@@ -1,0 +1,35 @@
+---
+interface Props {
+  href: string;
+  icon: string;
+  text: string;
+}
+var {href, icon,text} = Astro.props
+---
+<astro>
+    <div class="flex-1 group px-8">
+      <a href= {href} class="flex items-end justify-center text-center px-4 pt-2 w-full text-gray-400 group-hover:text-yellow-400 border-b-2 border-transparent group-hover:border-yellow-400">
+        <span class="block pt-1 pb-2">
+          <i class= {icon + " block text-2xl pt-1 mb-1"}></i>
+          <span class= "block text-xs pb-1">{text}</span>
+        </span>
+      </a>
+    </div>
+  
+    <style>
+      @import url(https://pro.fontawesome.com/releases/v5.10.0/css/all.css);
+      .hover\:w-full:hover {
+        width: auto;
+      }
+      .group:hover .group-hover\:w-full {
+        width: auto;
+      }
+      .group:hover .group-hover\:inline-block {
+        display: inline-block;
+      }
+      .group:hover .group-hover\:flex-grow {
+        flex-grow: 1;
+      }
+    </style>
+  </astro>
+  
