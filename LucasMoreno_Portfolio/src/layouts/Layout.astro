@@ -13,8 +13,14 @@ interface Props {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
   </head>
-  <body>
+  <body class="bg-cover h-full w-full bg-slate-950">
+    <div class="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[600px] w-[600px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]">
+      <div class="absolute bottom-0 right-[-210%] top-[50%] h-5/6 w-11/12 rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]">
+      </div>
+    </div>
     <slot />
   </body>
 </html>
+
 <style></style>
+
