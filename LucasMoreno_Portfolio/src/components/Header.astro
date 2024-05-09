@@ -1,22 +1,17 @@
 ---
 import MenuSection from "./MenuSection.astro";
-import aboutme from "../assets/aboutme.svg"
+import aboutme from "../assets/aboutme.svg";
 ---
 
 <astro>
-  <header class="fixed flex w-[70%] mx-[15%] z-40 justify-between my-10 h-auto bg-opacity-75 bg-gray-800 shadow-lg rounded-2xl">
-
-
-    <img src="https://avatars.githubusercontent.com/u/168908236?v=4" alt="Foto Perfil" 
-    class="flex my-auto ml-8 w-14 rounded-full justify-start z-40 opacity-100">
-
+  <header class="fixed flex w-[70%] mx-[15%] my-10 z-40 justify-between h-auto bg-opacity-75 bg-gray-800 shadow-lg rounded-2xl">
+    <img src="https://avatars.githubusercontent.com/u/168908236?v=4" alt="Foto Perfil" class="flex my-auto ml-8 w-14 rounded-full justify-start z-40 opacity-100">
     <nav class="flex items-end justify-end z-40">
       <MenuSection href="#" icon="far fa-home" text="Home"/>
-      <MenuSection href="#" icon="far fa-compass" text="Projects"/>
-      <MenuSection href="#" icon="far fa-search" text="Tools"/>
-      <MenuSection href="#" icon="far fa-cog" text="About me"/>
+      <MenuSection href="#" icon="far fa-folder-open" text="Projects"/>
+      <MenuSection href="#" icon="far fa-wrench" text="Tools"/>
+      <MenuSection href="#" icon="far fa-user" text="About me"/>
     </nav>
   </header>
-
   <style></style>
 </astro>
