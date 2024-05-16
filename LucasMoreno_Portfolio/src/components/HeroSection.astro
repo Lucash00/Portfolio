@@ -1,4 +1,5 @@
 ---
+import TechCarousel from "./TechCarousel.astro"; 
 
 ---
 
@@ -85,47 +86,13 @@
               </svg>
             </span>
           </button>
-        </div>
-
-        <div class="mx-auto">
-          <p
-            class="mb-2 bg-contain text-center text-sm font-semibold uppercase tracking-wide text-[#666666] dark:text-[#888888] md:!mb-4"
-          >
-          Tecnologias
-          </p>
-          <div
-            class="z-50 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1"
-          >
-            <div
-              class="flex w-48 items-center justify-center lg:w-40 lg:flex"
-            >
-              <img
-                alt="Vercel's Logo"
-                width="150"
-                height="75"
-                class="mx-8 inline dark:hidden"
-                style="width:150px;height:75px"
-                src="../src/assets/icono.svg"
-              />
-            </div>
-            <div
-              class="flex w-48 items-center justify-center lg:w-40 lg:flex dark:hidden"
-            >
-              <img
-                alt="Microsoft's Logo"
-                fetchpriority="high"
-                width="125"
-                height="75"
-                decoding="async"
-                data-nimg="1"
-                class="mx-8 inline dark:hidden"
-                style="color:transparent;width:125px;height:75px"
-                src="/images/logos/color/microsoft.svg"
-              />
-            </div>
-          </div>
-        </div>
       </div>
+      <p
+      class="mb-2 bg-contain text-center text-sm font-semibold uppercase tracking-wide text-[#666666] dark:text-[#888888] md:!mb-4"
+    >
+    Tecnologias
+    </p>
+      <TechCarousel></TechCarousel>
     </div>
   </section>
 </astro>

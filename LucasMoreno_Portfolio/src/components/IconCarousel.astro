@@ -1,0 +1,25 @@
+---
+interface Props {
+  alt: string;
+  src: string;
+}
+
+var {alt, src} = Astro.props;
+---
+
+
+<astro>
+  <div class="flex w-48 items-center justify-center lg:w-40 lg:flex">
+      <img
+      alt={alt}
+      fetchpriority="high"
+      width="150"
+      height="75"
+      decoding="async"
+      data-nimg="1"
+      class="mx-8 inline"
+      style="color:transparent;width:150px;height:75px"
+      src={src}
+    />
+  </div>
+</astro>

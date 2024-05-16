@@ -1,174 +1,25 @@
-<div class="mx-auto">
-  <p class="mb-2 bg-contain text-center text-sm font-semibold uppercase tracking-wide text-[#666666] dark:text-[#888888] md:!mb-4">Tecnologias</p>
-    <div
-    class="z-50 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1"
+---
+import IconCarousel from "./IconCarousel.astro"
+---
+
+<astro>
+  <div
+    class="mx-auto z-50 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1"
   >
-    <div class="flex w-48 items-center justify-center lg:w-40 lg:flex dark:hidden">
-      <img
-        alt="Vercel's Logo"
-        fetchpriority="high"
-        width="150"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 inline dark:hidden"
-        style="color:transparent;width:150px;height:75px"
-        src="/images/logos/color/vercel.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:flex dark:hidden"
-    >
-      <img
-        alt="AWS's Logo"
-        fetchpriority="high"
-        width="75"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 inline dark:hidden"
-        style="color:transparent;width:75px;height:75px"
-        src="/images/logos/color/aws.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:flex dark:hidden"
-    >
-      <img
-        alt="Microsoft's Logo"
-        fetchpriority="high"
-        width="125"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 inline dark:hidden"
-        style="color:transparent;width:125px;height:75px"
-        src="/images/logos/color/microsoft.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:flex dark:hidden"
-    >
-      <img
-        alt="Netflix's Logo"
-        fetchpriority="high"
-        width="110"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 inline dark:hidden"
-        style="color:transparent;width:110px;height:75px"
-        src="/images/logos/color/netflix.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:flex dark:hidden"
-    >
-      <img
-        alt="Disney's Logo"
-        fetchpriority="high"
-        width="100"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 inline dark:hidden"
-        style="color:transparent;width:100px;height:75px"
-        src="/images/logos/color/disney.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:flex dark:hidden"
-    >
-      <img
-        alt="Adobe's Logo"
-        fetchpriority="high"
-        width="100"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 inline dark:hidden"
-        style="color:transparent;width:100px;height:75px"
-        src="/images/logos/color/adobe.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:hidden dark:flex"
-    >
-      <img
-        alt="Vercel's Logo"
-        fetchpriority="high"
-        width="150"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 hidden dark:inline"
-        style="color:transparent;width:150px;height:75px"
-        src="/images/logos/white/vercel.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:hidden dark:flex"
-    >
-      <img
-        alt="AWS's Logo"
-        fetchpriority="high"
-        width="75"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 hidden dark:inline"
-        style="color:transparent;width:75px;height:75px"
-        src="/images/logos/white/aws.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:hidden dark:flex"
-    >
-      <img
-        alt="Microsoft's Logo"
-        fetchpriority="high"
-        width="125"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 hidden dark:inline"
-        style="color:transparent;width:125px;height:75px"
-        src="/images/logos/white/microsoft.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:hidden dark:flex"
-    >
-      <img
-        alt="Netflix's Logo"
-        fetchpriority="high"
-        width="110"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 hidden dark:inline"
-        style="color:transparent;width:110px;height:75px"
-        src="/images/logos/white/netflix.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:hidden dark:flex"
-    >
-      <img
-        alt="Disney's Logo"
-        fetchpriority="high"
-        width="100"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 hidden dark:inline"
-        style="color:transparent;width:100px;height:75px"
-        src="/images/logos/white/disney.svg"
-      />
-    </div><div
-      class="flex w-48 items-center justify-center lg:w-40 lg:hidden dark:flex"
-    >
-      <img
-        alt="Adobe's Logo"
-        fetchpriority="high"
-        width="100"
-        height="75"
-        decoding="async"
-        data-nimg="1"
-        class="mx-8 hidden dark:inline"
-        style="color:transparent;width:100px;height:75px"
-        src="/images/logos/white/adobe.svg"
-      />
-    </div>
+  <IconCarousel alt="HTML Logo" src="src/assets/html.svg" ></IconCarousel>
+  <IconCarousel alt="CSS Logo" src="src/assets/css.svg" ></IconCarousel>
+  <IconCarousel alt="JS Logo" src="src/assets/js.svg" ></IconCarousel>
+  <IconCarousel alt="Python Logo" src="src/assets/python.svg" ></IconCarousel>
+  <IconCarousel alt="Swift Logo" src="src/assets/swift.svg" ></IconCarousel>
+  <IconCarousel alt="React Logo" src="src/assets/react.svg" ></IconCarousel>
+  <IconCarousel alt="Django Logo" src="src/assets/django.svg" ></IconCarousel>
+  <IconCarousel alt="Angular Logo" src="src/assets/angular.svg" ></IconCarousel>
+  <IconCarousel alt="Java Logo" src="src/assets/java.svg" ></IconCarousel>
+  <IconCarousel alt="PHP Logo" src="src/assets/php.svg" ></IconCarousel>
+  <IconCarousel alt="MySQL Logo" src="sql/assets/mysql.svg" ></IconCarousel>
+  <IconCarousel alt="Linux Logo" src="src/assets/linux.svg" ></IconCarousel>
+  <IconCarousel alt="Nginx Logo" src="src/assets/nginx.svg" ></IconCarousel>
+  <IconCarousel alt="XLS Logo" src="src/assets/xls.svg" ></IconCarousel>
+  <IconCarousel alt="XML Logo" src="src/assets/xml.svg" ></IconCarousel>
   </div>
-</div>
+</astro>
