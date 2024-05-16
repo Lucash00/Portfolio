@@ -1,25 +1,157 @@
 ---
-import IconCarousel from "./IconCarousel.astro"
+import IconCarousel from "./IconCarousel.astro";
 ---
+
 
 <astro>
   <div
-    class="mx-auto z-50 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1"
+    class="mx-auto z-50 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container"
+    ref:"sliderRef"
   >
-  <IconCarousel alt="HTML Logo" src="src/assets/html.svg" ></IconCarousel>
-  <IconCarousel alt="CSS Logo" src="src/assets/css.svg" ></IconCarousel>
-  <IconCarousel alt="JS Logo" src="src/assets/js.svg" ></IconCarousel>
-  <IconCarousel alt="Python Logo" src="src/assets/python.svg" ></IconCarousel>
-  <IconCarousel alt="Swift Logo" src="src/assets/swift.svg" ></IconCarousel>
-  <IconCarousel alt="React Logo" src="src/assets/react.svg" ></IconCarousel>
-  <IconCarousel alt="Django Logo" src="src/assets/django.svg" ></IconCarousel>
-  <IconCarousel alt="Angular Logo" src="src/assets/angular.svg" ></IconCarousel>
-  <IconCarousel alt="Java Logo" src="src/assets/java.svg" ></IconCarousel>
-  <IconCarousel alt="PHP Logo" src="src/assets/php.svg" ></IconCarousel>
-  <IconCarousel alt="MySQL Logo" src="sql/assets/mysql.svg" ></IconCarousel>
-  <IconCarousel alt="Linux Logo" src="src/assets/linux.svg" ></IconCarousel>
-  <IconCarousel alt="Nginx Logo" src="src/assets/nginx.svg" ></IconCarousel>
-  <IconCarousel alt="XLS Logo" src="src/assets/xls.svg" ></IconCarousel>
-  <IconCarousel alt="XML Logo" src="src/assets/xml.svg" ></IconCarousel>
+    <div class="carousel-track" ref:"trackRef">
+      <IconCarousel alt="HTML Logo" src="src/assets/html.svg" />
+      <IconCarousel alt="CSS Logo" src="src/assets/css.svg" />
+      <IconCarousel alt="JS Logo" src="src/assets/js.svg" />
+      <IconCarousel alt="Python Logo" src="src/assets/python.svg" />
+      <IconCarousel alt="Swift Logo" src="src/assets/swift.svg" />
+      <IconCarousel alt="React Logo" src="src/assets/react.svg" />
+      <IconCarousel alt="Django Logo" src="src/assets/django.svg" />
+      <IconCarousel alt="Angular Logo" src="src/assets/angular.svg" />
+      <IconCarousel alt="Java Logo" src="src/assets/java.svg" />
+      <IconCarousel alt="PHP Logo" src="src/assets/php.svg" />
+      <IconCarousel alt="MySQL Logo" src="sql/assets/mysql.svg" />
+      <IconCarousel alt="Linux Logo" src="src/assets/linux.svg" />
+      <IconCarousel alt="Nginx Logo" src="src/assets/nginx.svg" />
+      <IconCarousel alt="XLS Logo" src="src/assets/xls.svg" />
+      <IconCarousel alt="XML Logo" src="src/assets/xml.svg" />
+    </div>
   </div>
 </astro>
+
+<style>
+  /* Estilos para el carrusel */
+  .carousel-container {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .carousel-track {
+    display: flex;
+    cursor: grab;
+    user-select: none; /* Evita la selección de texto al arrastrar */
+  }
+
+  .carousel-item {
+    flex: 0 0 auto;
+    margin-right: 10px; /* Espacio entre cada ícono */
+  }
+
+  .active {
+    cursor: grabbing; /* Cambia el cursor durante el arrastre */
+  }
+</style>
+
+<script>
+  let intervalId: ReturnType<typeof setInterval> | null = null; // Define la variable intervalId con el tipo adecuado y permite que sea nula
+  let slider: HTMLElement | null = null; // Define la variable slider con el tipo adecuado y permite que sea nula
+  let scrollAmount = 1; // Cantidad de desplazamiento en píxeles
+  let startX = 0; // Posición inicial del mouse en el eje X
+  let scrollLeft = 0; // Posición de desplazamiento del slider
+
+  // Indica si el mouse está presionado
+  let isMouseDown = false;
+  // Indica si el mouse está sobre el slider
+  let isMouseOverSlider = false;
+
+  // Función para mover el carousel automáticamente
+  function moveCarousel() {
+    if (!isMouseDown && !isMouseOverSlider && slider) {
+      slider.scrollLeft += scrollAmount; // Modifica el desplazamiento horizontal
+
+      // Si llegamos al final del carousel, movemos el primer elemento al final
+      if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth) {
+        const firstItem = slider.querySelector('.carousel-item');
+        if (firstItem) {
+          slider.appendChild(firstItem.cloneNode(true)); // Clonamos el primer elemento
+          slider.removeChild(firstItem); // Eliminamos el primer elemento original
+          slider.scrollLeft = 0; // Volvemos al principio del carousel
+        }
+      }
+    }
+  }
+
+  // Inicia el movimiento automático del carousel siempre
+  intervalId = setInterval(moveCarousel, 10);
+
+  // Agrega un evento de carga para asegurarse de que slider esté definido antes de usarlo
+  window.addEventListener('load', () => {
+    slider = document.querySelector('.carousel-container');
+
+    // Verifica si slider tiene un valor antes de agregar los eventos
+    if (slider) {
+      // Agrega eventos de mouse y táctiles para arrastrar el slider
+      slider.addEventListener('mousedown', handleMouseDown);
+      slider.addEventListener('mouseup', handleMouseUp);
+      slider.addEventListener('mousemove', handleMouseMove);
+      slider.addEventListener('touchstart', handleTouchStart);
+      slider.addEventListener('touchend', handleTouchEnd);
+      slider.addEventListener('touchmove', handleTouchMove);
+
+      // Agrega eventos para controlar si el mouse está sobre el slider
+      slider.addEventListener('mouseenter', handleMouseEnter);
+      slider.addEventListener('mouseleave', handleMouseLeave);
+    }
+  });
+
+  // Funciones para manejar eventos de arrastre del slider
+  function handleMouseDown(e: MouseEvent) {
+    isMouseDown = true;
+    slider!.classList.add('active');
+    startX = e.pageX - slider!.offsetLeft;
+    scrollLeft = slider!.scrollLeft;
+  }
+
+  function handleMouseUp() {
+    isMouseDown = false;
+    slider!.classList.remove('active');
+  }
+
+  function handleMouseMove(e: MouseEvent) {
+    if (isMouseDown) {
+      e.preventDefault();
+      const x = e.pageX - slider!.offsetLeft;
+      const walk = (x - startX) * 3; // Ajusta la velocidad de desplazamiento
+      slider!.scrollLeft = scrollLeft - walk;
+    }
+  }
+
+  function handleTouchStart(e: TouchEvent) {
+    isMouseDown = true;
+    slider!.classList.add('active');
+    startX = e.touches[0].pageX - slider!.offsetLeft;
+    scrollLeft = slider!.scrollLeft;
+  }
+
+  function handleTouchEnd() {
+    isMouseDown = false;
+    slider!.classList.remove('active');
+  }
+
+  function handleTouchMove(e: TouchEvent) {
+    if (isMouseDown) {
+      e.preventDefault();
+      const x = e.touches[0].pageX - slider!.offsetLeft;
+      const walk = (x - startX) * 3; // Ajusta la velocidad de desplazamiento
+      slider!.scrollLeft = scrollLeft - walk;
+    }
+  }
+
+  // Funciones para manejar eventos de mouse sobre el slider
+  function handleMouseEnter() {
+    isMouseOverSlider = true;
+  }
+
+  function handleMouseLeave() {
+    isMouseOverSlider = false;
+  }
+</script>
