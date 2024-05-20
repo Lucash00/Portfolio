@@ -18,7 +18,6 @@ import IconCarousel from "./IconCarousel.astro";
       <IconCarousel alt="Angular Logo" src="src/assets/angular.svg" />
       <IconCarousel alt="Java Logo" src="src/assets/java.svg" />
       <IconCarousel alt="PHP Logo" src="src/assets/php.svg" />
-      <IconCarousel alt="MySQL Logo" src="sql/assets/mysql.svg" />
       <IconCarousel alt="Linux Logo" src="src/assets/linux.svg" />
       <IconCarousel alt="Nginx Logo" src="src/assets/nginx.svg" />
       <IconCarousel alt="XLS Logo" src="src/assets/xls.svg" />
@@ -51,20 +50,20 @@ import IconCarousel from "./IconCarousel.astro";
 
 <script>
   let intervalId = null;
-  let slider: HTMLElement = document.createElement('div');
-  let track: HTMLElement = document.createElement('div');
+  let slider: HTMLElement | null;
+  let track: HTMLElement | null;
   let scrollAmount = 1;
   let startX = 0;
   let scrollLeft = 0;
   let isMouseDown = false;
   let isMouseOverSlider = false;
 
-  window.addEventListener("load", () => {
-    if (slider instanceof HTMLElement && track instanceof HTMLElement) {
+  window.addEventListener("DOMContentLoaded", () => {
+    slider = document.querySelector('.carousel-container');
+    track = document.querySelector('.carousel-track');
+    if (slider && track) {
       cloneElements();
-
       intervalId = setInterval(moveCarousel, 10);
-
       slider.addEventListener("mousedown", handleMouseDown);
       slider.addEventListener("mouseup", handleMouseUp);
       slider.addEventListener("mousemove", handleMouseMove);
@@ -79,29 +78,24 @@ import IconCarousel from "./IconCarousel.astro";
   function moveCarousel() {
     if (!isMouseDown && !isMouseOverSlider && slider) {
       slider.scrollLeft += scrollAmount;
-
-      if (slider.scrollLeft >= track.scrollWidth / 2) {
+      if (slider.scrollLeft >= track!.scrollWidth / 2) {
         slider.scrollLeft = 0;
       }
     }
   }
 
   function cloneElements() {
-    const items = track!.children;
-    const trackWidth = track!.offsetWidth;
+    const items = Array.from(track!.children) as HTMLElement[];
+    const trackWidth = (track as HTMLElement).offsetWidth;
     const itemWidth = (items[0] as HTMLElement).offsetWidth;
     const itemsPerViewport = Math.ceil(trackWidth / itemWidth);
-
     let currentWidth = 0;
-
     for (let i = 0; i < itemsPerViewport; i++) {
-      const item = (items[i % items.length] as HTMLElement).cloneNode(
-        true
-      ) as HTMLElement;
+      const item = items[i % items.length].cloneNode(true);
       track!.appendChild(item);
       currentWidth +=
         itemWidth +
-        parseInt(window.getComputedStyle(item).marginRight || "0");
+        parseInt(window.getComputedStyle(item as HTMLElement).marginRight || "0");
     }
   }
 
