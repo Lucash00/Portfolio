@@ -72,6 +72,7 @@ import IconCarousel from "./IconCarousel.astro";
       slider.addEventListener("touchmove", handleTouchMove);
       slider.addEventListener("mouseenter", handleMouseEnter);
       slider.addEventListener("mouseleave", handleMouseLeave);
+      track.addEventListener("mouseleave", handleMouseLeaveTrack);
     }
   });
 
@@ -148,5 +149,10 @@ import IconCarousel from "./IconCarousel.astro";
   function handleMouseLeave() {
     isMouseOverSlider = false;
   }
+  function handleMouseLeaveTrack() {
+  if (isMouseDown) {
+    handleMouseUp();
+  }
+}
 </script>
 </astro>
