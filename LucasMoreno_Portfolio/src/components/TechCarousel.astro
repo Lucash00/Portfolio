@@ -7,23 +7,25 @@ import IconCarousel from "./IconCarousel.astro";
     class="mx-auto z-50 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container"
     ref:"sliderRef"
   >
-    <div class="carousel-track" ref:"trackRef">
-      <IconCarousel alt="HTML Logo" src="src/assets/html.svg" />
-      <IconCarousel alt="CSS Logo" src="src/assets/css.svg" />
-      <IconCarousel alt="JS Logo" src="src/assets/js.svg" />
-      <IconCarousel alt="Python Logo" src="src/assets/python.svg" />
-      <IconCarousel alt="Swift Logo" src="src/assets/swift.svg" />
-      <IconCarousel alt="React Logo" src="src/assets/react.svg" />
-      <IconCarousel alt="Django Logo" src="src/assets/django.svg" />
-      <IconCarousel alt="Angular Logo" src="src/assets/angular.svg" />
-      <IconCarousel alt="Java Logo" src="src/assets/java.svg" />
-      <IconCarousel alt="PHP Logo" src="src/assets/php.svg" />
-      <IconCarousel alt="Linux Logo" src="src/assets/linux.svg" />
-      <IconCarousel alt="Nginx Logo" src="src/assets/nginx.svg" />
-      <IconCarousel alt="XLS Logo" src="src/assets/xls.svg" />
-      <IconCarousel alt="XML Logo" src="src/assets/xml.svg" />
+    <div class="carousel-track relative" ref:"trackRef">
+      <IconCarousel alt="HTML" src="src/assets/html.svg" />
+      <IconCarousel alt="CSS" src="src/assets/css.svg" />
+      <IconCarousel alt="JavaScript" src="src/assets/js.svg" />
+      <IconCarousel alt="Python" src="src/assets/python.svg" />
+      <IconCarousel alt="Swift" src="src/assets/swift.svg" />
+      <IconCarousel alt="React" src="src/assets/react.svg" />
+      <IconCarousel alt="Django" src="src/assets/django.svg" />
+      <IconCarousel alt="Angular" src="src/assets/angular.svg" />
+      <IconCarousel alt="Java" src="src/assets/java.svg" />
+      <IconCarousel alt="PHP" src="src/assets/php.svg" />
+      <IconCarousel alt="Linux" src="src/assets/linux.svg" />
+      <IconCarousel alt="Nginx" src="src/assets/nginx.svg" />
+      <IconCarousel alt="XLS" src="src/assets/xls.svg" />
+      <IconCarousel alt="XML" src="src/assets/xml.svg" />
     </div>
-  </div>
+    <div id="tooltip" class="tooltip hidden fixed p-3 bg-gradient-to-b from-[#161616] via-[#202020] to-transparent tracking-wide text-gray-100 rounded-t-2xl transform -translate-x-1/2 left-1/2 -mt-8">
+    </div>
+    
 
   <style>
     .carousel-container {
@@ -46,113 +48,147 @@ import IconCarousel from "./IconCarousel.astro";
     .active {
       cursor: grabbing;
     }
+
+    .tooltip {
+      pointer-events: none;
+    }
+
+    .hidden {
+      opacity: 0;
+    }
   </style>
 
-<script>
-  let intervalId = null;
-  let slider: HTMLElement | null;
-  let track: HTMLElement | null;
-  let scrollAmount = 1;
-  let startX = 0;
-  let scrollLeft = 0;
-  let isMouseDown = false;
-  let isMouseOverSlider = false;
+  <script>
+    let intervalId: number | null = null;
+    let slider: HTMLElement | null;
+    let track: HTMLElement | null;
+    let tooltip: HTMLElement | null;
+    let scrollAmount = 1;
+    let startX = 0;
+    let scrollLeft = 0;
+    let isMouseDown = false;
+    let isMouseOverSlider = false;
 
-  window.addEventListener("DOMContentLoaded", () => {
-    slider = document.querySelector('.carousel-container');
-    track = document.querySelector('.carousel-track');
-    if (slider && track) {
-      cloneElements();
-      intervalId = setInterval(moveCarousel, 10);
-      slider.addEventListener("mousedown", handleMouseDown);
-      slider.addEventListener("mouseup", handleMouseUp);
-      slider.addEventListener("mousemove", handleMouseMove);
-      slider.addEventListener("touchstart", handleTouchStart);
-      slider.addEventListener("touchend", handleTouchEnd);
-      slider.addEventListener("touchmove", handleTouchMove);
-      slider.addEventListener("mouseenter", handleMouseEnter);
-      slider.addEventListener("mouseleave", handleMouseLeave);
-      track.addEventListener("mouseleave", handleMouseLeaveTrack);
-    }
-  });
+    window.addEventListener("DOMContentLoaded", () => {
+      slider = document.querySelector(".carousel-container");
+      track = document.querySelector(".carousel-track");
+      tooltip = document.getElementById("tooltip");
+      if (slider && track && tooltip) {
+        cloneElements();
+        intervalId = setInterval(moveCarousel, 10);
+        slider.addEventListener("mousedown", handleMouseDown);
+        slider.addEventListener("mouseup", handleMouseUp);
+        slider.addEventListener("mousemove", handleMouseMove);
+        slider.addEventListener("touchstart", handleTouchStart);
+        slider.addEventListener("touchend", handleTouchEnd);
+        slider.addEventListener("touchmove", handleTouchMove);
+        slider.addEventListener("mouseenter", handleMouseEnter);
+        slider.addEventListener("mouseleave", handleMouseLeave);
+        track.addEventListener("mouseleave", handleMouseLeaveTrack);
+        track.addEventListener("mouseover", handleMouseOver);
+        track.addEventListener("mouseout", handleMouseOut);
+      }
+    });
 
-  function moveCarousel() {
-    if (!isMouseDown && !isMouseOverSlider && slider) {
-      slider.scrollLeft += scrollAmount;
-      if (slider.scrollLeft >= track!.scrollWidth / 2) {
-        slider.scrollLeft = 0;
+    function moveCarousel() {
+      if (!isMouseDown && !isMouseOverSlider && slider) {
+        slider.scrollLeft += scrollAmount;
+        if (slider.scrollLeft >= track!.scrollWidth / 2) {
+          slider.scrollLeft = 0;
+        }
       }
     }
-  }
 
-  function cloneElements() {
-    const items = Array.from(track!.children) as HTMLElement[];
-    const trackWidth = (track as HTMLElement).offsetWidth;
-    const itemWidth = (items[0] as HTMLElement).offsetWidth;
-    const itemsPerViewport = Math.ceil(trackWidth / itemWidth);
-    let currentWidth = 0;
-    for (let i = 0; i < itemsPerViewport; i++) {
-      const item = items[i % items.length].cloneNode(true);
-      track!.appendChild(item);
-      currentWidth +=
-        itemWidth +
-        parseInt(window.getComputedStyle(item as HTMLElement).marginRight || "0");
+    function cloneElements() {
+      const items = Array.from(track!.children) as HTMLElement[];
+      const trackWidth = (track as HTMLElement).offsetWidth;
+      const itemWidth = (items[0] as HTMLElement).offsetWidth;
+      const itemsPerViewport = Math.ceil(trackWidth / itemWidth);
+      let currentWidth = 0;
+      for (let i = 0; i < itemsPerViewport; i++) {
+        const item = items[i % items.length].cloneNode(true) as HTMLElement;
+        track!.appendChild(item);
+        currentWidth +=
+          itemWidth +
+          parseInt(
+            window.getComputedStyle(item as HTMLElement).marginRight || "0",
+          );
+      }
     }
-  }
 
-  function handleMouseDown(e: MouseEvent) {
-    isMouseDown = true;
-    slider!.classList.add("active");
-    startX = e.pageX - slider!.offsetLeft;
-    scrollLeft = slider!.scrollLeft;
-  }
-
-  function handleMouseUp() {
-    isMouseDown = false;
-    slider!.classList.remove("active");
-  }
-
-  function handleMouseMove(e: MouseEvent) {
-    if (isMouseDown) {
-      e.preventDefault();
-      const x = e.pageX - slider!.offsetLeft;
-      const walk = (x - startX) * 3;
-      slider!.scrollLeft = scrollLeft - walk;
+    function handleMouseDown(e: MouseEvent) {
+      isMouseDown = true;
+      slider!.classList.add("active");
+      startX = e.pageX - slider!.offsetLeft;
+      scrollLeft = slider!.scrollLeft;
     }
-  }
 
-  function handleTouchStart(e: TouchEvent) {
-    isMouseDown = true;
-    slider!.classList.add("active");
-    startX = e.touches[0].pageX - slider!.offsetLeft;
-    scrollLeft = slider!.scrollLeft;
-  }
-
-  function handleTouchEnd() {
-    isMouseDown = false;
-    slider!.classList.remove("active");
-  }
-
-  function handleTouchMove(e: TouchEvent) {
-    if (isMouseDown) {
-      e.preventDefault();
-      const x = e.touches[0].pageX - slider!.offsetLeft;
-      const walk = (x - startX) * 3;
-      slider!.scrollLeft = scrollLeft - walk;
+    function handleMouseUp() {
+      isMouseDown = false;
+      slider!.classList.remove("active");
     }
-  }
 
-  function handleMouseEnter() {
-    isMouseOverSlider = true;
-  }
+    function handleMouseMove(e: MouseEvent) {
+      if (isMouseDown) {
+        e.preventDefault();
+        const x = e.pageX - slider!.offsetLeft;
+        const walk = (x - startX) * 3;
+        slider!.scrollLeft = scrollLeft - walk;
+      }
+    }
 
-  function handleMouseLeave() {
-    isMouseOverSlider = false;
-  }
-  function handleMouseLeaveTrack() {
-  if (isMouseDown) {
-    handleMouseUp();
-  }
-}
-</script>
+    function handleTouchStart(e: TouchEvent) {
+      isMouseDown = true;
+      slider!.classList.add("active");
+      startX = e.touches[0].pageX - slider!.offsetLeft;
+      scrollLeft = slider!.scrollLeft;
+    }
+
+    function handleTouchEnd() {
+      isMouseDown = false;
+      slider!.classList.remove("active");
+    }
+
+    function handleTouchMove(e: TouchEvent) {
+      if (isMouseDown) {
+        e.preventDefault();
+        const x = e.touches[0].pageX - slider!.offsetLeft;
+        const walk = (x - startX) * 3;
+        slider!.scrollLeft = scrollLeft - walk;
+      }
+    }
+
+    function handleMouseEnter() {
+      isMouseOverSlider = true;
+    }
+
+    function handleMouseLeave() {
+      isMouseOverSlider = false;
+    }
+
+    function handleMouseLeaveTrack() {
+      if (isMouseDown) {
+        handleMouseUp();
+      }
+    }
+
+    function handleMouseOver(e: MouseEvent) {
+      const target = e.target as HTMLElement;
+      if (target && target.tagName === "IMG") {
+        const img = target as HTMLImageElement;
+        const rect = img.getBoundingClientRect();
+        tooltip!.textContent = img.alt;
+        tooltip!.style.left = `${rect.left + rect.width / 2 + window.pageXOffset}px`;
+        tooltip!.style.top = `${rect.top + window.pageYOffset - 10}px`;
+        tooltip!.classList.remove("hidden");
+      }
+    }
+
+    function handleMouseOut(e: MouseEvent) {
+      const target = e.target as HTMLElement;
+      if (target && target.tagName === "IMG") {
+        tooltip!.classList.add("hidden");
+      }
+    }
+  </script>
 </astro>
