@@ -3,11 +3,9 @@ import IconCarousel from "./IconCarousel.astro";
 ---
 
 <astro>
-  <div
-    class="mx-auto z-50 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container"
-    ref:"sliderRef"
-  >
-    <div class="carousel-track relative" ref:"trackRef">
+  <div class="mt-10 z-50 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container" ref:"sliderRef">
+    <div class="carousel-track relative" 
+    ref:"trackRef">
       <IconCarousel alt="HTML" src="src/assets/html.svg" />
       <IconCarousel alt="CSS" src="src/assets/css.svg" />
       <IconCarousel alt="JavaScript" src="src/assets/js.svg" />
@@ -25,24 +23,20 @@ import IconCarousel from "./IconCarousel.astro";
     </div>
     <div id="tooltip" class="tooltip hidden fixed p-3 bg-gradient-to-b from-[#161616] via-[#202020] to-transparent tracking-wide text-gray-100 rounded-t-2xl transform -translate-x-1/2 left-1/2 -mt-8">
     </div>
-    
+  </div>
 
   <style>
     .carousel-container {
       overflow-x: hidden;
       width: 100%;
       position: relative;
+
     }
 
     .carousel-track {
       display: flex;
       cursor: grab;
       user-select: none;
-    }
-
-    .carousel-item {
-      flex: 0 0 auto;
-      margin-right: 10px;
     }
 
     .active {
@@ -124,16 +118,25 @@ import IconCarousel from "./IconCarousel.astro";
     }
 
     function handleMouseUp() {
-      isMouseDown = false;
-      slider!.classList.remove("active");
+      if (isMouseDown) {
+        isMouseDown = false;
+        slider!.classList.remove("active");
+        const maxScrollLeft = track!.scrollWidth - slider!.clientWidth;
+        if (slider!.scrollLeft <= 0) {
+          slider!.scrollLeft = maxScrollLeft;
+        } else if (slider!.scrollLeft >= maxScrollLeft) {
+          slider!.scrollLeft = 0;
+        }
+      }
     }
 
     function handleMouseMove(e: MouseEvent) {
       if (isMouseDown) {
         e.preventDefault();
         const x = e.pageX - slider!.offsetLeft;
-        const walk = (x - startX) * 3;
+        const walk = (x - startX) * 1.2;
         slider!.scrollLeft = scrollLeft - walk;
+        tooltip!.classList.add("hidden"); 
       }
     }
 
@@ -145,8 +148,16 @@ import IconCarousel from "./IconCarousel.astro";
     }
 
     function handleTouchEnd() {
-      isMouseDown = false;
-      slider!.classList.remove("active");
+      if (isMouseDown) {
+        isMouseDown = false;
+        slider!.classList.remove("active");
+        const maxScrollLeft = track!.scrollWidth - slider!.clientWidth;
+        if (slider!.scrollLeft <= 0) {
+          slider!.scrollLeft = maxScrollLeft;
+        } else if (slider!.scrollLeft >= maxScrollLeft) {
+          slider!.scrollLeft = 0;
+        }
+      }
     }
 
     function handleTouchMove(e: TouchEvent) {

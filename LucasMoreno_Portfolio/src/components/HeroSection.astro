@@ -4,8 +4,8 @@ import TechCarousel from "./TechCarousel.astro";
 ---
 
 <astro>
-  <section class="inline-block w-full z-30 mt-40">
-    <div class="py-8 px-4 mx-auto mt-10 lg:py-16 lg:px-48 sm:px-16 xl:px-80">
+  <section class="inline-block w-full z-30 mt-52 mb-16">
+    <div class="py-8 px-4 mx-auto lg:py-8 lg:px-48 sm:px-16 xl:px-80">
       <h1
         class="mb-10 text-4xl text-left font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
       >
@@ -21,8 +21,8 @@ import TechCarousel from "./TechCarousel.astro";
       >
         <span class="text-amber-400">Cádiz</span>, España
       </p>
-      <div class="mx-1 md:max-w-screen-md lg:max-w-screen-lg">
-        <span class="text-left font-semibold text-gray-400 uppercase"
+      <div class="mx-1 mt-16 md:max-w-screen-md lg:max-w-screen-lg">
+        <span class="text-left text-balance font-semibold uppercase tracking-wide text-[#666666] dark:text-[#888888]"
           >Contacto</span
         >
         <!-- Contacto -->
@@ -87,12 +87,18 @@ import TechCarousel from "./TechCarousel.astro";
             </span>
           </button>
       </div>
-      <p
-      class="mb-2 bg-contain text-center text-sm font-semibold uppercase tracking-wide text-[#666666] dark:text-[#888888] md:!mb-4"
-    >
-    Tecnologias
-    </p>
+    </section>
+    <div class=" w-full text-center ladosTransparentes">
+      <p class="mb-4 bg-contain text-center text-balance font-semibold uppercase tracking-wide text-[#666666] dark:text-[#888888] md:!mb-4">
+        Tecnologias
+      </p>
       <TechCarousel></TechCarousel>
     </div>
-  </section>
 </astro>
+
+<style>
+.ladosTransparentes {
+  mask-image: linear-gradient(to right, transparent, white, transparent);
+}
+
+</style>
