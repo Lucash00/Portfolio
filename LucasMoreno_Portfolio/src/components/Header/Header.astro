@@ -4,13 +4,13 @@ import aboutme from "../assets/aboutme.svg";
 ---
 
 <astro>
-  <header id="header" class="header fixed flex w-[70%] mx-[15%] mt-10 z-40 justify-between h-auto rounded-2xl">
+  <header id="header" class="header fixed flex w-[70%] mx-[15%] z-40 justify-between h-auto rounded-2xl">
     <img src="https://avatars.githubusercontent.com/u/168908236?v=4" alt="Foto Perfil" class="flex my-auto ml-8 w-14 rounded-full justify-start z-40 opacity-100">
     <nav class="flex items-end justify-end z-40">
-      <MenuSection href="#" icon="far fa-home" text="Home"/>
-      <MenuSection href="#" icon="far fa-folder-open" text="Projects"/>
-      <MenuSection href="#" icon="far fa-wrench" text="Tools"/>
-      <MenuSection href="#" icon="far fa-user" text="About me"/>
+      <MenuSection href="/" icon="far fa-home" text="Inicio"/>
+      <MenuSection href="proyectos" icon="far fa-folder-open" text="Proyectos"/>
+      <MenuSection href="#" icon="far fa-wrench" text="Herramientas"/>
+      <MenuSection href="#" icon="far fa-user" text="Sobre mi"/>
     </nav>
   </header>
 
@@ -22,8 +22,8 @@ import aboutme from "../assets/aboutme.svg";
       border: none;
     }
     .header.scrolled {
-      background-color: rgba(31, 41, 55, 0.75); /* bg-gray-800 with bg-opacity-75 */
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind shadow-lg */
+      background-color: rgba(31, 41, 55, 0.75); 
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
     }
   </style>
 

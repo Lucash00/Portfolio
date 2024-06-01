@@ -1,0 +1,74 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header/Header.astro";
+import { projects } from '../../data/projects';
+import type { Project } from '../../data/projects';
+
+export async function getStaticPaths() {
+  return projects.map(project => ({
+    params: { title: encodeURIComponent(project.title.replace(/\s+/g, '-')) },
+  }));
+}
+
+const params = Astro.params;
+
+if (!params.title) {
+  throw new Error('No title parameter provided');
+}
+
+const decodedTitle = decodeURIComponent(params.title);
+const project = projects.find(p => p.title.toLowerCase() === decodedTitle.replace(/-/g, ' ').toLowerCase());
+
+if (!project) {
+  throw new Error(`Project with title '${decodedTitle}' not found`);
+}
+---
+
+<Layout title={`Proyecto: ${project.title}`}>
+  <Header />
+
+  <div class="flex">
+    <!-- Columna izquierda -->
+    <div class="w-1/12"></div>
+    <!-- Columna del medio (grande) -->
+    <div class="w-10/12">
+      <main>
+        <div class="grid grid-cols-2 gap-4 rounded overflow-hidden shadow-lg my-4 bg-white">
+          <!-- Contenido de la izquierda -->
+          <div class="col-span-1">
+            <div class="px-6 py-4">
+              <div class="font-bold text-2xl mb-2">{project.title}</div>
+              <p class="text-gray-700 text-base">{project.description}</p>
+            </div>
+            <div class="px-6 pt-4 pb-2">
+              {project.tags.map((tag: string) => (
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{tag}</span>
+              ))}
+            </div>
+          </div>
+          <!-- Contenido de la derecha (imagen, video, etc.) -->
+          <div class="col-span-1">
+            {project.media.map((url: string, index: number) => (
+              <img src={url} alt={project.title} class="object-cover w-full h-full mb-4" />
+            ))}
+            <div class="px-6 py-4">
+              <a href={project.projectUrl} class="text-blue-500 hover:text-blue-700" target="_blank" rel="noopener noreferrer">
+                Ver proyecto
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- Columna derecha -->
+    <div class="w-1/12"></div>
+  </div>
+</Layout>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
+  body {
+    font-family: "Poppins", sans-serif;
+  }
+</style>
+

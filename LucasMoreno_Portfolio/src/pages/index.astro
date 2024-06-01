@@ -1,21 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
-import Header from "../components/Header.astro";
-import HeroSection from "../components/HeroSection.astro";
-import DividerLine from "../components/DividerLine.astro";
+import HeroSection from "../components/HeroSection/HeroSection.astro";
+
 ---
 
 
-<Layout title="Illo que">
-  <Header></Header>
-  <HeroSection></HeroSection>
+<Layout title="Index">
+  <main>
+    <HeroSection></HeroSection>
+  </main>
+
 </Layout>
-
-
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
-  body {
-    font-family: "Onest Variable", sans-serif;
-  }
-</style>

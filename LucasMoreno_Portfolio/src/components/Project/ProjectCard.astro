@@ -1,0 +1,52 @@
+---
+export interface Props {
+    title: string;
+    briefDescription: string;
+    description: string;
+    product: boolean;
+    tags: string[];
+    projectUrl: string;
+    media: string[];
+}
+
+const {
+    title,
+    briefDescription,
+    description,
+    product,
+    tags,
+    projectUrl,
+    media,
+} = Astro.props;
+---
+
+
+<a href={`/proyecto/${encodeURIComponent(title.replace(/\s+/g, '-'))}`} class="block">
+
+    <div
+        class="grid grid-cols-2 gap-4 rounded overflow-hidden hover:shadow-gray-500 hover:shadow-lg my-8 mx-8 bg-white"
+    >
+        <div class="px-6 col-span-1">
+            <div class="py-4">
+                <div class="font-bold text-2xl mb-2">{title}</div>
+                <p class="text-gray-700 text-base">{briefDescription}</p>
+            </div>
+            <div class="py-4">
+                {
+                    tags.map((tag) => (
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                            {tag}
+                        </span>
+                    ))
+                }
+            </div>
+        </div>
+        <div class="col-span-1">
+            <img
+                src={media[0]}
+                alt={title}
+                class="object-cover w-full h-full"
+            />
+        </div>
+    </div>
+</a>
