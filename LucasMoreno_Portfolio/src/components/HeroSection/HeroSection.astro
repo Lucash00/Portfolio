@@ -3,9 +3,9 @@ import TechCarousel from "../Carousel/TechCarousel.astro";
 
 ---
 
-<astro class="text-shadow">
-  <section class="inline-block w-full z-30 mt-44 mb-16">
-    <div class="py-8 px-4 mx-auto lg:py-8 lg:px-48 sm:px-16 xl:px-80">
+<astro>
+  <section class="text-shadow z-30 mt-12 mb-24 mx-[10%]">
+    <div class="py-8 w-full lg:py-8">
       <h1
         class=" mb-10 text-4xl text-left font-extrabold tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
       >
@@ -14,14 +14,14 @@ import TechCarousel from "../Carousel/TechCarousel.astro";
       <p
         class="mb-2 ml-[30%] text-lg text-right font-normal text-gray-500 lg:text-xl dark:text-gray-400"
       >
-        Hey! Soy <span class="text-amber-400">Lucas Moreno</span>, un Desarrollador Web <span class="text-gray-200">versátil</span> con una sólida base en diversas <span class="text-gray-200">tecnologías</span>.
+        Hey! Soy <span class="text-amber-400">Lucas Moreno</span>, un Desarrollador Web <span class="text-gray-200">versátil</span> con una sólida base en diversas <span class="text-gray-200">tecnologías</span>
       </p>
       <p
         class="mb-8 text-lg text-right font-normal text-gray-500 lg:text-xl dark:text-gray-400"
       >
         <span class="text-amber-400">Cádiz</span>, España
       </p>
-      <div class="mx-1 mt-16 md:max-w-screen-md lg:max-w-screen-lg">
+      <div class="mx-8 mt-16 md:max-w-screen-md lg:max-w-screen-lg">
         <span class="text-left text-balance font-semibold uppercase tracking-wide text-[#666666] dark:text-[#888888]"
         >Contacto</span
         >
@@ -88,11 +88,11 @@ import TechCarousel from "../Carousel/TechCarousel.astro";
           </button>
       </div>
     </section>
-    <div class=" w-full text-center ladosTransparentes">
+    <div class="w-full text-center ladosTransparentes">
       <p class="mb-4 bg-contain text-center text-balance font-semibold uppercase tracking-wide text-[#666666] dark:text-[#888888] md:!mb-4">
         Tecnologias
       </p>
-      <TechCarousel></TechCarousel>
+      <TechCarousel class="w-full"></TechCarousel> <!-- Ajustar el ancho del TechCarousel -->
     </div>
 </astro>
 

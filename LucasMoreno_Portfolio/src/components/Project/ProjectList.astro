@@ -1,26 +1,27 @@
 ---
-import ProjectCard from './ProjectCard.astro';
-import { projects } from '../../data/projects';
-import type { Project } from '../../data/projects';
+import ProjectCard from "./ProjectCard.astro";
+import type { Project } from "../../data/projects";
 
 interface Props {
-  filter: (project: Project) => boolean;
+  projects: Project[];
 }
 
-const { filter } = Astro.props;
-const filteredProjects = projects.filter(filter);
+const { projects } = Astro.props;
 ---
 
-<div class="w-full mb-20">
-  {filteredProjects.map((project: Project) => (
-    <ProjectCard 
-      title={project.title}
-      briefDescription={project.briefDescription}
-      description={project.description}
-      product={project.product}
-      tags={project.tags}
-      projectUrl={project.projectUrl}
-      media={project.media}
-    />
-  ))}
-</div>
+<astro>
+  <div class="w-full mb-20">
+    {
+      projects.map((project: Project) => (
+        <ProjectCard
+          title={project.title}
+          briefDescription={project.briefDescription}
+          description={project.description}
+          tags={project.tags}
+          projectUrl={project.projectUrl}
+          media={project.media}
+        />
+      ))
+    }
+  </div>
+</astro>

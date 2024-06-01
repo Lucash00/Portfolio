@@ -2,31 +2,16 @@
 import Layout from "../layouts/Layout.astro";
 import Title from "../components/Utils/Title.astro";
 import ProjectList from "../components/Project/ProjectList.astro";
-import { projects } from '../data/projects';
-import type { Project } from '../data/projects';
+import { projectsProducts, projectsTemplates } from '../data/projects';
 ---
 
 <Layout title="Proyectos">
 
-  <div class="flex my-32">
-    <!-- Columna izquierda -->
-    <div class="w-1/12">
-    </div>
-    <!-- Columna del medio (grande) -->
-    <div class="w-10/12">
       <main>
         <Title title="Productos" />
-        <ProjectList filter={(project: Project) => project.product === true} />
+        <ProjectList projects={projectsProducts} />
         <Title title="Plantillas" />
-        <ProjectList filter={(project: Project) => project.product === false} />
+        <ProjectList projects={projectsTemplates} />
       </main>
-    </div>
-    <!-- Columna derecha -->
-    <div class="w-1/12">
-    </div>
-  </div>
-  
-  
-  
 
 </Layout>

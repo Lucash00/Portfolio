@@ -1,11 +1,12 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header/Header.astro";
-import { projects } from '../../data/projects';
+import { projectsProducts, projectsTemplates } from '../../data/projects';
 import type { Project } from '../../data/projects';
 
 export async function getStaticPaths() {
-  return projects.map(project => ({
+  const allProjects = [...projectsProducts, ...projectsTemplates];
+  return allProjects.map(project => ({
     params: { title: encodeURIComponent(project.title.replace(/\s+/g, '-')) },
   }));
 }
@@ -17,7 +18,8 @@ if (!params.title) {
 }
 
 const decodedTitle = decodeURIComponent(params.title);
-const project = projects.find(p => p.title.toLowerCase() === decodedTitle.replace(/-/g, ' ').toLowerCase());
+const allProjects = [...projectsProducts, ...projectsTemplates];
+const project = allProjects.find(p => p.title.toLowerCase() === decodedTitle.replace(/-/g, ' ').toLowerCase());
 
 if (!project) {
   throw new Error(`Project with title '${decodedTitle}' not found`);
@@ -25,7 +27,6 @@ if (!project) {
 ---
 
 <Layout title={`Proyecto: ${project.title}`}>
-  <Header />
 
   <div class="flex">
     <!-- Columna izquierda -->
@@ -49,13 +50,8 @@ if (!project) {
           <!-- Contenido de la derecha (imagen, video, etc.) -->
           <div class="col-span-1">
             {project.media.map((url: string, index: number) => (
-              <img src={url} alt={project.title} class="object-cover w-full h-full mb-4" />
+              <img src={url} alt={project.title} class="object-cover w-full h-full mb-4"/>
             ))}
-            <div class="px-6 py-4">
-              <a href={project.projectUrl} class="text-blue-500 hover:text-blue-700" target="_blank" rel="noopener noreferrer">
-                Ver proyecto
-              </a>
-            </div>
           </div>
         </div>
       </main>
@@ -71,4 +67,3 @@ if (!project) {
     font-family: "Poppins", sans-serif;
   }
 </style>
-

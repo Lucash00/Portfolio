@@ -3,7 +3,6 @@ export interface Props {
     title: string;
     briefDescription: string;
     description: string;
-    product: boolean;
     tags: string[];
     projectUrl: string;
     media: string[];
@@ -13,18 +12,16 @@ const {
     title,
     briefDescription,
     description,
-    product,
     tags,
     projectUrl,
     media,
 } = Astro.props;
 ---
 
-
-<a href={`/proyecto/${encodeURIComponent(title.replace(/\s+/g, '-'))}`} class="block">
-
-    <div
-        class="grid grid-cols-2 gap-4 rounded overflow-hidden hover:shadow-gray-500 hover:shadow-lg my-8 mx-8 bg-white"
+<astro>
+    <a
+        href={`/proyecto/${encodeURIComponent(title.replace(/\s+/g, "-"))}`}
+        class="my-8 mx-8 grid grid-cols-2 gap-4 rounded overflow-hidden hover:shadow-gray-500 hover:shadow-lg bg-white"
     >
         <div class="px-6 col-span-1">
             <div class="py-4">
@@ -48,5 +45,5 @@ const {
                 class="object-cover w-full h-full"
             />
         </div>
-    </div>
-</a>
+    </a>
+</astro>
