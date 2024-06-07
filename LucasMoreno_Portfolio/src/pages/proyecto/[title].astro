@@ -1,69 +1,154 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Header from "../../components/Header/Header.astro";
-import { projectsProducts, projectsTemplates } from '../../data/projects';
-import type { Project } from '../../data/projects';
+import TitleComponent from "../../components/Utils/Title.astro";
+import Card from "../../components/Utils/Card.astro";
+import { projectsProducts, projectsTemplates } from "../../data/projects";
+import SectionToggle from "../../components/Utils/SectionToggle.jsx";
 
 export async function getStaticPaths() {
   const allProjects = [...projectsProducts, ...projectsTemplates];
-  return allProjects.map(project => ({
-    params: { title: encodeURIComponent(project.title.replace(/\s+/g, '-')) },
+  return allProjects.map((project) => ({
+    params: { title: encodeURIComponent(project.title.replace(/\s+/g, "-")) },
   }));
 }
 
 const params = Astro.params;
 
 if (!params.title) {
-  throw new Error('No title parameter provided');
+  throw new Error("No title parameter provided");
 }
 
 const decodedTitle = decodeURIComponent(params.title);
 const allProjects = [...projectsProducts, ...projectsTemplates];
-const project = allProjects.find(p => p.title.toLowerCase() === decodedTitle.replace(/-/g, ' ').toLowerCase());
+const project = allProjects.find(
+  (p) =>
+    p.title.toLowerCase() === decodedTitle.replace(/-/g, " ").toLowerCase(),
+);
 
 if (!project) {
   throw new Error(`Project with title '${decodedTitle}' not found`);
 }
+
+// Crear un arreglo de secciones dinámicamente
+const sections = [
+  { name: "Objetivo", content: project.objective },
+  {
+    name: "Proceso",
+    content: project.developmentProcess
+      ? `${project.developmentProcess.methodology}, ${project.developmentProcess.timeline}`
+      : "",
+  },
+  {
+    name: "Equipo",
+    content: project.team
+      ? project.team.contributors
+          ?.map((contributor) => `${contributor.name}: ${contributor.role}`)
+          .join(", ")
+      : "",
+  },
+];
 ---
 
 <Layout title={`Proyecto: ${project.title}`}>
-
-  <div class="flex">
-    <!-- Columna izquierda -->
-    <div class="w-1/12"></div>
-    <!-- Columna del medio (grande) -->
-    <div class="w-10/12">
-      <main>
-        <div class="grid grid-cols-2 gap-4 rounded overflow-hidden shadow-lg my-4 bg-white">
-          <!-- Contenido de la izquierda -->
-          <div class="col-span-1">
-            <div class="px-6 py-4">
-              <div class="font-bold text-2xl mb-2">{project.title}</div>
-              <p class="text-gray-700 text-base">{project.description}</p>
-            </div>
-            <div class="px-6 pt-4 pb-2">
-              {project.tags.map((tag: string) => (
-                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{tag}</span>
-              ))}
-            </div>
-          </div>
-          <!-- Contenido de la derecha (imagen, video, etc.) -->
-          <div class="col-span-1">
-            {project.media.map((url: string, index: number) => (
-              <img src={url} alt={project.title} class="object-cover w-full h-full mb-4"/>
-            ))}
-          </div>
+  <main>
+    <TitleComponent title={project.title} />
+    <Card>
+      <!-- Contenido de la izquierda -->
+      <div class="col-span-1">
+        <div class="px-6 py-4">
+          <div class="font-bold text-2xl mb-2">{project.titleJob}</div>
+          <p class="text-gray-700 text-base mb-4">{project.description}</p>
         </div>
-      </main>
-    </div>
-    <!-- Columna derecha -->
-    <div class="w-1/12"></div>
-  </div>
-</Layout>
 
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
-  body {
-    font-family: "Poppins", sans-serif;
-  }
-</style>
+        <!-- Tags Utilizadas -->
+        {
+          project.tags && (
+            <div class="px-6 py-4">
+              <h3 class="font-bold text-xl mb-2">Tags</h3>
+              <ul class="flex flex-wrap gap-2 mb-4">
+                {project.tags.map((tag) => (
+                  <li class="px-2 py-1 bg-gray-200 rounded-full text-gray-700 text-sm">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      <!-- Pasar el arreglo de secciones a SectionToggle -->
+      <SectionToggle client:visible sections={sections} />
+      </div>
+
+
+      <!-- Contenido de la derecha (imágenes, videos, etc.) -->
+      <div class="col-span-1">
+        {
+          project.media.map((url, index) => (
+            <img
+              src={url}
+              alt={project.title}
+              class="object-cover w-full h-full mb-4"
+            />
+          ))
+        }
+
+        <!-- Enlaces -->
+        {
+          project.links && (
+            <div class="px-6 py-4">
+              <h3 class="font-bold text-xl mb-2">Enlaces</h3>
+              <ul class="list-disc list-inside text-gray-700 text-base mb-4">
+                {project.links.website && (
+                  <li>
+                    <a
+                      href={project.links.website}
+                      target="_blank"
+                      class="text-blue-500 hover:underline"
+                    >
+                      Sitio Web
+                    </a>
+                  </li>
+                )}
+                {project.links.codeRepository && (
+                  <li>
+                    <a
+                      href={project.links.codeRepository}
+                      target="_blank"
+                      class="text-blue-500 hover:underline"
+                    >
+                      Repositorio de Código
+                    </a>
+                  </li>
+                )}
+                {project.links.downloads &&
+                  project.links.downloads.map((download, index) => (
+                    <li>
+                      {`Descarga ${index + 1}`} -{" "}
+                      <a
+                        href={download}
+                        target="_blank"
+                        class="text-blue-500 hover:underline"
+                      >
+                        {download}
+                      </a>
+                    </li>
+                  ))}
+                {project.links.documentation && (
+                  <li>
+                    <a
+                      href={project.links.documentation}
+                      target="_blank"
+                      class="text-blue-500 hover:underline"
+                    >
+                      Documentación
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </div>
+          )
+        }
+      </div>
+    </Card>
+  </main>
+</Layout>

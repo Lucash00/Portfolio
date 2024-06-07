@@ -1,26 +1,6 @@
----
-export interface Props {
-    content:Props;
-}
-var { content } = Astro.props;
----
-
 <astro>
-    <div class="card">
-        {content}
+    <div class="my-8 mx-8 pt-1.5 grid grid-cols-2 gap-4 rounded overflow-hidden bg-white">
+        <slot/>
     </div>
 </astro>
 
-
-<style>
-    .card {
-        display: flex;
-        border: 1px solid #ddd;
-        padding: 1rem;
-        margin: 1rem 0;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-</style>
