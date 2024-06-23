@@ -52,14 +52,14 @@ const Slider = ({ images }) => {
         {/* Botones para cambiar de imagen */}
         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-between">
           <button
-            className="w-[5%] h-full bg-gray-300 focus:outline-none flex items-center justify-center hover:bg-gray-400 transition duration-300 transform relative"
+            className="w-[5%] h-full bg-gray-300 focus:outline-none flex items-center justify-center hover:bg-gray-400 transition duration-300 transform relative active:scale-x-125"
             onClick={() => handleArrowClick('prev')}
           >
             <span className="text-white text-2xl">{'<'}</span>
             <span className="absolute top-0 left-0 w-full h-full rounded-full border-2 border-transparent transition-all duration-300 transform scale-0 "></span>
           </button>
           <button
-            className="w-[5%] h-full bg-gray-300 focus:outline-none flex items-center justify-center hover:bg-gray-400 transition duration-300 transform relative"
+            className="w-[5%] h-full bg-gray-300 focus:outline-none flex items-center justify-center hover:bg-gray-400 transition duration-300 transform relative active:scale-x-125"
             onClick={() => handleArrowClick('next')}
           >
             <span className="text-white text-2xl">{'>'}</span>
