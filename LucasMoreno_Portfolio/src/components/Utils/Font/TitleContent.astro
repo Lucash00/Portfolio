@@ -1,0 +1,11 @@
+---
+interface Props {
+    title: string | never;
+
+  }
+  var {title} = Astro.props;
+---
+
+<astro>
+    <h2 class="font-bold text-xl mb-2"> {title} </h2>
+</astro>

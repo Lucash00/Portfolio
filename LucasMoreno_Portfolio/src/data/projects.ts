@@ -1,3 +1,5 @@
+const bafreMediaFolder = "/src/data/BafreMedia";
+
 export interface Project {
   title: string;
   titleJob:string;
@@ -41,7 +43,18 @@ export const projectsProducts: Project[] = [
       "Mobile Development"
     ],
     projectUrl: "https://example.com/project-one",
-    media: ["/path/to/image1.jpg", "/path/to/video1.mp4"],
+    media: [
+      `${bafreMediaFolder}/1.png`,
+      `${bafreMediaFolder}/2.png`,
+      `${bafreMediaFolder}/3.png`,
+      `${bafreMediaFolder}/4.png`,
+      `${bafreMediaFolder}/5.png`,
+      `${bafreMediaFolder}/6.png`,
+      `${bafreMediaFolder}/7.png`,
+      `${bafreMediaFolder}/8.png`,
+      `${bafreMediaFolder}/9.png`,
+      `${bafreMediaFolder}/10.png`,
+    ],
     links: {
       website: "https://example.com",
       codeRepository: "https://github.com/example/bafre",
@@ -61,7 +74,7 @@ export const projectsProducts: Project[] = [
       methodology: "Agile",
       timeline: "Jan 2022 - Dec 2022"
     },
-    company: "TechCorp"
+    company: ""
   }
 ];
 

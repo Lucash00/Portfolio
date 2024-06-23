@@ -1,9 +1,12 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import TitleComponent from "../../components/Utils/Title.astro";
-import Card from "../../components/Utils/Card.astro";
+import TitleComponent from "../../components/Utils/Font/Title.astro";
+import TitleContent from "../../components/Utils/Font/TitleContent.astro";
+import TextContent from "../../components/Utils/Font/TextContent.astro";
+import Card from "../../components/Utils/Card/Card.astro";
 import { projectsProducts, projectsTemplates } from "../../data/projects";
 import SectionToggle from "../../components/Utils/SectionToggle.jsx";
+import Slider from "../../components/Utils/Slider/Slider.jsx"; // Importa el componente Slider
 
 export async function getStaticPaths() {
   const allProjects = [...projectsProducts, ...projectsTemplates];
@@ -46,108 +49,49 @@ const sections = [
           .join(", ")
       : "",
   },
+  {
+    name: "Empresa",
+    content: project.company ? `${project.company}` : "",
+  },
 ];
+
 ---
 
 <Layout title={`Proyecto: ${project.title}`}>
   <main>
     <TitleComponent title={project.title} />
     <Card>
-      <!-- Contenido de la izquierda -->
-      <div class="col-span-1">
-        <div class="px-6 py-4">
-          <div class="font-bold text-2xl mb-2">{project.titleJob}</div>
-          <p class="text-gray-700 text-base mb-4">{project.description}</p>
-        </div>
-
-        <!-- Tags Utilizadas -->
-        {
-          project.tags && (
-            <div class="px-6 py-4">
-              <h3 class="font-bold text-xl mb-2">Tags</h3>
-              <ul class="flex flex-wrap gap-2 mb-4">
-                {project.tags.map((tag) => (
-                  <li class="px-2 py-1 bg-gray-200 rounded-full text-gray-700 text-sm">
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )
-        }
-      <!-- Pasar el arreglo de secciones a SectionToggle -->
-      <SectionToggle client:visible sections={sections} />
+      <!-- Contenido de la media -->
+      <div class="mb-4 col-span-2 col-start-1">
+        <!-- Utiliza el componente Slider y pasa las imágenes del proyecto -->
+        <Slider client:load images={project.media} />
       </div>
 
+      <!-- Tags Utilizadas -->
+      {project.tags && (
+        <div class="px-6 py-4 col-span-1 col-start-1 ">
+          <TitleContent title="Tags" />
+          <ul class="flex flex-wrap gap-2 mb-4">
+            {project.tags.map((tag) => (
+              <li class="px-2 py-1 bg-gray-200 rounded-full text-gray-700 text-sm">
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
-      <!-- Contenido de la derecha (imágenes, videos, etc.) -->
-      <div class="col-span-1">
-        {
-          project.media.map((url, index) => (
-            <img
-              src={url}
-              alt={project.title}
-              class="object-cover w-full h-full mb-4"
-            />
-          ))
-        }
+      <!-- Enlaces en un futuro -->
 
-        <!-- Enlaces -->
-        {
-          project.links && (
-            <div class="px-6 py-4">
-              <h3 class="font-bold text-xl mb-2">Enlaces</h3>
-              <ul class="list-disc list-inside text-gray-700 text-base mb-4">
-                {project.links.website && (
-                  <li>
-                    <a
-                      href={project.links.website}
-                      target="_blank"
-                      class="text-blue-500 hover:underline"
-                    >
-                      Sitio Web
-                    </a>
-                  </li>
-                )}
-                {project.links.codeRepository && (
-                  <li>
-                    <a
-                      href={project.links.codeRepository}
-                      target="_blank"
-                      class="text-blue-500 hover:underline"
-                    >
-                      Repositorio de Código
-                    </a>
-                  </li>
-                )}
-                {project.links.downloads &&
-                  project.links.downloads.map((download, index) => (
-                    <li>
-                      {`Descarga ${index + 1}`} -{" "}
-                      <a
-                        href={download}
-                        target="_blank"
-                        class="text-blue-500 hover:underline"
-                      >
-                        {download}
-                      </a>
-                    </li>
-                  ))}
-                {project.links.documentation && (
-                  <li>
-                    <a
-                      href={project.links.documentation}
-                      target="_blank"
-                      class="text-blue-500 hover:underline"
-                    >
-                      Documentación
-                    </a>
-                  </li>
-                )}
-              </ul>
-            </div>
-          )
-        }
+      <!-- Descripción -->
+      <div class="px-6 py-4 col-span-1 col-start-1">
+        <TitleContent title={project.titleJob} />
+        <TextContent>{project.description}</TextContent>
+      </div>
+
+      <!-- Secciones (SectionToggle) -->
+      <div class="px-6 py-4 col-span-1 col-start-2">
+        <SectionToggle client:visible sections={sections} />
       </div>
     </Card>
   </main>
