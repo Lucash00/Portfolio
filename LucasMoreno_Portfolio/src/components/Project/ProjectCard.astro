@@ -6,6 +6,7 @@ export interface Props {
     description: string;
     tags: string[];
     projectUrl: string;
+    logo: string;  
     media: string[];
 }
 
@@ -15,12 +16,12 @@ const {
     description,
     tags,
     projectUrl,
+    logo,
     media,
 } = Astro.props;
 ---
 
 <astro>
-
     <CardLink link={`/proyecto/${encodeURIComponent(title.replace(/\s+/g, "-"))}`}>
         <div class="px-6 col-span-1">
             <div class="py-4">
@@ -37,14 +38,13 @@ const {
                 }
             </div>
         </div>
-        <div class="col-span-1">
+        <div class="col-span-1 flex items-center justify-center">
             <img
-                src={media[0]}
+                src={logo}  
                 alt={title}
-                class="object-cover w-full h-full"
+                class="object-cover max-w-[65%] h-auto"
             />
         </div>
     </CardLink>
-    
-
 </astro>
+

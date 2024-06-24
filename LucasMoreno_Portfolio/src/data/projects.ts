@@ -8,6 +8,7 @@ export interface Project {
   objective?: string;
   tags: string[];
   projectUrl: string;
+  logo: string;
   media: string[];
   links?: {
     website?: string;
@@ -43,6 +44,7 @@ export const projectsProducts: Project[] = [
       "Mobile Development"
     ],
     projectUrl: "https://example.com/project-one",
+    logo:`${bafreMediaFolder}/logo.png`,
     media: [
       `${bafreMediaFolder}/1.png`,
       `${bafreMediaFolder}/2.png`,
@@ -88,6 +90,7 @@ export const projectsTemplates: Project[] = [
     objective: 'Main purpose of the project.',
     tags: ['HTML', 'CSS', 'JavaScript'],
     projectUrl: 'https://example.com/project-two',
+    logo:"",
     media: ['/path/to/image2.jpg'],
     links: {
       website: 'https://example.com',
@@ -118,6 +121,7 @@ export const projectsTemplates: Project[] = [
     objective: 'Main purpose of the project.',
     tags: ['HTML', 'CSS', 'JavaScript'],
     projectUrl: 'https://example.com/project-four',
+    logo:"",
     media: ['/path/to/image2.jpg'],
     links: {
       website: 'https://example.com',
