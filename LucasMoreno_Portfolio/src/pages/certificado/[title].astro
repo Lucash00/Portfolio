@@ -1,0 +1,93 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import TitleComponent from "../../components/Utils/Font/Title.astro";
+import TextContent from "../../components/Utils/Font/TextContent.astro";
+import Card from "../../components/Utils/Card/Card.astro";
+import { certificates } from "../../data/certificates";
+
+// Generar rutas estáticas
+export async function getStaticPaths() {
+  return certificates.map((certificate) => ({
+    params: { title: encodeURIComponent(certificate.title.replace(/\s+/g, "-")) },
+  }));
+}
+
+const params = Astro.params;
+
+if (!params.title) {
+  throw new Error("No title parameter provided");
+}
+
+const decodedTitle = decodeURIComponent(params.title);
+const certificate = certificates.find(
+  (c) =>
+    c.title.toLowerCase() === decodedTitle.replace(/-/g, " ").toLowerCase()
+);
+
+if (!certificate) {
+  throw new Error(`Certificate with title '${decodedTitle}' not found`);
+}
+---
+
+<Layout title={`Certificado: ${certificate.title}`}>
+  <main>
+    <TitleComponent title={certificate.title} logo={certificate.logo} />
+    <Card>
+      <!-- Media superior -->
+      <div class="mb-4 col-span-2 col-start-1 flex justify-center">
+        <img src={certificate.logo} alt={certificate.title} class="object-cover max-h-40" />
+      </div>
+
+        <!-- Columna izquierda -->
+        <div class="col-span-1 gap-6 px-6">
+          {certificate.tags && (
+            <div class="mb-4">
+              <h3 class="font-bold text-lg">Tags</h3>
+              <ul class="flex flex-wrap gap-2">
+                {certificate.tags.map((tag) => (
+                  <li class="px-2 py-1 bg-gray-200 rounded-full text-sm">{tag}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div class="mb-4">
+            <h3 class="font-bold text-lg">Fecha</h3>
+            <p>{certificate.date}</p>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="font-bold text-lg">Descripción</h3>
+            <TextContent>{certificate.description}</TextContent>
+          </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="col-span-1 col-start-2 items-start gap-6 px-6">
+          <div class="mb-4">
+            <h3 class="font-bold text-lg">Proveedor</h3>
+            <p>{certificate.provider}</p>
+          </div>
+
+          {certificate.credentials && (
+            <div class="mb-4">
+              <h3 class="font-bold text-lg">Credenciales</h3>
+              <p>
+                {certificate.credentials}
+              </p>
+            </div>
+          )}
+
+          {certificate.certificateUrl && (
+            <div>
+              <h3 class="font-bold text-lg">Link</h3>
+              <a href={certificate.certificateUrl} target="_blank" class="text-blue-500 underline">
+                  Ver certificado
+                </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </Card>
+  </main>
+</Layout>

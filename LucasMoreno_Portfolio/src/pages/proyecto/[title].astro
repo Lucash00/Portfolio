@@ -4,13 +4,12 @@ import TitleComponent from "../../components/Utils/Font/Title.astro";
 import TitleContent from "../../components/Utils/Font/TitleContent.astro";
 import TextContent from "../../components/Utils/Font/TextContent.astro";
 import Card from "../../components/Utils/Card/Card.astro";
-import { projectsProducts, projectsTemplates } from "../../data/projects";
+import { projects } from "../../data/projects"; // Importamos todos los proyectos
 import SectionToggle from "../../components/Utils/SectionToggle.jsx";
 import Slider from "../../components/Utils/Slider/Slider.jsx"; // Importa el componente Slider
 
 export async function getStaticPaths() {
-  const allProjects = [...projectsProducts, ...projectsTemplates];
-  return allProjects.map((project) => ({
+  return projects.map((project) => ({
     params: { title: encodeURIComponent(project.title.replace(/\s+/g, "-")) },
   }));
 }
@@ -22,8 +21,7 @@ if (!params.title) {
 }
 
 const decodedTitle = decodeURIComponent(params.title);
-const allProjects = [...projectsProducts, ...projectsTemplates];
-const project = allProjects.find(
+const project = projects.find(
   (p) =>
     p.title.toLowerCase() === decodedTitle.replace(/-/g, " ").toLowerCase(),
 );
@@ -54,12 +52,12 @@ const sections = [
     content: project.company ? `${project.company}` : "",
   },
 ];
-
 ---
 
 <Layout title={`Proyecto: ${project.title}`}>
   <main>
-    <TitleComponent title={project.title} />
+    <TitleComponent title={project.title} logo={project.logo} />
+
     <Card>
       <!-- Contenido de la media -->
       <div class="mb-4 col-span-2 col-start-1">
@@ -80,8 +78,6 @@ const sections = [
           </ul>
         </div>
       )}
-
-      <!-- Enlaces en un futuro -->
 
       <!-- Descripción -->
       <div class="px-6 py-4 col-span-1 col-start-1">

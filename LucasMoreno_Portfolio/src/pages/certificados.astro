@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Title from "../components/Utils/Font/Title.astro";
+import CertificateList from "../components/Certificate/CertificateList.astro";
+import { certificates } from '../data/certificates';
+---
+
+<Layout title="Certificados">
+
+  <main>
+    <Title title="Certificados" />
+    <CertificateList certificates={certificates} />
+  </main>
+
+</Layout>

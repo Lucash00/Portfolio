@@ -2,16 +2,14 @@
 import Layout from "../layouts/Layout.astro";
 import Title from "../components/Utils/Font/Title.astro";
 import ProjectList from "../components/Project/ProjectList.astro";
-import { projectsProducts, projectsTemplates } from '../data/projects';
+import { projects } from '../data/projects';
 ---
 
 <Layout title="Proyectos">
 
-      <main>
-        <Title title="Productos" />
-        <ProjectList projects={projectsProducts} />
-        <Title title="Plantillas" />
-        <ProjectList projects={projectsTemplates} />
-      </main>
+  <main>
+    <Title title="Proyectos" />
+    <ProjectList projects={projects} />
+  </main>
 
 </Layout>

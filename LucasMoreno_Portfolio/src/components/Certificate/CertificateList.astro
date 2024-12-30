@@ -1,0 +1,25 @@
+---
+import CertificateCard from "./CertificateCard.astro";
+import type { Certificate } from "../../data/certificates";
+
+interface Props {
+  certificates: Certificate[];
+}
+
+const { certificates } = Astro.props;
+---
+
+<astro>
+  <div class="w-full mb-20">
+    {certificates.map((certificate: Certificate) => (
+      <CertificateCard
+        title={certificate.title}
+        provider={certificate.provider}
+        description={certificate.description}
+        tags={certificate.tags}
+        date={certificate.date}
+        logo={certificate.logo}
+      />
+    ))}
+  </div>
+</astro>
