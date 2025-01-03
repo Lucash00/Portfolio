@@ -35,7 +35,11 @@ if (!certificate) {
     <Card>
       <!-- Media superior -->
       <div class="mb-4 col-span-2 col-start-1 flex justify-center">
-        <img src={certificate.logo} alt={certificate.title} class="object-cover max-h-40" />
+        {certificate.media && certificate.media.length > 0 ? (
+          <img src={certificate.media[0]} alt={certificate.title} class="object-cover max-h-96" />
+        ) : (
+          <p>No media available</p>
+        )}
       </div>
 
         <!-- Columna izquierda -->
