@@ -4,15 +4,13 @@ export default function CardTimeline({ experience }) {
   if (!experience) return null;
 
   return (
-    <div className="p-8 shadow-lg rounded-lg bg-gray-50 m-4">
-      <h2 className="text-2xl font-bold">{experience.title}</h2>
-      <p className="mt-4 text-gray-700">{experience.description}</p>
-      <a
-        href={`/experiencia/${experience.id}`} // Cambiado "to" por "href"
-        className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Ver más
-      </a>
-    </div>
+    <a
+      href={`/experiencia/${experience.id}`}
+      className="my-8 mx-8 p-8 grid gap-1 w-screen rounded overflow-hidden hover:shadow-gray-600 hover:shadow-lg bg-slate-100 shadow-lg rounded-l"
+    >
+        <h2 className="text-2xl font-bold">{experience.title}</h2>
+        <p className="mt-4 text-gray-400">{experience.startDate} / {experience.endDate}</p>
+        <p className="mt-4 text-gray-700">{experience.description}</p>
+    </a>
   );
 }
