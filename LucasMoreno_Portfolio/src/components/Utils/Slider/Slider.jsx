@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Slider = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredDot, setHoveredDot] = useState(null);
+  const [isMainImageLarge, setIsMainImageLarge] = useState(false); // Nuevo estado para controlar la condición
+  const containerRef = useRef(null); // Referencia al contenedor
+  const imageRef = useRef(null); // Referencia a la imagen actual
 
   const nextImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
@@ -24,30 +27,55 @@ const Slider = ({ images }) => {
     }
   };
 
+  useEffect(() => {
+    // Verificar si la imagen principal ocupa más de 1/3 del contenedor
+    if (containerRef.current && imageRef.current) {
+      const containerWidth = containerRef.current.offsetWidth;
+      const imageWidth = imageRef.current.offsetWidth;
+      setIsMainImageLarge(imageWidth > containerWidth / 3);
+    }
+  }, [currentIndex]); // Se ejecuta cuando cambia el índice de la imagen actual
+
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" ref={containerRef}>
       {/* Contenedor de las imágenes */}
       <div className="relative w-full bg-gray-50">
         {/* Imagen actual */}
+        {!isMainImageLarge && (
         <img
+          ref={imageRef}
           src={images[currentIndex]}
           alt={`Image ${currentIndex}`}
           className="object-contain mx-auto"
         />
-
-        {/* Imagen anterior */}
+        )}
+        {isMainImageLarge && (
         <img
-          src={images[currentIndex === 0 ? images.length - 1 : currentIndex - 1]}
-          alt={`Previous Image`}
-          className="absolute left-0 top-0 opacity-40 mx-[10%]"
+          ref={imageRef}
+          src={images[currentIndex]}
+          alt={`Image ${currentIndex}`}
+          className="object-contain px-[5%]"
         />
+        )}
 
-        {/* Imagen siguiente */}
-        <img
-          src={images[currentIndex === images.length - 1 ? 0 : currentIndex + 1]}
-          alt={`Next Image`}
-          className="absolute right-0 top-0 opacity-40 mx-[10%]"
-        />
+        {/* Condición para no mostrar las imágenes de los lados */}
+        {!isMainImageLarge && (
+          <>
+            {/* Imagen anterior */}
+            <img
+              src={images[currentIndex === 0 ? images.length - 1 : currentIndex - 1]}
+              alt={`Previous Image`}
+              className="absolute left-0 top-0 opacity-40 mx-[10%]"
+            />
+
+            {/* Imagen siguiente */}
+            <img
+              src={images[currentIndex === images.length - 1 ? 0 : currentIndex + 1]}
+              alt={`Next Image`}
+              className="absolute right-0 top-0 opacity-40 mx-[10%]"
+            />
+          </>
+        )}
 
         {/* Botones para cambiar de imagen */}
         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-between">
@@ -76,9 +104,7 @@ const Slider = ({ images }) => {
               onClick={() => handleClickDot(index)}
               onMouseEnter={() => setHoveredDot(index)}
               onMouseLeave={() => setHoveredDot(null)}
-              className={`rounded-full mx-1 focus:outline-none transition-all duration-300 ${
-                index === currentIndex ? 'bg-gray-500' : 'bg-gray-300'
-              }`}
+              className={`rounded-full mx-1 focus:outline-none transition-all duration-300 ${index === currentIndex ? 'bg-gray-500' : 'bg-gray-300'}`}
               style={{
                 width: index === currentIndex ? '12px' : '10px',
                 height: index === currentIndex ? '12px' : '10px',
