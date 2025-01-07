@@ -9,10 +9,10 @@ export interface Experience {
     tags: string[];
     logo?: string;
     media?: string[];
-    type: 'trabajo' | 'educacion' | 'personal' | 'voluntario';
+    type: 'Trabajo' | 'Educacion' | 'Personal' | 'Voluntario';
     skills?: string[];
     certificateUrl?: string[];
-    projectUrl?: string;
+    projectUrl?: string[];
     highlights?: string[];
     responsibilities?: string[];
   }
@@ -39,7 +39,7 @@ export interface Experience {
         "English Proficiency",
       ],
       logo: "/src/data/Certificates/Certificates.svg",
-      type: "voluntario",
+      type: "Voluntario",
       skills: [
         "JavaScript",
         "D3.js",
@@ -81,7 +81,14 @@ export interface Experience {
       location: "Jerez de la Frontera, Cádiz, España",
       tags: ["Swift", "Firebase", "CocoaPods", "Git", "UI/UX", "Angular", "ASP.NET"],
       logo: "https://example.com/logo-controlnet.png",
-      type: "trabajo",
+      type: "Trabajo",
+      projectUrl:[
+        "/certificado/BackEnd-Development-y-APIs",
+        "/certificado/Data-Analysis",
+        "/certificado/Data-Visualization",
+        "/certificado/EF-SET-English",
+        "/certificado/Responsive-Web-Design"
+      ],
       skills: [
         "SwiftUI",
         "Firebase",
@@ -105,7 +112,7 @@ export interface Experience {
     },
     {
       id: 3,
-      title: "Técnico Superior en Desarrollo de Aplicaciones Web (DAW)",
+      title: "Tecnico Superior en Desarrollo de Aplicaciones Web",
       provider: "Instituto XYZ",
       description: 
         "El programa DAW ofreció una formación completa en el diseño, desarrollo y mantenimiento de aplicaciones web modernas, utilizando un enfoque integral para la programación backend y frontend. A lo largo de dos años, desarrollé competencias avanzadas en el uso de tecnologías clave, herramientas de desarrollo y metodologías de trabajo colaborativo, destacándome en proyectos individuales y en equipo. Durante mi formación, creé aplicaciones funcionales y escalables que integraban las mejores prácticas de desarrollo web, priorizando la seguridad, el rendimiento y la experiencia de usuario.",
@@ -139,7 +146,7 @@ export interface Experience {
         "Linux"
       ],
       logo: "/src/assets/logos/instituto-daw.png",
-      type: "educacion",
+      type: "Educacion",
       skills: [
         "Desarrollo Web",
         "Frontend Development",
@@ -183,7 +190,7 @@ export interface Experience {
     },    
     {
       id: 2,
-      title: "Técnico en Sistemas Microinformáticos y Redes (SMR)",
+      title: "Tecnico en Sistemas Microinformaticos y Redes",
       provider: "Instituto ABC",
       description: 
         "El ciclo formativo de SMR me brindó una formación técnica completa en la instalación, configuración, administración y mantenimiento de sistemas informáticos y redes. Aprendí a gestionar infraestructuras de TI, resolver problemas de hardware y software, y optimizar el rendimiento de sistemas y redes. Durante el curso, participé en proyectos prácticos que incluyeron la implementación de redes locales, configuración de servidores, gestión de usuarios y seguridad informática.",
@@ -213,7 +220,7 @@ export interface Experience {
         "NoSQL"
       ],
       logo: "/src/assets/logos/instituto-smr.png",
-      type: "educacion",
+      type: "Educacion",
       skills: [
         "Administración de Redes",
         "Instalación de Sistemas Operativos",
@@ -253,10 +260,10 @@ export interface Experience {
     },    
     {
       id: 1,
-      title: "Educación Secundaria Obligatoria (ESO)",
+      title: "Educacion Secundaria Obligatoria",
       provider: "Colegio IES H.H. Carmelitas",
       description: 
-        "La Educación Secundaria Obligatoria (ESO) me brindó una formación sólida en diversas áreas científicas y técnicas, enfocándome en las matemáticas, las ciencias naturales y sociales, y las bases de la informática. Durante estos años, desarrollé habilidades analíticas, críticas y de resolución de problemas que sentaron las bases para mi posterior formación técnica. La especialización en ciencias me permitió adquirir conocimientos fundamentales en física, química y biología, que se complementaron con el aprendizaje de conceptos matemáticos aplicados a situaciones reales y problemas técnicos.",
+        "La Educación Secundaria Obligatoria (ESO), me brindó una formación sólida en diversas áreas científicas y técnicas, enfocándome en las matemáticas, las ciencias naturales y sociales, y las bases de la informática. Durante estos años, desarrollé habilidades analíticas, críticas y de resolución de problemas que sentaron las bases para mi posterior formación técnica. La especialización en ciencias me permitió adquirir conocimientos fundamentales en física, química y biología, que se complementaron con el aprendizaje de conceptos matemáticos aplicados a situaciones reales y problemas técnicos.",
       startDate: "2014-09-01",
       endDate: "2018-06-30",
       location: "Cádiz, España",
@@ -273,7 +280,7 @@ export interface Experience {
         "Inglés"
       ],
       logo: "/src/assets/logos/colegio-eso.png",
-      type: "educacion",
+      type: "Educacion",
       skills: [
         "Análisis Matemático",
         "Resolución de Problemas",

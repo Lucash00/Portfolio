@@ -1,0 +1,173 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import TitleComponent from "../../components/Utils/Font/Title.astro";
+import TitleContent from "../../components/Utils/Font/TitleContent.astro";
+import TextContent from "../../components/Utils/Font/TextContent.astro";
+import Card from "../../components/Utils/Card/Card.astro";
+import SectionToggle from "../../components/Utils/SectionToggle.jsx";
+import { experiences } from "../../data/experiences";
+
+// Generar rutas estáticas
+export async function getStaticPaths() {
+    return experiences.map((experience) => ({
+        params: {
+            title: encodeURIComponent(experience.title.replace(/\s+/g, "-")),
+        },
+    }));
+}
+
+const params = Astro.params;
+
+if (!params.title) {
+    throw new Error("No title parameter provided");
+}
+
+const decodedTitle = decodeURIComponent(params.title);
+const experience = experiences.find(
+    (exp) =>
+        exp.title.toLowerCase() ===
+        decodedTitle.replace(/-/g, " ").toLowerCase(),
+);
+
+if (!experience) {
+    throw new Error(`Experience with title '${decodedTitle}' not found`);
+}
+
+// Crear secciones dinámicas, asignar null a contenido vacío
+const sections = [
+    {
+        name: "Aspectos destacados",
+        content: experience.highlights?.join(", ") || null,
+    },
+    {
+        name: "Responsabilidades",
+        content: experience.responsibilities?.join(", ") || null,
+    },
+    {
+        name: "Habilidades",
+        content: experience.skills?.join(", ") || null,
+    },
+    { name: "Tipo", content: experience.type || null },
+    { name: "Ubicación", content: experience.location || null },
+];
+
+// Filtrar solo las secciones que tienen contenido
+const validSections = sections.filter(
+    (section) => section.content && section.content !== null,
+);
+---
+
+<Layout title={`Experiencia: ${experience.title}`}>
+    <main>
+        <!-- Título principal -->
+        <TitleComponent title={experience.title} />
+
+        <!-- Contenido principal -->
+        <Card>
+            <!-- Sección de Descripción -->
+            <div class="pl-6 pt-4 col-span-2">
+                <TitleContent title={experience.title} />
+
+                {/* Mostrar provider, startDate y endDate si existe provider */}
+                {
+                    experience.provider ? (
+                        <p class="mb-2 text-gray-400">
+                            {experience.provider} / {experience.startDate} -{" "}
+                            {experience.endDate}
+                        </p>
+                    ) : (
+                        <p class="mb-2 text-gray-400">
+                            {experience.startDate} - {experience.endDate}
+                        </p>
+                    )
+                }
+
+                <TextContent>
+                    {experience.description || "No especificado"}
+                </TextContent>
+            </div>
+            <!-- Tags -->
+            {
+                experience.tags && (
+                    <div class="px-6 py-4 col-start-1 col-span-2">
+                        <TitleContent title="Tags" />
+                        <ul class="flex flex-wrap gap-2">
+                            {experience.tags.map((tag) => (
+                                <li class="px-2 py-1 bg-gray-300 rounded-full text-gray-700 text-sm">
+                                    {tag}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )
+            }
+            <!-- Secciones dinámicas (solo las válidas) -->
+            <div class="py-4 col-span-1 col-start-1">
+                <SectionToggle client:visible sections={validSections} />
+            </div>
+            {
+                ((experience.certificateUrl &&
+                    experience.certificateUrl.length > 0) ||
+                    (experience.projectUrl &&
+                        experience.projectUrl.length > 0)) && (
+                    <div class="pl-6 py-4 col-start-2 col-span-1">
+                        <TitleContent title="Links" />
+                        <div class="text-sm">
+                            <ul class="list-disc ml-4">
+                                {Array.isArray(experience.certificateUrl) &&
+                                    experience.certificateUrl.length > 0 &&
+                                    experience.certificateUrl.map(
+                                        (url, index) => {
+                                            const urlParts = url.split("/");
+                                            const lastSegment =
+                                                urlParts[urlParts.length - 1];
+                                            const formattedName = lastSegment
+                                                .replace(/-/g, " ")
+                                                .replace(/\b\w/g, (char) =>
+                                                    char.toUpperCase(),
+                                                );
+                                            return (
+                                                <li>
+                                                    <a
+                                                        href={url}
+                                                        target="_blank"
+                                                        class="text-blue-600"
+                                                    >
+                                                        {formattedName}
+                                                    </a>
+                                                </li>
+                                            );
+                                        },
+                                    )}
+
+                                {Array.isArray(experience.projectUrl) &&
+                                    experience.projectUrl.length > 0 &&
+                                    experience.projectUrl.map((url, index) => {
+                                        const urlParts = url.split("/");
+                                        const lastSegment =
+                                            urlParts[urlParts.length - 1];
+                                        const formattedName = lastSegment
+                                            .replace(/-/g, " ")
+                                            .replace(/\b\w/g, (char) =>
+                                                char.toUpperCase(),
+                                            );
+                                        return (
+                                            <li>
+                                                <a
+                                                    href={url}
+                                                    target="_blank"
+                                                    class="text-blue-600"
+                                                >
+                                                    {formattedName}
+                                                </a>
+                                            </li>
+                                        );
+                                    })}
+                            </ul>
+                        </div>
+                    </div>
+                )
+            }
+        </Card>
+    </main>
+</Layout>
