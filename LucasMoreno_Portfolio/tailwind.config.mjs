@@ -7,6 +7,9 @@ export default {
 			spacing: {
 				'100': '25rem',
 			},
+			fontFamily: {
+				Poppins: ["Poppins", "sans-serif"],
+			},
 		},
 	},
 	plugins: [

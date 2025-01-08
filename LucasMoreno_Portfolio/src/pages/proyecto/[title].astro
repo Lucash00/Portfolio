@@ -34,22 +34,18 @@ if (!project) {
 const sections = [
   { name: "Objetivo", content: project.objective },
   {
-    name: "Proceso",
-    content: project.developmentProcess
-      ? `${project.developmentProcess.methodology}, ${project.developmentProcess.timeline}`
-      : "",
-  },
-  {
     name: "Equipo",
     content: project.team
       ? project.team.contributors
-          ?.map((contributor) => `${contributor.name}: ${contributor.role}`)
-          .join(", ")
+          ?.map((contributor) => `**${contributor.name}**: ${contributor.role}`)
+          .join("\n\n")
       : "",
   },
   {
-    name: "Empresa",
-    content: project.company ? `${project.company}` : "",
+    name: "Proceso",
+    content: project.developmentProcess
+      ? `Metodología ${project.developmentProcess.methodology}`
+      : "",
   },
 ];
 ---
@@ -83,9 +79,20 @@ const sections = [
       <!-- Descripción -->
       <div class="px-6 py-4 col-span-1 col-start-1">
         <TitleContent title={project.titleJob} />
+        {/* Mostrar company, startDate y endDate si existe provider */}
+        {
+          project.company ? (
+              <p class="mb-2 text-gray-400">
+                  {project.company} / {project.startDate} -{" "}
+                  {project.endDate}
+              </p>
+          ) : (
+              <p class="mb-2 text-gray-400">
+                  Autodidacta / {project.startDate} - {project.endDate}
+              </p>
+          )
+      }
         <TextContent content={project.description} />
-
-        
       </div>
 
       <!-- Secciones (SectionToggle) -->

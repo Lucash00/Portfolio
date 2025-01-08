@@ -1,5 +1,6 @@
 ---
 import CardLink from "../Utils/Card/CardLink.astro";
+import TextContent from "../Utils/Font/TextContent";
 export interface Props {
     title: string;
     provider: string;
@@ -22,7 +23,7 @@ const { title, provider, description, tags, date, logo } = Astro.props;
                     <p class="text-gray-400 text-base mb-2">
                         {provider} / {date}
                     </p>
-                    <p class="text-gray-700 text-base">{description}</p>
+                    <TextContent content={description} />
                 </div>
                 <div class="py-4">
                     {

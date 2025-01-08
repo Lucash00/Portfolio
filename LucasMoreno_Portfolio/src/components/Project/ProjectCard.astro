@@ -1,5 +1,6 @@
 ---
 import CardLink from '../Utils/Card/CardLink.astro';
+import TextContent from "../Utils/Font/TextContent";
 export interface Props {
   title: string;
   briefDescription: string;
@@ -35,8 +36,8 @@ const {
               <p class="text-gray-400 text-base mb-2">
                 {company ? company : "Autodidacta"} / {startDate} - {endDate}
               </p>
-              <p class="text-gray-700 text-base">{briefDescription}</p>
-          </div>
+              <TextContent content={briefDescription} />
+            </div>
           <div class="py-4">
               {
                   tags.map((tag) => (

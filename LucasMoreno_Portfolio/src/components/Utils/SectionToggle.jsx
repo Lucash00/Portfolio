@@ -14,7 +14,7 @@ const SectionToggle = ({ sections }) => {
         {filteredSections.map((section, index) => (
           <button
             key={index}
-            className={`font-bold text-sm px-4 py-2 mr-2 bg-gray-200 ${selectedSection === section.name ? 'bg-gray-400' : ''}`}
+            className={`font-bold text-sm px-4 py-2 mr-2 bg-gray-200 hover:bg-gray-300 ${selectedSection === section.name ? 'bg-gray-400 hover:bg-gray-400' : ''}`}
             onClick={() => setSelectedSection(section.name)}
           >
             {section.name}
