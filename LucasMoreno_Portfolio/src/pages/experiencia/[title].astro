@@ -4,6 +4,7 @@ import TitleComponent from "../../components/Utils/Font/Title.astro";
 import TitleContent from "../../components/Utils/Font/TitleContent.astro";
 import TextContent from "../../components/Utils/Font/TextContent.astro";
 import Card from "../../components/Utils/Card/Card.astro";
+import LinkExperience from "../../components/Utils/Link/LinkExperience.jsx";
 import SectionToggle from "../../components/Utils/SectionToggle.jsx";
 import { experiences } from "../../data/experiences";
 
@@ -65,7 +66,7 @@ const validSections = sections.filter(
         <!-- Contenido principal -->
         <Card>
             <!-- Sección de Descripción -->
-            <div class="pl-6 pt-4 col-span-2">
+            <div class="px-6 pt-4 col-span-2">
                 <TitleContent title={experience.title} />
 
                 {/* Mostrar provider, startDate y endDate si existe provider */}
@@ -83,8 +84,9 @@ const validSections = sections.filter(
                 }
 
                 <TextContent>
-                    {experience.description || "No especificado"}
+                    {experience.description}
                 </TextContent>
+                
             </div>
             <!-- Tags -->
             {
@@ -110,60 +112,15 @@ const validSections = sections.filter(
                     experience.certificateUrl.length > 0) ||
                     (experience.projectUrl &&
                         experience.projectUrl.length > 0)) && (
-                    <div class="pl-6 py-4 col-start-2 col-span-1">
+                    <div class="px-6 py-4 col-start-2 col-span-1">
                         <TitleContent title="Links" />
                         <div class="text-sm">
-                            <ul class="list-disc ml-4">
-                                {Array.isArray(experience.certificateUrl) &&
-                                    experience.certificateUrl.length > 0 &&
-                                    experience.certificateUrl.map(
-                                        (url, index) => {
-                                            const urlParts = url.split("/");
-                                            const lastSegment =
-                                                urlParts[urlParts.length - 1];
-                                            const formattedName = lastSegment
-                                                .replace(/-/g, " ")
-                                                .replace(/\b\w/g, (char) =>
-                                                    char.toUpperCase(),
-                                                );
-                                            return (
-                                                <li>
-                                                    <a
-                                                        href={url}
-                                                        target="_blank"
-                                                        class="text-blue-600"
-                                                    >
-                                                        {formattedName}
-                                                    </a>
-                                                </li>
-                                            );
-                                        },
-                                    )}
-
-                                {Array.isArray(experience.projectUrl) &&
-                                    experience.projectUrl.length > 0 &&
-                                    experience.projectUrl.map((url, index) => {
-                                        const urlParts = url.split("/");
-                                        const lastSegment =
-                                            urlParts[urlParts.length - 1];
-                                        const formattedName = lastSegment
-                                            .replace(/-/g, " ")
-                                            .replace(/\b\w/g, (char) =>
-                                                char.toUpperCase(),
-                                            );
-                                        return (
-                                            <li>
-                                                <a
-                                                    href={url}
-                                                    target="_blank"
-                                                    class="text-blue-600"
-                                                >
-                                                    {formattedName}
-                                                </a>
-                                            </li>
-                                        );
-                                    })}
-                            </ul>
+                            {experience.certificateUrl && experience.certificateUrl.length > 0 && (
+                                <LinkExperience urls={experience.certificateUrl} />
+                            )}
+                            {experience.projectUrl && experience.projectUrl.length > 0 && (
+                                <LinkExperience urls={experience.projectUrl} />
+                            )}
                         </div>
                     </div>
                 )

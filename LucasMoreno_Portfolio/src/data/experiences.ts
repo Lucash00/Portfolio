@@ -22,7 +22,7 @@ export interface Experience {
       id: 5,
       title: "Certificados",
       description:
-        "Educación autodidacta demostrada mediante diversas certificaciones en áreas como desarrollo Backend, visualización de datos, análisis de datos, diseño web adaptable, y habilidades en inglés. Estas certificaciones reflejan un compromiso continuo con el aprendizaje y la mejora profesional.",
+      'Educación autodidacta demostrada mediante diversas certificaciones en áreas como desarrollo Backend, visualización de datos, análisis de datos, diseño web adaptable, y habilidades en inglés. Estas certificaciones reflejan un compromiso continuo con el aprendizaje y la mejora profesional.',  
       startDate: "2024-09-01",
       endDate: "actualidad",
       tags: [
@@ -313,4 +313,3 @@ export interface Experience {
       ]
     }  
   ];
-  
