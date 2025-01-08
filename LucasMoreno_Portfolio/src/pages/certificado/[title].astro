@@ -1,9 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import TitleComponent from "../../components/Utils/Font/Title.astro";
-import TextContent from "../../components/Utils/Font/TextContent.astro";
+import TextContent from "../../components/Utils/Font/TextContent.jsx";
 import Card from "../../components/Utils/Card/Card.astro";
 import { certificates } from "../../data/certificates";
+import experience from "../../components/Experience/experience";
+import LinkCertificate from "../../components/Utils/Link/LinkCertificate";
 
 // Generar rutas estáticas
 export async function getStaticPaths() {
@@ -62,7 +64,7 @@ if (!certificate) {
 
           <div class="mb-4">
             <h3 class="font-bold text-lg">Descripción</h3>
-            <TextContent>{certificate.description}</TextContent>
+            <TextContent content={certificate.description} />
           </div>
         </div>
 
@@ -85,9 +87,7 @@ if (!certificate) {
           {certificate.certificateUrl && (
             <div>
               <h3 class="font-bold text-lg">Link</h3>
-              <a href={certificate.certificateUrl} target="_blank" class="text-blue-500 underline">
-                  Ver certificado
-                </a>
+                <LinkCertificate url={certificate.certificateUrl} />
             </div>
           )}
         </div>

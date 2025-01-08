@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import TitleComponent from "../../components/Utils/Font/Title.astro";
 import TitleContent from "../../components/Utils/Font/TitleContent.astro";
-import TextContent from "../../components/Utils/Font/TextContent.astro";
+import TextContent from "../../components/Utils/Font/TextContent.jsx";
 import Card from "../../components/Utils/Card/Card.astro";
 import { projects } from "../../data/projects"; // Importamos todos los proyectos
 import SectionToggle from "../../components/Utils/SectionToggle.jsx";
@@ -83,7 +83,9 @@ const sections = [
       <!-- Descripción -->
       <div class="px-6 py-4 col-span-1 col-start-1">
         <TitleContent title={project.titleJob} />
-        <TextContent>{project.description}</TextContent>
+        <TextContent content={project.description} />
+
+        
       </div>
 
       <!-- Secciones (SectionToggle) -->

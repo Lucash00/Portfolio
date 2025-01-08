@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import TitleComponent from "../../components/Utils/Font/Title.astro";
 import TitleContent from "../../components/Utils/Font/TitleContent.astro";
-import TextContent from "../../components/Utils/Font/TextContent.astro";
+import TextContent from "../../components/Utils/Font/TextContent.jsx";
 import Card from "../../components/Utils/Card/Card.astro";
 import LinkExperience from "../../components/Utils/Link/LinkExperience.jsx";
 import SectionToggle from "../../components/Utils/SectionToggle.jsx";
@@ -83,9 +83,8 @@ const validSections = sections.filter(
                     )
                 }
 
-                <TextContent>
-                    {experience.description}
-                </TextContent>
+            <TextContent content={experience.description} />
+
                 
             </div>
             <!-- Tags -->
@@ -107,6 +106,9 @@ const validSections = sections.filter(
             <div class="py-4 col-span-1 col-start-1">
                 <SectionToggle client:visible sections={validSections} />
             </div>
+
+
+            <!-- Seccion Links -->
             {
                 ((experience.certificateUrl &&
                     experience.certificateUrl.length > 0) ||

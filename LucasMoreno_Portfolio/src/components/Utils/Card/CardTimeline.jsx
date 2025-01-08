@@ -1,4 +1,5 @@
 import React from 'react';
+import TextContent from '../Font/TextContent.jsx';
 
 export default function CardTimeline({ experience }) {
   if (!experience) return null;
@@ -23,7 +24,7 @@ export default function CardTimeline({ experience }) {
                         </p>
                     )
                 }
-      <p className="mt-4 text-gray-700">{experience.description}</p>
+            <TextContent content={experience.description} />
     </a>
   );
 }

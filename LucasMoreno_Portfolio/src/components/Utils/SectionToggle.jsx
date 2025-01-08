@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-
+import TextContent from '../../components/Utils/Font/TextContent.jsx'; // Asegúrate de importar el componente TextContent
 
 const SectionToggle = ({ sections }) => {
   const [selectedSection, setSelectedSection] = useState(sections[0].name); // Inicia con la primera sección seleccionada
 
   // Filtrar las secciones que tienen contenido
-  const filteredSections = sections.filter(section => section.content !== '');
+  const filteredSections = sections.filter(section => section.content !== '' && section.content !== null);
 
   return (
     <div className='px-6 pb-5'>
@@ -25,19 +25,8 @@ const SectionToggle = ({ sections }) => {
         {/* Mostrar el contenido de la sección seleccionada */}
         {filteredSections.map((section, index) => (
           <div key={index} style={{ display: selectedSection === section.name ? 'block' : 'none' }}>
-            {/* Verificar si el contenido es un objeto */}
-            {typeof section.content === 'object' ? (
-              <ul>
-                {/* Iterar sobre las propiedades del objeto */}
-                {Object.entries(section.content).map(([key, value]) => (
-                  <li key={key}>
-                    <strong>{key}:</strong> {value}
-                  </li>
-                ))}
-              </ul>
-            ) : 
-            // Si no es un objeto, mostrar como texto
-            section.content}
+            {/* Usar el componente TextContent para procesar el contenido Markdown */}
+            <TextContent content={section.content} />
           </div>
         ))}
       </div>
