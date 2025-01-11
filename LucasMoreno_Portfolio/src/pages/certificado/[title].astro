@@ -4,8 +4,7 @@ import TitleComponent from "../../components/Utils/Font/Title.astro";
 import TextContent from "../../components/Utils/Font/TextContent.jsx";
 import Card from "../../components/Utils/Card/Card.astro";
 import { certificates } from "../../data/certificates";
-import experience from "../../components/Experience/experience";
-import Link from "../../components/Utils/Link/Link.jsx";
+import LinkList from "../../components/Utils/Link/Link.jsx";
 
 // Generar rutas estáticas
 export async function getStaticPaths() {
@@ -69,9 +68,9 @@ if (!certificate) {
         <!-- Columna derecha -->
         <div class="col-span-1 col-start-2 items-start gap-6 px-6">
           {certificate.certificateUrl && (
-            <div>
-                <Link url={certificate.certificateUrl} name={"Ver Certificado"} />
-            </div>
+            <LinkList links={[
+              { url: certificate.certificateUrl, name: "Ver Certificado" },
+            ]} />
           )}
           {certificate.credentials && (
             <div class="mt-4">

@@ -7,6 +7,7 @@ import Card from "../../components/Utils/Card/Card.astro";
 import { projects } from "../../data/projects"; // Importamos todos los proyectos
 import SectionToggle from "../../components/Utils/SectionToggle.jsx";
 import Slider from "../../components/Utils/Slider/Slider.jsx"; // Importa el componente Slider
+import LinkList from "../../components/Utils/Link/Link";
 
 export async function getStaticPaths() {
   return projects.map((project) => ({
@@ -56,50 +57,63 @@ const sections = [
 
     <Card>
       <!-- Contenido de la media -->
-      {project.media && project.media.length > 0 && (
-        <div class="mb-4 col-span-2 col-start-1">
-          <Slider client:load images={project.media} />
-        </div>
-      )}
+      {
+        project.media && project.media.length > 0 && (
+          <div class="mb-4 col-span-2 col-start-1">
+            <Slider client:load images={project.media} />
+          </div>
+        )
+      }
 
       <!-- Tags Utilizadas -->
-      {project.tags && (
-        <div class="px-6 py-4 col-span-2 col-start-1 ">
-          <TitleContent title="Tags" />
-          <ul class="flex flex-wrap gap-2 mb-4">
-            {project.tags.map((tag) => (
-              <li class="px-2 py-1 bg-gray-300 rounded-full text-gray-700 text-sm">
-                {tag}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {
+        project.tags && (
+          <div class="px-6 py-2 col-span-1 col-start-1 ">
+            <TitleContent title="Tags" />
+            <ul class="flex flex-wrap gap-2 mb-4">
+              {project.tags.map((tag) => (
+                <li class="px-2 py-1 bg-gray-300 rounded-full text-gray-700 text-sm">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+      <div class="py-2 col-span-1 col-start-2">
+        { 
+          (project.links?.website || project.links?.codeRepository) && (
+            <LinkList links={[
+              ...(project.links?.website ? [{ url: project.links.website, name: "Ver Proyecto" }] : []),
+              ...(project.links?.codeRepository ? [{ url: project.links.codeRepository, name: "Ver Código" }] : []),
+            ]} />
+          )
+        }
+      </div>
+      
+      <!-- Secciones (SectionToggle) -->
+      <div class="py-2 col-span-2 col-start-1">
+        <SectionToggle client:visible sections={sections} />
+      </div>
+      
 
       <!-- Descripción -->
-      <div class="px-6 py-4 col-span-1 col-start-1">
+      <div class="px-6 py-2 col-span-2 col-start-1">
         <TitleContent title={project.titleJob} />
         {/* Mostrar company, startDate y endDate si existe provider */}
         {
           project.company ? (
-              <p class="mb-2 text-gray-400">
-                  {project.company} / {project.startDate} -{" "}
-                  {project.endDate}
-              </p>
+            <p class="mb-2 text-gray-400">
+              {project.company} / {project.startDate} - {project.endDate}
+            </p>
           ) : (
-              <p class="mb-2 text-gray-400">
-                  Autodidacta / {project.startDate} - {project.endDate}
-              </p>
+            <p class="mb-2 text-gray-400">
+              Autodidacta / {project.startDate} - {project.endDate}
+            </p>
           )
-      }
+        }
         <TextContent content={project.description} />
-      </div>
-
-      <!-- Secciones (SectionToggle) -->
-      <div class="px-6 py-4 col-span-1 col-start-2">
-        <SectionToggle client:visible sections={sections} />
       </div>
     </Card>
   </main>
 </Layout>
-

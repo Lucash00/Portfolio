@@ -1,8 +1,7 @@
 ---
 import MenuSection from "./MenuSection.astro";
-import aboutme from "../assets/aboutme.svg";
+import curriculum from "../../assets/CurriculumVitae_LucasMoreno_ES.pdf"; // Ruta al archivo del currículum
 ---
-
 <astro>
   <header id="header" class="header fixed flex w-[80%] mx-[10%] z-40 justify-between h-auto rounded-2xl mt-10">
     <img src="https://avatars.githubusercontent.com/u/168908236?v=4" alt="Foto Perfil" class="flex my-auto ml-8 w-14 rounded-full justify-start z-40 opacity-100">
@@ -11,7 +10,8 @@ import aboutme from "../assets/aboutme.svg";
       <MenuSection href="/proyectos" icon="far fa-folder-open" text="Proyectos"/>
       <MenuSection href="/certificados" icon="far fa-file-certificate" text="Certificados"/>
       <MenuSection href="/experiencia" icon="far fa-briefcase" text="Experiencia"/>
-      <MenuSection href="#" icon="far fa-user" text="Sobre mi"/>
+      <MenuSection href="/sobreMi" icon="far fa-user" text="Sobre mi"/>
+      <MenuSection href={curriculum} icon="far fa-file-alt" text="Descargar CV" />
     </nav>
   </header>
 

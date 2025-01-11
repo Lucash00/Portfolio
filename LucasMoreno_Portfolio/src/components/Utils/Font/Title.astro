@@ -9,6 +9,6 @@ const { title, logo } = Astro.props;
 
 <h1 class="text-3xl sm:text-4xl text-left font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 flex items-center">
   {/* Mostrar el logo solo si existe */}
-  {logo && <img src={logo} alt={`${title} logo`} class="ml-2 mr-4 h-8 w-auto filter dark:invert dark:brightness-0 dark:contrast-200" />}
+  {logo && <img src={logo} alt={`${title} logo`} class="ml-2 mr-4 h-8 w-auto"/>}
   {title}
 </h1>

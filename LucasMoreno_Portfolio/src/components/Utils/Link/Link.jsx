@@ -1,15 +1,26 @@
 import React from 'react';
+import './Link.css';
 
-function Link ({ url, name}) {
+function Link({ url, name }) {
     return (
-                    <a
-                        href={url}
-                        target="_blank"
-                        className="block p-4 bg-white border border-gray-300 rounded-lg shadow-md hover:bg-gray-300 text-center"
-                    >
-                        {name}
-                    </a>
+        <a
+            href={url}
+            target="_blank"
+            className="button-style"
+        >
+            <span>{name}</span>
+        </a>
     );
 };
 
-export default Link;
+function LinkList({ links }) {
+    return (
+        <div className={`links-container ${links.length === 1 ? 'single' : ''}`}>
+            {links.map((link, index) => (
+                <Link key={index} url={link.url} name={link.name} />
+            ))}
+        </div>
+    );
+}
+
+export default LinkList;

@@ -1,8 +1,9 @@
 import React from 'react';
+import './Link.css';
 
 const LinkExperience = ({ urls }) => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="links-container">
             {urls.map((url, index) => {
                 const urlParts = url.split("/");
                 const lastSegment = urlParts[urlParts.length - 1];
@@ -14,9 +15,9 @@ const LinkExperience = ({ urls }) => {
                         key={index}
                         href={url}
                         target="_blank"
-                        className="block max-w-sm p-4 bg-white border border-gray-300 rounded-lg shadow-md hover:bg-gray-300 hover:font-bold"
+                        className="button-style"
                     >
-                        {formattedName}
+                        <span>{formattedName}</span>
                     </a>
                 );
             })}

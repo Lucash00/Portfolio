@@ -3,7 +3,7 @@ import rehypeRaw from "rehype-raw";
 
 function TextContent({ content }) {
     return (
-        <div className="text-gray-700 text-base my-2 text-justify font-Poppins">
+        <div className="text-gray-700 text-base my-2 text-justify whitespace-break-spaces font-Poppins">
             <ReactMarkdown
                 rehypePlugins={[rehypeRaw]} // Habilita HTML embebido
                 components={{
@@ -17,7 +17,7 @@ function TextContent({ content }) {
                         <li className="ml-4 font-Poppins" {...props} />
                     ),
                     strong: ({ node, ...props }) => (
-                        <strong className="font-bold" {...props} />
+                        <strong className="font-bold font-Poppins" {...props} />
                     ),
                 }}
             >

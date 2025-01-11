@@ -1,50 +1,50 @@
 export interface Experience {
-    id: number;
-    title: string;
-    provider?: string;
-    briefDescription:string;
-    description: string;
-    startDate: string;
-    endDate?: string;
-    location?: string;
-    tags: string[];
-    logo?: string;
-    media?: string[];
-    type: 'Trabajo' | 'Educacion' | 'Personal' | 'Voluntario';
-    skills?: string[];
-    certificateUrl?: string[];
-    projectUrl?: string[];
-    highlights?: string[];
-    responsibilities?: string[];
-  }
-  
-  export const experiences: Experience[] = [
-    {
-      id: 4,
-      title: "Certificados",
-      briefDescription: `Educación autodidacta demostrada mediante diversas certificaciones en áreas como **desarrollo Backend**, **visualización de datos**, **análisis de datos**, **diseño web adaptable**, y habilidades en **inglés**.`,
-      description:
-        `Educación autodidacta demostrada mediante diversas certificaciones en áreas como **desarrollo Backend**, **visualización de datos**, **análisis de datos**, **diseño web adaptable**, y habilidades en **inglés**.  
-        Estas certificaciones reflejan un compromiso continuo con el aprendizaje y la mejora profesional.`,
-      startDate: "2024-09-01",
-      endDate: "Actualidad",
-      tags: [
-        "Data Visualization",
-        "Back End",
-        "APIs",
-        "Node.js",
-        "Express",
-        "MongoDB",
-        "Responsive Design",
-        "HTML",
-        "CSS",
-        "Python",
-        "English Proficiency",
-      ],
-      logo: "/src/data/Certificates/Certificates.svg",
-      type: "Voluntario",
-      skills: [
-        `<ul>
+  id: number;
+  title: string;
+  provider?: string;
+  briefDescription: string;
+  description: string;
+  startDate: string;
+  endDate?: string;
+  location?: string;
+  tags: string[];
+  logo?: string;
+  media?: string[];
+  type: 'Trabajo' | 'Educacion' | 'Personal' | 'Voluntario';
+  skills?: string[];
+  certificateUrl?: string[];
+  projectUrl?: string[];
+  highlights?: string[];
+  responsibilities?: string[];
+}
+
+export const experiences: Experience[] = [
+  {
+    id: 4,
+    title: "Certificados",
+    briefDescription: `Educación autodidacta demostrada mediante diversas certificaciones en áreas como <strong>desarrollo Backend</strong>, <strong>visualización de datos</strong>, <strong>análisis de datos</strong>, <strong>diseño web adaptable</strong>, y habilidades en <strong>inglés</strong>.`,
+    description:
+      `Educación autodidacta demostrada mediante diversas certificaciones en áreas como <strong>desarrollo Backend</strong>, <strong>visualización de datos</strong>, <strong>análisis de datos</strong>, <strong>diseño web adaptable</strong>, y habilidades en <strong>inglés</strong>.  
+       Estas certificaciones reflejan un compromiso continuo con el aprendizaje y la mejora profesional.`,
+    startDate: "2024-09-01",
+    endDate: "Actualidad",
+    tags: [
+      "Data Visualization",
+      "Back End",
+      "APIs",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Responsive Design",
+      "HTML",
+      "CSS",
+      "Python",
+      "English Proficiency",
+    ],
+    logo: "/src/data/Certificates/Certificates.svg",
+    type: "Voluntario",
+    skills: [
+      `<ul>
           <li>JavaScript</li>
           <li>D3.js</li>
           <li>Node.js</li>
@@ -59,48 +59,49 @@ export interface Experience {
           <li>CSS Grid</li>
           <li>English Proficiency</li>
         </ul>`
-      ],
-      
-      certificateUrl: [
-        "/certificado/BackEnd-Development-y-APIs",
-        "/certificado/Data-Analysis",
-        "/certificado/Data-Visualization",
-        "/certificado/EF-SET-English",
-        "/certificado/Responsive-Web-Design",
-      ],
-      highlights: [
-        `<ul>
-          <li>Certificación en **Backend Development y APIs**, con **Node.js**, **Express** y **MongoDB**.</li>
-          <li>Certificación en **Data Analysis** con **Python** y bibliotecas como **pandas** y **numpy**.</li>
-          <li>Certificación en **Data Visualization** con **JavaScript** y **D3.js**.</li>
-          <li>Certificación en **Responsive Web Design**, enfocada en **HTML**, **CSS** y diseño adaptable.</li>
-          <li>Certificación de **inglés** con nivel **C1** en EF SET.</li>
+    ],
+
+    certificateUrl: [
+      "/certificado/BackEnd-Development-y-APIs",
+      "/certificado/Data-Analysis",
+      "/certificado/Data-Visualization",
+      "/certificado/EF-SET-English",
+      "/certificado/Responsive-Web-Design",
+    ],
+    highlights: [
+      `<ul>
+          <li>Certificación en <strong>Backend Development</strong> y APIs, con <strong>Node.js</strong>, <strong>Express</strong> y <strong>MongoDB</strong>.</li>
+          <li>Certificación en <strong>Data Analysis</strong> con <strong>Python</strong> y bibliotecas como <strong>pandas</strong> y <strong>numpy</strong>.</li>
+          <li>Certificación en <strong>Data Visualization</strong> con <strong>JavaScript</strong> y <strong>D3.js</strong>.</li>
+          <li>Certificación en <strong>Responsive Web Design</strong>, enfocada en <strong>HTML</strong>, <strong>CSS</strong> y diseño adaptable.</li>
+          <li>Certificación de <strong>inglés</strong> con nivel <strong>C1</strong> en EF SET.</li>
         </ul>`
-      ],
-    },
-    {
-      id: 3,
-      title: "Desarrollador Fullstack en ControlNet",
-      provider: "ControlNet",
-      briefDescription: `Experiencia Laboral en la que **lideré** y **desarrolle** una aplicación además de contribuir en diversos proyectos en **producción** y en **desarrollo**.
-      Obteniendo así una gran experiencia como desarrollador **FullStack** en un entorno de **trabajo profesional**.`,
-      description:
-        `Lideré y contribuí en la migración de una aplicación iOS para la inmobiliaria Bafre, implementando **SwiftUI**, **Firebase**, **CocoaPods** y **Git** así como la ajustes en la **API** de la empresa cliente.  
-        También trabajé en el diseño **UI/UX** y resolución de problemas de seguridad y diseño en **WordPress**, así como la contribución momentanea en proyectos con **Angular** y un **CRM** en **ASP.NET**.  
-        Dando como resultado una gran experiencia como desarrollador **FullStack** en un entorno de trabajo profesional y multidisciplinario.`,
-      startDate: "2023-09-01",
-      endDate: "2023-12-23",
-      location: "Jerez de la Frontera, Cádiz, España",
-      tags: ["Swift", "Firebase", "CocoaPods", "Git", "UI/UX", "Angular", "ASP.NET"],
-      logo: "https://example.com/logo-controlnet.png",
-      type: "Trabajo",
-      projectUrl: [
-        "/proyecto/Bafre-iOS",
-        "/proyecto/CRM-ASP.NET",
-        "/proyecto/La-11mil-WordPress",
-      ],
-      skills: [
-        `<ul>
+    ],
+  },
+  {
+    id: 3,
+    title: "Desarrollador Fullstack en ControlNet",
+    provider: "ControlNet",
+    briefDescription: `Experiencia Laboral en la que <strong>lideré</strong> y <strong>desarrollé</strong> una aplicación además de contribuir en diversos proyectos en <strong>producción</strong> y en <strong>desarrollo</strong>.  
+   Obteniendo así una gran experiencia como desarrollador <strong>FullStack</strong> en un entorno de <strong>trabajo profesional</strong>.`,
+    description:
+      `Lideré y contribuí en la migración de una aplicación iOS para la inmobiliaria Bafre, implementando <strong>SwiftUI</strong>, <strong>Firebase</strong>, <strong>CocoaPods</strong> y <strong>Git</strong>, así como ajustes en la <strong>API</strong> de la empresa cliente.  
+   También trabajé en el diseño <strong>UI/UX</strong> y resolución de problemas de seguridad y diseño en <strong>WordPress</strong>, así como la contribución momentánea en proyectos con <strong>Angular</strong> y un <strong>CRM</strong> en <strong>ASP.NET</strong>.  
+   Dando como resultado una gran experiencia como desarrollador <strong>FullStack</strong> en un entorno de trabajo profesional y multidisciplinario.`,
+
+    startDate: "2023-09-01",
+    endDate: "2023-12-23",
+    location: "Jerez de la Frontera, Cádiz, España",
+    tags: ["Swift", "Firebase", "CocoaPods", "Git", "UI/UX", "Angular", "ASP.NET"],
+    logo: "https://example.com/logo-controlnet.png",
+    type: "Trabajo",
+    projectUrl: [
+      "/proyecto/Bafre-iOS",
+      "/proyecto/CRM-ASP.NET",
+      "/proyecto/La-11mil-WordPress",
+    ],
+    skills: [
+      `<ul>
           <li>SwiftUI</li>
           <li>Firebase</li>
           <li>Git</li>
@@ -110,66 +111,66 @@ export interface Experience {
           <li>Angular</li>
           <li>ASP.NET</li>
         </ul>`
-      ],
-      highlights: [
-        `<ul>
-          <li>Completé una **migración compleja** superando los estándares de calidad.</li>
+    ],
+    highlights: [
+      `<ul>
+          <li>Completé una <strong>migración compleja</strong> superando los estándares de calidad.</li>
           <li>Colaboré con un equipo multidisciplinario en distintos proyectos.</li>
-          <li>Optimizé la **funcionalidad** y **diseño** de aplicaciones existentes y creadas desde 0.</li>
+          <li>Optimizé la <strong>funcionalidad</strong> y <strong>diseño</strong> de aplicaciones existentes y creadas desde 0.</li>
         </ul>`
-      ],
-      responsibilities: [
-        `<ul>
+    ],
+    responsibilities: [
+      `<ul>
           <li>Migración de aplicaciones iOS.</li>
           <li>Diseño y optimización de UI/UX.</li>
           <li>Resolución de problemas técnicos en aplicaciones web.</li>
         </ul>`
-      ],
-      
-    },
-    {
-      id: 2,
-      title: "Tecnico Superior en Desarrollo de Aplicaciones Web",
-      provider: "IES Francisco Romero Vargas",
-      briefDescription: `Formación **Frontend** en diseño, desarrollo y mantenimiento de aplicaciones **web modernas**, obteniendo la capacidad de interpretar y mostrar correctamente los datos.  
-      Así como en **BackEnd** con diversas **tecnologías** y **metodologías de trabajo colaborativo**, obteniendo la capacidad de instalar configurar y administrar **servidores** y **bases de datos SQL** y **NoSQL**.`,
-      description:
-        `El programa _DAW_ ofreció una formación completa en el diseño, desarrollo y mantenimiento de aplicaciones web modernas, utilizando un enfoque integral para la programación **Backend** y **Frontend**.  
-        A lo largo de dos años, desarrollé competencias avanzadas en el uso de tecnologías clave, **herramientas de desarrollo y metodologías** de trabajo colaborativo, **destacándome en proyectos individuales y en equipo**.  
-        Durante mi formación, creé aplicaciones funcionales y escalables que integraban las mejores prácticas de desarrollo web, priorizando la **seguridad**, el **rendimiento** y la **experiencia de usuario**.`,
-      startDate: "2020-09-01",
-      endDate: "2022-06-30",
-      location: "Cádiz, España",
-      tags: [
-        "HTML5",
-        "CSS3",
-        "JavaScript",
-        "PHP",
-        "SQL",
-        "NoSQL",
-        "Angular",
-        "React",
-        "Python",
-        "Django",
-        "Responsive Design",
-        "Bootstrap",
-        "WordPress",
-        "Joomla",
-        "Git",
-        "GitHub",
-        "SASS",
-        "TypeScript",
-        "JSON",
-        "AJAX",
-        "XML",
-        "XLS",
-        "XAMPP",
-        "Linux",
-      ],
-      logo: "/src/assets/logos/instituto-daw.png",
-      type: "Educacion",
-      skills: [
-        `<ul>
+    ],
+
+  },
+  {
+    id: 2,
+    title: "Tecnico Superior en Desarrollo de Aplicaciones Web",
+    provider: "IES Francisco Romero Vargas",
+    briefDescription: `Formación <strong>Frontend</strong> en diseño, desarrollo y mantenimiento de aplicaciones <strong>web modernas</strong>, obteniendo la capacidad de interpretar y mostrar correctamente los datos.  
+   Así como en <strong>Backend</strong> con diversas <strong>tecnologías</strong> y <strong>metodologías de trabajo colaborativo</strong>, obteniendo la capacidad de instalar, configurar y administrar <strong>servidores</strong> y <strong>bases de datos SQL</strong> y <strong>NoSQL</strong>.`,
+    description:
+      `El programa <em>DAW</em> ofreció una formación completa en el diseño, desarrollo y mantenimiento de aplicaciones web modernas, utilizando un enfoque integral para la programación <strong>Backend</strong> y <strong>Frontend</strong>.  
+   A lo largo de dos años, desarrollé competencias avanzadas en el uso de tecnologías clave, <strong>herramientas de desarrollo y metodologías</strong> de trabajo colaborativo, <strong>destacándome en proyectos individuales y en equipo</strong>.  
+   Durante mi formación, creé aplicaciones funcionales y escalables que integraban las mejores prácticas de desarrollo web, priorizando la <strong>seguridad</strong>, el <strong>rendimiento</strong> y la <strong>experiencia de usuario</strong>.`,
+    startDate: "2020-09-01",
+    endDate: "2022-06-30",
+    location: "Cádiz, España",
+    tags: [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "PHP",
+      "SQL",
+      "NoSQL",
+      "Angular",
+      "React",
+      "Python",
+      "Django",
+      "Responsive Design",
+      "Bootstrap",
+      "WordPress",
+      "Joomla",
+      "Git",
+      "GitHub",
+      "SASS",
+      "TypeScript",
+      "JSON",
+      "AJAX",
+      "XML",
+      "XLS",
+      "XAMPP",
+      "Linux",
+    ],
+    logo: "/src/assets/logos/instituto-daw.png",
+    type: "Educacion",
+    skills: [
+      `<ul>
           <li>Desarrollo Web</li>
           <li>Frontend Development</li>
           <li>Backend Development</li>
@@ -187,74 +188,74 @@ export interface Experience {
           <li>Manejo de datos con XLS</li>
           <li>Configuración de entornos con XAMPP</li>
         </ul>`
-      ],
-      highlights: [
-        `<ul>
-          <li>Adquirí un dominio avanzado en la creación de interfaces web con **HTML5**, **CSS3** y frameworks como **Bootstrap**, aplicando principios de **diseño responsive** para garantizar compatibilidad en distintos dispositivos.</li>
-          <li>Desarrollé aplicaciones dinámicas utilizando **JavaScript**, **TypeScript** y frameworks como **Angular** y **React**, mejorando la interactividad y experiencia de usuario.</li>
-          <li>Implementé soluciones **backend** robustas utilizando **PHP**, **Python** y **Django**, integrando bases de datos **SQL** y **NoSQL** según los requisitos de cada proyecto.</li>
-          <li>Participé en proyectos colaborativos utilizando sistemas de control de versiones como **Git** y **GitHub**, gestionando de forma eficiente el **ciclo de vida** del desarrollo de software.</li>
-          <li>Integré **CMS** populares como **WordPress** y **Joomla** en proyectos prácticos, adaptándolos a necesidades específicas mediante personalización de temas y plugins.</li>
-          <li>Automaticé tareas y optimicé procesos utilizando **Python**, aplicando bibliotecas específicas para **procesamiento de datos** y **análisis**.</li>
-          <li>Utilicé herramientas como **XAMPP** para configurar entornos de desarrollo local, facilitando pruebas y despliegues.</li>
-          <li>Gestioné **servidores** **Linux** para el despliegue de aplicaciones web, asegurando **seguridad** y **estabilidad** en los servicios.</li>
-          <li>Realicé análisis y reportes utilizando hojas de cálculo **XLS**, aplicando principios de organización y **visualización de datos**.</li>
+    ],
+    highlights: [
+      `<ul>
+          <li>Adquirí un dominio avanzado en la creación de interfaces web con <strong>HTML5</strong>, <strong>CSS3</strong> y frameworks como <strong>Bootstrap</strong>, aplicando principios de <strong>diseño responsive</strong> para garantizar compatibilidad en distintos dispositivos.</li>
+          <li>Desarrollé aplicaciones dinámicas utilizando <strong>JavaScript</strong>, <strong>TypeScript</strong> y frameworks como <strong>Angular</strong> y <strong>React</strong>, mejorando la interactividad y experiencia de usuario.</li>
+          <li>Implementé soluciones <strong>backend</strong> robustas utilizando <strong>PHP</strong>, <strong>Python</strong> y <strong>Django</strong>, integrando bases de datos <strong>SQL</strong> y <strong>NoSQL</strong> según los requisitos de cada proyecto.</li>
+          <li>Participé en proyectos colaborativos utilizando sistemas de control de versiones como <strong>Git</strong> y <strong>GitHub</strong>, gestionando de forma eficiente el <strong>ciclo de vida</strong> del desarrollo de software.</li>
+          <li>Integré <strong>CMS</strong> populares como <strong>WordPress</strong> y <strong>Joomla</strong> en proyectos prácticos, adaptándolos a necesidades específicas mediante personalización de temas y plugins.</li>
+          <li>Automaticé tareas y optimicé procesos utilizando <strong>Python</strong>, aplicando bibliotecas específicas para <strong>procesamiento de datos</strong> y <strong>análisis</strong>.</li>
+          <li>Utilicé herramientas como <strong>XAMPP</strong> para configurar entornos de desarrollo local, facilitando pruebas y despliegues.</li>
+          <li>Gestioné <strong>servidores</strong> <strong>Linux</strong> para el despliegue de aplicaciones web, asegurando <strong>seguridad</strong> y <strong>estabilidad</strong> en los servicios.</li>
+          <li>Realicé análisis y reportes utilizando hojas de cálculo <strong>XLS</strong>, aplicando principios de organización y <strong>visualización de datos</strong>.</li>
         </ul>`
-      ],
-      responsibilities: [
-        `<ul>
+    ],
+    responsibilities: [
+      `<ul>
           <li>Desarrollar aplicaciones web completas desde el diseño inicial hasta el despliegue.</li>
           <li>Garantizar la seguridad y optimización del código, siguiendo buenas prácticas como validación de entradas y codificación de salidas.</li>
           <li>Configurar y gestionar entornos de desarrollo locales y en servidores Linux.</li>
           <li>Colaborar en equipos multidisciplinarios para cumplir con los objetivos de proyectos prácticos.</li>
           <li>Documentar procesos de desarrollo y guías técnicas para proyectos implementados.</li>
         </ul>`
-      ],
-      
-      media: [
-        "/src/assets/projects/daw-project-1.png",
-        "/src/assets/projects/daw-project-2.png",
-      ],
-    },
-    {
-      id: 1,
-      title: "Tecnico en Sistemas Microinformaticos y Redes",
-      provider: "IES Castillo de Luna",
-      briefDescription: `Formación técnica en la **instalación**, **configuración**, **administración** y **mantenimiento** de **sistemas informáticos y redes**.
-      Aprendí a gestionar **infraestructuras de TI**, resolver problemas de **hardware** y **software**, y algunos aspectos de **ciberseguridad**.`,
-      description:
-        `El ciclo formativo de _SMR_ me brindó una formación técnica completa en la **instalación**, **configuración**, **administración** y **mantenimiento** de **sistemas informáticos y redes**.  
-        Aprendí a gestionar **infraestructuras de TI**, resolver problemas de **hardware** y **software**, y optimizar el rendimiento de **sistemas** y **redes**.  
-        Durante el curso, participé en proyectos prácticos que incluyeron entre otras cosas la implementación de **redes**, **configuración de servidores**, **gestión de usuarios**, **seguridad informática** y otros aspectos...`,
-      startDate: "2018-09-01",
-      endDate: "2020-06-30",
-      location: "Cádiz, España",
-      tags: [
-        "Sistemas Operativos",
-        "Redes",
-        "Hardware",
-        "Windows Server",
-        "Linux",
-        "Cisco",
-        "Virtualización",
-        "VMware",
-        "Hyper-V",
-        "Seguridad Informática",
-        "Backup",
-        "TCP/IP",
-        "DNS",
-        "DHCP",
-        "Active Directory",
-        "Firewall",
-        "Routing",
-        "Switching",
-        "SQL",
-        "NoSQL",
-      ],
-      logo: "/src/assets/logos/instituto-smr.png",
-      type: "Educacion",
-      skills: [
-        `<ul>
+    ],
+
+    media: [
+      "/src/assets/projects/daw-project-1.png",
+      "/src/assets/projects/daw-project-2.png",
+    ],
+  },
+  {
+    id: 1,
+    title: "Tecnico en Sistemas Microinformaticos y Redes",
+    provider: "IES Castillo de Luna",
+    briefDescription: `Formación técnica en la <strong>instalación</strong>, <strong>configuración</strong>, <strong>administración</strong> y <strong>mantenimiento</strong> de <strong>sistemas informáticos y redes</strong>.  
+   Aprendí a gestionar <strong>infraestructuras de TI</strong>, resolver problemas de <strong>hardware</strong> y <strong>software</strong>, y algunos aspectos de <strong>ciberseguridad</strong>.`,
+    description:
+      `El ciclo formativo de <em>SMR</em> me brindó una formación técnica completa en la <strong>instalación</strong>, <strong>configuración</strong>, <strong>administración</strong> y <strong>mantenimiento</strong> de <strong>sistemas informáticos y redes</strong>.  
+   Aprendí a gestionar <strong>infraestructuras de TI</strong>, resolver problemas de <strong>hardware</strong> y <strong>software</strong>, y optimizar el rendimiento de <strong>sistemas</strong> y <strong>redes</strong>.  
+   Durante el curso, participé en proyectos prácticos que incluyeron, entre otras cosas, la implementación de <strong>redes</strong>, <strong>configuración de servidores</strong>, <strong>gestión de usuarios</strong>, <strong>seguridad informática</strong> y otros aspectos...`,
+    startDate: "2018-09-01",
+    endDate: "2020-06-30",
+    location: "Cádiz, España",
+    tags: [
+      "Sistemas Operativos",
+      "Redes",
+      "Hardware",
+      "Windows Server",
+      "Linux",
+      "Cisco",
+      "Virtualización",
+      "VMware",
+      "Hyper-V",
+      "Seguridad Informática",
+      "Backup",
+      "TCP/IP",
+      "DNS",
+      "DHCP",
+      "Active Directory",
+      "Firewall",
+      "Routing",
+      "Switching",
+      "SQL",
+      "NoSQL",
+    ],
+    logo: "/src/assets/logos/instituto-smr.png",
+    type: "Educacion",
+    skills: [
+      `<ul>
           <li>Administración de Redes</li>
           <li>Instalación de Sistemas Operativos</li>
           <li>Resolución de Problemas de Hardware</li>
@@ -268,17 +269,17 @@ export interface Experience {
           <li>Active Directory</li>
           <li>Routing y Switching con Cisco</li>
         </ul>`
-      ],
-      highlights: [
-        `<ul>
-          <li>Instalación y configuración de **redes** y **servidores** en entornos reales, incluyendo sistemas operativos como **Windows Server** y **Linux**.</li>
-          <li>Optimización del rendimiento de **redes** mediante el uso de tecnologías avanzadas de **routing y switching**.</li>
-          <li>Gestión de la **seguridad** informática mediante **firewalls** y soluciones de **backup**.</li>
-          <li>Desarrollo de habilidades prácticas en el **soporte** y **mantenimiento** de equipos informáticos en entornos de trabajo profesionales.</li>
+    ],
+    highlights: [
+      `<ul>
+          <li>Instalación y configuración de <strong>redes</strong> y <strong>servidores</strong> en entornos reales, incluyendo sistemas operativos como <strong>Windows Server</strong> y <strong>Linux</strong>.</li>
+          <li>Optimización del rendimiento de <strong>redes</strong> mediante el uso de tecnologías avanzadas de <strong>routing y switching</strong>.</li>
+          <li>Gestión de la <strong>seguridad</strong> informática mediante <strong>firewalls</strong> y soluciones de <strong>backup</strong>.</li>
+          <li>Desarrollo de habilidades prácticas en el <strong>soporte</strong> y <strong>mantenimiento</strong> de equipos informáticos en entornos de trabajo profesionales.</li>
         </ul>`
-      ],
-      responsibilities: [
-        `<ul>
+    ],
+    responsibilities: [
+      `<ul>
           <li>Configurar y administrar redes informáticas, servidores y dispositivos de seguridad.</li>
           <li>Instalar y mantener sistemas operativos en equipos de trabajo.</li>
           <li>Gestionar redes locales y realizar tareas de mantenimiento preventivo.</li>
@@ -286,7 +287,6 @@ export interface Experience {
           <li>Asistir en la implementación de soluciones de backup y recuperación ante desastres.</li>
           <li>Gestionar Active Directory y tareas relacionadas con la administración de usuarios.</li>
         </ul>`
-      ],      
-    }
-  ];
-  
+    ],
+  }
+];
