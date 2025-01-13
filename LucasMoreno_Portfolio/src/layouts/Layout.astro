@@ -24,14 +24,14 @@ import Header from "../components/Header/Header.astro";
   <Header />
     <div class="flex justify-between pt-40">
       <!-- Columna izquierda -->
-      <div class="w-auto">
+      <div class="w-auto sm:hidden">
       </div>
       <!-- Columna del medio (grande) -->
-      <div class="w-11/12">
+      <div class="w-11/12 sm:w-full ">
         <slot />
       </div>
       <!-- Columna derecha -->
-      <div class="w-auto">
+      <div class="w-auto sm:hidden">
       </div>
     </div>
   </body>

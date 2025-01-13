@@ -9,7 +9,7 @@ var {alt, src} = Astro.props;
 
 
 <astro>
-  <div class="flex w-48 items-center justify-center lg:w-40 lg:flex carousel-item">
+  <div class="z-0 flex items-center justify-center sm:w-16 md:w-36 lg:w-44 xl:w-52 carousel-item">
       <img
       alt={alt}
       fetchpriority="high"
@@ -17,8 +17,8 @@ var {alt, src} = Astro.props;
       height="75"
       decoding="async"
       data-nimg="1"
-      class="mx-8 inline"
-      style="color:transparent;width:150px;height:75px"
+      class="z-0 sm:mx-2 md:mx-8 lg:mx-12 xl:mx-16 inline"
+      style="color:transparent;"
       src={src}
       draggable="false"
     />

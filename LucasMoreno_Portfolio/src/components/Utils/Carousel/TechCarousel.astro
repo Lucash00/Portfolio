@@ -3,8 +3,8 @@ import IconCarousel from "./IconCarousel.astro";
 ---
 
 <astro>
-  <div class="mt-10 z-50 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container" ref:"sliderRef">
-    <div class="carousel-track relative" 
+  <div class="mt-10 z-0 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container" ref:"sliderRef">
+    <div class="z-0 carousel-track relative" 
     ref:"trackRef">
       <IconCarousel alt="HTML" src="src/assets/html.svg" />
       <IconCarousel alt="CSS" src="src/assets/css.svg" />
@@ -31,7 +31,7 @@ import IconCarousel from "./IconCarousel.astro";
       <IconCarousel alt="Github" src="src/assets/github.svg" />
       <IconCarousel alt="Gitlab" src="src/assets/gitlab.svg" />
     </div>
-    <div id="tooltip" class="tooltip hidden fixed p-3 bg-gradient-to-b from-[#161616] via-[#202020] to-transparent tracking-wide text-gray-100 rounded-t-2xl transform -translate-x-1/2 left-1/2 -mt-8">
+    <div id="tooltip" class="z-0 tooltip hidden fixed sm:text-xs md:text-base p-3 bg-gradient-to-b from-[#161616] via-[#202020] to-transparent tracking-wide text-gray-100 rounded-t-2xl transform -translate-x-1/2 left-1/2 -mt-8">
     </div>
   </div>
 
