@@ -50,7 +50,7 @@ const ContactButtons = () => {
                 className="inline-block rounded bg-gray-500 hover:bg-[#ff0000] px-4 py-2 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-200 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                 onClick={() => {
                     navigator.clipboard
-                        .writeText("tu-email@gmail.com")
+                        .writeText("lucas.moreno.dev@gmail.com")
                         .then(() => setPopupMessage("Correo copiado al portapapeles"))
                         .catch(() => setPopupMessage("Error al copiar el correo"));
                 }}
