@@ -3,9 +3,11 @@ import IconCarousel from "./IconCarousel.astro";
 ---
 
 <astro>
-  <div class="mt-10 z-0 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container" ref:"sliderRef">
-    <div class="z-0 carousel-track relative" 
-    ref:"trackRef">
+  <div
+    class="mt-10 z-0 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container"
+    ref:"sliderRef"
+  >
+    <div class="carousel-track" ref:"trackRef">
       <IconCarousel alt="HTML" src="src/assets/html.svg" />
       <IconCarousel alt="CSS" src="src/assets/css.svg" />
       <IconCarousel alt="TailwindCSS" src="src/assets/tailwind.svg" />
@@ -31,11 +33,17 @@ import IconCarousel from "./IconCarousel.astro";
       <IconCarousel alt="Github" src="src/assets/github.svg" />
       <IconCarousel alt="Gitlab" src="src/assets/gitlab.svg" />
     </div>
-    <div id="tooltip" class="z-0 tooltip hidden fixed sm:text-xs md:text-base p-3 bg-gradient-to-b from-[#161616] via-[#202020] to-transparent tracking-wide text-gray-100 rounded-t-2xl transform -translate-x-1/2 left-1/2 -mt-8">
+    <div
+      id="tooltip"
+      class="tooltip hidden fixed sm:text-xxs md:text-sm lg:text-base sm:p-2 md:p-3 bg-gradient-to-b from-[#161616] via-[#202020] to-transparent tracking-wide text-gray-100 rounded-t-2xl transform -translate-x-1/2 left-1/2 sm:-mt-4 md:-mt-8"
+    >
     </div>
   </div>
 
   <style>
+    .ladosTransparentes {
+      mask-image: linear-gradient(to right, transparent, white, transparent);
+    }
     .carousel-container {
       overflow-x: hidden;
       width: 100%;
@@ -53,6 +61,7 @@ import IconCarousel from "./IconCarousel.astro";
 
     .tooltip {
       pointer-events: none;
+      opacity: 1;
     }
 
     .hidden {
@@ -77,7 +86,7 @@ import IconCarousel from "./IconCarousel.astro";
       tooltip = document.getElementById("tooltip");
       if (slider && track && tooltip) {
         cloneElements();
-        intervalId = setInterval(moveCarousel, 10);
+        intervalId = setInterval(moveCarousel, 15);
         slider.addEventListener("mousedown", handleMouseDown);
         slider.addEventListener("mouseup", handleMouseUp);
         slider.addEventListener("mousemove", handleMouseMove);
@@ -91,6 +100,29 @@ import IconCarousel from "./IconCarousel.astro";
         track.addEventListener("mouseout", handleMouseOut);
       }
     });
+
+    // Función para ajustar la velocidad de desplazamiento
+    function adjustScrollSpeed() {
+      const width = window.innerWidth;
+
+      // Ajustar scrollAmount según el tamaño de la pantalla
+      if (width <= 768) {
+        // Dispositivos móviles (tamaño de pantalla pequeña)
+        scrollAmount = 1; // Movimiento más lento
+      } else if (width <= 1024) {
+        // Tablets
+        scrollAmount = 1; // Velocidad estándar
+      } else {
+        // Desktop
+        scrollAmount = 2; // Movimiento más rápido
+      }
+    }
+
+    // Llamar a la función cada vez que se redimensione la ventana
+    window.addEventListener("resize", adjustScrollSpeed);
+
+    // Llamar a la función al cargar la página para establecer la velocidad inicial
+    adjustScrollSpeed();
 
     function moveCarousel() {
       if (!isMouseDown && !isMouseOverSlider && slider) {
@@ -144,7 +176,7 @@ import IconCarousel from "./IconCarousel.astro";
         const x = e.pageX - slider!.offsetLeft;
         const walk = (x - startX) * 1.2;
         slider!.scrollLeft = scrollLeft - walk;
-        tooltip!.classList.add("hidden"); 
+        tooltip!.classList.add("hidden");
       }
     }
 

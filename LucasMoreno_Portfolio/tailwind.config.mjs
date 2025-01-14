@@ -4,12 +4,25 @@ export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
 	  extend: {
+		maskImage: {
+			'fade': 'linear-gradient(to right, transparent, white, transparent)',
+		  },
+		zIndex: {
+			'0': 0,
+			'10': 10,
+			'50': 50,
+			'1000': 1000,
+			'9999': 9999,
+		  },
 		spacing: {
 		  '100': '25rem',
 		},
 		fontFamily: {
 		  Poppins: ["Poppins", "sans-serif"],
 		},
+		fontSize: {
+			xxs: ['0.625rem', { lineHeight: '1rem' }], // 10px con un line-height de 16px
+		  },
 		screens: {
 		  'sm': {'max': '639px'}, // Esto hace que sm sea para dispositivos con un ancho máximo de 639px
 		  'md': '640px', // Puedes ajustar estos valores según sea necesario
@@ -20,6 +33,15 @@ export default {
 	  },
 	},
 	plugins: [
+		
+    function ({ addComponents }) {
+      addComponents({
+        '.mask-fade': {
+          maskImage: 'linear-gradient(to right, transparent, white, transparent)',
+
+        },
+      });
+    },
 	  function ({ addUtilities }) {
 		addUtilities(
 		  {
@@ -33,6 +55,14 @@ export default {
 		  },
 		  ['responsive', 'hover']
 		)
+	  },
+	  function ({ addBase }) {
+		addBase({
+		  '*': {
+			position: 'static',
+			zIndex: 'auto',
+		  },
+		});
 	  },
 	],
   };

@@ -18,19 +18,9 @@ import Header from "../components/Header/Header.astro";
   <body
     class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 bg-fixed tracking-tighter leading-none"
   >
-
-  <Header />
-    <div class="flex justify-between pt-40">
-      <!-- Columna izquierda -->
-      <div class="w-auto sm:hidden">
-      </div>
-      <!-- Columna del medio (grande) -->
-      <div class="w-11/12 sm:w-full ">
-        <slot />
-      </div>
-      <!-- Columna derecha -->
-      <div class="w-auto sm:hidden">
-      </div>
+    <Header /> 
+    <div class="justify-between pt-40">
+      <slot />
     </div>
   </body>
 </html>

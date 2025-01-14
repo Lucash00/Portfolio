@@ -8,4 +8,36 @@
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none; /* Firefox */
   }
-  
+
+/* Ajusta las reglas globales */
+* {
+  position: relative; /* En lugar de static */
+  z-index: auto; /* Resetea valores personalizados de z-index */
+}
+
+/* Side Menu */
+.side-menu {
+  position: fixed; /* Fijo sobre todo el contenido */
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #333;
+  z-index: 9999; /* Superior al resto de los elementos */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 9999 !important;
+}
+
+.side-menu.open {
+  transform: translateX(0); /* Muestra el menú */
+}
+
+/* HeroSection */
+.hero-section {
+  position: relative; /* Respetar el flujo del diseño */
+  z-index: 1; /* Debajo del side-menu */
+  padding: 20px;
+}
+
+
