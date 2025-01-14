@@ -9,7 +9,7 @@ export default function CardTimeline({ experience }) {
   return (
     <a
       href={`/experiencia/${formattedTitle}`}
-      className="my-8 mx-8 p-8 grid gap-1 w-screen rounded overflow-hidden hover:shadow-gray-600 hover:shadow-lg bg-slate-100 shadow-lg rounded-l"
+      className="my-8 mx-8 p-8 grid gap-1 w-screen rounded overflow-hidden hover:shadow-gray-600 hover:shadow-lg bg-slate-100 shadow-lg rounded-l ease-in-out duration-300 sm:transform-none transform hover:-translate-y-1"
     >
       <h2 className="text-2xl font-bold">{experience.title}</h2>
       {

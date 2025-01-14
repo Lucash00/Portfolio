@@ -8,11 +8,11 @@ var {href, icon, text} = Astro.props;
 ---
 
 <astro>
-  <div class="flex-1 group px-8 z-40 opacity-100">
-    <a href={href} class="block items-end justify-center text-center px-4 pt-2 w-full text-gray-400 group-hover:text-yellow-400 border-b-2 border-transparent group-hover:border-yellow-400">
-      <span class="block pt-1 pb-2">
+  <div class="flex-1 group md:px-3 lg:px-5 xl:px-7 2xl:px-8 z-40 opacity-100 ">
+    <a href={href} class="block items-end justify-center text-center md:px-3 lg:px-3 pt-2 w-full text-gray-400 group-hover:text-yellow-400 border-b-2 border-transparent group-hover:border-yellow-400">
+      <span class="block pt-1 pb-2 ease-in-out duration-150 transform hover:scale-110">
         {typeof icon === 'string' ? <i class={icon + " block text-2xl pt-1 mb-1"}></i> : <img src={icon.src} class="block text-2xl pt-1 mb-1"/>}
-        <span class="block text-xs pb-1">{text}</span>
+        <span class="block md:text-xxs lg:text-xs pb-1">{text}</span>
       </span>
     </a>
   </div>

@@ -37,7 +37,7 @@ const SideMenu = () => {
             <img
               src="https://avatars.githubusercontent.com/u/168908236?v=4"
               alt="Foto Perfil"
-              className="w-14 h-14 rounded-full"
+              className="w-20 h-20 rounded-full"
             />
           </div>
 

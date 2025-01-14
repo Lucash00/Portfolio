@@ -17,30 +17,29 @@ const { title, provider, description, tags, date, logo } = Astro.props;
     <CardLink
         link={`/certificado/${encodeURIComponent(title.replace(/\s+/g, "-"))}`}
     >
-            <div class="col-span-7 items-center gap-6 px-6 ">
-                <div class="py-4">
-                    <h3 class="font-bold text-2xl mb-2">{title}</h3>
-                    <p class="text-gray-400 text-base mb-2">
-                        {provider} / {date}
-                    </p>
-                    <TextContent content={description} />
-                </div>
-                <div class="py-4">
-                    {
-                        tags.map((tag) => (
-                            <span class="inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                {tag}
-                            </span>
-                        ))
-                    }
-                </div>
-            </div>
-        <div class="col-span-3 flex items-center justify-center py-4">
+    <div class="sm:col-span-10 sm:mt-10 sm:mb-5 md:col-span-3 xl:col-span-2 flex items-center justify-center">
+
             <img
-                src={logo}
-                alt={title}
-                class="object-cover max-w-[25%] h-auto"
-            />
+            src={logo}
+            alt={title}
+            class="object-cover max-w-[25%] h-auto"
+        />
+    </div>
+    <div class="sm:px-3 sm:py-2 md:py-4 sm:border-t-2 md:border-l-2 sm:pt-4 sm:border-slate-200 md:px-6 sm:col-span-10 md:col-span-7 xl:col-span-8">
+
+            <h3 class="font-bold sm:text-2xl md:text-3xl mb-2">{title}</h3>
+            <p class="text-gray-400 sm:text-sm md:text-base mb-2">
+                {provider} / {date}
+            </p>
+            <TextContent content={description} />
+
+            {
+                tags.map((tag) => (
+                <span class="inline-block bg-gray-300 rounded-full sm:px-2 sm:py-1 md:px-3 md:py-1 sm:mr-1 sm:my-1 md:mr-2 md:my-2 sm:text-xs md:text-sm font-semibold text-gray-700 ">
+                        {tag}
+                    </span>
+                ))
+            }
         </div>
     </CardLink>
 </astro>
