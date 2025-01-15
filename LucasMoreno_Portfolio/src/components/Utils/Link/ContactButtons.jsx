@@ -9,7 +9,7 @@ const ContactButtons = () => {
             {/* LinkedIn */}
             <button
                 type="button"
-                className="inline-block rounded bg-gray-500 hover:bg-[#0077b5] sm:max-w-24 sm:text-xs sm:font-medium sm:px-2 sm:py-1 md:max-w-36 md:px-3 md:py-2 lg:px-4 lg:my-2 uppercase leading-normal text-white shadow-md transition duration-300 ease-in-out hover:shadow-lg sm:hover:scale-105 md:transform md:hover:scale-110 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                className="inline-block rounded bg-gray-500 sm:active:bg-[#0077b5] md:hover:bg-[#0077b5] sm:max-w-24 sm:text-xs sm:font-medium sm:px-2 sm:py-1 md:max-w-36 md:px-3 md:py-2 lg:px-4 lg:my-2 uppercase leading-normal text-white shadow-md transition sm:duration-0 md:duration-300 ease-in-out hover:shadow-lg sm:active:scale-105 md:transform md:hover:scale-110 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                 onClick={() => window.open("https://www.linkedin.com/in/lucas-moreno-dev", "_blank")}
             >
                 <span className="flex items-center sm:text-xxs md:text-xs 2xl:text-sm">
@@ -28,7 +28,7 @@ const ContactButtons = () => {
             {/* GitHub */}
             <button
                 type="button"
-                className="inline-block rounded bg-gray-500 hover:bg-[#050505] sm:max-w-24 sm:text-xs sm:font-medium sm:px-2 sm:py-1 md:max-w-36 md:px-3 md:py-2 lg:px-4 lg:my-2 uppercase leading-normal text-white shadow-md transition duration-300 ease-in-out hover:shadow-lg sm:hover:scale-105 md:transform md:hover:scale-110 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                className="inline-block rounded bg-gray-500 sm:active:bg-[#050505] md:hover:bg-[#050505] sm:max-w-24 sm:text-xs sm:font-medium sm:px-2 sm:py-1 md:max-w-36 md:px-3 md:py-2 lg:px-4 lg:my-2 uppercase leading-normal text-white shadow-md transition sm:duration-0 md:duration-300 ease-in-out hover:shadow-lg sm:active:scale-105 md:transform md:hover:scale-110 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                 onClick={() => window.open("https://github.com/Lucash00", "_blank")}
             >
                 <span className="flex items-center sm:text-xxs md:text-xs 2xl:text-sm">
@@ -47,7 +47,7 @@ const ContactButtons = () => {
             {/* Gmail */}
             <button
                 type="button"
-                className="inline-block rounded bg-gray-500 hover:bg-[#ff0000] sm:max-w-24 sm:text-xs sm:font-medium sm:px-2 sm:py-1 md:max-w-36 md:px-3 md:py-2 lg:px-4 lg:my-2 uppercase leading-normal text-white shadow-md transition duration-300 ease-in-out hover:shadow-lg sm:hover:scale-105 md:transform md:hover:scale-110 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                className="inline-block rounded bg-gray-500 sm:active:bg-[#ff0000] md:hover:bg-[#ff0000] sm:max-w-24 sm:text-xs sm:font-medium sm:px-2 sm:py-1 md:max-w-36 md:px-3 md:py-2 lg:px-4 lg:my-2 uppercase leading-normal text-white shadow-md transition sm:duration-0 md:duration-300 ease-in-out hover:shadow-lg sm:active:scale-105 md:transform md:hover:scale-110 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                 onClick={() => {
                     navigator.clipboard
                         .writeText("lucas.moreno.dev@gmail.com")

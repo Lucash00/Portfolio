@@ -14,7 +14,7 @@ function TextContent({ content }) {
                         <ul className="sm:text-sm md:text-base list-disc list-inside font-Poppins" {...props} />
                     ),
                     li: ({ node, ...props }) => (
-                        <li className="sm:text-sm md:text-base sm:ml-1 md:ml-2 font-Poppins" {...props} />
+                        <li className="sm:text-sm md:text-base font-Poppins" {...props} />
                     ),
                     strong: ({ node, ...props }) => (
                         <strong className="font-bold font-Poppins scale-105" {...props} />

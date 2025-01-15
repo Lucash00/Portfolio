@@ -38,7 +38,7 @@ const Slider = ({ images }) => {
   return (
     <div className="relative w-full">
       {/* Carrusel */}
-      <div className="relative w-auto h-100 overflow-hidden flex justify-center items-center bg-gray-100">
+      <div className="relative w-auto h-100 overflow-hidden flex justify-center items-center bg-transparent">
         {springs.map((style, i) => (
           <animated.img
             key={slides[i].key}
@@ -61,13 +61,13 @@ const Slider = ({ images }) => {
       {/* Botones de navegación */}
       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-between">
         <button
-          className="w-10 h-10 sm:mx-2 md:mx-4 lg:mx-6 xl:mx-8 2xl:mx-10 bg-gray-300 rounded-full flex items-center justify-center hover:bg-gray-400 hover:scale-110 transition duration-100"
+          className="sm:w-7 sm:h-7 md:w-10 md:h-10 sm:mx-1 md:mx-4 lg:mx-6 xl:mx-8 2xl:mx-10 bg-gray-300 rounded-full flex items-center justify-center sm:active:bg-gray-400 md:hover:bg-gray-400 sm:active:scale-125 md:hover:scale-110 transition sm:duration-0 md:duration-100"
           onClick={prevImage}
         >
           {"<"}
         </button>
         <button
-          className="w-10 h-10 sm:mx-2 md:mx-4 lg:mx-6 xl:mx-8 2xl:mx-10 bg-gray-300 rounded-full flex items-center justify-center hover:bg-gray-400 hover:scale-110 transition duration-100"
+          className="sm:w-7 sm:h-7 md:w-10 md:h-10 sm:mx-1 md:mx-4 lg:mx-6 xl:mx-8 2xl:mx-10 bg-gray-300 rounded-full flex items-center justify-center sm:active:bg-gray-400 md:hover:bg-gray-400 sm:active:scale-125 md:hover:scale-110 transition sm:duration-0 md:duration-100"
           onClick={nextImage}
         >
           {">"}

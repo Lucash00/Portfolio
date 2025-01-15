@@ -1,17 +1,19 @@
 import React from 'react';
-import './Link.css';
 
 function Link({ url, name }) {
     return (
-        <a
-            href={url}
-            target="_blank"
-            className="button-style"
-        >
-            <span>{name}</span>
-        </a>
+        <div className="flex gap-4 items-center justify-center">
+            <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sm:px-5 sm:py-2 md:px-10 md:py-3 font-medium sm:text-base md:text-base xl:text-lg rounded-full bg-gradient-to-t sm:duration-0 md:duration-100 from-blue-900 via-blue-800 to-blue-600 text-white w-fit transition-all sm:active:bg-gradient-to-t sm:active:from-blue-950 sm:active:via-blue-800 sm:active:to-blue-600 sm:active:translate-x-[1px] sm:active:translate-y-[1px] md:hover:bg-gradient-to-t md:hover:from-blue-950 md:hover:via-blue-800 md:hover:to-blue-600 md:hover:translate-x-[1px] md:hover:translate-y-[1px]"
+            >
+                {name}
+            </a>
+        </div>
     );
-};
+}
 
 function LinkList({ links }) {
     return (

@@ -61,19 +61,35 @@ const sections = [
         project.media && project.media.length > 0 && (
           <div class="z-10 mb-4 col-span-2 col-start-1">
             {/* Usar SliderM para dispositivos pequeños y Slider normal para más grandes */}
-            <Slider client:load images={project.media}/>
+            <Slider client:load images={project.media} />
           </div>
         )
       }
 
+      <div class="py-2 col-span-2 col-start-1">
+        {
+          (project.links?.website || project.links?.codeRepository) && (
+            <LinkList
+              links={[
+                ...(project.links?.website
+                  ? [{ url: project.links.website, name: "Ver Proyecto" }]
+                  : []),
+                ...(project.links?.codeRepository
+                  ? [{ url: project.links.codeRepository, name: "Ver Código" }]
+                  : []),
+              ]}
+            />
+          )
+        }
+      </div>
       <!-- Tags Utilizadas -->
       {
         project.tags && (
-          <div class="px-6 py-2 col-span-1 col-start-1 ">
+          <div class="sm:col-span-2 md:col-span-2 col-start-1 ">
             <TitleContent title="Tags" />
             <ul class="flex flex-wrap gap-2 mb-4">
               {project.tags.map((tag) => (
-                <li class="px-2 py-1 bg-gray-300 rounded-full text-gray-700 text-sm">
+                <li class="px-2 py-1 bg-gray-300 rounded-full text-gray-900 text-sm">
                   {tag}
                 </li>
               ))}
@@ -81,25 +97,9 @@ const sections = [
           </div>
         )
       }
-      <div class="py-2 col-span-1 col-start-2">
-        { 
-          (project.links?.website || project.links?.codeRepository) && (
-            <LinkList links={[
-              ...(project.links?.website ? [{ url: project.links.website, name: "Ver Proyecto" }] : []),
-              ...(project.links?.codeRepository ? [{ url: project.links.codeRepository, name: "Ver Código" }] : []),
-            ]} />
-          )
-        }
-      </div>
       
-      <!-- Secciones (SectionToggle) -->
-      <div class="py-2 col-span-2 col-start-1">
-        <SectionToggle client:visible sections={sections} />
-      </div>
-      
-
       <!-- Descripción -->
-      <div class="px-6 py-2 col-span-2 col-start-1">
+      <div class="pt-4 col-span-2 col-start-1 border-spacing-y-10 border-y-2 border-gray-300">
         <TitleContent title={project.titleJob} />
         {/* Mostrar company, startDate y endDate si existe provider */}
         {
@@ -114,6 +114,13 @@ const sections = [
           )
         }
         <TextContent content={project.description} />
+      </div>
+
+      <!-- Secciones (SectionToggle) -->
+      <div
+        class="py-2 sm:col-span-2 sm:col-start-1 md:col-span-2 md:col-start-1 "
+      >
+        <SectionToggle client:visible sections={sections} />
       </div>
     </Card>
   </main>

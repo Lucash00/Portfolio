@@ -5,11 +5,14 @@ import TextContent from "../../components/Utils/Font/TextContent.jsx";
 import Card from "../../components/Utils/Card/Card.astro";
 import { certificates } from "../../data/certificates";
 import LinkList from "../../components/Utils/Link/Link.jsx";
+import TitleContent from "../../components/Utils/Font/TitleContent.astro";
 
 // Generar rutas estáticas
 export async function getStaticPaths() {
   return certificates.map((certificate) => ({
-    params: { title: encodeURIComponent(certificate.title.replace(/\s+/g, "-")) },
+    params: {
+      title: encodeURIComponent(certificate.title.replace(/\s+/g, "-")),
+    },
   }));
 }
 
@@ -22,7 +25,7 @@ if (!params.title) {
 const decodedTitle = decodeURIComponent(params.title);
 const certificate = certificates.find(
   (c) =>
-    c.title.toLowerCase() === decodedTitle.replace(/-/g, " ").toLowerCase()
+    c.title.toLowerCase() === decodedTitle.replace(/-/g, " ").toLowerCase(),
 );
 
 if (!certificate) {
@@ -35,53 +38,63 @@ if (!certificate) {
     <TitleComponent title={certificate.title} logo={certificate.logo} />
     <Card>
       <!-- Media superior -->
-      <div class="mb-4 col-span-2 col-start-1 flex justify-center">
-        {certificate.media && certificate.media.length > 0 ? (
-          <img src={certificate.media[0]} alt={certificate.title} class="object-cover max-h-96" />
-        ) : (
-          null
-        )}
+      <div class="mb-4 sm:-mx-2 md:-mx-4 col-span-2 col-start-1 flex justify-center">
+        {
+          certificate.media && certificate.media.length > 0 ? (
+            <img
+              src={certificate.media[0]}
+              alt={certificate.title}
+              class="object-cover max-h-100"
+            />
+          ) : null
+        }
       </div>
+      <div class="py-2 col-span-2 col-start-1">
 
-        <!-- Columna izquierda -->
-        <div class="col-span-1 gap-6 px-6">
-          {certificate.tags && (
-            <div class="mb-4">
-              <h3 class="font-bold text-lg">Tags</h3>
-              <ul class="flex flex-wrap gap-2">
-                {certificate.tags.map((tag) => (
-                  <li class="px-2 py-1 bg-gray-200 rounded-full text-sm">{tag}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div class="mb-4">
-            <h3 class="font-bold text-lg">{certificate.title}</h3>
-            <p class="mb-2 text-gray-400">
-              {certificate.provider} / {certificate.date}
-          </p>
-            <TextContent content={certificate.description} />
-          </div>
-        </div>
-
-        <!-- Columna derecha -->
-        <div class="col-span-1 col-start-2 items-start gap-6 px-6">
-          {certificate.certificateUrl && (
-            <LinkList links={[
+        {
+          certificate.certificateUrl && (
+            <LinkList
+            links={[
               { url: certificate.certificateUrl, name: "Ver Certificado" },
-            ]} />
-          )}
-          {certificate.credentials && (
-            <div class="mt-4">
-              <h3 class="font-bold text-lg">Credenciales</h3>
-              <p>
-                {certificate.credentials}
-              </p>
-            </div>
-          )}
+            ]}
+            />
+          )
+        }
         </div>
+
+      {
+        certificate.tags && (
+          <div class="sm:col-span-2 md:col-span-2 lg:col-span-1 col-start-1 ">
+            <TitleContent title="Tags" />
+            <ul class="flex flex-wrap gap-2 mb-4">
+              {certificate.tags.map((tag) => (
+                <li class="px-2 py-1 bg-gray-300 rounded-full text-gray-900 text-sm">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+      <!-- Credenciales -->
+      {
+        certificate.credentials && (
+          <div class="sm:col-span-2 sm:col-start-1 md:col-span-2 md:col-start-1 lg:col-span-1 lg:col-start-2 ">
+                    <TitleContent title="Credenciales" />
+            <p>{certificate.credentials}</p>
+          </div>
+        )
+      }
+      <!-- Descripción -->
+      <div class="py-4 col-span-2 col-start-1 border-spacing-y-10 border-y-2 border-gray-300">
+        <TitleContent title={certificate.title} />
+        <p class="mb-2 text-gray-400">
+          {certificate.provider} / {certificate.date}
+        </p>
+        <TextContent content={certificate.description} />
       </div>
+
+      
     </Card>
   </main>
 </Layout>
