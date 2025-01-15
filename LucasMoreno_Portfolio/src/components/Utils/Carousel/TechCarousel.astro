@@ -4,7 +4,7 @@ import IconCarousel from "./IconCarousel.astro";
 
 <astro>
   <div
-    class="mt-10 z-0 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container"
+    class="mt-10 z-0 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container ladosTransparentes"
     ref:"sliderRef"
   >
     <div class="carousel-track" ref:"trackRef">
@@ -33,17 +33,17 @@ import IconCarousel from "./IconCarousel.astro";
       <IconCarousel alt="Github" src="src/assets/github.svg" />
       <IconCarousel alt="Gitlab" src="src/assets/gitlab.svg" />
     </div>
-    <div
-      id="tooltip"
-      class="tooltip hidden fixed sm:text-xxs md:text-sm lg:text-base sm:p-2 md:p-3 bg-gradient-to-b from-[#161616] via-[#202020] to-transparent tracking-wide text-gray-100 rounded-t-2xl transform -translate-x-1/2 left-1/2 sm:-mt-4 md:-mt-8"
-    >
-    </div>
+  </div>
+  <div
+    id="tooltip"
+    class="tooltip hidden fixed sm:text-xxs md:text-sm lg:text-base sm:p-2 md:p-3 bg-gradient-to-b from-[#161616] via-[#202020] to-transparent tracking-wide text-gray-100 rounded-t-2xl transform -translate-x-1/2 left-1/2 sm:-mt-4 md:-mt-8"
+  >
   </div>
 
   <style>
-    /* .ladosTransparentes {
+    .ladosTransparentes {
       mask-image: linear-gradient(to right, transparent, white, transparent);
-    } */
+    }
     .carousel-container {
       overflow-x: hidden;
       width: 100%;

@@ -3,6 +3,7 @@ interface Props {
   title: string;
 }
 import Header from "../components/Header/Header.astro";
+import SideMenu from "../components/SideMenu/SideMenu.jsx";
 ---
 
 <!doctype html>
@@ -18,20 +19,19 @@ import Header from "../components/Header/Header.astro";
   <body
     class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 bg-fixed tracking-tighter leading-none max-h-screen"
   >
-
     <Header />
 
     <div class="flex justify-between h-screen">
+      <!-- SideMenu para móviles -->
+      <SideMenu client:load />
       <!-- Columna izquierda -->
-      <div class="w-auto">
-      </div>
+      <div class="w-auto"></div>
       <!-- Columna del medio (grande) -->
       <div class="w-11/12">
         <slot />
       </div>
       <!-- Columna derecha -->
-      <div class="w-auto">
-      </div>
+      <div class="w-auto"></div>
     </div>
   </body>
 </html>
@@ -40,6 +40,6 @@ import Header from "../components/Header/Header.astro";
   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
   body {
     font-family: "Poppins", sans-serif;
-    word-spacing: 0.01rem
+    word-spacing: 0.01rem;
   }
 </style>

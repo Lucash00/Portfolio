@@ -59,8 +59,9 @@ const sections = [
       <!-- Contenido de la media -->
       {
         project.media && project.media.length > 0 && (
-          <div class="mb-4 col-span-2 col-start-1">
-            <Slider client:load images={project.media} />
+          <div class="z-10 mb-4 col-span-2 col-start-1">
+            {/* Usar SliderM para dispositivos pequeños y Slider normal para más grandes */}
+            <Slider client:load images={project.media}/>
           </div>
         )
       }
