@@ -23,13 +23,17 @@ function LinkExperience({ urls }) {
                           text-gray-900 bg-transparent
                           shadow-[-5px_-5px_10px_rgba(255,_255,_255,_0.8),_5px_5px_10px_rgba(0,_0,_0,_0.25)]
                           transition-all
-                          hover:shadow-[-1px_-1px_5px_rgba(255,_255,_255,_0.6),_1px_1px_5px_rgba(0,_0,_0,_0.3),inset_2px_2px_4px_rgba(0,_0,_0,_0.3)]
-                          hover:text-blue-700
-                          hover:bg-gray-200
-                          hover:translate-y-1
+                          md:hover:shadow-[-1px_-1px_5px_rgba(255,_255,_255,_0.6),_1px_1px_5px_rgba(0,_0,_0,_0.3),inset_2px_2px_4px_rgba(0,_0,_0,_0.3)]
+                          sm:active:shadow-[-1px_-1px_5px_rgba(255,_255,_255,_0.6),_1px_1px_5px_rgba(0,_0,_0,_0.3),inset_2px_2px_4px_rgba(0,_0,_0,_0.3)]
+                        md:hover:text-blue-700
+                        md:hover:bg-gray-200
+                        sm:active:text-blue-700
+                        sm:active:bg-gray-200
+                          md:hover:translate-y-1
+                          sm:active:translate-y-1
                         `}
                     >
-                        <FiCornerRightUp/>
+                        <FiCornerRightUp />
                         <span className="sm:text-sm md:text-base">{formattedName}</span>
                     </a>
                 );
