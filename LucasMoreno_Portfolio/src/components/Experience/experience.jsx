@@ -7,9 +7,9 @@ export default function Experience() {
   const [selectedExperience, setSelectedExperience] = useState(experiences[0]);
 
   return (
-    <div className="flex h-screen max-h-screen overflow-hidden">
+    <div className="h-screen max-h-screen overflow-hidden grid grid-cols-3">
       {/* Timeline section */}
-      <div className="w-1/3 max-h-screen overflow-y-auto snap-y snap-mandatory scrollbar-hide">
+      <div className="col-span-1 max-h-screen overflow-y-auto snap-y snap-mandatory scrollbar-hide">
         <Timeline
           experiences={experiences}
           onExperienceSelect={setSelectedExperience}
@@ -17,7 +17,7 @@ export default function Experience() {
       </div>
 
       {/* Card section */}
-      <div className="w-2/3 max-h-screen flex items-center justify-center">
+      <div className="col-span-2 col-start-2 max-h-screen flex items-center justify-center">
         <CardTimeline experience={selectedExperience} />
       </div>
     </div>

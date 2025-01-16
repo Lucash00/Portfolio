@@ -26,7 +26,7 @@ export const experiences: Experience[] = [
     description:
       `Educación autodidacta demostrada mediante diversas certificaciones en áreas como <strong>desarrollo Backend</strong>, <strong>visualización de datos</strong>, <strong>análisis de datos</strong>, <strong>diseño web adaptable</strong>, y habilidades en <strong>inglés</strong>.  
        Estas certificaciones reflejan un compromiso continuo con el aprendizaje y la mejora profesional.`,
-    startDate: "2024-09-01",
+    startDate: "Sept 2024",
     endDate: "Actualidad",
     tags: [
       "Data Visualization",
@@ -89,8 +89,8 @@ export const experiences: Experience[] = [
    También trabajé en el diseño <strong>UI/UX</strong> y resolución de problemas de seguridad y diseño en <strong>WordPress</strong>, así como la contribución momentánea en proyectos con <strong>Angular</strong> y un <strong>CRM</strong> en <strong>ASP.NET</strong>.  
    Dando como resultado una gran experiencia como desarrollador <strong>FullStack</strong> en un entorno de trabajo profesional y multidisciplinario.`,
 
-    startDate: "2023-09-01",
-    endDate: "2023-12-23",
+    startDate: "Sept 2023",
+    endDate: "Ene 2024",
     location: "Jerez de la Frontera, Cádiz, España",
     tags: ["Swift", "Firebase", "CocoaPods", "Git", "UI/UX", "Angular", "ASP.NET"],
     logo: "https://example.com/logo-controlnet.png",
@@ -138,8 +138,8 @@ export const experiences: Experience[] = [
       `El programa <em>DAW</em> ofreció una formación completa en el diseño, desarrollo y mantenimiento de aplicaciones web modernas, utilizando un enfoque integral para la programación <strong>Backend</strong> y <strong>Frontend</strong>.  
    A lo largo de dos años, desarrollé competencias avanzadas en el uso de tecnologías clave, <strong>herramientas de desarrollo y metodologías</strong> de trabajo colaborativo, <strong>destacándome en proyectos individuales y en equipo</strong>.  
    Durante mi formación, creé aplicaciones funcionales y escalables que integraban las mejores prácticas de desarrollo web, priorizando la <strong>seguridad</strong>, el <strong>rendimiento</strong> y la <strong>experiencia de usuario</strong>.`,
-    startDate: "2020-09-01",
-    endDate: "2022-06-30",
+    startDate: "Sept 2020",
+    endDate: "Jul 2022",
     location: "Cádiz, España",
     tags: [
       "HTML5",
@@ -227,8 +227,8 @@ export const experiences: Experience[] = [
       `El ciclo formativo de <em>SMR</em> me brindó una formación técnica completa en la <strong>instalación</strong>, <strong>configuración</strong>, <strong>administración</strong> y <strong>mantenimiento</strong> de <strong>sistemas informáticos y redes</strong>.  
    Aprendí a gestionar <strong>infraestructuras de TI</strong>, resolver problemas de <strong>hardware</strong> y <strong>software</strong>, y optimizar el rendimiento de <strong>sistemas</strong> y <strong>redes</strong>.  
    Durante el curso, participé en proyectos prácticos que incluyeron, entre otras cosas, la implementación de <strong>redes</strong>, <strong>configuración de servidores</strong>, <strong>gestión de usuarios</strong>, <strong>seguridad informática</strong> y otros aspectos...`,
-    startDate: "2018-09-01",
-    endDate: "2020-06-30",
+    startDate: "Sept 2018",
+    endDate: "Jul 2020",
     location: "Cádiz, España",
     tags: [
       "Sistemas Operativos",

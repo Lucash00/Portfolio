@@ -38,15 +38,15 @@ if (!experience) {
 const sections = [
     {
         name: "Aspectos destacados",
-        content: experience.highlights?.join(", ") || null,
+        content: experience.highlights?.join("") || null,
     },
     {
         name: "Responsabilidades",
-        content: experience.responsibilities?.join(", ") || null,
+        content: experience.responsibilities?.join("") || null,
     },
     {
         name: "Habilidades",
-        content: experience.skills?.join(", ") || null,
+        content: experience.skills?.join("") || null,
     },
     { name: "Tipo", content: experience.type || null },
     { name: "Ubicación", content: experience.location || null },
@@ -66,8 +66,10 @@ const validSections = sections.filter(
         <!-- Contenido principal -->
         <Card>
             <!-- Sección de Descripción -->
-            <div class="px-6 pt-4 col-span-2">
-                <TitleContent title={experience.title} />
+            <div
+                class="py-4 col-span-2 col-start-1 border-spacing-y-10 border-b-2 border-gray-300"
+            >
+                <TitleContent title={experience.title}/>
 
                 {/* Mostrar provider, startDate y endDate si existe provider */}
                 {
@@ -83,18 +85,16 @@ const validSections = sections.filter(
                     )
                 }
 
-            <TextContent content={experience.description} />
-
-                
+                <TextContent content={experience.description} />
             </div>
             <!-- Tags -->
             {
                 experience.tags && (
-                    <div class="px-6 py-4 col-start-1 col-span-2">
+                    <div class="col-span-2 col-start-1 mb-2">
                         <TitleContent title="Tags" />
-                        <ul class="flex flex-wrap gap-2">
+                        <ul class="flex flex-wrap gap-2 mb-2">
                             {experience.tags.map((tag) => (
-                                <li class="px-2 py-1 bg-gray-300 rounded-full text-gray-700 text-sm">
+                                <li class="px-2 py-1 bg-gray-300 rounded-full text-gray-900 text-sm">
                                     {tag}
                                 </li>
                             ))}
@@ -103,10 +103,11 @@ const validSections = sections.filter(
                 )
             }
             <!-- Secciones dinámicas (solo las válidas) -->
-            <div class="py-4 col-span-1 col-start-1">
+            <div
+                class="pt-4 sm:col-span-2 sm:col-start-1 md:col-span-2 md:col-start-1 border-y-2 border-gray-300"
+            >
                 <SectionToggle client:visible sections={validSections} />
             </div>
-
 
             <!-- Seccion Links -->
             {
@@ -114,15 +115,21 @@ const validSections = sections.filter(
                     experience.certificateUrl.length > 0) ||
                     (experience.projectUrl &&
                         experience.projectUrl.length > 0)) && (
-                    <div class="px-6 py-4 col-start-2 col-span-1">
+                    <div class="pb-2 col-span-2 col-start-1">
                         <TitleContent title="Links" />
                         <div class="text-sm">
-                            {experience.certificateUrl && experience.certificateUrl.length > 0 && (
-                                <LinkExperience urls={experience.certificateUrl} />
-                            )}
-                            {experience.projectUrl && experience.projectUrl.length > 0 && (
-                                <LinkExperience urls={experience.projectUrl} />
-                            )}
+                            {experience.certificateUrl &&
+                                experience.certificateUrl.length > 0 && (
+                                    <LinkExperience
+                                        urls={experience.certificateUrl}
+                                    />
+                                )}
+                            {experience.projectUrl &&
+                                experience.projectUrl.length > 0 && (
+                                    <LinkExperience
+                                        urls={experience.projectUrl}
+                                    />
+                                )}
                         </div>
                     </div>
                 )

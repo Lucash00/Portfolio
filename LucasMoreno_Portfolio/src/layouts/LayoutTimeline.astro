@@ -25,13 +25,13 @@ import SideMenu from "../components/SideMenu/SideMenu.jsx";
       <!-- SideMenu para móviles -->
       <SideMenu client:load />
       <!-- Columna izquierda -->
-      <div class="w-auto"></div>
+      <div class="w-auto sm:hidden"></div>
       <!-- Columna del medio (grande) -->
-      <div class="w-11/12">
+      <div class="w-11/12 sm:w-full sm:ml-1">
         <slot />
       </div>
       <!-- Columna derecha -->
-      <div class="w-auto"></div>
+      <div class="w-auto sm:hidden"></div>
     </div>
   </body>
 </html>
