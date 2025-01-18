@@ -10,13 +10,9 @@ const TranslatorDynamic = () => {
     { code: 'en', name: 'Inglés', flag: 'fi fi-gb' },
     { code: 'es', name: 'Español', flag: 'fi fi-es' },
     { code: 'fr', name: 'Francés', flag: 'fi fi-fr' },
-    { code: 'de', name: 'Alemán', flag: 'fi fi-de' },
-    { code: 'zh-CN', name: 'Chino (Simplificado)', flag: 'fi fi-cn' },
-    { code: 'ja', name: 'Japonés', flag: 'fi fi-jp' },
     { code: 'it', name: 'Italiano', flag: 'fi fi-it' },
-    { code: 'pt', name: 'Portugués', flag: 'fi fi-pt' },
-    { code: 'ru', name: 'Ruso', flag: 'fi fi-ru' },
-    { code: 'ar', name: 'Árabe', flag: 'fi fi-sa' },
+    { code: 'de', name: 'Alemán', flag: 'fi fi-de' },
+    { code: 'pl', name: 'Polaco', flag: 'fi fi-pl' }
     // Agrega más idiomas según sea necesario
   ];
 

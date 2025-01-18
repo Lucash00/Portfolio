@@ -1,7 +1,7 @@
 // src/data/projects.ts
-const bafreMediaFolder = "/src/data/BafreMedia";
-const la11milMediaFolder = "/src/data/la11mil";
-const rotaPlaceMediaFolder = "/src/data/RotaPlace";
+const bafreMediaFolder = "/BafreMedia";
+const la11milMediaFolder = "/la11mil";
+const rotaPlaceMediaFolder = "/RotaPlace";
 
 export interface Project {
   title: string;
@@ -175,7 +175,7 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
       "Optimización",
       "Corrección de Errores"
     ],
-    logo: "/src/data/CRM/logo.png",
+    logo: "/CRM/logo.png",
     team: {
       contributors: [
         { name: "Lucas Moreno", role: "Desarrollador Web" }
@@ -198,7 +198,7 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
     endDate:"Abr 2023",
     tags: ["React", "TMDb API", "JavaScript", "Movie Catalog", "API Integration"],
     projectUrl: "https://example.com/moviesdetails", 
-    logo: "/src/data/CRM/logo.png", 
+    logo: "/CRM/logo.png", 
     media: [
       "/path/to/image1.png", 
       "/path/to/image2.png"
