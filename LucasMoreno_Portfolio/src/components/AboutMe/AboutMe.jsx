@@ -23,11 +23,11 @@ const AboutMe = () => {
 
             {/* Información */}
             <div className="w-full lg:w-2/3">
-                <div className="sm:p-4 md:p-6 rounded-lg border-t-2 border-l-2 border-r-2 border-transparent bg-gradient-to-b from-gray-200 to-transparent dark:from-gray-700 dark:to-transparent ">
-                    <h1 className="sm:text-2xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-5xl sm:mb-4 md:mb-8 font-bold text-gray-800 dark:text-slate-200 ">
+                <div className="sm:p-4 md:p-6 rounded-lg border-t-2 border-l-2 border-r-2 border-transparent bg-gradient-to-b from-gray-200 to-transparentfrom-gray-700 to-transparent ">
+                    <h1 className="sm:text-2xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-5xl sm:mb-4 md:mb-8 font-bold text-gray-800text-slate-200 ">
                         Hola, soy <span className="text-amber-400">Lucas Moreno</span>
                     </h1>
-                    <p className="sm:text-base md:text-md lg:text-lg xl:text-lg 2xl:text-lg text-gray-600 dark:text-gray-300 leading-relaxed text-justify">
+                    <p className="sm:text-base md:text-md lg:text-lg xl:text-lg 2xl:text-lg text-gray-600text-gray-300 leading-relaxed text-justify">
                         Soy desarrollador web apasionado por la creación de experiencias digitales únicas, funcionales y centradas en el usuario. Mi enfoque combina habilidades de <strong>FrontEnd</strong> y <strong>BackEnd</strong>, lo que me permite abordar proyectos de manera integral, desde la concepción de interfaces <strong>atractivas</strong> y <strong>responsive</strong>, hasta la implementación de sistemas <strong>robustos</strong> y <strong>escalables</strong>.
                         <br /><br />
                         Mi compromiso con la excelencia técnica se refleja en cada detalle: <strong>diseño intuitivo</strong>, <strong>análisis de datos</strong>, <strong>optimización de rendimiento</strong> y una <strong>comunicación fluida</strong> que garantiza que cada proyecto alcance su máximo potencial. La adaptabilidad y la curiosidad son las claves que me permiten seguir creciendo y explorar nuevas formas de transformar ideas en soluciones tecnológicas reales.
