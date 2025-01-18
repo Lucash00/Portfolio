@@ -8,7 +8,7 @@ const AboutMe = () => {
             <div className="w-full lg:w-1/3 flex flex-col items-center lg:justify-start mb-8 lg:mb-0">
                 <div className="relative w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 2xl:w-100 2xl:h-100 ">
                     <img
-                        src="animeprofile.png"
+                        src="/animeprofile.png"
                         alt="Lucas Moreno Corral - Anime Avatar"
                         className="rounded-full shadow-lg object-cover w-full h-full"
                     />
