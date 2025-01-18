@@ -70,7 +70,7 @@ import IconCarousel from "./IconCarousel.astro";
   </style>
 
   <script>
-    let intervalId: number | null = null;
+    let intervalId: ReturnType<typeof setInterval> | null = null;
     let slider: HTMLElement | null;
     let track: HTMLElement | null;
     let tooltip: HTMLElement | null;
@@ -223,14 +223,32 @@ import IconCarousel from "./IconCarousel.astro";
       }
     }
 
+    const debounce = (func: Function, wait: number) => {
+      let timeout: ReturnType<typeof setTimeout> | undefined;
+      return (...args: any[]) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func(...args), wait);
+      };
+    };
+
+    const updateTooltipPosition = (img: HTMLImageElement) => {
+      const rect = img.getBoundingClientRect();
+      tooltip!.textContent = img.alt;
+      tooltip!.style.left = `${rect.left + rect.width / 2 + window.pageXOffset}px`;
+      tooltip!.style.top = `${rect.top + window.scrollY - 10}px`;
+      tooltip!.classList.remove("hidden");
+    };
+
+    const debouncedUpdateTooltipPosition = debounce(updateTooltipPosition, 10);
+
     function handleMouseOver(e: MouseEvent) {
       const target = e.target as HTMLElement;
       if (target && target.tagName === "IMG") {
         const img = target as HTMLImageElement;
         const rect = img.getBoundingClientRect();
         tooltip!.textContent = img.alt;
-        tooltip!.style.left = `${rect.left + rect.width / 2 + window.pageXOffset}px`;
-        tooltip!.style.top = `${rect.top + window.pageYOffset - 10}px`;
+        tooltip!.style.left = `${rect.left + rect.width / 2 + window.scrollX}px`;
+        tooltip!.style.top = `${rect.top + window.scrollY - 10}px`;
         tooltip!.classList.remove("hidden");
       }
     }

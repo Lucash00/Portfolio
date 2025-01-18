@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import SideMenuSection from "./SideMenuSecion.jsx";
 import curriculum from "../../assets/CurriculumVitae_LucasMoreno_ES.pdf";
 
