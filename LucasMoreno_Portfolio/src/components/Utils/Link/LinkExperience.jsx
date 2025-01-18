@@ -18,7 +18,7 @@ function LinkExperience({ urls }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`
-                          sm:px-6 sm:py-3 md:px-8 md:py-4 sm:mb-2 md:mb-3 xl:mb-6 rounded-full
+                          sm:px-6 sm:py-3 md:px-6 md:py-3 sm:mb-2 md:mb-3 xl:mb-6 rounded-full
                           flex items-center sm:gap-x-1 gap-x-2 
                           text-gray-900 bg-transparent
                           shadow-[-5px_-5px_10px_rgba(255,_255,_255,_0.8),_5px_5px_10px_rgba(0,_0,_0,_0.25)]

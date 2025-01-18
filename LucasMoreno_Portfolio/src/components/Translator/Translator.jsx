@@ -39,15 +39,15 @@ const TranslatorDynamic = () => {
   };
 
   return (
-    <div className="fixed top-4 right-4 z-50">
+    <div className="fixed top-2 right-2 z-50">
       <div className="mb-2">
         <div className="relative">
           {/* Botón que muestra el idioma seleccionado */}
           <div
             onClick={toggleDropdown}
-            className="cursor-pointer py-2 pl-3 pr-10 border border-gray-300 bg-white rounded-md shadow-sm"
+            className="cursor-pointer py-2 pl-2 pr-2 border border-gray-300 bg-white rounded-md shadow-sm"
           >
-            <span className={`${languages.find((lang) => lang.code === selectedLanguage)?.flag} mr-2`} />
+            <span className={`${languages.find((lang) => lang.code === selectedLanguage)?.flag} mr-1`} />
             {languages.find((lang) => lang.code === selectedLanguage)?.name}
           </div>
 
