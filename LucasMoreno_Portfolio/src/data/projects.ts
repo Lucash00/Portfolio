@@ -2,6 +2,7 @@
 const bafreMediaFolder = "/BafreMedia";
 const la11milMediaFolder = "/la11mil";
 const rotaPlaceMediaFolder = "/RotaPlace";
+const moviesDetailsMediaFolder = "/MoviesDetails";
 
 export interface Project {
   title: string;
@@ -197,15 +198,18 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
     startDate:"Jan 2023",
     endDate:"Abr 2023",
     tags: ["React", "TMDb API", "JavaScript", "Movie Catalog", "API Integration"],
-    projectUrl: "https://example.com/moviesdetails", 
-    logo: "/CRM/logo.png", 
+    projectUrl: "https://3a32f515.moviesdetails-react.pages.dev/", 
+    logo: `${moviesDetailsMediaFolder}/logo.png`, 
     media: [
-      "/path/to/image1.png", 
-      "/path/to/image2.png"
+      `${moviesDetailsMediaFolder}/1.png`,
+      `${moviesDetailsMediaFolder}/2.png`,
+      `${moviesDetailsMediaFolder}/3.png`,
+      `${moviesDetailsMediaFolder}/4.png`,
+      `${moviesDetailsMediaFolder}/5.png`,
+      `${moviesDetailsMediaFolder}/6.png`
     ],
     links: {
-      codeRepository: "https://github.com/username/moviesdetails", 
-      documentation: "https://example.com/docs" 
+      codeRepository: "https://github.com/Lucash00/MoviesDetails_React.git"
     },
     team: {
       contributors: [
@@ -214,7 +218,7 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
     },
     developmentProcess: {
       methodology: "Autodidacta",
-      timeline: "Enero 2023 - Marzo 2023"
+      timeline: "Sep 2023 - Nov 2023"
     }
   },
   {
