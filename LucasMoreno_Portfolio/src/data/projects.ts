@@ -205,10 +205,10 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
       `${moviesDetailsMediaFolder}/2.png`,
       `${moviesDetailsMediaFolder}/3.png`,
       `${moviesDetailsMediaFolder}/4.png`,
-      `${moviesDetailsMediaFolder}/5.png`,
-      `${moviesDetailsMediaFolder}/6.png`
+      `${moviesDetailsMediaFolder}/5.png`
     ],
     links: {
+      website: "https://3a32f515.moviesdetails-react.pages.dev/",
       codeRepository: "https://github.com/Lucash00/MoviesDetails_React.git"
     },
     team: {
