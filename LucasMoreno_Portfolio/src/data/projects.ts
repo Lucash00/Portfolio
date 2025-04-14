@@ -3,6 +3,7 @@ const bafreMediaFolder = "/BafreMedia";
 const la11milMediaFolder = "/la11mil";
 const rotaPlaceMediaFolder = "/RotaPlace";
 const moviesDetailsMediaFolder = "/MoviesDetails";
+const BookingApiMediaFolder = "/BookingApi";
 
 export interface Project {
   title: string;
@@ -180,8 +181,7 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
     team: {
       contributors: [
         { name: "Lucas Moreno", role: "Desarrollador Web" }
-      ],
-      externalCollaborators: [] 
+      ] 
     },
     developmentProcess: {
       methodology: "Agile", 
@@ -189,6 +189,34 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
     },
     company: "ControlNet SL"
   },
+  {
+    title: "BookingApi",
+    titleJob: "API RESTful para gestión de reservas",
+    briefDescription: "BookingAPI es una API RESTful desarrollada con Spring Boot para gestionar reservas de habitaciones en un sistema de gestión hotelero. La API incluye autenticación y autorización con JWT, manejo de usuarios, roles y reservas.",
+    description: "BookingAPI permite la gestión completa de usuarios, reservas y habitaciones en un sistema hotelero. A través de JWT, se garantiza la autenticación y autorización segura de los usuarios, permitiendo operaciones sobre reservas y habitaciones. La API incluye un sistema de roles para controlar el acceso a las funcionalidades. Además, se ha integrado Swagger para la documentación interactiva de la API, lo que facilita la interacción con los endpoints.",
+    objective: "Desarrollar una API RESTful para gestionar reservas de habitaciones, usuarios, y roles en un sistema de reservas hotelero, implementando autenticación y autorización con JWT y proporcionando documentación interactiva con Swagger.",
+    startDate: "Mar 2025",
+    endDate: "Abr 2025",
+    tags: ["Java", "Spring", "API RESTful", "Swagger"],
+    projectUrl: "https://3a32f515.moviesdetails-react.pages.dev/",
+    logo: `${BookingApiMediaFolder}/logo.png`,
+    media: [
+      `${BookingApiMediaFolder}/1.png`,
+      `${BookingApiMediaFolder}/2.png`
+    ],
+    links: {
+      codeRepository: "https://github.com/Lucash00/Bookingapi.git"
+    },
+    team: {
+      contributors: [
+        { "name": "Lucas Moreno", "role": "Desarrollador Principal" }
+      ]
+    },
+    developmentProcess: {
+      methodology: "Autodidacta",
+      timeline: "Mar 2025 - Abr 2025"
+    }
+  },  
   {
     title: "MoviesDetails",
     titleJob: "Catálogo de Películas",
