@@ -11,15 +11,43 @@ import Translator from "../components/Translator/Translator.jsx";
 <html lang="es" class="scrollbar-hide">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Portfolio de Lucas Moreno Corral, desarrollador web FullStack con experiencia en tecnologías modernas como React, TailwindCSS, Astro, Spring, y muchas más. Proyectos destacados y habilidades en desarrollo frontend y backend." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Lucas Moreno Corral" />
+    
+    <!-- Open Graph (para redes sociales) -->
+    <meta property="og:title" content="Portfolio de Lucas Moreno Corral" />
+    <meta property="og:description" content="Portfolio de Lucas Moreno Corral, desarrollador web FullStack con experiencia en tecnologías modernas como React, TailwindCSS, Astro, Spring, y muchas más. Proyectos destacados y habilidades en desarrollo frontend y backend." />
+    <meta property="og:image" content="/Portada/Portada.png" />
+    <meta property="og:url" content="https://www.lucas-moreno-dev.com/" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="/Portada/Portada.png" />
+    <meta name="twitter:title" content="Portfolio de Lucas Moreno Corral" />
+    <meta name="twitter:description" content="Portfolio de Lucas Moreno Corral, desarrollador web FullStack con experiencia en tecnologías modernas como React, TailwindCSS, Astro, Spring, y muchas más. Proyectos destacados y habilidades en desarrollo frontend y backend." />
+    <meta name="twitter:image" content="/Portada/Portada.png" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.lucas-moreno-dev.com/" />
+
+    <!-- Meta Generador -->
+    <meta name="generator" content="Astro" />
+    
+    <!-- Título de la página -->
+    <title>Portfolio Lucas Moreno</title>
+
+    <!-- Fuente Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap" rel="stylesheet" />
   </head>
-  <body
-    class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 bg-fixed tracking-tighter leading-none"
-  >
-    <Translator client:load/>
+
+  <body class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 bg-fixed tracking-tighter leading-none">
+    <Translator client:load />
     <Header />
     <div class="justify-between pt-40">
       <!-- SideMenu para móviles -->
@@ -30,7 +58,6 @@ import Translator from "../components/Translator/Translator.jsx";
 </html>
 
 <style>
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
   body {
     font-family: "Poppins", sans-serif;
     word-spacing: 0.01rem;
