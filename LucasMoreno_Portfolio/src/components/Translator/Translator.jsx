@@ -80,7 +80,7 @@ const TranslatorDynamic = () => {
         <div className="relative">
           <div
             onClick={toggleDropdown}
-            className="cursor-pointer py-2 pl-2 pr-2 border border-gray-300 bg-white rounded-md shadow-sm"
+            className="cursor-pointer sm:py-1 sm:pl-1 sm:pr-1 md:py-2 md:pl-2 md:pr-2 border border-gray-300 bg-white rounded-md shadow-sm"
           >
             {/* Mostrar la bandera y el nombre del idioma seleccionado */}
             <span className={`${languages.find((lang) => lang.code === selectedLanguage)?.flag} mr-1`} />
@@ -92,10 +92,10 @@ const TranslatorDynamic = () => {
               {languages.map((language) => (
                 <li
                   key={language.code}
-                  className="flex items-center p-2 cursor-pointer hover:bg-gray-100"
+                  className="flex items-center sm:px-1 sm:py-2 md:p-2 cursor-pointer hover:bg-gray-100"
                   onClick={() => handleLanguageChange(language.code)}
                 >
-                  <span className={`${language.flag} mr-2`} />
+                  <span className={`${language.flag} sm:mr-1 md:mr-2`} />
                   {language.name}
                 </li>
               ))}

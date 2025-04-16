@@ -4,14 +4,35 @@ interface Props {
   icon: string | ImageMetadata;
   text: string;
 }
-var {href, icon, text} = Astro.props;
+var { href, icon, text } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const relatedPaths: Record<string, string> = {
+  "/proyectos": "/proyecto",
+  "/certificados": "/certificado",
+  "/experiencia": "/experiencia",
+  "/blog": "/post"
+};
+
+const isActive =
+  currentPath === href ||
+  (href in relatedPaths && currentPath.startsWith(relatedPaths[href]));
 ---
 
 <astro>
-  <div class="flex-1 group md:px-3 lg:px-5 xl:px-7 2xl:px-8 z-40 opacity-100 ">
-    <a href={href} class="block items-end justify-center text-center md:px-2 lg:px-3 pt-2 w-full text-gray-400 group-hover:text-yellow-400 border-b-2 border-transparent group-hover:border-yellow-400">
+  <div class="flex-1 group md:px-3 lg:px-5 xl:px-7 2xl:px-8 z-40 opacity-100">
+    <a
+      href={href}
+      class={`block items-end justify-center text-center md:px-2 lg:px-3 pt-2 w-full ${
+        isActive ? "text-white border-transparent" : "text-gray-400 border-transparent"
+      } group-hover:text-yellow-400 group-hover:border-yellow-400 border-b-2`}
+    >
       <span class="block pt-1 pb-2 ease-in-out duration-150 transform hover:scale-110">
-        {typeof icon === 'string' ? <i class={icon + " block text-2xl pt-1 mb-1"}></i> : <img src={icon.src} class="block text-2xl pt-1 mb-1"/>}
+        {typeof icon === "string" ? (
+          <i class={icon + " block text-2xl pt-1 mb-1"}></i>
+        ) : (
+          <img src={icon.src} class="block text-2xl pt-1 mb-1" />
+        )}
         <span class="block md:text-xxs lg:text-xs 2xl:text-sm pb-1">{text}</span>
       </span>
     </a>

@@ -205,7 +205,9 @@ import IconCarousel from "./IconCarousel.astro";
       if (isMouseDown) {
         e.preventDefault();
         const x = e.touches[0].pageX - slider!.offsetLeft;
-        const walk = (x - startX) * 3;
+        const screenWidth = window.innerWidth;
+        const multiplier = screenWidth <= 768 ? 1.0 : 3;
+        const walk = (x - startX) * multiplier;
         slider!.scrollLeft = scrollLeft - walk;
       }
     }
