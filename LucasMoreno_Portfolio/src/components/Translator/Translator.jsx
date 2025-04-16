@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'flag-icons/css/flag-icons.min.css'; // Importar la librería de iconos de banderas
 
 const TranslatorDynamic = () => {
@@ -13,32 +13,62 @@ const TranslatorDynamic = () => {
     { code: 'it', name: 'Italiano', flag: 'fi fi-it' },
     { code: 'de', name: 'Alemán', flag: 'fi fi-de' },
     { code: 'pl', name: 'Polaco', flag: 'fi fi-pl' }
-    // Agrega más idiomas según sea necesario
   ];
 
+  // Detectar idioma actual (cuando ya se está en una página traducida)
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentLang = urlParams.get('hl');
+
+    if (currentLang && currentLang !== selectedLanguage) {
+      setSelectedLanguage(currentLang);
+    }
+  }, []);
+
   const translatePage = (languageCode) => {
-    const currentUrl = window.location.href; // Obtener la URL actual
+    const currentUrl = window.location.href;
     const translateUrl = `https://translate.google.com/translate?hl=${languageCode}&sl=auto&tl=${languageCode}&u=${encodeURIComponent(
       currentUrl
     )}`;
-    window.location.href = translateUrl; // Redirigir a la versión traducida
+    window.location.href = translateUrl;
+  };
+
+  const backToOriginal = () => {
+    const originalUrl = window.location.href;
+
+    // Si está en Google Translate, extraer la URL original
+    if (originalUrl.includes('translate.google')) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const originalPage = urlParams.get('u');
+      if (originalPage) {
+        window.location.href = decodeURIComponent(originalPage);
+        return;
+      }
+    }
+
+    // Si ya está en la página original, solo recarga
+    window.location.reload();
   };
 
   const handleLanguageChange = (languageCode) => {
     setSelectedLanguage(languageCode);
-    translatePage(languageCode); // Traducir la página automáticamente
-    setIsOpen(false); // Cerrar el dropdown después de seleccionar el idioma
+    if (languageCode === 'es') {
+      backToOriginal(); // Volver al contenido original
+    } else {
+      translatePage(languageCode); // Traducir
+    }
+    setIsOpen(false); // Cerrar dropdown
   };
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen); // Cambiar estado de apertura/cierre del dropdown
+    setIsOpen(!isOpen);
   };
 
   return (
     <div className="fixed top-2 right-2 z-50">
       <div className="mb-2">
         <div className="relative">
-          {/* Botón que muestra el idioma seleccionado */}
           <div
             onClick={toggleDropdown}
             className="cursor-pointer py-2 pl-2 pr-2 border border-gray-300 bg-white rounded-md shadow-sm"
@@ -47,7 +77,6 @@ const TranslatorDynamic = () => {
             {languages.find((lang) => lang.code === selectedLanguage)?.name}
           </div>
 
-          {/* Dropdown con opciones de idioma */}
           {isOpen && (
             <ul className="absolute w-full mt-2 bg-white border border-gray-300 rounded-md shadow-lg">
               {languages.map((language) => (
