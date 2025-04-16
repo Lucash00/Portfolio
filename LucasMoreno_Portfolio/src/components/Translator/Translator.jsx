@@ -19,8 +19,9 @@ const TranslatorDynamic = () => {
   useEffect(() => {
     const currentUrl = window.location.href;
     const urlParams = new URLSearchParams(window.location.search);
-    const currentLang = urlParams.get('hl');
-
+    const currentLang = urlParams.get('_x_tr_hl') || urlParams.get('hl');
+    
+    // Si el idioma detectado es diferente al actual, actualizar el estado
     if (currentLang && currentLang !== selectedLanguage) {
       setSelectedLanguage(currentLang);
     }
@@ -28,31 +29,39 @@ const TranslatorDynamic = () => {
 
   const translatePage = (languageCode) => {
     const currentUrl = window.location.href;
-    const translateUrl = `https://translate.google.com/translate?hl=${languageCode}&sl=auto&tl=${languageCode}&u=${encodeURIComponent(
-      currentUrl
-    )}`;
-    window.location.href = translateUrl;
+    // Detectar si estamos en Google Translate y redirigir a la página original
+    if (currentUrl.includes('translate.google')) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const originalPage = urlParams.get('_x_tr_u') || urlParams.get('u');
+      if (originalPage) {
+        const originalUrl = decodeURIComponent(originalPage);
+        window.location.href = `${originalUrl}?lang=${languageCode}`;  // Redirigir a la página original con el idioma seleccionado
+      }
+    } else {
+      // Si no estamos en Google Translate, simplemente traducir
+      const translateUrl = `https://translate.google.com/translate?hl=${languageCode}&sl=auto&tl=${languageCode}&u=${encodeURIComponent(currentUrl)}`;
+      window.location.href = translateUrl;
+    }
   };
 
   const backToOriginal = () => {
     const originalUrl = window.location.href;
-
-    // Si está en Google Translate, extraer la URL original
+    // Si estamos en Google Translate, extraemos la URL original
     if (originalUrl.includes('translate.google')) {
       const urlParams = new URLSearchParams(window.location.search);
-      const originalPage = urlParams.get('u');
+      const originalPage = urlParams.get('_x_tr_u') || urlParams.get('u');
       if (originalPage) {
-        window.location.href = decodeURIComponent(originalPage);
+        window.location.href = decodeURIComponent(originalPage); // Regresar a la URL original sin traducción
         return;
       }
     }
 
-    // Si ya está en la página original, solo recarga
+    // Si estamos ya en la URL original, simplemente recargamos
     window.location.reload();
   };
 
   const handleLanguageChange = (languageCode) => {
-    setSelectedLanguage(languageCode);
+    setSelectedLanguage(languageCode); // Actualizar el idioma seleccionado
     if (languageCode === 'es') {
       backToOriginal(); // Volver al contenido original
     } else {
@@ -73,6 +82,7 @@ const TranslatorDynamic = () => {
             onClick={toggleDropdown}
             className="cursor-pointer py-2 pl-2 pr-2 border border-gray-300 bg-white rounded-md shadow-sm"
           >
+            {/* Mostrar la bandera y el nombre del idioma seleccionado */}
             <span className={`${languages.find((lang) => lang.code === selectedLanguage)?.flag} mr-1`} />
             {languages.find((lang) => lang.code === selectedLanguage)?.name}
           </div>
