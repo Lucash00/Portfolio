@@ -17,9 +17,9 @@ const relatedPaths: Record<string, string> = {
 
 const isActive =
   currentPath === href || 
-  (href in relatedPaths && currentPath.startsWith(relatedPaths[href]));  // Solo se marca el enlace activo según su ruta
+  (href in relatedPaths && currentPath === relatedPaths[href]);  // Comparación exacta de las rutas
 
----
+--- 
 
 <astro>
   <div class="flex-1 group md:px-3 lg:px-5 xl:px-7 2xl:px-8 z-40 opacity-100">
