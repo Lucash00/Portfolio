@@ -7,17 +7,19 @@ interface Props {
 var { href, icon, text } = Astro.props; 
 const currentPath = Astro.url.pathname;
 
+// Ruta relacionada para "Sobre mí"
 const relatedPaths: Record<string, string> = { 
   "/proyectos": "/proyecto", 
   "/certificados": "/certificado", 
   "/experiencia": "/experiencia", 
   "/blog": "/post",
-  "/sobremi": "/sobremi" // Aseguramos que la ruta "Sobre mí" se trate correctamente
+  "/sobremi": "/sobremi" // Ruta correcta para "Sobre mí"
 };
 
+// Comparación exacta de la ruta activa
 const isActive =
   currentPath === href || 
-  (href in relatedPaths && currentPath === relatedPaths[href]);  // Comparación exacta de las rutas
+  (href in relatedPaths && currentPath.startsWith(relatedPaths[href]));  // Compara correctamente la ruta activa
 
 --- 
 
