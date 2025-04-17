@@ -67,10 +67,10 @@ const SideMenu = () => {
             isActive={currentPath === "/experiencia"}
           />
           <SideMenuSection
-            href="/sobreMi"
+            href="/sobremi"
             icon="far fa-user"
             text="Sobre mí"
-            isActive={currentPath === "/sobreMi"}
+            isActive={currentPath === "/sobremi"}
           />
           <SideMenuSection
             href={curriculum}

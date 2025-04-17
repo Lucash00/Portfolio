@@ -1,27 +1,23 @@
---- 
-interface Props { 
-  href: string; 
-  icon: string | ImageMetadata; 
-  text: string; 
-} 
-var { href, icon, text } = Astro.props; 
+---
+interface Props {
+  href: string;
+  icon: string | ImageMetadata;
+  text: string;
+}
+var { href, icon, text } = Astro.props;
 const currentPath = Astro.url.pathname;
 
-// Ruta relacionada para "Sobre mí"
-const relatedPaths: Record<string, string> = { 
-  "/proyectos": "/proyecto", 
-  "/certificados": "/certificado", 
-  "/experiencia": "/experiencia", 
-  "/blog": "/post",
-  "/sobremi": "/sobremi" // Ruta correcta para "Sobre mí"
+const relatedPaths: Record<string, string> = {
+  "/proyectos": "/proyecto",
+  "/certificados": "/certificado",
+  "/experiencia": "/experiencia",
+  "/blog": "/post"
 };
 
-// Comparación exacta de la ruta activa
 const isActive =
-  currentPath === href || 
-  (href in relatedPaths && currentPath.startsWith(relatedPaths[href]));  // Compara correctamente la ruta activa
-
---- 
+  currentPath === href ||
+  (href in relatedPaths && currentPath.startsWith(relatedPaths[href]));
+---
 
 <astro>
   <div class="flex-1 group md:px-3 lg:px-5 xl:px-7 2xl:px-8 z-40 opacity-100">
@@ -58,4 +54,3 @@ const isActive =
     }
   </style>
 </astro>
-
