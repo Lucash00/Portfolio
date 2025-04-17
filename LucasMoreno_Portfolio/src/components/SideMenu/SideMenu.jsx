@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SideMenuSection from "./SideMenuSecion.jsx";
+import SideMenuSection from "./SideMenuSection.jsx";
 import curriculum from "../../assets/CurriculumVitae_LucasMoreno_ES.pdf";
 
 const SideMenu = () => {
@@ -67,10 +67,10 @@ const SideMenu = () => {
             isActive={currentPath === "/experiencia"}
           />
           <SideMenuSection
-            href="/sobremi"
+            href="/sobreMi"
             icon="far fa-user"
             text="Sobre mí"
-            isActive={currentPath === "/sobremi"}
+            isActive={currentPath === "/sobreMi"}
           />
           <SideMenuSection
             href={curriculum}
