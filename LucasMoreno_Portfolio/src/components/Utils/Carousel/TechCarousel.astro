@@ -22,6 +22,7 @@ import IconCarousel from "./IconCarousel.astro";
       <IconCarousel alt="ASP.NET" src="/assets/aspnet.svg" />
       <IconCarousel alt="Java" src="/assets/java.svg" />
       <IconCarousel alt="Spring" src="/assets/spring.svg" />
+      <IconCarousel alt="NodeJs" src="/assets/nodejs.svg" />
       <IconCarousel alt="PHP" src="/assets/php.svg" />
       <IconCarousel alt="Linux" src="/assets/linux.svg" />
       <IconCarousel alt="Nginx" src="/assets/nginx.svg" />
@@ -80,6 +81,8 @@ import IconCarousel from "./IconCarousel.astro";
     let scrollLeft = 0;
     let isMouseDown = false;
     let isMouseOverSlider = false;
+    let isUserInteracting = false;
+    let interactionTimeout: ReturnType<typeof setTimeout> | null = null;
 
     window.addEventListener("DOMContentLoaded", () => {
       slider = document.querySelector(".carousel-container");
@@ -126,29 +129,23 @@ import IconCarousel from "./IconCarousel.astro";
     adjustScrollSpeed();
 
     function moveCarousel() {
-      if (!isMouseDown && !isMouseOverSlider && slider) {
+      if (!isMouseDown && !isMouseOverSlider && slider && track) {
         slider.scrollLeft += scrollAmount;
-        if (slider.scrollLeft >= track!.scrollWidth / 2) {
-          slider.scrollLeft = 0;
+        const halfScrollWidth = track.scrollWidth / 2;
+        if (slider.scrollLeft >= halfScrollWidth) {
+          slider.scrollLeft = slider.scrollLeft % halfScrollWidth;
         }
       }
     }
 
     function cloneElements() {
       const items = Array.from(track!.children) as HTMLElement[];
-      const trackWidth = (track as HTMLElement).offsetWidth;
-      const itemWidth = (items[0] as HTMLElement).offsetWidth;
-      const itemsPerViewport = Math.ceil(trackWidth / itemWidth);
-      let currentWidth = 0;
-      for (let i = 0; i < itemsPerViewport; i++) {
-        const item = items[i % items.length].cloneNode(true) as HTMLElement;
-        track!.appendChild(item);
-        currentWidth +=
-          itemWidth +
-          parseInt(
-            window.getComputedStyle(item as HTMLElement).marginRight || "0",
-          );
+      for (let i = 0; i < items.length; i++) {
+        const clone = items[i].cloneNode(true) as HTMLElement;
+        track!.appendChild(clone);
       }
+      // Forzar scroll al inicio exacto
+      slider!.scrollLeft = 0;
     }
 
     function handleMouseDown(e: MouseEvent) {
@@ -162,12 +159,9 @@ import IconCarousel from "./IconCarousel.astro";
       if (isMouseDown) {
         isMouseDown = false;
         slider!.classList.remove("active");
-        const maxScrollLeft = track!.scrollWidth - slider!.clientWidth;
-        if (slider!.scrollLeft <= 0) {
-          slider!.scrollLeft = maxScrollLeft;
-        } else if (slider!.scrollLeft >= maxScrollLeft) {
-          slider!.scrollLeft = 0;
-        }
+        // Ajustar scroll para evitar salto
+        const halfScrollWidth = track!.scrollWidth / 2;
+        slider!.scrollLeft = slider!.scrollLeft % halfScrollWidth;
       }
     }
 
@@ -178,6 +172,8 @@ import IconCarousel from "./IconCarousel.astro";
         const walk = (x - startX) * 1.2;
         slider!.scrollLeft = scrollLeft - walk;
         tooltip!.classList.add("hidden");
+
+        markUserInteracting();
       }
     }
 
@@ -192,12 +188,9 @@ import IconCarousel from "./IconCarousel.astro";
       if (isMouseDown) {
         isMouseDown = false;
         slider!.classList.remove("active");
-        const maxScrollLeft = track!.scrollWidth - slider!.clientWidth;
-        if (slider!.scrollLeft <= 0) {
-          slider!.scrollLeft = maxScrollLeft;
-        } else if (slider!.scrollLeft >= maxScrollLeft) {
-          slider!.scrollLeft = 0;
-        }
+        // Ajustar scroll para evitar salto
+        const halfScrollWidth = track!.scrollWidth / 2;
+        slider!.scrollLeft = slider!.scrollLeft % halfScrollWidth;
       }
     }
 
@@ -209,7 +202,17 @@ import IconCarousel from "./IconCarousel.astro";
         const multiplier = screenWidth <= 768 ? 1.0 : 3;
         const walk = (x - startX) * multiplier;
         slider!.scrollLeft = scrollLeft - walk;
+
+        markUserInteracting();
       }
+    }
+
+    function markUserInteracting() {
+      isUserInteracting = true;
+      if (interactionTimeout) clearTimeout(interactionTimeout);
+      interactionTimeout = setTimeout(() => {
+        isUserInteracting = false;
+      }, 1500); // espera 1.5s desde la última interacción antes de reactivar auto-scroll
     }
 
     function handleMouseEnter() {
