@@ -90,7 +90,7 @@ import IconCarousel from "./IconCarousel.astro";
       tooltip = document.getElementById("tooltip");
       if (slider && track && tooltip) {
         cloneElements();
-        intervalId = setInterval(moveCarousel, 15);
+        intervalId = setInterval(moveCarousel, 13);
         slider.addEventListener("mousedown", handleMouseDown);
         slider.addEventListener("mouseup", handleMouseUp);
         slider.addEventListener("mousemove", handleMouseMove);
@@ -182,6 +182,7 @@ import IconCarousel from "./IconCarousel.astro";
       slider!.classList.add("active");
       startX = e.touches[0].pageX - slider!.offsetLeft;
       scrollLeft = slider!.scrollLeft;
+      tooltip!.classList.add("hidden"); // Ocultar el tooltip al iniciar el arrastre
     }
 
     function handleTouchEnd() {
@@ -191,6 +192,9 @@ import IconCarousel from "./IconCarousel.astro";
         // Ajustar scroll para evitar salto
         const halfScrollWidth = track!.scrollWidth / 2;
         slider!.scrollLeft = slider!.scrollLeft % halfScrollWidth;
+
+        // Reanudar desplazamiento automático
+        markUserInteracting();
       }
     }
 
@@ -210,9 +214,16 @@ import IconCarousel from "./IconCarousel.astro";
     function markUserInteracting() {
       isUserInteracting = true;
       if (interactionTimeout) clearTimeout(interactionTimeout);
+      if (intervalId) {
+        clearInterval(intervalId); // Detener el intervalo actual
+      }
       interactionTimeout = setTimeout(() => {
         isUserInteracting = false;
-      }, 1500); // espera 1.5s desde la última interacción antes de reactivar auto-scroll
+        if (!isUserInteracting) {
+          // Reiniciar el intervalo con la velocidad correcta
+          intervalId = setInterval(moveCarousel, 13);
+        }
+      }, 100); // espera 1.5s desde la última interacción antes de reactivar auto-scroll
     }
 
     function handleMouseEnter() {
