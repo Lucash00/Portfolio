@@ -10,4 +10,8 @@ export default defineConfig({
       noExternal: ['styled-components'], // ✅ Esto es lo necesario
     },
   },
+  experimental: {
+    viewTransitions: true,
+  },
+  site: 'https://www.lucas-moreno-dev.com/',
 });
