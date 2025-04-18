@@ -7,11 +7,8 @@ export default defineConfig({
   integrations: [tailwind(), react()],
   vite: {
     ssr: {
-      noExternal: ['styled-components'], // ✅ Esto es lo necesario
+      noExternal: ['styled-components'],
     },
-  },
-  experimental: {
-    viewTransitions: true,
   },
   site: 'https://www.lucas-moreno-dev.com/',
 });
