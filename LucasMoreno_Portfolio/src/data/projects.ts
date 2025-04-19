@@ -14,7 +14,6 @@ export interface Project {
   startDate: string;
   endDate: string;
   tags: string[];
-  projectUrl?: string;
   logo: string;
   media?: string[];
   links?: {
@@ -36,6 +35,33 @@ export interface Project {
 
 
 export const projects: Project[] = [
+  {
+    title: "BookingApi",
+    titleJob: "API RESTful para gestión de reservas",
+    briefDescription: "BookingAPI es una <strong>API RESTful</strong> desarrollada con <strong>Spring Boot</strong> que permite la gestión completa de <strong>usuarios, roles, reservas, habitaciones, reviews y payments</strong> en un sistema hotelero. La API incluye <strong>seguridad</strong>, <strong>autenticación</strong> y <strong>autorización</strong> con JWT.",
+    description: "BookingAPI es una <strong>API RESTful</strong> desarrollada con <strong>Spring Boot</strong> que permite la gestión completa de <strong>usuarios, roles, reservas, habitaciones, reviews y payments</strong> en un sistema hotelero. A través de <strong>JWT</strong>, se garantiza la <strong>autenticación</strong> y <strong>autorización</strong> segura de los usuarios, permitiendo operaciones sobre reservas, habitaciones y reviews. La API incluye un <strong>sistema de roles</strong> para controlar el acceso a las funcionalidades. Además, se ha integrado <strong>Swagger</strong> para la documentación interactiva de la API, lo que facilita la interacción con los endpoints.",
+    objective: "Desarrollar una API RESTful para gestionar reservas de habitaciones, usuarios, y roles en un sistema de reservas hotelero, implementando autenticación y autorización con JWT y proporcionando documentación interactiva con Swagger.",
+    startDate: "Mar 2025",
+    endDate: "Abr 2025",
+    tags: ["API RESTful", "Java", "Spring Boot", "Spring Security", "Spring Data JPA", "BCrypt", "Jakarta", "JWT", "Swagger"],
+    logo: `${BookingApiMediaFolder}/logo.png`,
+    media: [
+      `${BookingApiMediaFolder}/1.png`,
+      `${BookingApiMediaFolder}/2.png`
+    ],
+    links: {
+      codeRepository: "https://github.com/Lucash00/Bookingapi.git"
+    },
+    team: {
+      contributors: [
+        { "name": "Lucas Moreno", "role": "Desarrollador Principal" }
+      ]
+    },
+    developmentProcess: {
+      methodology: "Autodidacta",
+      timeline: "Mar 2025 - Abr 2025"
+    }
+  },
   {
     title: "Bafre iOS",
     titleJob: "Migración de Aplicación Bafre iOS",
@@ -73,7 +99,6 @@ export const projects: Project[] = [
       "Mobile Development",
       "CI/CD"
     ],
-    projectUrl: "https://example.com/project-one",
     logo: bafreMediaFolder + "/logo.png",
     media: [
       bafreMediaFolder + "/1.png",
@@ -96,7 +121,7 @@ export const projects: Project[] = [
         { name: "Victor Lillo Godoy", role: "Desarrollador Fullstack" }
       ],
       externalCollaborators: [
-        { name: "External Collaborator", role: "Consultant" }
+        { name: "Colaborador de Bafre", role: "Cliente" }
       ]
     },
     developmentProcess: {
@@ -128,7 +153,6 @@ Posteriormente, reforcé las <strong>medidas de seguridad</strong> del sitio web
       "MySQL",
       "DNS"
     ],
-    projectUrl: "https://la11mil.es/",
     logo: `${la11milMediaFolder}/logo.png`, 
     media: [
       `${la11milMediaFolder}/1.png`,
@@ -144,8 +168,8 @@ Posteriormente, reforcé las <strong>medidas de seguridad</strong> del sitio web
     },
     team: {
       contributors: [
-        { name: "Lucas Moreno", role: "Desarrollador Fulstack" },
-        { name: "Victor Lillo Godoy", role: "Desarrollador Fulstack" }
+        { name: "Lucas Moreno", role: "Desarrollador Fullstack" },
+        { name: "Victor Lillo Godoy", role: "Desarrollador Fullstack" }
       ]
     },
     developmentProcess: {
@@ -180,7 +204,7 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
     logo: "/CRM/logo.png",
     team: {
       contributors: [
-        { name: "Lucas Moreno", role: "Desarrollador Web" }
+        { name: "Lucas Moreno", role: "Desarrollador Fullstack" }
       ] 
     },
     developmentProcess: {
@@ -188,34 +212,6 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
       timeline: "Sep 2023 - Oct 2023"
     },
     company: "ControlNet SL"
-  },
-  {
-    title: "BookingApi",
-    titleJob: "API RESTful para gestión de reservas",
-    briefDescription: "BookingAPI es una API RESTful desarrollada con Spring Boot para gestionar reservas de habitaciones en un sistema de gestión hotelero. La API incluye autenticación y autorización con JWT, manejo de usuarios, roles y reservas.",
-    description: "BookingAPI permite la gestión completa de usuarios, reservas y habitaciones en un sistema hotelero. A través de JWT, se garantiza la autenticación y autorización segura de los usuarios, permitiendo operaciones sobre reservas y habitaciones. La API incluye un sistema de roles para controlar el acceso a las funcionalidades. Además, se ha integrado Swagger para la documentación interactiva de la API, lo que facilita la interacción con los endpoints.",
-    objective: "Desarrollar una API RESTful para gestionar reservas de habitaciones, usuarios, y roles en un sistema de reservas hotelero, implementando autenticación y autorización con JWT y proporcionando documentación interactiva con Swagger.",
-    startDate: "Mar 2025",
-    endDate: "Abr 2025",
-    tags: ["Java", "Spring", "API RESTful", "Swagger"],
-    projectUrl: "https://3a32f515.moviesdetails-react.pages.dev/",
-    logo: `${BookingApiMediaFolder}/logo.png`,
-    media: [
-      `${BookingApiMediaFolder}/1.png`,
-      `${BookingApiMediaFolder}/2.png`
-    ],
-    links: {
-      codeRepository: "https://github.com/Lucash00/Bookingapi.git"
-    },
-    team: {
-      contributors: [
-        { "name": "Lucas Moreno", "role": "Desarrollador Principal" }
-      ]
-    },
-    developmentProcess: {
-      methodology: "Autodidacta",
-      timeline: "Mar 2025 - Abr 2025"
-    }
   },  
   {
     title: "MoviesDetails",
@@ -226,7 +222,6 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
     startDate:"Jan 2023",
     endDate:"Abr 2023",
     tags: ["React", "TMDb API", "JavaScript", "Movie Catalog", "API Integration"],
-    projectUrl: "https://3a32f515.moviesdetails-react.pages.dev/", 
     logo: `${moviesDetailsMediaFolder}/logo.png`, 
     media: [
       `${moviesDetailsMediaFolder}/1.png`,
@@ -241,7 +236,7 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
     },
     team: {
       contributors: [
-        { name: "Lucas Moreno", role: "Desarrollador Principal" }
+        { name: "Lucas Moreno", role: "Desarrollador Fullstack" }
       ]
     },
     developmentProcess: {
@@ -277,9 +272,6 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
       methodology: "Autodidacta",
       timeline: "Jun 2023 - Nov 2023"
     },
-    company: "Proyecto Personal"
+    company: "Autodidacta"
   }
-  
-
-  // Otros proyectos
 ];
