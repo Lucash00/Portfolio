@@ -3,12 +3,14 @@ import MenuSection from "./MenuSection.astro";
 import cvES from "../../assets/CV_Lucas_Moreno_Corral_ES.pdf";
 import cvEN from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
 
-// Obtener idioma desde query params
-const url = new URL(Astro.request.url);
-const lang = url.searchParams.get('_x_tr_hl') || url.searchParams.get('hl');
+// Lógica para seleccionar el CV correcto basado en headers
+const userAgent = Astro.request.headers.get("user-agent") || "";
+const referer = Astro.request.headers.get("referer") || "";
 
-// Determinar qué CV usar
-const curriculum = (!lang || lang === "es") ? cvES : cvEN;
+const isGoogleTranslate =
+  referer.includes("translate.google") || userAgent.includes("GoogleTranslate");
+
+const curriculum = isGoogleTranslate ? cvEN : cvES;
 ---
 
 <header id="header" class="header fixed flex md:w-[80%] md:mr-[10%] md:-ml-5 lg:mx-[10%] md:z-40 md:justify-between md:h-auto md:rounded-2xl md:mt-10 md:right-0">
@@ -18,15 +20,15 @@ const curriculum = (!lang || lang === "es") ? cvES : cvEN;
     class="hidden md:flex my-auto md:mx-4 lg:ml-8 w-14 rounded-full justify-start z-40 opacity-100 md:left-0"
   />
 
-  <!-- Menú principal para pantallas grandes -->
   <nav class="hidden md:flex items-end justify-end z-40">
     <MenuSection href="/" icon="far fa-home" text="Inicio" />
     <MenuSection href="/proyectos" icon="far fa-folder-open" text="Proyectos" />
     <MenuSection href="/certificados" icon="far fa-file-certificate" text="Certificados" />
     <MenuSection href="/experiencia" icon="far fa-briefcase" text="Experiencia" />
     <MenuSection href="/sobreMi" icon="far fa-user" text="Sobre mí" />
+    <!-- Aquí se pasa el 'curriculum' como href para el botón de descargar -->
     <MenuSection href={curriculum} icon="far fa-file-alt" text="Descargar CV" />
-  </>
+  </nav>
 </header>
 
 <style>
@@ -42,7 +44,7 @@ const curriculum = (!lang || lang === "es") ? cvES : cvEN;
   }
 </style>
 
-<script>
+<script is:inline>
   window.addEventListener("scroll", () => {
     const header = document.getElementById("header");
     if (header) {

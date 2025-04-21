@@ -11,4 +11,5 @@ export default defineConfig({
     },
   },
   site: 'https://www.lucas-moreno-dev.com/',
+  output: 'server',
 });
