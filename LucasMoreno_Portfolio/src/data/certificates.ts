@@ -38,7 +38,7 @@ export interface Certificate {
       provider: "freeCodeCamp",
       description: "Certificación que valida conceptos de visualizar datos de forma <strong>interactiva</strong> y <strong>estática</strong>, usando <strong>JavaScript</strong> y bibliotecas como <strong>D3.js</strong>, enfocándome en la representación clara y efectiva de la información.",
       date: "Octubre 2024",
-      tags: ["Data Visualization", "JavaScript", "D3.js", "Data Representation"],
+      tags: ["Data Visualization", "JavaScript", "D3.js", "Chart.js", "Data Representation"],
       logo: "/Certificates/DataVisualization/DataVisualization.svg",
       media: ["/Certificates/DataVisualization/DataVisualization.png"],
       certificateUrl: "https://www.freecodecamp.org/certification/LucasMorenoDev/data-visualization",

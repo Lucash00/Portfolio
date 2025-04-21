@@ -87,8 +87,8 @@ export const projects: Project[] = [
       <li><strong>VR</strong>: Visualización de inmuebles en realidad virtual mediante imágenes 360º.</li>
       </ul>`,
     objective: "Migración completa de la Aplicación. Actualizar y modernizar la aplicación Bafre iOS para <strong>mejorar su rendimiento</strong>, <strong>seguridad</strong> y <strong>experiencia de usuario</strong>, utilizando tecnologías actuales y <strong>facilitando su mantenimiento</strong> futuro mediante <strong>CI/CD</strong>.",
-    startDate: "Jan 2022",
-    endDate: "Dec 2022",
+    startDate: "Sept 2023",
+    endDate: "Dec 2023",
     tags: [
       "Swift",
       "SwiftUI",
@@ -150,7 +150,6 @@ Posteriormente, reforcé las <strong>medidas de seguridad</strong> del sitio web
       "Optimización de Rendimiento",
       "Limpieza de Malwares",
       "PHP",
-      "MySQL",
       "DNS"
     ],
     logo: `${la11milMediaFolder}/logo.png`, 
@@ -199,7 +198,8 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
       "Debugging",
       "Mantenimiento de Software",
       "Optimización",
-      "Corrección de Errores"
+      "Corrección de Errores",
+      "AWS"
     ],
     logo: "/CRM/logo.png",
     team: {
@@ -221,7 +221,7 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
     objective: "Crear un <strong>catálogo interactivo de películas</strong> con datos actualizados de manera continua, utilizando <strong>React</strong> y la <strong>API TMDb</strong> para obtener la información de las películas, trailers, géneros y demás.",
     startDate:"Jan 2023",
     endDate:"Abr 2023",
-    tags: ["React", "TMDb API", "JavaScript", "Movie Catalog", "API Integration"],
+    tags: ["React", "JavaScript", "API Integration", "Async/Await"],
     logo: `${moviesDetailsMediaFolder}/logo.png`, 
     media: [
       `${moviesDetailsMediaFolder}/1.png`,
