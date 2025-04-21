@@ -1,6 +1,14 @@
 ---
 import MenuSection from "./MenuSection.astro";
-import curriculum from "../../assets/CurriculumVitae_LucasMoreno_ES.pdf";
+import cvES from "../../assets/CV_Lucas_Moreno_Corral_ES.pdf";
+import cvEN from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
+
+// Obtener idioma desde query params
+const url = new URL(Astro.request.url);
+const lang = url.searchParams.get('_x_tr_hl') || url.searchParams.get('hl');
+
+// Determinar qué CV usar
+const curriculum = (!lang || lang === "es") ? cvES : cvEN;
 ---
 
 <header id="header" class="header fixed flex md:w-[80%] md:mr-[10%] md:-ml-5 lg:mx-[10%] md:z-40 md:justify-between md:h-auto md:rounded-2xl md:mt-10 md:right-0">

@@ -1,13 +1,22 @@
 import { useState, useEffect } from "react";
 import SideMenuSection from "./SideMenuSection.jsx";
-import curriculum from "../../assets/CurriculumVitae_LucasMoreno_ES.pdf";
+import cvES from "../../assets/CV_Lucas_Moreno_Corral_ES.pdf";
+import cvEN from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
 
 const SideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState("");
+  const [curriculum, setCurriculum] = useState(cvES); // valor por defecto
 
   useEffect(() => {
-    setCurrentPath(window.location.pathname);
+    const path = window.location.pathname;
+    setCurrentPath(path);
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const langParam = searchParams.get("_x_tr_hl") || searchParams.get("hl");
+    const lang = langParam || (path.startsWith("/en") ? "en" : "es");
+
+    setCurriculum(lang === "en" ? cvEN : cvES);
   }, []);
 
   const toggleMenu = () => {
