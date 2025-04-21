@@ -138,8 +138,8 @@ export const experiences: Experience[] = [
       `El programa <em>DAW</em> ofreció una formación completa en el diseño, desarrollo y mantenimiento de aplicaciones web modernas, utilizando un enfoque integral para la programación <strong>Backend</strong> y <strong>Frontend</strong>.  
    A lo largo de dos años, desarrollé competencias avanzadas en el uso de tecnologías clave, <strong>herramientas de desarrollo y metodologías</strong> de trabajo colaborativo, <strong>destacándome en proyectos individuales y en equipo</strong>.  
    Durante mi formación, creé aplicaciones funcionales y escalables que integraban las mejores prácticas de desarrollo web, priorizando la <strong>seguridad</strong>, el <strong>rendimiento</strong> y la <strong>experiencia de usuario</strong>.`,
-    startDate: "Sept 2020",
-    endDate: "Jul 2022",
+    startDate: "Sept 2021",
+    endDate: "Jun 2023",
     location: "Cádiz, España",
     tags: [
       "HTML5",
@@ -228,7 +228,7 @@ export const experiences: Experience[] = [
    Aprendí a gestionar <strong>infraestructuras de TI</strong>, resolver problemas de <strong>hardware</strong> y <strong>software</strong>, y optimizar el rendimiento de <strong>sistemas</strong> y <strong>redes</strong>.  
    Durante el curso, participé en proyectos prácticos que incluyeron, entre otras cosas, la implementación de <strong>redes</strong>, <strong>configuración de servidores</strong>, <strong>gestión de usuarios</strong>, <strong>seguridad informática</strong> y otros aspectos...`,
     startDate: "Sept 2018",
-    endDate: "Jul 2020",
+    endDate: "Jun 2020",
     location: "Cádiz, España",
     tags: [
       "Sistemas Operativos",
