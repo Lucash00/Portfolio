@@ -1,4 +1,11 @@
 // src/data/projects.ts
+const devOpsTemplateMediaFolder = "/DevOpsTemplate";
+const utschMediaFolder = "/Utsch";
+const cubocMediaFolder = "/Cuboc";
+const indekMediaFolder = "/IndeK";
+const tourismWithStyleMediaFolder = "/TourismWithStyle";
+const russellsMediaFolder = "/Russells";
+const iceEditorialMediaFolder = "/ICEditorial";
 const bafreMediaFolder = "/BafreMedia";
 const la11milMediaFolder = "/la11mil";
 const rotaPlaceMediaFolder = "/RotaPlace";
@@ -35,6 +42,325 @@ export interface Project {
 
 
 export const projects: Project[] = [
+  {
+    title: "DevOps Template GCP",
+    titleJob: "Template empresarial de DevOps e Infrastructure as Code en GCP",
+    briefDescription: "Diseño y desarrollo de un <strong>template empresarial reutilizable de DevOps</strong> con <strong>Terraform</strong> y <strong>Google Cloud Platform</strong>, que automatiza despliegues <strong>fullstack</strong> multi-ambiente (Preview, Staging, Production) con <strong>CI/CD</strong>, <strong>Cloud Run</strong> y <strong>Cloudflare</strong>.",
+    description: `Durante mi etapa en <strong>Databay Solutions</strong>, diseñé y desarrollé la piedra angular de la infraestructura cloud de la empresa: un <strong>template DevOps reutilizable</strong> basado en <strong>Infrastructure as Code (Terraform)</strong> para desplegar aplicaciones fullstack en <strong>GCP</strong> de forma automatizada, segura y escalable.
+
+<strong>Arquitectura principal:</strong>
+      <ul>
+      <li><strong>Terraform modular:</strong> Módulos para Artifact Registry, Cloud Run, GCS (frontend estático), Cloudflare DNS/Workers e IAM con principio de mínimo privilegio.</li>
+      <li><strong>Frontend trimodal:</strong> Hosting estático en GCS, SSR en Cloud Run o arquitectura híbrida con routing inteligente.</li>
+      <li><strong>Backend y microservicios:</strong> Cloud Run con auto-scaling, health checks y aislamiento de fallos.</li>
+      <li><strong>Cloudflare:</strong> Workers para routing, DNS dinámico, SSL/TLS y CDN global.</li>
+      <li><strong>CI/CD:</strong> GitHub Actions (build, deploy, detect-changes, validación Terraform, rollout gradual 10% → 50% → 100%).</li>
+      </ul>
+
+<strong>Impacto:</strong> Reducción del ~90% en tiempo de despliegue, zero-downtime deployments, infraestructura versionada y documentación técnica para adopción en todos los proyectos cliente.
+
+_Repositorio interno de Databay Solutions — no disponible públicamente por ser código propietario._`,
+    objective: "Crear una base de infraestructura <strong>reutilizable, automatizada y segura</strong> que estandarice los despliegues en GCP para todos los proyectos de la empresa, reduciendo errores manuales y el time-to-market de nuevos clientes.",
+    startDate: "Ago 2025",
+    endDate: "May 2026",
+    tags: [
+      "Terraform",
+      "GCP",
+      "Cloud Run",
+      "Docker",
+      "GitHub Actions",
+      "CI/CD",
+      "Cloudflare",
+      "Infrastructure as Code",
+      "Artifact Registry",
+      "Cloud Storage",
+      "DevOps"
+    ],
+    logo: `${devOpsTemplateMediaFolder}/logo.png`,
+    company: "Databay Solutions"
+  },
+  {
+    title: "UTSCH",
+    titleJob: "Plataforma digital de matrículas personalizadas",
+    briefDescription: "Desarrollo <strong>fullstack</strong> y despliegue en producción de la plataforma de <strong>UTSCH España</strong> para gestión y venta de matrículas, con integración <strong>DGT</strong>, antifraude <strong>Kount</strong> e infraestructura <strong>GCP</strong> automatizada.",
+    description: `Desarrollo y despliegue completo de la plataforma digital de <strong>UTSCH España</strong> para la gestión y venta de matrículas personalizadas, utilizando el template DevOps interno (<strong>Terraform + GCP</strong>).
+
+<strong>Responsabilidades principales:</strong>
+      <ul>
+      <li><strong>DevOps:</strong> Ambientes Preview, Staging y Production; CI/CD con GitHub Actions; Cloud Run y Cloud Storage; DNS y routing con Cloudflare Workers.</li>
+      <li><strong>Frontend:</strong> React y Vue.js.</li>
+      <li><strong>Backend:</strong> Prisma ORM con PostgreSQL; API REST; panel de administración.</li>
+      <li><strong>Integraciones críticas:</strong> API oficial de la <strong>DGT</strong> (validaciones en tiempo real), <strong>Kount</strong> (antifraude y scoring), APIs de terceros y sistema de pagos seguros.</li>
+      </ul>
+
+_Plataforma en producción estable con escalabilidad automática y despliegues sin downtime._`,
+    objective: "Entregar una plataforma <strong>escalable, segura y en producción</strong> para la venta de matrículas digitales, con integraciones oficiales (DGT) y controles antifraude robustos.",
+    startDate: "Ago 2025",
+    endDate: "May 2026",
+    tags: [
+      "React",
+      "Vue.js",
+      "Prisma",
+      "PostgreSQL",
+      "Terraform",
+      "GCP",
+      "Cloud Run",
+      "GitHub Actions",
+      "Cloudflare",
+      "Kount",
+      "API REST",
+      "DGT API"
+    ],
+    logo: `${utschMediaFolder}/logo.png`,
+    links: {
+      website: "https://utsch.es/"
+    },
+    team: {
+      contributors: [
+        { name: "Lucas Moreno", role: "Desarrollador Fullstack & DevOps" }
+      ]
+    },
+    developmentProcess: {
+      methodology: "Agile",
+      timeline: "Ago 2025 - May 2026"
+    },
+    company: "Databay Solutions"
+  },
+  {
+    title: "Cuboc",
+    titleJob: "Plataforma de gestión empresarial con arquitectura híbrida",
+    briefDescription: "Desarrollo <strong>fullstack</strong> de plataforma empresarial con <strong>Next.js</strong>, <strong>React</strong> y <strong>Prisma</strong>, usando infraestructura <strong>GCP</strong> en dev/staging y despliegue optimizado en <strong>Vercel</strong> para producción.",
+    description: `Desarrollo fullstack de la plataforma empresarial <strong>Cuboc</strong> con arquitectura híbrida: infraestructura DevOps propia en desarrollo y staging, y deployment final en <strong>Vercel</strong> para producción.
+
+<strong>Arquitectura y desarrollo:</strong>
+      <ul>
+      <li><strong>Dev/Staging:</strong> Terraform, GCP Cloud Run, preview environments por PR, CI/CD con GitHub Actions.</li>
+      <li><strong>Producción:</strong> Vercel con Edge Functions, SSR/SSG optimizado y CDN global.</li>
+      <li><strong>Stack:</strong> React, Next.js, Vue.js (componentes específicos), Prisma, PostgreSQL.</li>
+      <li><strong>Seguridad y SEO:</strong> Integración <strong>Kount</strong>, Open Graph, autenticación/autorización y panel administrativo.</li>
+      </ul>`,
+    objective: "Construir una plataforma empresarial <strong>moderna y performante</strong>, con flujos de despliegue automatizados en múltiples entornos y optimización de producción en Vercel.",
+    startDate: "Ago 2025",
+    endDate: "May 2026",
+    tags: [
+      "React",
+      "Next.js",
+      "Vue.js",
+      "Prisma",
+      "PostgreSQL",
+      "Vercel",
+      "Terraform",
+      "GCP",
+      "GitHub Actions",
+      "Kount",
+      "Open Graph",
+      "SSR"
+    ],
+    logo: `${cubocMediaFolder}/logo.png`,
+    links: {
+      website: "https://cuboc-app.vercel.app/es/"
+    },
+    team: {
+      contributors: [
+        { name: "Lucas Moreno", role: "Desarrollador Fullstack & DevOps" }
+      ]
+    },
+    developmentProcess: {
+      methodology: "Agile",
+      timeline: "Ago 2025 - May 2026"
+    },
+    company: "Databay Solutions"
+  },
+  {
+    title: "INDEK API",
+    titleJob: "API interna de gestión empresarial y procesamiento de datos",
+    briefDescription: "API <strong>REST</strong> interna para <strong>INDE-K</strong> con procesamiento avanzado de <strong>Excel</strong>, análisis con <strong>Pandas</strong>, caché <strong>Redis</strong> y despliegue en <strong>Cloud Run</strong> sobre <strong>GCP</strong>.",
+    description: `Desarrollo de API REST interna para <strong>INDE-K</strong> orientada al procesamiento de hojas de cálculo y automatización de procesos de control interno, reportes y datos complejos.
+
+<strong>Funcionalidades clave:</strong>
+      <ul>
+      <li><strong>Procesamiento Excel:</strong> Import/export, validación, transformaciones y generación de reportes automatizados.</li>
+      <li><strong>Backend:</strong> Node.js/Express y Python/FastAPI; colas asíncronas para archivos grandes.</li>
+      <li><strong>Infraestructura:</strong> Terraform, Cloud Run, Cloud Storage, Redis, Secrets Manager y Cloud Monitoring.</li>
+      <li><strong>Seguridad:</strong> Autenticación JWT, control de acceso por roles y auditoría completa de operaciones.</li>
+      </ul>
+
+_Sistema interno privado — no se puede mostrar código ni enlaces por protección de datos._`,
+    objective: "Automatizar procesos manuales empresariales mediante una API <strong>robusta, escalable y auditable</strong> para el procesamiento eficiente de datos en Excel.",
+    startDate: "Ago 2025",
+    endDate: "May 2026",
+    tags: [
+      "Node.js",
+      "Express",
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "Redis",
+      "Pandas",
+      "Terraform",
+      "GCP",
+      "Cloud Run",
+      "GitHub Actions",
+      "JWT"
+    ],
+    logo: `${indekMediaFolder}/logo.png`,
+    links: {
+      website: "https://inde-k.com/"
+    },
+    team: {
+      contributors: [
+        { name: "Lucas Moreno", role: "Desarrollador Backend & DevOps" }
+      ]
+    },
+    developmentProcess: {
+      methodology: "Agile",
+      timeline: "Ago 2025 - May 2026"
+    },
+    company: "Databay Solutions"
+  },
+  {
+    title: "Tourism With Style",
+    titleJob: "Implementación ERP Odoo 19 para agencia de turismo de lujo",
+    briefDescription: "Implementación completa de <strong>Odoo 19</strong> para agencia turística: consultoría, <strong>módulos personalizados</strong>, contabilidad con <strong>Verifactu (AEAT)</strong>, migración de datos y formación al cliente.",
+    description: `Proyecto end-to-end de implementación de <strong>ERP Odoo 19</strong> para <strong>Tourism With Style</strong>, agencia de turismo de lujo, desde análisis de requisitos hasta puesta en producción.
+
+<strong>Módulos implementados y personalizados:</strong>
+      <ul>
+      <li><strong>Ventas y Compras:</strong> Paquetes turísticos, cotizaciones, proveedores hoteleros y control de márgenes.</li>
+      <li><strong>CRM y Contactos:</strong> Segmentación B2B/B2C, leads, historial de viajes y fidelización.</li>
+      <li><strong>Inventario:</strong> Disponibilidad de servicios, cupos y reservas temporales.</li>
+      <li><strong>Contabilidad:</strong> Plan contable español, facturación automatizada e integración <strong>Verifactu (AEAT)</strong> con envío automático y trazabilidad.</li>
+      </ul>
+
+<strong>Desarrollo técnico:</strong> 6+ módulos custom en Python, vistas XML/QWeb, API cliente AEAT, automatizaciones, reports y migración desde sistema legacy.
+
+_Reducción estimada del 80% en tiempo de procesos manuales._`,
+    objective: "Digitalizar y automatizar la operativa de la agencia con un ERP <strong>adaptado al negocio turístico</strong>, cumpliendo normativa fiscal española (Verifactu) y formando al equipo del cliente.",
+    startDate: "Ago 2025",
+    endDate: "May 2026",
+    tags: [
+      "Odoo 19",
+      "Python",
+      "PostgreSQL",
+      "XML",
+      "QWeb",
+      "Verifactu",
+      "Docker",
+      "Nginx",
+      "ERP",
+      "Consultoría"
+    ],
+    logo: `${tourismWithStyleMediaFolder}/logo.png`,
+    links: {
+      website: "https://www.tourismwithstyle.com/"
+    },
+    team: {
+      contributors: [
+        { name: "Lucas Moreno", role: "Consultor Odoo & Desarrollador de Módulos" }
+      ]
+    },
+    developmentProcess: {
+      methodology: "Agile",
+      timeline: "Ago 2025 - May 2026"
+    },
+    company: "Databay Solutions"
+  },
+  {
+    title: "Russells",
+    titleJob: "ERP Odoo 19 para marketplace gourmet multi-vendedor",
+    briefDescription: "Implementación de <strong>Odoo 19</strong> como ERP de <strong>marketplace</strong> gourmet: módulo custom de vendedores, <strong>comisiones automatizadas</strong>, pedidos multi-vendedor y contabilidad adaptada al modelo marketplace.",
+    description: `Implementación completa de <strong>Odoo 19</strong> para <strong>Russells</strong>, marketplace de comidas y aperitivos gourmet, con lógica específica multi-vendedor.
+
+<strong>Módulo personalizado — Gestión de Marketplace:</strong>
+      <ul>
+      <li><strong>Dashboard de vendedores:</strong> Panel autónomo de productos, ventas y comisiones.</li>
+      <li><strong>Comisiones automatizadas:</strong> Motor configurable por categoría, volumen y liquidaciones.</li>
+      <li><strong>Pedidos multi-vendedor:</strong> División automática, notificaciones y tracking por sub-pedido.</li>
+      <li><strong>Contabilidad:</strong> Facturación de comisiones, pagos a vendedores y reports por vendedor.</li>
+      </ul>
+
+<strong>Consultoría:</strong> Análisis del modelo marketplace, formación al equipo y parametrización fiscal de productos alimentarios.
+
+_Reducción del ~70% en tiempo de gestión administrativa._`,
+    objective: "Operar un marketplace gourmet con <strong>transparencia en comisiones</strong>, autonomía de vendedores y escalabilidad para incorporar nuevos partners sin fricción operativa.",
+    startDate: "Ago 2025",
+    endDate: "May 2026",
+    tags: [
+      "Odoo 19",
+      "Python",
+      "PostgreSQL",
+      "XML",
+      "QWeb",
+      "Marketplace",
+      "ERP",
+      "Docker",
+      "Nginx",
+      "Consultoría"
+    ],
+    logo: `${russellsMediaFolder}/logo.png`,
+    links: {
+      website: "https://www.russells.es/"
+    },
+    team: {
+      contributors: [
+        { name: "Lucas Moreno", role: "Consultor Odoo & Desarrollador de Módulos" }
+      ]
+    },
+    developmentProcess: {
+      methodology: "Agile",
+      timeline: "Ago 2025 - May 2026"
+    },
+    company: "Databay Solutions"
+  },
+  {
+    title: "ICEditorial",
+    titleJob: "Migración PrestaShop 9 y módulos de sincronización",
+    briefDescription: "Migración de tienda editorial a <strong>PrestaShop 9</strong> y desarrollo de dos módulos custom: sincronización de <strong>pedidos vía API</strong> y sincronización de <strong>catálogo por cron optimizado</strong> (batch processing).",
+    description: `Migración completa de la tienda online de <strong>ICEditorial</strong> desde versión legacy a <strong>PrestaShop 9</strong>, incluyendo base de datos, tema, pagos, envíos y SEO (redirecciones 301).
+
+<strong>Módulo 1 — Sincronización de pedidos:</strong>
+      <ul>
+      <li>Hook de captura de pedidos y envío en tiempo real vía API REST a sistema externo.</li>
+      <li>Retry automático, logs de auditoría y panel de monitoreo en backoffice.</li>
+      </ul>
+
+<strong>Módulo 2 — Sincronización de productos (cron optimizado):</strong>
+      <ul>
+      <li>Procesamiento por lotes (batch) y sincronización incremental para catálogos grandes.</li>
+      <li>Resolución de timeouts y límites de memoria de cronjobs nativos de PrestaShop (~10x más rápido).</li>
+      </ul>
+
+<strong>Infraestructura:</strong> Linux, Nginx, SSL/TLS, MySQL optimizado para e-commerce, backups automáticos y caché.`,
+    objective: "Completar la migración sin pérdida de datos y eliminar errores manuales en inventario y pedidos mediante <strong>sincronización fiable y monitorizable</strong> con sistemas externos.",
+    startDate: "Ago 2025",
+    endDate: "May 2026",
+    tags: [
+      "PrestaShop 9",
+      "PHP",
+      "MySQL",
+      "JavaScript",
+      "API REST",
+      "Cron Jobs",
+      "Docker",
+      "Nginx",
+      "SSL/TLS",
+      "E-commerce"
+    ],
+    logo: `${iceEditorialMediaFolder}/logo.png`,
+    links: {
+      website: "https://nuevo.iceditorial.com/"
+    },
+    team: {
+      contributors: [
+        { name: "Lucas Moreno", role: "Desarrollador Backend & Especialista PrestaShop" }
+      ]
+    },
+    developmentProcess: {
+      methodology: "Agile",
+      timeline: "Ago 2025 - May 2026"
+    },
+    company: "Databay Solutions"
+  },
   {
     title: "BookingApi",
     titleJob: "API RESTful para gestión de reservas",
