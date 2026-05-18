@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import SideMenuSection from "./SideMenuSection.jsx";
-import curriculum from "../../assets/CV_Lucas_Moreno_Corral_ES.pdf";
+import curriculum from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
 
 const SideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
