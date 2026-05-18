@@ -384,7 +384,7 @@ _Reducción del ~70% en tiempo de gestión administrativa._`,
       ]
     },
     developmentProcess: {
-      methodology: "Autodidacta",
+      methodology: "Agile",
       timeline: "Mar 2025 - Abr 2025"
     }
   },
@@ -566,7 +566,7 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
       ]
     },
     developmentProcess: {
-      methodology: "Autodidacta",
+      methodology: "Agile",
       timeline: "Sep 2023 - Nov 2023"
     }
   },
@@ -595,9 +595,9 @@ _No se puede mostrar el código ni el Link por Proteccion de Datos_`,
       ]
     },
     developmentProcess: {
-      methodology: "Autodidacta",
+      methodology: "Agile",
       timeline: "Jun 2023 - Nov 2023"
     },
-    company: "Autodidacta"
+    company: "IES Castillo de Luna"
   }
 ];
