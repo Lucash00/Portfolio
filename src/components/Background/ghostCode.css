@@ -1,0 +1,147 @@
+/* Tema tipo VS Code Dark+ — solo texto, sin fondo de editor */
+.ghost-code-root {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.11;
+  /* Emborrona solo el código fantasma, no el gradiente ni el texto */
+  filter: blur(2.5px);
+  transform: translateZ(0);
+  font-family: "Cascadia Code", "Fira Code", "Consolas", "Monaco", monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 640px) {
+  .ghost-code-root {
+    opacity: 0.13;
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ghost-code-root {
+    opacity: 0.15;
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .ghost-code-root {
+    font-size: 1.35rem;
+  }
+}
+
+.ghost-code-mask {
+  width: 100%;
+  height: 100%;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 12%,
+    black 88%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 12%,
+    black 88%,
+    transparent 100%
+  );
+}
+
+.ghost-code-columns {
+  width: 100%;
+  height: 100%;
+  padding: 2rem clamp(0.75rem, 3vw, 2rem);
+}
+
+.gc-column {
+  width: 100%;
+  max-width: 100%;
+  animation: gc-scroll linear infinite;
+  will-change: transform;
+}
+
+.gc-line {
+  white-space: pre;
+  margin-bottom: 0.45rem;
+  user-select: none;
+}
+
+/* Tokens — colores de editor, resto gris */
+.gc-plain {
+  color: #6b7280;
+}
+
+.gc-comment {
+  color: #5a6b5a;
+  font-style: italic;
+}
+
+.gc-keyword {
+  color: #569cd6;
+}
+
+.gc-string {
+  color: #ce9178;
+}
+
+.gc-function {
+  color: #dcdcaa;
+}
+
+.gc-type {
+  color: #4ec9b0;
+}
+
+.gc-property {
+  color: #9cdcfe;
+}
+
+.gc-number {
+  color: #b5cea8;
+}
+
+.gc-operator {
+  color: #9ca3af;
+}
+
+.gc-punctuation {
+  color: #6b7280;
+}
+
+@keyframes gc-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gc-column {
+    animation: none;
+  }
+
+  .ghost-code-root {
+    opacity: 0.08;
+  }
+}
+
+@media (max-width: 639px) {
+  .ghost-code-root {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost-code-root {
+    filter: none;
+  }
+}
