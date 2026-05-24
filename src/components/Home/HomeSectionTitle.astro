@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  class?: string;
+}
+
+const { title, class: className = "" } = Astro.props;
+---
+
+<h2
+  class:list={[
+    "home-section-title text-left text-white font-extrabold tracking-tight text-shadow text-balance",
+    "text-lg sm:text-xl md:text-2xl lg:text-[1.75rem]",
+    className,
+  ]}
+>
+  {title}
+</h2>
+
+<style>
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.75);
+  }
+</style>
