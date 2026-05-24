@@ -1,3 +1,8 @@
+const databaySolutionsMediaFolder = "/DatabaySolutions";
+const certificatesMediaFolder = "/Certificates";
+const controlNetMediaFolder = "/ControlNet";
+const tecnicoMediaFolder = "/tecnico";
+
 export interface Experience {
   id: number;
   title: string;
@@ -14,11 +19,98 @@ export interface Experience {
   skills?: string[];
   certificateUrl?: string[];
   projectUrl?: string[];
+  companyUrl?: string;
+  companyLinkLabel?: string;
   highlights?: string[];
   responsibilities?: string[];
 }
 
 export const experiences: Experience[] = [
+  {
+    id: 5,
+    title: "Desarrollador Fullstack & DevOps",
+    provider: "Databay Solutions",
+    briefDescription: `En <strong>Databay Solutions</strong>, consultoría tecnológica, desarrollé soluciones <strong>fullstack</strong> y <strong>DevOps</strong> para clientes de sectores muy distintos: desde <strong>ERP Odoo</strong> y <strong>e-commerce PrestaShop</strong> hasta <strong>plataformas en GCP</strong> con <strong>Terraform</strong>, <strong>IA</strong>, <strong>IoT</strong> e integraciones a medida.`,
+    description: `<strong>Databay Solutions</strong> (<a href="https://databay.solutions" target="_blank" rel="noopener noreferrer">databay.solutions</a>) es una <strong>consultoría tecnológica</strong> que acompaña a empresas medianas y grandes en su transformación digital. Su catálogo abarca <strong>ERP Odoo</strong>, <strong>Data e IA</strong>, <strong>automatización</strong>, <strong>software a medida</strong>, <strong>cloud</strong> e <strong>IoT</strong>, entre otras líneas de servicio.
+
+En mi etapa como <strong>Desarrollador Fullstack & DevOps</strong> participé en proyectos de cliente de punta a punta: diseño de infraestructura, despliegues automatizados, desarrollo backend/frontend e integraciones con APIs externas, siempre con foco en <strong>producción estable</strong> y <strong>mantenibilidad</strong>.
+
+<strong>Principales líneas de trabajo:</strong>
+      <ul>
+      <li><strong>DevOps & Cloud:</strong> Template empresarial <strong>Terraform + GCP</strong> (CI/CD, Cloud Run, Cloudflare) reutilizable en múltiples proyectos.</li>
+      <li><strong>Plataformas web:</strong> UTSCH España (matrículas, DGT, Kount), Cuboc (app interna Soluble Studio).</li>
+      <li><strong>Backend & datos:</strong> API interna INDE-K (Excel, Pandas, Cloud Run).</li>
+      <li><strong>ERP Odoo 19:</strong> Tourism With Style (Verifactu/AEAT) y Russells (marketplace multi-vendedor).</li>
+      <li><strong>E-commerce:</strong> ICEditorial — migración a PrestaShop 9, importaciones masivas y módulos custom (pedidos, direcciones, sync catálogo).</li>
+      </ul>`,
+    startDate: "4 Ago 2025",
+    endDate: "8 May 2026",
+    location: "Remoto, España",
+    tags: [
+      "Terraform",
+      "GCP",
+      "DevOps",
+      "Odoo 19",
+      "PrestaShop 9",
+      "React",
+      "Next.js",
+      "Vue.js",
+      "PHP",
+      "Python",
+      "Cloud Run",
+      "GitHub Actions",
+      "Cloudflare",
+      "API REST",
+      "ERP",
+      "E-commerce",
+    ],
+    logo: `${databaySolutionsMediaFolder}/logo.png`,
+    media: [
+      `${databaySolutionsMediaFolder}/1.png`,
+      `${databaySolutionsMediaFolder}/2.png`
+    ],
+    type: "Trabajo",
+    companyUrl: "https://databay.solutions",
+    companyLinkLabel: "Ver Databay Solutions",
+    projectUrl: [
+      "/proyecto/DevOps-Template-GCP",
+      "/proyecto/UTSCH",
+      "/proyecto/Cuboc",
+      "/proyecto/INDE-K-API",
+      "/proyecto/Tourism-With-Style",
+      "/proyecto/Russells",
+      "/proyecto/ICEditorial",
+    ],
+    skills: [
+      `<ul>
+          <li>Infraestructura como código (Terraform) y despliegues en GCP</li>
+          <li>CI/CD con GitHub Actions, Docker y Cloud Run</li>
+          <li>Desarrollo fullstack (React, Next.js, Vue.js, PHP, Python)</li>
+          <li>ERP Odoo 19: consultoría, módulos custom y Verifactu</li>
+          <li>PrestaShop 9: migración, importaciones masivas y módulos propios</li>
+          <li>Integración de APIs REST y sistemas de terceros</li>
+          <li>Seguridad (Kount, JWT, SSL/TLS) y observabilidad</li>
+        </ul>`,
+    ],
+    highlights: [
+      `<ul>
+          <li>Diseño del <strong>template DevOps</strong> base de la infraestructura de la consultora.</li>
+          <li><strong>7 proyectos de cliente</strong> llevados a producción en distintos stacks.</li>
+          <li>Automatización de despliegues multi-ambiente (preview, staging, production).</li>
+          <li>Implementación de <strong>Verifactu (AEAT)</strong> y lógica marketplace en Odoo.</li>
+          <li>Migración <strong>PrestaShop 9</strong> con sincronización de catálogo y pedidos vía API.</li>
+        </ul>`,
+    ],
+    responsibilities: [
+      `<ul>
+          <li>Desarrollo y despliegue de aplicaciones fullstack en entornos cloud.</li>
+          <li>Diseño de pipelines CI/CD e infraestructura reproducible con Terraform.</li>
+          <li>Implementación y parametrización de ERP Odoo y tiendas PrestaShop.</li>
+          <li>Creación de módulos e integraciones a medida para clientes.</li>
+          <li>Coordinación técnica con APIs oficiales y proveedores externos (DGT, Kount, AEAT).</li>
+        </ul>`,
+    ],
+  },
   {
     id: 4,
     title: "Certificados",
@@ -27,7 +119,7 @@ export const experiences: Experience[] = [
       `Educación autodidacta demostrada mediante diversas certificaciones en áreas como <strong>desarrollo Backend</strong>, <strong>visualización de datos</strong>, <strong>análisis de datos</strong>, <strong>diseño web adaptable</strong>, y habilidades en <strong>inglés</strong>.  
        Estas certificaciones reflejan un compromiso continuo con el aprendizaje y la mejora profesional.`,
     startDate: "Sept 2024",
-    endDate: "Actualidad",
+    endDate: "4 Ago 2025",
     tags: [
       "Data Visualization",
       "Back End",
@@ -41,7 +133,7 @@ export const experiences: Experience[] = [
       "Python",
       "English Proficiency",
     ],
-    logo: "/src/data/Certificates/Certificates.svg",
+    logo: `${certificatesMediaFolder}/logo.png`,
     type: "Voluntario",
     skills: [
       `<ul>
@@ -80,7 +172,7 @@ export const experiences: Experience[] = [
   },
   {
     id: 3,
-    title: "Desarrollador Fullstack en ControlNet",
+    title: "Desarrollador Fullstack",
     provider: "ControlNet",
     briefDescription: `Experiencia Laboral en la que <strong>lideré</strong> y <strong>desarrollé</strong> una aplicación además de contribuir en diversos proyectos en <strong>producción</strong> y en <strong>desarrollo</strong>.  
    Obteniendo así una gran experiencia como desarrollador <strong>FullStack</strong> en un entorno de <strong>trabajo profesional</strong>.`,
@@ -93,7 +185,12 @@ export const experiences: Experience[] = [
     endDate: "Ene 2024",
     location: "Jerez de la Frontera, Cádiz, España",
     tags: ["Swift", "Firebase", "CocoaPods", "Git", "UI/UX", "Angular", "ASP.NET"],
-    logo: "https://example.com/logo-controlnet.png",
+    logo: `${controlNetMediaFolder}/logo.png`,
+    media: [
+      `${controlNetMediaFolder}/1.png`,
+      `${controlNetMediaFolder}/2.png`,
+      `${controlNetMediaFolder}/3.png`,
+    ],
     type: "Trabajo",
     projectUrl: [
       "/proyecto/Bafre-iOS",
@@ -167,7 +264,7 @@ export const experiences: Experience[] = [
       "XAMPP",
       "Linux",
     ],
-    logo: "/src/assets/logos/instituto-daw.png",
+    logo: `${tecnicoMediaFolder}/logo.png`,
     type: "Educacion",
     skills: [
       `<ul>
@@ -210,12 +307,7 @@ export const experiences: Experience[] = [
           <li>Colaborar en equipos multidisciplinarios para cumplir con los objetivos de proyectos prácticos.</li>
           <li>Documentar procesos de desarrollo y guías técnicas para proyectos implementados.</li>
         </ul>`
-    ],
-
-    media: [
-      "/src/assets/projects/daw-project-1.png",
-      "/src/assets/projects/daw-project-2.png",
-    ],
+    ]
   },
   {
     id: 1,
@@ -252,7 +344,7 @@ export const experiences: Experience[] = [
       "SQL",
       "NoSQL",
     ],
-    logo: "/src/assets/logos/instituto-smr.png",
+    logo: `${tecnicoMediaFolder}/logo.png`,
     type: "Educacion",
     skills: [
       `<ul>

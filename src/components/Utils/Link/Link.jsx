@@ -9,6 +9,10 @@ function getIcon(name) {
             return <FiGithub class="sm:scale-100 md:scale-110" />;
         case 'Ver Certificado':
             return <FiFileText class="sm:scale-100 md:scale-110" />;
+        case 'Ver Databay Solutions':
+            return <FiExternalLink class="sm:scale-100 md:scale-110" />;
+        default:
+            return <FiExternalLink class="sm:scale-100 md:scale-110" />;
     }
 }
 
