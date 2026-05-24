@@ -5,6 +5,7 @@ interface Props {
 import Header from "../components/Header/Header.astro";
 import SideMenu from "../components/SideMenu/SideMenu.jsx";
 import Translator from "../components/Translator/Translator.jsx";
+import GhostCodeBackground from "../components/Background/GhostCodeBackground.jsx";
 ---
 
 <!doctype html>
@@ -47,9 +48,10 @@ import Translator from "../components/Translator/Translator.jsx";
   </head>
 
   <body class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 bg-fixed tracking-tighter leading-none">
+    <GhostCodeBackground client:idle />
     <Translator client:load />
     <Header />
-    <div class="justify-between pt-40 md:animate-fadeIn">
+    <div class="relative z-10 justify-between pt-40 md:animate-fadeIn">
       <!-- SideMenu para móviles -->
       <SideMenu client:load />
       <slot />
