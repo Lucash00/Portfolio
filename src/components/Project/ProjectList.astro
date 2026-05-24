@@ -4,15 +4,18 @@ import type { Project } from "../../data/projects";
 
 interface Props {
   projects: Project[];
+  limit?: number;
+  compact?: boolean;
 }
 
-const { projects } = Astro.props;
+const { projects, limit, compact = false } = Astro.props;
+const visibleProjects = limit ? projects.slice(0, limit) : projects;
 ---
 
 <astro>
-  <div class="w-full mb-20">
+  <div class:list={["w-full", !compact && "mb-20"]}>
     {
-      projects.map((project: Project) => (
+      visibleProjects.map((project: Project) => (
         <ProjectCard
           title={project.title}
           briefDescription={project.briefDescription}
@@ -23,8 +26,7 @@ const { projects } = Astro.props;
           startDate={project.startDate}
           endDate={project.endDate}
           company={project.company}
-
-
+          compact={compact}
         />
       ))
     }

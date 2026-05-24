@@ -1,0 +1,17 @@
+---
+import HomePreviewSection from "./HomePreviewSection.astro";
+import ExperiencePreviewList from "../Experience/ExperiencePreviewList.astro";
+import ProjectList from "../Project/ProjectList.astro";
+import { experiences } from "../../data/experiences";
+import { projects } from "../../data/projects";
+
+const PREVIEW_COUNT = 3;
+---
+
+<HomePreviewSection title="Experiencias" viewMoreHref="/experiencia">
+  <ExperiencePreviewList experiences={experiences} limit={PREVIEW_COUNT} />
+</HomePreviewSection>
+
+<HomePreviewSection title="Proyectos" viewMoreHref="/proyectos">
+  <ProjectList projects={projects} limit={PREVIEW_COUNT} compact />
+</HomePreviewSection>

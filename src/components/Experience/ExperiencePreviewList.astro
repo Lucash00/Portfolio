@@ -1,0 +1,30 @@
+---
+import ExperienceCard from "./ExperienceCard.astro";
+import type { Experience } from "../../data/experiences";
+
+interface Props {
+  experiences: Experience[];
+  limit?: number;
+}
+
+const { experiences, limit = 3 } = Astro.props;
+const visibleExperiences = experiences.slice(0, limit);
+---
+
+<div class="w-full">
+  {
+    visibleExperiences.map((experience) => (
+      <ExperienceCard
+        title={experience.title}
+        provider={experience.provider}
+        briefDescription={experience.briefDescription}
+        tags={experience.tags}
+        logo={experience.logo}
+        startDate={experience.startDate}
+        endDate={experience.endDate}
+        type={experience.type}
+        compact
+      />
+    ))
+  }
+</div>
