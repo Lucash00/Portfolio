@@ -28,17 +28,17 @@ export default function CardTimeline({ experience }) {
       </div>
 
       {experience.provider ? (
-        <p className="mt-2 sm:text-sm text-md 2xl:text-lg text-gray-400">
+        <p className="mt-2 text-sm text-gray-400 sm:text-[0.9375rem] 2xl:text-base">
           {experience.provider} / {experience.startDate} - {experience.endDate}
         </p>
       ) : (
-        <p className="mt-1 sm:text-sm text-md 2xl:text-lg text-gray-400">
+        <p className="mt-1 text-sm text-gray-400 sm:text-[0.9375rem] 2xl:text-base">
           {experience.startDate} - {experience.endDate}
         </p>
       )}
 
       <div className="border-t-2 border-gray-300">
-        <TextContent content={experience.briefDescription} />
+        <TextContent content={experience.briefDescription} variant="compact" />
       </div>
     </a>
   );

@@ -33,7 +33,7 @@ const { title, provider, description, tags, date, logo } = Astro.props;
             <p class="text-gray-400 sm:text-sm md:text-base mb-2">
                 {provider} / {date}
             </p>
-            <TextContent content={description} />
+            <TextContent content={description} variant="compact" />
 
             {
                 tags.map((tag) => (
