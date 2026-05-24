@@ -77,6 +77,9 @@ _Repositorio interno de Databay Solutions — no disponible públicamente por se
       "DevOps"
     ],
     logo: `${devOpsTemplateMediaFolder}/logo.png`,
+    media: [
+      `${devOpsTemplateMediaFolder}/1.png`
+    ],
     company: "Databay Solutions"
   },
   {
@@ -112,6 +115,11 @@ _Plataforma en producción estable con escalabilidad automática y despliegues s
       "DGT API"
     ],
     logo: `${utschMediaFolder}/logo.png`,
+    media: [
+      `${utschMediaFolder}/1.png`,
+      `${utschMediaFolder}/2.png`,
+      `${utschMediaFolder}/3.png`
+    ],
     links: {
       website: "https://utsch.es/"
     },
@@ -128,41 +136,48 @@ _Plataforma en producción estable con escalabilidad automática y despliegues s
   },
   {
     title: "Cuboc",
-    titleJob: "Plataforma de gestión empresarial con arquitectura híbrida",
-    briefDescription: "Desarrollo <strong>fullstack</strong> de plataforma empresarial con <strong>Next.js</strong>, <strong>React</strong> y <strong>Prisma</strong>, usando infraestructura <strong>GCP</strong> en dev/staging y despliegue optimizado en <strong>Vercel</strong> para producción.",
-    description: `Desarrollo fullstack de la plataforma empresarial <strong>Cuboc</strong> con arquitectura híbrida: infraestructura DevOps propia en desarrollo y staging, y deployment final en <strong>Vercel</strong> para producción.
+    titleJob: "Aplicación interna de trabajo — Soluble Studio",
+    briefDescription: "Desarrollo <strong>fullstack</strong> de <strong>Cuboc</strong>, aplicación privada de <strong>Soluble Studio</strong> para que su equipo trabaje internamente, con <strong>Next.js</strong>, <strong>Vue.js</strong>, <strong>Kount</strong> y <strong>Open Graph</strong>.",
+    description: `Desarrollo fullstack de <strong>Cuboc</strong>, aplicación web privada de <strong><a href="https://solublestudio.com" target="_blank" rel="noopener noreferrer">Soluble Studio</a></strong>: herramienta de uso exclusivo para que el equipo del estudio gestione su operativa diaria (proyectos, procesos y recursos internos).
 
-<strong>Arquitectura y desarrollo:</strong>
+No es un producto público ni orientado a clientes externos; es el entorno de trabajo digital del propio equipo, con acceso restringido al personal autorizado.
+
+<strong>Stack principal:</strong>
       <ul>
-      <li><strong>Dev/Staging:</strong> Terraform, GCP Cloud Run, preview environments por PR, CI/CD con GitHub Actions.</li>
-      <li><strong>Producción:</strong> Vercel con Edge Functions, SSR/SSG optimizado y CDN global.</li>
-      <li><strong>Stack:</strong> React, Next.js, Vue.js (componentes específicos), Prisma, PostgreSQL.</li>
-      <li><strong>Seguridad y SEO:</strong> Integración <strong>Kount</strong>, Open Graph, autenticación/autorización y panel administrativo.</li>
+      <li><strong>JavaScript:</strong> Next.js (SSR/SSG) y Vue.js en módulos y componentes específicos.</li>
+      <li><strong>Seguridad:</strong> Integración de Kount para prevención de fraude y operaciones seguras.</li>
+      <li><strong>UI y presencia social:</strong> Open Graph para compartición y metadatos en redes.</li>
+      <li><strong>DevOps:</strong> Infraestructura en GCP (dev/staging) y despliegue en producción con CI/CD automatizado.</li>
       </ul>`,
-    objective: "Construir una plataforma empresarial <strong>moderna y performante</strong>, con flujos de despliegue automatizados en múltiples entornos y optimización de producción en Vercel.",
+    objective: "Entregar una aplicación interna <strong>segura y mantenible</strong> que permita a Soluble Studio centralizar su operativa diaria, con buenas prácticas de frontend y controles de seguridad.",
     startDate: "Ago 2025",
     endDate: "May 2026",
     tags: [
-      "React",
       "Next.js",
       "Vue.js",
-      "Prisma",
-      "PostgreSQL",
-      "Vercel",
-      "Terraform",
-      "GCP",
-      "GitHub Actions",
+      "JavaScript",
       "Kount",
       "Open Graph",
-      "SSR"
+      "SSR",
+      "DevOps",
+      "GCP"
     ],
     logo: `${cubocMediaFolder}/logo.png`,
+    media: [
+      `${cubocMediaFolder}/1.png`,
+      `${cubocMediaFolder}/2.png`,
+      `${cubocMediaFolder}/3.png`,
+      `${cubocMediaFolder}/4.png`
+    ],
     links: {
-      website: "https://cuboc-app.vercel.app/es/"
+      website: "https://solublestudio.com"
     },
     team: {
       contributors: [
         { name: "Lucas Moreno", role: "Desarrollador Fullstack & DevOps" }
+      ],
+      externalCollaborators: [
+        { name: "Soluble Studio", role: "Cliente" }
       ]
     },
     developmentProcess: {
@@ -204,6 +219,13 @@ _Sistema interno privado — no se puede mostrar código ni enlaces por protecci
       "JWT"
     ],
     logo: `${indekMediaFolder}/logo.png`,
+    media: [
+      `${indekMediaFolder}/1.png`,
+      `${indekMediaFolder}/2.png`,
+      `${indekMediaFolder}/3.png`,
+      `${indekMediaFolder}/4.png`,
+      `${indekMediaFolder}/5.png`
+    ],
     links: {
       website: "https://inde-k.com/"
     },
@@ -251,6 +273,12 @@ _Reducción estimada del 80% en tiempo de procesos manuales._`,
       "Consultoría"
     ],
     logo: `${tourismWithStyleMediaFolder}/logo.png`,
+    media: [
+      `${tourismWithStyleMediaFolder}/1.png`,
+      `${tourismWithStyleMediaFolder}/2.png`,
+      `${tourismWithStyleMediaFolder}/3.png`,
+      `${tourismWithStyleMediaFolder}/4.png`
+    ],
     links: {
       website: "https://www.tourismwithstyle.com/"
     },
@@ -298,6 +326,13 @@ _Reducción del ~70% en tiempo de gestión administrativa._`,
       "Consultoría"
     ],
     logo: `${russellsMediaFolder}/logo.png`,
+    media: [
+      `${russellsMediaFolder}/1.png`,
+      `${russellsMediaFolder}/2.png`,
+      `${russellsMediaFolder}/3.png`,
+      `${russellsMediaFolder}/4.png`,
+      `${russellsMediaFolder}/5.png`
+    ],
     links: {
       website: "https://www.russells.es/"
     },
@@ -314,39 +349,52 @@ _Reducción del ~70% en tiempo de gestión administrativa._`,
   },
   {
     title: "ICEditorial",
-    titleJob: "Migración PrestaShop 9 y módulos de sincronización",
-    briefDescription: "Migración de tienda editorial a <strong>PrestaShop 9</strong> y desarrollo de dos módulos custom: sincronización de <strong>pedidos vía API</strong> y sincronización de <strong>catálogo por cron optimizado</strong> (batch processing).",
-    description: `Migración completa de la tienda online de <strong>ICEditorial</strong> desde versión legacy a <strong>PrestaShop 9</strong>, incluyendo base de datos, tema, pagos, envíos y SEO (redirecciones 301).
+    titleJob: "PrestaShop 9, migración e integraciones a medida",
+    briefDescription: "Desarrollo de la tienda en <strong>PrestaShop</strong>, migración a <strong>PrestaShop 9</strong>, <strong>importación masiva</strong> de clientes y productos, y módulos custom de Databay Solutions (pedidos, validación de direcciones y sync de catálogo).",
+    description: `Desarrollo y evolución de la <strong>tienda online editorial ICEditorial</strong> en PrestaShop: construcción de la página en el nuevo stack, <strong>migración de PrestaShop legacy a PrestaShop 9</strong>, <strong>importación masiva de clientes y productos</strong>, e integración con APIs externas mediante módulos personalizados.
 
-<strong>Módulo 1 — Sincronización de pedidos:</strong>
+<strong>PrestaShop y migración:</strong>
       <ul>
-      <li>Hook de captura de pedidos y envío en tiempo real vía API REST a sistema externo.</li>
-      <li>Retry automático, logs de auditoría y panel de monitoreo en backoffice.</li>
+      <li>Desarrollo de la tienda, tema, pagos, envíos y SEO (redirecciones 301).</li>
+      <li>Migración completa de datos: catálogo, clientes y pedidos históricos.</li>
+      <li>Importación masiva de clientes y productos al entorno PrestaShop 9.</li>
       </ul>
 
-<strong>Módulo 2 — Sincronización de productos (cron optimizado):</strong>
+<strong>Módulos personalizados (Databay Solutions):</strong>
       <ul>
-      <li>Procesamiento por lotes (batch) y sincronización incremental para catálogos grandes.</li>
-      <li>Resolución de timeouts y límites de memoria de cronjobs nativos de PrestaShop (~10x más rápido).</li>
+      <li><strong>Iceditorial API Pedidos v3.0.0:</strong> envío de datos de pedidos a API externa en tiempo real (hooks, reintentos, logs y backoffice).</li>
+      <li><strong>IC Validador de direcciones v1.0.1:</strong> validación de direcciones en checkout vía API IC Grupo (<code>POST /validate</code>).</li>
+      <li><strong>ICEditorial API Sync v1.2.1:</strong> sincronización de productos con la API de Innovación y Cualificación (cron por lotes, incremental, ~10x más rápido en catálogos grandes).</li>
       </ul>
 
-<strong>Infraestructura:</strong> Linux, Nginx, SSL/TLS, MySQL optimizado para e-commerce, backups automáticos y caché.`,
-    objective: "Completar la migración sin pérdida de datos y eliminar errores manuales en inventario y pedidos mediante <strong>sincronización fiable y monitorizable</strong> con sistemas externos.",
+<strong>Infraestructura:</strong> Linux, Nginx, SSL/TLS, MySQL optimizado, backups y caché.`,
+    objective: "Modernizar la tienda en <strong>PrestaShop 9</strong> sin pérdida de datos, automatizar catálogo y pedidos con módulos fiables, y mejorar el checkout con <strong>validación de direcciones</strong> integrada.",
     startDate: "Ago 2025",
     endDate: "May 2026",
     tags: [
       "PrestaShop 9",
       "PHP",
       "MySQL",
-      "JavaScript",
       "API REST",
+      "Módulos custom",
+      "Importación masiva",
       "Cron Jobs",
-      "Docker",
+      "E-commerce",
       "Nginx",
-      "SSL/TLS",
-      "E-commerce"
+      "Docker"
     ],
     logo: `${iceEditorialMediaFolder}/logo.png`,
+    media: [
+      `${iceEditorialMediaFolder}/1.png`,
+      `${iceEditorialMediaFolder}/2.png`,
+      `${iceEditorialMediaFolder}/3.png`,
+      `${iceEditorialMediaFolder}/4.png`,
+      `${iceEditorialMediaFolder}/5.png`,
+      `${iceEditorialMediaFolder}/6.png`,
+      `${iceEditorialMediaFolder}/7.png`,
+      `${iceEditorialMediaFolder}/8.png`,
+      `${iceEditorialMediaFolder}/9.png`
+    ],
     links: {
       website: "https://nuevo.iceditorial.com/"
     },
