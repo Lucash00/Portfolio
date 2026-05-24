@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { useSprings, animated, config } from "@react-spring/web";
 
 const Slider = ({ images }) => {
+  const validImages = (images ?? []).filter(
+    (src) => typeof src === "string" && src.trim().length > 0,
+  );
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredDot, setHoveredDot] = useState(null); // Control para hover
 
-  const slides = images.map((image, index) => ({
+  const slides = validImages.map((image, index) => ({
     key: index,
     content: image,
   }));
@@ -34,6 +38,10 @@ const Slider = ({ images }) => {
     scale: i === currentIndex ? 1 : 0.2,
     opacity: i === currentIndex ? 1 : 0,
   }));
+
+  if (!slides.length) {
+    return null;
+  }
 
   return (
     <div className="relative w-full">

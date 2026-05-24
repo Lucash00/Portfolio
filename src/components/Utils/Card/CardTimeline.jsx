@@ -16,7 +16,16 @@ export default function CardTimeline({ experience }) {
         <FiExternalLink />
       </div>
 
-      <h2 className="sm:text-xl text-2xl 2xl:text-4xl font-bold">{experience.title}</h2>
+      <div className="flex items-center gap-3 pr-8">
+        {experience.logo && (
+          <img
+            src={experience.logo}
+            alt={experience.title}
+            className="h-12 w-auto shrink-0 object-contain"
+          />
+        )}
+        <h2 className="sm:text-xl text-2xl 2xl:text-4xl font-bold">{experience.title}</h2>
+      </div>
 
       {experience.provider ? (
         <p className="mt-2 sm:text-sm text-md 2xl:text-lg text-gray-400">

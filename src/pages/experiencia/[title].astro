@@ -5,7 +5,9 @@ import TitleContent from "../../components/Utils/Font/TitleContent.astro";
 import TextContent from "../../components/Utils/Font/TextContent.jsx";
 import Card from "../../components/Utils/Card/Card.astro";
 import LinkExperience from "../../components/Utils/Link/LinkExperience.jsx";
+import LinkList from "../../components/Utils/Link/Link.jsx";
 import SectionToggle from "../../components/Utils/SectionToggle.jsx";
+import Slider from "../../components/Utils/Slider/Slider.jsx";
 import { experiences } from "../../data/experiences";
 
 // Generar rutas estáticas
@@ -56,20 +58,31 @@ const sections = [
 const validSections = sections.filter(
     (section) => section.content && section.content !== null,
 );
+
+const experienceMedia =
+    experience.media?.filter((src) => src?.trim().length > 0) ?? [];
+const hasExperienceMedia = experienceMedia.length > 0;
 ---
 
 <Layout title={`Experiencia: ${experience.title}`}>
     <main>
         <!-- Título principal -->
-        <TitleComponent title={experience.title} />
+        <TitleComponent title={experience.title} logo={experience.logo} />
 
         <!-- Contenido principal -->
         <Card>
+            {
+                hasExperienceMedia && (
+                    <div class="z-10 mb-4 col-span-2 col-start-1">
+                        <Slider client:load images={experienceMedia} />
+                    </div>
+                )
+            }
             <!-- Sección de Descripción -->
             <div
                 class="py-4 col-span-2 col-start-1 border-spacing-y-10 border-b-2 border-gray-300"
             >
-                <TitleContent title={experience.title}/>
+                <TitleContent title={experience.title} />
 
                 {/* Mostrar provider, startDate y endDate si existe provider */}
                 {
@@ -111,13 +124,29 @@ const validSections = sections.filter(
 
             <!-- Seccion Links -->
             {
-                ((experience.certificateUrl &&
-                    experience.certificateUrl.length > 0) ||
+                (experience.companyUrl ||
+                    (experience.certificateUrl &&
+                        experience.certificateUrl.length > 0) ||
                     (experience.projectUrl &&
                         experience.projectUrl.length > 0)) && (
                     <div class="pb-2 col-span-2 col-start-1">
                         <TitleContent title="Links" />
                         <div class="text-sm">
+                            {experience.companyUrl && (
+                                <div class="mb-4">
+                                    <LinkList
+                                        client:load
+                                        links={[
+                                            {
+                                                url: experience.companyUrl,
+                                                name:
+                                                    experience.companyLinkLabel ??
+                                                    "Ver empresa",
+                                            },
+                                        ]}
+                                    />
+                                </div>
+                            )}
                             {experience.certificateUrl &&
                                 experience.certificateUrl.length > 0 && (
                                     <LinkExperience
