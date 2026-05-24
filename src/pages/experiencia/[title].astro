@@ -74,7 +74,11 @@ const hasExperienceMedia = experienceMedia.length > 0;
             {
                 hasExperienceMedia && (
                     <div class="z-10 mb-4 col-span-2 col-start-1">
-                        <Slider client:load images={experienceMedia} />
+                        <Slider
+                            client:load
+                            images={experienceMedia}
+                            lightboxLabel={experience.title}
+                        />
                     </div>
                 )
             }
