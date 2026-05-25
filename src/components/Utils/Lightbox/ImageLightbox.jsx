@@ -24,7 +24,7 @@ export default function ImageLightbox({
 
   const hasMultiple = images.length > 1;
   const currentSrc = images[index];
-  const canPan = scale > 1;
+  const hasZoom = scale > MIN_SCALE;
 
   const resetView = useCallback(() => {
     setScale(1);
@@ -107,7 +107,7 @@ export default function ImageLightbox({
   };
 
   const onPointerDown = (event) => {
-    if (!canPan || event.button !== 0) return;
+    if (event.button !== 0) return;
 
     event.preventDefault();
     stageRef.current?.setPointerCapture(event.pointerId);
@@ -135,17 +135,16 @@ export default function ImageLightbox({
       stageRef.current?.releasePointerCapture(event.pointerId);
     }
     setIsDragging(false);
+    if (!hasZoom) {
+      setPosition({ x: 0, y: 0 });
+    }
   };
 
   if (!mounted || !currentSrc) {
     return null;
   }
 
-  const stageCursor = canPan
-    ? isDragging
-      ? "grabbing"
-      : "grab"
-    : "zoom-in";
+  const stageCursor = isDragging ? "grabbing" : "grab";
 
   return createPortal(
     <div
@@ -249,7 +248,7 @@ export default function ImageLightbox({
         </div>
 
         <p className="relative z-20 shrink-0 border-t border-slate-200 px-4 py-2.5 text-center text-[10px] text-gray-500 sm:text-xs">
-          Rueda o +/- para zoom · Arrastra con zoom · Doble clic restablece · ESC cierra
+          Rueda o +/- para zoom · Arrastra para mover (sin zoom vuelve al centro) · Doble clic restablece · ESC cierra
         </p>
       </div>
 

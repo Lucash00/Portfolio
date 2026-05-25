@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSprings, animated, config } from "@react-spring/web";
+import { FiZoomIn } from "react-icons/fi";
 import ImageLightbox from "../Lightbox/ImageLightbox";
 
 const springForIndex = (i, activeIndex) => ({
@@ -58,7 +59,7 @@ const Slider = ({ images, lightboxLabel = "Galería" }) => {
 
   return (
     <div className="relative w-full">
-      <div className="relative flex h-100 w-auto items-center justify-center overflow-hidden bg-transparent">
+      <div className="group/lightbox-preview relative flex h-100 w-auto items-center justify-center overflow-hidden rounded-[10px] bg-transparent md:cursor-pointer">
         {springs.map((style, i) => {
           const isActive = i === currentIndex;
 
@@ -83,7 +84,7 @@ const Slider = ({ images, lightboxLabel = "Galería" }) => {
               }}
               className={
                 isActive
-                  ? "cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70"
+                  ? "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70"
                   : undefined
               }
               style={{
@@ -102,6 +103,14 @@ const Slider = ({ images, lightboxLabel = "Galería" }) => {
             />
           );
         })}
+        <div
+          className="pointer-events-none absolute inset-0 z-[3] hidden items-center justify-center rounded-[10px] bg-slate-900/0 transition-colors duration-300 group-hover/lightbox-preview:bg-slate-900/[0.06] md:flex"
+          aria-hidden="true"
+        >
+          <span className="flex h-14 w-14 scale-90 items-center justify-center rounded-full bg-white/95 text-blue-700 opacity-0 shadow-[0_8px_24px_rgba(29,78,216,0.2)] ring-2 ring-blue-500/25 backdrop-blur-sm transition-all duration-300 ease-out group-hover/lightbox-preview:scale-100 group-hover/lightbox-preview:opacity-100">
+            <FiZoomIn className="h-7 w-7" strokeWidth={2.25} aria-hidden="true" />
+          </span>
+        </div>
       </div>
 
       <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-between">
@@ -152,7 +161,7 @@ const Slider = ({ images, lightboxLabel = "Galería" }) => {
                   event.stopPropagation();
                   openLightbox(index);
                 }}
-                className="absolute bottom-full left-1/2 z-40 mb-2 h-40 w-40 -translate-x-1/2 cursor-zoom-in overflow-hidden rounded-lg border border-slate-200 bg-gray-100 p-1 shadow-lg"
+                className="absolute bottom-full left-1/2 z-40 mb-2 h-40 w-40 -translate-x-1/2 cursor-pointer overflow-hidden rounded-lg border border-slate-200 bg-gray-100 p-1 shadow-lg"
                 aria-label={`Ampliar imagen ${index + 1}`}
               >
                 <img

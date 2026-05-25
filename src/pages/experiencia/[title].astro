@@ -73,7 +73,7 @@ const hasExperienceMedia = experienceMedia.length > 0;
         <Card>
             {
                 hasExperienceMedia && (
-                    <div class="z-10 mb-4 col-span-2 col-start-1">
+                    <div class="z-10 mb-4 pt-3 md:pt-4 col-span-2 col-start-1">
                         <Slider
                             client:load
                             images={experienceMedia}
@@ -108,7 +108,6 @@ const hasExperienceMedia = experienceMedia.length > 0;
             {
                 experience.tags && (
                     <div class="col-span-2 col-start-1 mb-2">
-                        <TitleContent title="Tags" />
                         <ul class="flex flex-wrap gap-2 mb-2">
                             {experience.tags.map((tag) => (
                                 <li class="px-2 py-1 bg-gray-300 rounded-full font-semibold text-gray-700 text-sm">
