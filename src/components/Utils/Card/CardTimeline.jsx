@@ -2,6 +2,7 @@ import React from 'react';
 
 import { FiExternalLink } from 'react-icons/fi';
 
+import { cardEntryTitleClass } from './cardEntryTitle';
 import TextContent from '../Font/TextContent.jsx';
 
 
@@ -50,7 +51,7 @@ export default function CardTimeline({ experience }) {
 
                 alt={experience.title}
 
-                className="card-logo card-logo-img md:group-hover:animate-logoWobble"
+                className="card-logo card-logo-img card-logo-img-timeline md:group-hover:animate-logoWobble"
 
               />
 
@@ -58,7 +59,7 @@ export default function CardTimeline({ experience }) {
 
           )}
 
-          <h2 className="card-title sm:text-xl text-2xl 2xl:text-4xl font-bold">{experience.title}</h2>
+          <h2 className={cardEntryTitleClass}>{experience.title}</h2>
 
         </div>
 

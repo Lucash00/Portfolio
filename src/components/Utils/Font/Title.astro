@@ -1,19 +1,27 @@
 ---
 interface Props {
   title: string;
-  logo?: string; // Parámetro opcional para el logo
+  logo?: string;
+  class?: string;
 }
 
-const { title, logo } = Astro.props;
+const { title, logo, class: className = "" } = Astro.props;
 ---
 
-<h1 class="text-4xl text-left font-extrabold tracking-tight text-white flex items-center gap-3">
-  {logo && (
-    <img
-      src={logo}
-      alt={`${title} logo`}
-      class="h-10 w-auto shrink-0 object-contain"
-    />
-  )}
-  <span>{title}</span>
+<h1
+  class:list={[
+    "w-fit max-w-full text-4xl text-left font-extrabold tracking-tight text-white flex items-center gap-3",
+    className,
+  ]}
+>
+  {
+    logo && (
+      <img
+        src={logo}
+        alt={`${title} logo`}
+        class="h-10 w-auto shrink-0 object-contain select-none"
+      />
+    )
+  }
+  <span data-text-glow class="text-mouse-glow">{title}</span>
 </h1>

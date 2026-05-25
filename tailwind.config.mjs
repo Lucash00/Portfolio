@@ -99,6 +99,10 @@ export default {
 						'max-width': '9rem',
 						'object-fit': 'contain',
 					},
+					'.card-logo-img-timeline': {
+						'height': '2rem',
+						'max-width': '4.5rem',
+					},
 					'@media (min-width: 640px)': {
 						'.group:hover .card-accent-bar': {
 							'opacity': '1',
@@ -110,6 +114,10 @@ export default {
 						'.card-logo-img': {
 							'height': '6rem',
 							'max-width': '14rem',
+						},
+						'.card-logo-img-timeline': {
+							'height': '2rem',
+							'max-width': '5.5rem',
 						},
 						'.group:hover .card-logo-wrap': {
 							'transform': 'scale(1.12)',
