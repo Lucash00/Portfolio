@@ -1,5 +1,6 @@
 ---
 import CardLink from "../Utils/Card/CardLink.astro";
+import { cardEntryTitleClass } from "../Utils/Card/cardEntryTitle";
 import TextContent from "../Utils/Font/TextContent";
 export interface Props {
     title: string;
@@ -31,7 +32,7 @@ const { title, provider, description, tags, date, logo } = Astro.props;
         <div
         class="sm:px-3 sm:py-2 md:py-4 sm:border-t-2 md:border-l-2 sm:pt-4 sm:border-slate-200 md:px-6 sm:col-span-10 md:col-span-7 lg:col-span-8 xl:col-span-8 2xl:col-span-8"
         >
-            <h3 class="card-title font-bold sm:text-2xl md:text-3xl mb-2">{title}</h3>
+            <h3 class={cardEntryTitleClass}>{title}</h3>
             <p class="text-gray-400 sm:text-sm md:text-base mb-2">
                 {provider} / {date}
             </p>

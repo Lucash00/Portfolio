@@ -6,6 +6,7 @@ import Header from "../components/Header/Header.astro";
 import SideMenu from "../components/SideMenu/SideMenu.jsx";
 import Translator from "../components/Translator/Translator.jsx";
 import GhostCodeBackground from "../components/Background/GhostCodeBackground.jsx";
+import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.jsx";
 ---
 
 <!doctype html>
@@ -50,6 +51,7 @@ import GhostCodeBackground from "../components/Background/GhostCodeBackground.js
     class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 md:bg-fixed tracking-tighter leading-none max-h-screen"
   >
     <GhostCodeBackground client:idle />
+    <TextMouseGlowManager client:idle />
     <Translator client:load/>
     <Header />
 

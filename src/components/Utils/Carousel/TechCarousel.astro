@@ -1,5 +1,6 @@
 ---
 import IconCarousel from "./IconCarousel.astro";
+import { techCarouselIcons } from "../../../data/techCarouselIcons";
 ---
 
 <astro>
@@ -8,33 +9,11 @@ import IconCarousel from "./IconCarousel.astro";
     ref:"sliderRef"
   >
     <div class="carousel-track" ref:"trackRef">
-      <IconCarousel alt="HTML" src="/assets/html.svg" />
-      <IconCarousel alt="CSS" src="/assets/css.svg" />
-      <IconCarousel alt="TailwindCSS" src="/assets/tailwind.svg" />
-      <IconCarousel alt="JavaScript" src="/assets/js.svg" />
-      <IconCarousel alt="TypeScript" src="/assets/typescript.svg" />
-      <IconCarousel alt="Python" src="/assets/python.svg" />
-      <IconCarousel alt="Swift" src="/assets/swift.svg" />
-      <IconCarousel alt="React" src="/assets/react.svg" />
-      <IconCarousel alt="Astro" src="/assets/astro.svg" />
-      <IconCarousel alt="Angular" src="/assets/angular.svg" />
-      <IconCarousel alt="Django" src="/assets/django.svg" />
-      <IconCarousel alt="ASP.NET" src="/assets/aspnet.svg" />
-      <IconCarousel alt="Java" src="/assets/java.svg" />
-      <IconCarousel alt="Spring" src="/assets/spring.svg" />
-      <IconCarousel alt="NodeJs" src="/assets/nodejs.svg" />
-      <IconCarousel alt="PHP" src="/assets/php.svg" />
-      <IconCarousel alt="Linux" src="/assets/linux.svg" />
-      <IconCarousel alt="Nginx" src="/assets/nginx.svg" />
-      <IconCarousel alt="Xampp" src="/assets/xampp.svg" />
-      <IconCarousel alt="Wordpress" src="/assets/wordpress.svg" />
-      <IconCarousel alt="Joomla" src="/assets/joomla.svg" />
-      <IconCarousel alt="SQL" src="/assets/sql.svg" />
-      <IconCarousel alt="MongoDB" src="/assets/mongodb.svg" />
-      <IconCarousel alt="XLS" src="/assets/xls.svg" />
-      <IconCarousel alt="XML" src="/assets/xml.svg" />
-      <IconCarousel alt="Github" src="/assets/github.svg" />
-      <IconCarousel alt="Gitlab" src="/assets/gitlab.svg" />
+      {
+        techCarouselIcons.map((icon) => (
+          <IconCarousel alt={icon.alt} src={`/assets/${icon.file}`} />
+        ))
+      }
     </div>
   </div>
   <div
