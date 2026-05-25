@@ -4,10 +4,11 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
 ---
 
 <astro>
-  <div
-    class="my-10 z-0 grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1 carousel-container ladosTransparentes"
-    ref:"sliderRef"
-  >
+  <div class="my-10 z-0 carousel-section ladosTransparentes">
+    <div
+      class="carousel-container grid grid-flow-col grid-rows-6 sm:grid-rows-3 md:grid-rows-2 lg:grid-rows-1"
+      ref:"sliderRef"
+    >
     <div class="carousel-track" ref:"trackRef">
       {
         techCarouselIcons.map((icon) => (
@@ -15,24 +16,54 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
         ))
       }
     </div>
+    </div>
   </div>
   <div
     id="tooltip"
-    class="tooltip hidden fixed sm:text-xxs md:text-sm lg:text-base sm:p-2 md:p-3 bg-gradient-to-b from-[#161616] via-[#202020] to-transparent tracking-wide text-gray-100 rounded-t-2xl transform -translate-x-1/2 left-1/2 sm:-mt-4 md:-mt-8"
+    class="carousel-tooltip tooltip-hidden fixed z-[9999] pointer-events-none"
+    role="tooltip"
+    aria-hidden="true"
   >
+    <span
+      id="tooltip-label"
+      class="carousel-tooltip-label inline-block whitespace-nowrap rounded-full border border-slate-400/55 px-3 py-1.5 text-xs font-medium tracking-wide text-white sm:text-sm md:px-3.5 md:py-2 md:text-base"
+    ></span>
   </div>
 
   <style>
     .ladosTransparentes {
-      mask-image: linear-gradient(to right, transparent, white, transparent);
+      -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        white 40%,
+        white 60%,
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        white 40%,
+        white 60%,
+        transparent 100%
+      );
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
     }
+
+    .carousel-section {
+      overflow: visible;
+      padding: 0.75rem 0 1rem;
+    }
+
     .carousel-container {
       overflow-x: hidden;
+      overflow-y: visible;
       width: 100%;
     }
 
     .carousel-track {
       display: flex;
+      align-items: center;
       cursor: grab;
       user-select: none;
     }
@@ -41,13 +72,42 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       cursor: grabbing;
     }
 
-    .tooltip {
-      pointer-events: none;
-      opacity: 1;
+    .carousel-tooltip {
+      display: block;
+      visibility: visible;
+      transition: none;
     }
 
-    .hidden {
+    .carousel-tooltip-label {
+      background: transparent;
+      box-shadow: none;
+      filter: none;
+    }
+
+    .carousel-tooltip.tooltip-hidden {
       opacity: 0;
+      visibility: hidden;
+      transition: none;
+    }
+
+    /* Misma máscara lateral que .ladosTransparentes, alineada al carrusel vía JS */
+    .carousel-tooltip:not(.tooltip-hidden) {
+      -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        white 40%,
+        white 60%,
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        white 40%,
+        white 60%,
+        transparent 100%
+      );
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
     }
   </style>
 
@@ -56,6 +116,9 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
     let slider: HTMLElement | null;
     let track: HTMLElement | null;
     let tooltip: HTMLElement | null;
+    let tooltipLabel: HTMLElement | null;
+    let activeTooltipImg: HTMLImageElement | null = null;
+    let showTooltipFrame = 0;
     let scrollAmount = 1;
     let startX = 0;
     let scrollLeft = 0;
@@ -68,7 +131,9 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       slider = document.querySelector(".carousel-container");
       track = document.querySelector(".carousel-track");
       tooltip = document.getElementById("tooltip");
-      if (slider && track && tooltip) {
+      tooltipLabel = document.getElementById("tooltip-label");
+      if (slider && track && tooltip && tooltipLabel) {
+        document.body.appendChild(tooltip);
         cloneElements();
         intervalId = setInterval(moveCarousel, 13);
         slider.addEventListener("mousedown", handleMouseDown);
@@ -79,9 +144,10 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
         slider.addEventListener("touchmove", handleTouchMove);
         slider.addEventListener("mouseenter", handleMouseEnter);
         slider.addEventListener("mouseleave", handleMouseLeave);
-        track.addEventListener("mouseleave", handleMouseLeaveTrack);
+        track.addEventListener("mouseleave", handleTrackMouseLeave);
         track.addEventListener("mouseover", handleMouseOver);
-        track.addEventListener("mouseout", handleMouseOut);
+        slider.addEventListener("scroll", refreshTooltip, { passive: true });
+        window.addEventListener("resize", refreshTooltip, { passive: true });
       }
     });
 
@@ -115,6 +181,7 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
         if (slider.scrollLeft >= halfScrollWidth) {
           slider.scrollLeft = slider.scrollLeft % halfScrollWidth;
         }
+        refreshTooltip();
       }
     }
 
@@ -151,7 +218,7 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
         const x = e.pageX - slider!.offsetLeft;
         const walk = (x - startX) * 1.2;
         slider!.scrollLeft = scrollLeft - walk;
-        tooltip!.classList.add("hidden");
+        hideTooltip();
 
         markUserInteracting();
       }
@@ -162,7 +229,7 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       slider!.classList.add("active");
       startX = e.touches[0].pageX - slider!.offsetLeft;
       scrollLeft = slider!.scrollLeft;
-      tooltip!.classList.add("hidden"); // Ocultar el tooltip al iniciar el arrastre
+      hideTooltip();
     }
 
     function handleTouchEnd() {
@@ -214,29 +281,126 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       isMouseOverSlider = false;
     }
 
-    function handleMouseLeaveTrack() {
+    function handleTrackMouseLeave() {
+      hideTooltip();
       if (isMouseDown) {
         handleMouseUp();
       }
     }
 
-    function handleMouseOver(e: MouseEvent) {
-      const target = e.target as HTMLElement;
-      if (target && target.tagName === "IMG") {
-        const img = target as HTMLImageElement;
-        const rect = img.getBoundingClientRect();
-        tooltip!.textContent = img.alt;
-        tooltip!.style.left = `${rect.left + rect.width / 2 + window.scrollX}px`;
-        tooltip!.style.top = `${rect.top + window.scrollY - 10}px`;
-        tooltip!.classList.remove("hidden");
+    const CAROUSEL_EDGE_MASK =
+      "linear-gradient(to right, transparent 0%, white 40%, white 60%, transparent 100%)";
+
+    /** Alinea la máscara del tooltip con la de .carousel-section (mismo fade lateral). */
+    function syncTooltipEdgeMask() {
+      if (!tooltip) return;
+
+      const section = document.querySelector(".carousel-section");
+      if (!section) return;
+
+      const sectionRect = section.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const maskX = sectionRect.left - tooltipRect.left;
+
+      tooltip.style.webkitMaskImage = CAROUSEL_EDGE_MASK;
+      tooltip.style.maskImage = CAROUSEL_EDGE_MASK;
+      tooltip.style.webkitMaskSize = `${sectionRect.width}px 100%`;
+      tooltip.style.maskSize = `${sectionRect.width}px 100%`;
+      tooltip.style.webkitMaskPosition = `${maskX}px 0`;
+      tooltip.style.maskPosition = `${maskX}px 0`;
+      tooltip.style.webkitMaskRepeat = "no-repeat";
+      tooltip.style.maskRepeat = "no-repeat";
+    }
+
+    function clearTooltipEdgeMask() {
+      if (!tooltip) return;
+      tooltip.style.removeProperty("-webkit-mask-image");
+      tooltip.style.removeProperty("mask-image");
+      tooltip.style.removeProperty("-webkit-mask-size");
+      tooltip.style.removeProperty("mask-size");
+      tooltip.style.removeProperty("-webkit-mask-position");
+      tooltip.style.removeProperty("mask-position");
+      tooltip.style.removeProperty("-webkit-mask-repeat");
+      tooltip.style.removeProperty("mask-repeat");
+    }
+
+    function cancelShowTooltipFrame() {
+      if (showTooltipFrame) {
+        cancelAnimationFrame(showTooltipFrame);
+        showTooltipFrame = 0;
       }
     }
 
-    function handleMouseOut(e: MouseEvent) {
-      const target = e.target as HTMLElement;
-      if (target && target.tagName === "IMG") {
-        tooltip!.classList.add("hidden");
+    function isCarouselIcon(node: EventTarget | null): node is HTMLImageElement {
+      return (
+        node instanceof HTMLImageElement &&
+        !!track &&
+        track.contains(node)
+      );
+    }
+
+    function hideTooltip() {
+      if (!tooltip) return;
+      cancelShowTooltipFrame();
+      activeTooltipImg = null;
+      tooltip.classList.add("tooltip-hidden");
+      tooltip.setAttribute("aria-hidden", "true");
+      // No limpiar la máscara aquí: evita 1 frame a opacidad plena al salir
+    }
+
+    function updateTooltipLayout() {
+      if (!tooltip || !activeTooltipImg) return;
+
+      const iconRect = activeTooltipImg.getBoundingClientRect();
+      const centerX = iconRect.left + iconRect.width / 2;
+
+      tooltip.style.position = "fixed";
+      tooltip.style.left = `${centerX}px`;
+      tooltip.style.top = `${iconRect.top - 8}px`;
+      tooltip.style.transform = "translate(-50%, -100%)";
+      syncTooltipEdgeMask();
+    }
+
+    function refreshTooltip() {
+      if (
+        !tooltip ||
+        !activeTooltipImg ||
+        tooltip.classList.contains("tooltip-hidden")
+      ) {
+        return;
+      }
+      updateTooltipLayout();
+    }
+
+    function showTooltip(img: HTMLImageElement) {
+      if (!tooltip || !tooltipLabel) return;
+
+      cancelShowTooltipFrame();
+      activeTooltipImg = img;
+      tooltipLabel.textContent = img.alt;
+
+      // Posición y máscara mientras sigue oculto (sin flash a opacidad plena)
+      updateTooltipLayout();
+      void tooltip.offsetWidth;
+
+      showTooltipFrame = requestAnimationFrame(() => {
+        showTooltipFrame = requestAnimationFrame(() => {
+          showTooltipFrame = 0;
+          if (!tooltip || activeTooltipImg !== img) return;
+          updateTooltipLayout();
+          void tooltip.offsetWidth;
+          tooltip.classList.remove("tooltip-hidden");
+          tooltip.setAttribute("aria-hidden", "false");
+        });
+      });
+    }
+
+    function handleMouseOver(e: MouseEvent) {
+      const target = e.target;
+      if (isCarouselIcon(target)) {
+        showTooltip(target);
       }
     }
+
   </script>
 </astro>
