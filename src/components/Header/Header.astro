@@ -11,7 +11,7 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
   class="header fixed left-0 right-0 z-40 w-full"
 >
   <div
-    class="header__inner flex min-h-11 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:mr-[10%] md:-ml-5 lg:mx-[10%] md:ml-auto md:py-0 md:pl-2 md:pr-1"
+    class="header__inner flex min-h-11 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:ml-auto md:mr-[10%] md:py-0 md:pl-2 md:pr-1 lg:mx-[10%]"
   >
     <a
       id="header-avatar-link"
@@ -173,7 +173,7 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
 
   const updateScrollProgress = () => {
     const fill = document.querySelector(".header__scroll-progress-fill");
-    if (!fill) return;
+    if (!(fill instanceof HTMLElement)) return;
 
     const maxScroll =
       document.documentElement.scrollHeight - window.innerHeight;
