@@ -6,6 +6,9 @@ import react from "@astrojs/react";
 export default defineConfig({
   integrations: [tailwind(), react()],
   vite: {
+    optimizeDeps: {
+      include: ['@react-spring/web', 'react', 'react-dom', 'react/jsx-runtime'],
+    },
     ssr: {
       noExternal: ['styled-components'],
     },

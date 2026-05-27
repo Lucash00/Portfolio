@@ -1,16 +1,10 @@
 ---
 import Layout from "../layouts/LayoutTimeline.astro";
-import Title from "../components/Utils/Font/Title.astro";
 import Experience from "../components/Experience/experience.jsx";
 ---
 
 <Layout title="Experiencia">
-  <main class="grid h-screen max-h-screen grid-rows-[auto_minmax(0,1fr)]">
-    <div class="shrink-0 px-4 py-3 md:px-8 md:py-4">
-      <Title title="Experiencia" />
-    </div>
-    <div class="min-h-0">
-      <Experience client:load />
-    </div>
+  <main class="h-screen max-h-screen overflow-x-clip overflow-y-hidden">
+    <Experience client:load />
   </main>
 </Layout>

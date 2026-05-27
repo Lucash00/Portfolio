@@ -59,6 +59,9 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       overflow-x: hidden;
       overflow-y: visible;
       width: 100%;
+      /* Reserva margen vertical para el hover scale sin recortar arriba/abajo */
+      padding-block: 0.45rem;
+      margin-block: -0.45rem;
     }
 
     .carousel-track {
@@ -120,6 +123,7 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
     let activeTooltipImg: HTMLImageElement | null = null;
     let showTooltipFrame = 0;
     let scrollAmount = 1;
+    const AUTO_SCROLL_SPEED_FACTOR = 0.9; // ~10% más lento
     let startX = 0;
     let scrollLeft = 0;
     let isMouseDown = false;
@@ -133,7 +137,10 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       tooltip = document.getElementById("tooltip");
       tooltipLabel = document.getElementById("tooltip-label");
       if (slider && track && tooltip && tooltipLabel) {
+        const scrollX = window.scrollX;
+        const scrollY = window.scrollY;
         document.body.appendChild(tooltip);
+        window.scrollTo(scrollX, scrollY);
         cloneElements();
         intervalId = setInterval(moveCarousel, 13);
         slider.addEventListener("mousedown", handleMouseDown);
@@ -158,13 +165,13 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       // Ajustar scrollAmount según el tamaño de la pantalla
       if (width <= 768) {
         // Dispositivos móviles (tamaño de pantalla pequeña)
-        scrollAmount = 1; // Movimiento más lento
+        scrollAmount = 1 * AUTO_SCROLL_SPEED_FACTOR; // Movimiento más lento
       } else if (width <= 1024) {
         // Tablets
-        scrollAmount = 1; // Velocidad estándar
+        scrollAmount = 1 * AUTO_SCROLL_SPEED_FACTOR; // Velocidad estándar
       } else {
         // Desktop
-        scrollAmount = 2; // Movimiento más rápido
+        scrollAmount = 2 * AUTO_SCROLL_SPEED_FACTOR; // Movimiento más rápido
       }
     }
 

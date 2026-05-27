@@ -57,9 +57,17 @@ const Slider = ({ images, lightboxLabel = "Galería" }) => {
     return null;
   }
 
+  const hasMultiple = slides.length > 1;
+
   return (
     <div className="relative w-full">
-      <div className="group/lightbox-preview relative flex h-100 w-auto items-center justify-center overflow-hidden rounded-[10px] bg-transparent md:cursor-pointer">
+      <div className="group/lightbox-preview relative flex h-100 w-full min-h-[12rem] items-center justify-center overflow-hidden rounded-[10px] bg-transparent">
+        <button
+          type="button"
+          className="absolute inset-0 z-[4] cursor-pointer border-0 bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+          onClick={() => openLightbox(currentIndex)}
+          aria-label={`Ampliar ${lightboxLabel}`}
+        />
         {springs.map((style, i) => {
           const isActive = i === currentIndex;
 
@@ -68,32 +76,14 @@ const Slider = ({ images, lightboxLabel = "Galería" }) => {
               key={slides[i].key}
               src={slides[i].content}
               alt={`${lightboxLabel} ${i + 1}`}
-              role={isActive ? "button" : undefined}
-              tabIndex={isActive ? 0 : -1}
-              onClick={(event) => {
-                if (!isActive) return;
-                event.stopPropagation();
-                openLightbox(i);
-              }}
-              onKeyDown={(event) => {
-                if (!isActive) return;
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  openLightbox(i);
-                }
-              }}
-              className={
-                isActive
-                  ? "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70"
-                  : undefined
-              }
+              aria-hidden={!isActive}
+              className="pointer-events-none select-none"
               style={{
                 position: "absolute",
                 width: "100%",
                 height: "100%",
                 objectFit: "contain",
                 borderRadius: "10px",
-                pointerEvents: isActive ? "auto" : "none",
                 zIndex: isActive ? 2 : 1,
                 transform: style.x.to((x) => `translate3d(${x}%, 0, 0)`),
                 scale: style.scale,
@@ -113,29 +103,32 @@ const Slider = ({ images, lightboxLabel = "Galería" }) => {
         </div>
       </div>
 
-      <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-between">
-        <button
-          type="button"
-          className="pointer-events-auto flex sm:mx-1 md:mx-4 lg:mx-4 xl:mx-6 2xl:mx-6 sm:h-7 sm:w-7 md:h-10 md:w-10 items-center justify-center rounded-full border-none bg-gray-300 text-gray-700 transition-[color,background-color,transform] duration-[250ms] ease-out sm:active:scale-110 sm:active:bg-amber-400 sm:active:text-gray-800 md:hover:scale-110 md:hover:bg-amber-400 md:hover:text-gray-800"
-          onClick={prevImage}
-          aria-label="Imagen anterior"
-        >
-          {"<"}
-        </button>
-        <button
-          type="button"
-          className="pointer-events-auto flex sm:mx-1 md:mx-4 lg:mx-6 xl:mx-8 2xl:mx-10 sm:h-7 sm:w-7 md:h-10 md:w-10 items-center justify-center rounded-full border-none bg-gray-300 text-gray-700 transition-[color,background-color,transform] duration-[250ms] ease-out sm:active:scale-110 sm:active:bg-amber-400 sm:active:text-gray-800 md:hover:scale-110 md:hover:bg-amber-400 md:hover:text-gray-800"
-          onClick={nextImage}
-          aria-label="Imagen siguiente"
-        >
-          {">"}
-        </button>
-      </div>
+      {hasMultiple && (
+        <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-between">
+          <button
+            type="button"
+            className="pointer-events-auto flex sm:mx-1 md:mx-4 lg:mx-4 xl:mx-6 2xl:mx-6 sm:h-7 sm:w-7 md:h-10 md:w-10 items-center justify-center rounded-full border-none bg-gray-300 text-gray-700 transition-[color,background-color,transform] duration-[250ms] ease-out sm:active:scale-110 sm:active:bg-amber-400 sm:active:text-gray-800 md:hover:scale-110 md:hover:bg-amber-400 md:hover:text-gray-800"
+            onClick={prevImage}
+            aria-label="Imagen anterior"
+          >
+            {"<"}
+          </button>
+          <button
+            type="button"
+            className="pointer-events-auto flex sm:mx-1 md:mx-4 lg:mx-6 xl:mx-8 2xl:mx-10 sm:h-7 sm:w-7 md:h-10 md:w-10 items-center justify-center rounded-full border-none bg-gray-300 text-gray-700 transition-[color,background-color,transform] duration-[250ms] ease-out sm:active:scale-110 sm:active:bg-amber-400 sm:active:text-gray-800 md:hover:scale-110 md:hover:bg-amber-400 md:hover:text-gray-800"
+            onClick={nextImage}
+            aria-label="Imagen siguiente"
+          >
+            {">"}
+          </button>
+        </div>
+      )}
 
       <p className="relative z-10 mt-2 text-center text-[10px] text-gray-400 sm:text-xs">
         Clic en la imagen para ampliar
       </p>
 
+      {hasMultiple && (
       <div className="relative z-30 mt-3 flex justify-center">
         {slides.map((slide, index) => (
           <div key={index} className="relative">
@@ -174,6 +167,7 @@ const Slider = ({ images, lightboxLabel = "Galería" }) => {
           </div>
         ))}
       </div>
+      )}
 
       <ImageLightbox
         images={validImages}

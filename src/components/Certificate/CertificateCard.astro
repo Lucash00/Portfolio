@@ -19,7 +19,7 @@ const { title, provider, description, tags, date, logo } = Astro.props;
         link={`/certificado/${encodeURIComponent(title.replace(/\s+/g, "-"))}`}
     >
         <div
-        class="sm:col-span-10 sm:mt-10 sm:mb-5 md:col-span-3 lg:col-span-2 xl:col-span-2 2xl:col-span-2 flex items-center justify-center -mr-4"
+        class="sm:col-span-10 sm:mt-10 sm:mb-5 md:col-span-3 lg:col-span-2 xl:col-span-2 2xl:col-span-2 flex items-center justify-center"
         >
             <div class="card-logo-wrap">
                 <img
@@ -30,7 +30,7 @@ const { title, provider, description, tags, date, logo } = Astro.props;
             </div>
         </div>
         <div
-        class="sm:px-3 sm:py-2 md:py-4 sm:border-t-2 md:border-l-2 sm:pt-4 sm:border-slate-200 md:px-6 sm:col-span-10 md:col-span-7 lg:col-span-8 xl:col-span-8 2xl:col-span-8"
+        class="min-w-0 sm:px-3 sm:py-2 md:py-4 sm:border-t-2 md:border-l-2 sm:pt-4 sm:border-slate-200 md:px-6 sm:col-span-10 md:col-span-7 lg:col-span-8 xl:col-span-8 2xl:col-span-8"
         >
             <h3 class={cardEntryTitleClass}>{title}</h3>
             <p class="text-gray-400 sm:text-sm md:text-base mb-2">

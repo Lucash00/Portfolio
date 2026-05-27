@@ -1,0 +1,23 @@
+<script is:inline>
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  const resetWindowScroll = () => {
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+  };
+
+  resetWindowScroll();
+
+  document.addEventListener("DOMContentLoaded", resetWindowScroll);
+  window.addEventListener("load", resetWindowScroll, { once: true });
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) resetWindowScroll();
+  });
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(resetWindowScroll);
+  });
+</script>

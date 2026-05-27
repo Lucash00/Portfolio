@@ -1,3 +1,7 @@
+html {
+  overflow-anchor: none;
+}
+
 /* Esto oculta la barra de desplazamiento vertical */
 .scrollbar-hide::-webkit-scrollbar {
     display: none;

@@ -24,6 +24,9 @@ const isActive =
   <div class="flex-1 group md:px-3 lg:px-5 xl:px-7 2xl:px-8 z-40 opacity-100">
     <a
       href={href}
+      data-menu-link
+      data-active={isActive ? "true" : undefined}
+      data-astro-prefetch="hover"
       class={`block items-end justify-center text-center md:px-2 lg:px-3 pt-2 w-full ${
         isActive ? "text-white border-transparent" : "text-gray-400 border-transparent"
       } group-hover:text-yellow-400 group-hover:border-yellow-400 border-b-2`}
@@ -54,4 +57,28 @@ const isActive =
       flex-grow: 1;
     }
   </style>
+
+  <script>
+    const menuScope = globalThis as unknown as {
+      __menuSameRouteGuard__?: boolean;
+    };
+
+    if (!menuScope.__menuSameRouteGuard__) {
+      menuScope.__menuSameRouteGuard__ = true;
+
+      document.addEventListener(
+        "click",
+        (event) => {
+          const link = (event.target as Element | null)?.closest(
+            "a[data-menu-link][data-active='true']",
+          );
+          if (!link) return;
+
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        },
+        true,
+      );
+    }
+  </script>
 </astro>

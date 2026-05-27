@@ -140,7 +140,7 @@ export default function ImageLightbox({
     }
   };
 
-  if (!mounted || !currentSrc) {
+  if ((!isOpen && !mounted) || !currentSrc) {
     return null;
   }
 
