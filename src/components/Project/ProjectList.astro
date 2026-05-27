@@ -13,7 +13,7 @@ const visibleProjects = limit ? projects.slice(0, limit) : projects;
 ---
 
 <astro>
-  <div class:list={["w-full", !compact && "mb-20"]}>
+  <div class:list={["min-w-0 w-full max-w-full", !compact && "mb-20"]}>
     {
       visibleProjects.map((project: Project) => (
         <ProjectCard

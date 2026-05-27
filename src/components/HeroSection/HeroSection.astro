@@ -1,7 +1,7 @@
 ---
 import TechCarousel from "../Utils/Carousel/TechCarousel.astro";
 import ContactButtons from "../Utils/Link/ContactButtons.jsx";
-import TextRotator from "../Utils/TextRotator.jsx";
+import HeroTitleRotator from "../Utils/HeroTitleRotator.jsx";
 import HomeSectionTitle from "../Home/HomeSectionTitle.astro";
 ---
 
@@ -14,14 +14,7 @@ import HomeSectionTitle from "../Home/HomeSectionTitle.astro";
         data-text-glow
         class="text-mouse-glow w-fit max-w-full mb-6 lg:mb-10 text-left font-extrabold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-6xl"
       >
-        <span class="text-amber-400">Desarrollador</span>
-        <span class="md:inline-block">
-          <TextRotator
-            texts={["Fullstack", "Backend", "Frontend"]}
-            interval={4000}
-            client:load
-          />
-        </span>
+        <HeroTitleRotator interval={4000} client:load />
       </h1>
       
       <p

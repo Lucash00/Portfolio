@@ -8,10 +8,18 @@ import { projects } from "../../data/projects";
 const PREVIEW_COUNT = 3;
 ---
 
-<HomePreviewSection title="Experiencias" viewMoreHref="/experiencia">
+<HomePreviewSection
+  title="Experiencias"
+  viewMoreHref="/experiencia"
+  description="Un vistazo rápido a mis experiencias laborales, formación y evolución en el sector."
+>
   <ExperiencePreviewList experiences={experiences} limit={PREVIEW_COUNT} />
 </HomePreviewSection>
 
-<HomePreviewSection title="Proyectos" viewMoreHref="/proyectos">
+<HomePreviewSection
+  title="Proyectos"
+  viewMoreHref="/proyectos"
+  description="Proyectos destacados con enfoque práctico en desarrollo frontend, backend y despliegue."
+>
   <ProjectList projects={projects} limit={PREVIEW_COUNT} compact />
 </HomePreviewSection>

@@ -23,13 +23,13 @@ export default function CardTimeline({ experience }) {
 
       href={`/experiencia/${formattedTitle}`}
 
-      className="group flex flex-col w-screen sm:mr-3 rounded-lg ease-in-out duration-300 sm:transform-none transform md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-gray-900"
+      className="group flex min-w-0 max-w-full flex-col rounded-lg ease-in-out duration-300 sm:transform-none transform md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-gray-900"
 
     >
 
       <div className="card-accent-bar" aria-hidden="true" />
 
-      <div className="relative sm:px-3 sm:py-2 md:p-8 grid gap-1 w-full rounded-b-lg overflow-hidden bg-slate-100 shadow-lg">
+      <div className="relative sm:px-3 sm:py-2 md:p-8 grid gap-1 w-full min-w-0 rounded-b-lg overflow-hidden bg-slate-100 shadow-lg">
 
         <div className="absolute top-2 right-2 text-gray-400 pointer-events-none z-10 sm:text-sm md:text-base lg:text-lg xl:text-xl">
 

@@ -1,0 +1,68 @@
+---
+import { Image } from "astro:assets";
+import profileImage from "../../assets/animeprofile.png";
+import ContactButtons from "../Utils/Link/ContactButtons.jsx";
+---
+
+<section class="flex flex-col lg:flex-row items-center justify-between px-6 py-12">
+  <div class="w-full lg:w-1/3 flex flex-col items-center lg:justify-start mb-8 lg:mb-0">
+    <div
+      class="relative w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 2xl:w-100 2xl:h-100"
+    >
+      <Image
+        src={profileImage}
+        alt="Lucas Moreno Corral - Anime Avatar"
+        widths={[240, 288, 320, 384]}
+        sizes="(max-width: 768px) 15rem, (max-width: 1024px) 18rem, (max-width: 1280px) 20rem, 24rem"
+        class="rounded-full shadow-lg object-cover w-full h-full"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div
+        class="absolute top-0 left-0 w-full h-full rounded-full blur-sm opacity-50 pointer-events-none"
+        aria-hidden="true"
+      >
+      </div>
+    </div>
+    <div class="mt-4">
+      <ContactButtons client:load />
+    </div>
+  </div>
+
+  <div class="w-full lg:w-2/3">
+    <div
+      class="sm:p-4 md:p-6 rounded-lg border-t-2 border-l-2 border-r-2 border-transparent bg-gradient-to-b to-transparent from-gray-700"
+    >
+      <h1
+        class="sm:text-2xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-5xl sm:mb-4 md:mb-8 font-bold text-slate-200"
+      >
+        Hola, soy <span class="text-amber-400">Lucas Moreno</span>
+      </h1>
+      <p
+        class="sm:text-base md:text-md lg:text-lg xl:text-lg 2xl:text-lg text-gray-300 leading-relaxed text-justify"
+      >
+        Soy desarrollador web apasionado por la creación de experiencias digitales
+        únicas, funcionales y centradas en el usuario. Mi enfoque combina habilidades
+        de <strong>FrontEnd</strong> y <strong>BackEnd</strong>, lo que me permite
+        abordar proyectos de manera integral, desde la concepción de interfaces <strong
+          >atractivas</strong
+        > y <strong>responsive</strong>, hasta la implementación de sistemas <strong
+          >robustos</strong
+        > y <strong>escalables</strong>.
+        <br /><br />
+        Mi compromiso con la excelencia técnica se refleja en cada detalle: <strong
+          >diseño intuitivo</strong
+        >, <strong>análisis de datos</strong>, <strong>optimización de rendimiento</strong
+        > y una <strong>comunicación fluida</strong> que garantiza que cada proyecto
+        alcance su máximo potencial. La adaptabilidad y la curiosidad son las claves
+        que me permiten seguir creciendo y explorar nuevas formas de transformar ideas
+        en soluciones tecnológicas reales.
+        <br /><br />
+        Cuando no estoy programando, disfruto aprendiendo sobre tendencias emergentes,
+        perfeccionando mi conocimiento de la programación y explorando cómo la tecnología
+        puede impactar positivamente.
+      </p>
+    </div>
+  </div>
+</section>

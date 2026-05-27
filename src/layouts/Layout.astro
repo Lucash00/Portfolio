@@ -7,6 +7,7 @@ import SideMenu from "../components/SideMenu/SideMenu.jsx";
 import Translator from "../components/Translator/Translator.jsx";
 import GhostCodeBackground from "../components/Background/GhostCodeBackground.jsx";
 import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.jsx";
+import ScrollReset from "../components/Utils/ScrollReset.astro";
 ---
 
 <!doctype html>
@@ -46,6 +47,7 @@ import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.
 
     <!-- Fuente Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap" rel="stylesheet" />
+    <ScrollReset />
   </head>
   <body
     class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 md:bg-fixed tracking-tighter leading-none"
@@ -60,7 +62,7 @@ import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.
       <!-- Columna izquierda -->
       <div class="w-auto sm:hidden"></div>
       <!-- Columna del medio (grande) -->
-      <div class="w-11/12 sm:w-full sm:mx-4 md:animate-slideIn">
+      <div class="w-11/12 min-w-0 max-w-full sm:w-full sm:mx-4 md:animate-slideIn">
         <slot />
       </div>
       <!-- Columna derecha -->

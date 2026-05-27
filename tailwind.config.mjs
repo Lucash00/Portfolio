@@ -40,7 +40,7 @@ export default {
 					'100%': { opacity: '1', transform: 'scale(1)' },
 				},
 				slideIn: {
-					'0%': { opacity: '0', transform: 'translateX(100px)' }, // Desliza desde la derecha
+					'0%': { opacity: '0', transform: 'translateX(24px)' },
 					'100%': { opacity: '1', transform: 'translateX(0)' },
 				},
 				logoWobble: {
@@ -50,11 +50,43 @@ export default {
 					'14%': { transform: 'rotate(-2deg)' },
 					'18%': { transform: 'rotate(2deg)' },
 				},
+				cardFlipOutUp: {
+					'0%': { transform: 'rotateX(0deg)', opacity: '1' },
+					'100%': { transform: 'rotateX(75deg)', opacity: '0' },
+				},
+				cardFlipInUp: {
+					'0%': { transform: 'rotateX(-75deg)', opacity: '0' },
+					'100%': { transform: 'rotateX(0deg)', opacity: '1' },
+				},
+				cardFlipOutDown: {
+					'0%': { transform: 'rotateX(0deg)', opacity: '1' },
+					'100%': { transform: 'rotateX(-75deg)', opacity: '0' },
+				},
+				cardFlipInDown: {
+					'0%': { transform: 'rotateX(75deg)', opacity: '0' },
+					'100%': { transform: 'rotateX(0deg)', opacity: '1' },
+				},
+				experienceLetterSquash: {
+					'0%, 100%': {
+						transform: 'scaleX(1) scaleY(1)',
+					},
+					'42%': {
+						transform: 'scaleX(var(--bulge, 1.06)) scaleY(0.9)',
+					},
+					'58%': {
+						transform: 'scaleX(calc(var(--bulge, 1.06) * 1.015)) scaleY(0.86)',
+					},
+				},
 			},
 			animation: {
 				fadeIn: 'fadeIn 1s ease-out forwards',
 				slideIn: 'slideIn 0.8s ease-out forwards',
 				logoWobble: 'logoWobble 2.75s ease-in-out infinite',
+				cardFlipOutUp: 'cardFlipOutUp 150ms ease-in-out forwards',
+				cardFlipInUp: 'cardFlipInUp 150ms ease-in-out forwards',
+				cardFlipOutDown: 'cardFlipOutDown 150ms ease-in-out forwards',
+				cardFlipInDown: 'cardFlipInDown 150ms ease-in-out forwards',
+				experienceLetterSquash: 'experienceLetterSquash 300ms ease-in-out',
 			},
 		},
 	},
