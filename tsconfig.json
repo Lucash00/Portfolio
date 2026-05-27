@@ -9,7 +9,8 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.astro"
-, "src/components/SideMenu/SideMenu.jsx"  ],
+    "src/**/*.astro",
+    "src/**/*.jsx"
+  ],
   "exclude": ["node_modules"]
 }
