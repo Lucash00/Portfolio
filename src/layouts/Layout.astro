@@ -8,6 +8,7 @@ import Translator from "../components/Translator/Translator.jsx";
 import GhostCodeBackground from "../components/Background/GhostCodeBackground.jsx";
 import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.jsx";
 import ScrollReset from "../components/Utils/ScrollReset.astro";
+import PageEnd from "../components/PageEnd/PageEnd.astro";
 ---
 
 <!doctype html>
@@ -56,17 +57,21 @@ import ScrollReset from "../components/Utils/ScrollReset.astro";
     <TextMouseGlowManager client:idle />
     <Translator client:load/>
     <Header />
-    <div class="relative z-10 flex justify-between sm:pt-20 md:pt-40">
+    <div class="relative z-10 flex flex-col sm:pt-20 md:pt-40">
       <!-- SideMenu para móviles -->
       <SideMenu client:load />
-      <!-- Columna izquierda -->
-      <div class="w-auto sm:hidden"></div>
-      <!-- Columna del medio (grande) -->
-      <div class="w-11/12 min-w-0 max-w-full sm:w-full sm:mx-4 md:animate-slideIn">
-        <slot />
+      <div class="flex justify-between">
+        <!-- Columna izquierda -->
+        <div class="w-auto sm:hidden"></div>
+        <!-- Columna del medio (contenido de página) -->
+        <div class="w-11/12 min-w-0 max-w-full sm:w-full sm:mx-4 md:animate-slideIn">
+          <slot />
+        </div>
+        <!-- Columna derecha -->
+        <div class="w-auto sm:hidden"></div>
       </div>
-      <!-- Columna derecha -->
-      <div class="w-auto sm:hidden"></div>
+      <!-- Contacto + footer a ancho completo (igual que en home) -->
+      <PageEnd contactAlign="content" />
     </div>
   </body>
 </html>

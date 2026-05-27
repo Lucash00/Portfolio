@@ -1,0 +1,174 @@
+---
+import HomeSectionTitle from "../Home/HomeSectionTitle.astro";
+import ContactButtons from "../Utils/Link/ContactButtons.jsx";
+import ContactForm from "./ContactForm.jsx";
+
+interface Props {
+  class?: string;
+  /** home: márgenes 10% como en inicio; content: alineado con tarjetas del layout de columna */
+  align?: "home" | "content";
+}
+
+const { class: className = "", align = "home" } = Astro.props;
+
+const sectionMargins =
+  align === "home" ? "mx-6 md:mx-[10%]" : "";
+
+const isDetailPage = /^\/(proyecto|certificado|experiencia)\//.test(
+  Astro.url.pathname,
+);
+
+/** Mismos márgenes que CardLink (listados) o Card (detalle de proyecto/certificado/experiencia) */
+const cardMargins =
+  align === "content"
+    ? isDetailPage
+      ? "sm:mx-1 md:mx-3 lg:mx-4 xl:mx-8 2xl:mx-16"
+      : "sm:mx-2 md:mx-4 lg:mx-6 xl:mx-8 2xl:mx-12"
+    : "";
+const email = "lucas.moreno.dev@gmail.com";
+const location = "Cádiz, España";
+---
+
+<section
+  id="contacto"
+  class:list={[
+    "contact-section relative mt-16 sm:mt-20 md:mt-24 mb-10 sm:mb-12",
+    sectionMargins,
+    className,
+  ]}
+  aria-labelledby="contacto-titulo"
+>
+  <div
+    class="pointer-events-none absolute bottom-1/4 left-1/3 -z-10 h-72 w-72 rounded-full bg-cyan-900/15 blur-3xl"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative z-10">
+    <div
+      class:list={[
+        "min-w-0 max-w-full",
+        align === "content" && cardMargins,
+      ]}
+    >
+    <div class="mb-10 text-center md:mb-12 md:text-left">
+      <HomeSectionTitle
+        id="contacto-titulo"
+        title="Contacto"
+        class="mb-3 sm:mb-4 md:mx-0"
+      />
+      <p
+        class="w-full max-w-none text-sm font-medium tracking-tight text-slate-300 md:text-base text-pretty"
+      >
+        ¿Tienes un proyecto en mente o quieres hablar de una posible colaboración?
+        Escríbeme con el formulario o contáctame por cualquiera de mis canales.
+      </p>
+    </div>
+
+    <div
+      class="w-full min-w-0 max-w-full overflow-hidden rounded-xl shadow-lg shadow-black/25"
+    >
+      <div class="card-accent-bar" aria-hidden="true"></div>
+
+      <div class="grid min-w-0 grid-cols-1 lg:grid-cols-7">
+        <div
+          class="min-w-0 bg-slate-100 px-5 py-7 sm:px-7 sm:py-8 md:px-8 md:py-9 lg:col-span-5"
+        >
+          <h3 class="card-title mb-6 text-xl font-bold leading-snug md:text-2xl">
+            Envíame un mensaje
+          </h3>
+          <ContactForm client:load />
+        </div>
+
+        <div
+          class="flex min-w-0 flex-col justify-center border-t border-slate-600/40 bg-slate-900/55 px-5 py-7 backdrop-blur-sm sm:px-7 sm:py-8 md:px-6 md:py-9 lg:col-span-2 lg:border-l lg:border-t-0"
+        >
+          <div class="space-y-7 md:space-y-8">
+            <div>
+              <h3
+                class="mb-3 text-lg font-bold tracking-tight text-white md:text-xl"
+              >
+                Información de contacto
+              </h3>
+              <p class="text-sm leading-relaxed text-slate-300">
+                Siempre estoy abierto a nuevos proyectos, ideas creativas u
+                oportunidades profesionales.
+              </p>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <div
+                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-amber-400/35 bg-amber-400/10 text-amber-400"
+                aria-hidden="true"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+              </div>
+              <div class="min-w-0">
+                <h4 class="text-sm font-semibold text-white md:text-base">Email</h4>
+                <a
+                  href={`mailto:${email}`}
+                  class="break-all text-sm font-medium text-amber-400 underline-offset-2 transition-colors hover:text-amber-300 hover:underline"
+                >
+                  {email}
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <div
+                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-amber-400/35 bg-amber-400/10 text-amber-400"
+                aria-hidden="true"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+                  ></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-white md:text-base">
+                  Ubicación
+                </h4>
+                <p class="text-sm text-slate-300">{location}</p>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="mb-3 text-sm font-semibold text-white md:text-base">
+                Redes y enlaces
+              </h4>
+              <ContactButtons client:load />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>

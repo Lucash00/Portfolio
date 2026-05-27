@@ -2,12 +2,14 @@
 interface Props {
   title: string;
   class?: string;
+  id?: string;
 }
 
-const { title, class: className = "" } = Astro.props;
+const { title, class: className = "", id } = Astro.props;
 ---
 
 <h2
+  id={id}
   data-text-glow
   class:list={[
     "home-section-title text-mouse-glow w-fit max-w-full text-left text-white font-extrabold tracking-tight text-shadow text-balance",

@@ -1,28 +1,41 @@
 ---
-import { Image } from "astro:assets";
-import profileImage from "../../assets/animeprofile.png";
 import ContactButtons from "../Utils/Link/ContactButtons.jsx";
+import AboutMeAvatarFly from "./AboutMeAvatarFly.jsx";
+import AboutMeProfileAvatar from "./AboutMeProfileAvatar.jsx";
+
+const profileAvatarSrc = "https://avatars.githubusercontent.com/u/168908236?v=4";
 ---
+
+<AboutMeAvatarFly client:load />
 
 <section class="flex flex-col lg:flex-row items-center justify-between px-6 py-12">
   <div class="w-full lg:w-1/3 flex flex-col items-center lg:justify-start mb-8 lg:mb-0">
-    <div
-      class="relative w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 2xl:w-100 2xl:h-100"
-    >
-      <Image
-        src={profileImage}
-        alt="Lucas Moreno Corral - Anime Avatar"
-        widths={[240, 288, 320, 384]}
-        sizes="(max-width: 768px) 15rem, (max-width: 1024px) 18rem, (max-width: 1280px) 20rem, 24rem"
-        class="rounded-full shadow-lg object-cover w-full h-full"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-      />
-      <div
-        class="absolute top-0 left-0 w-full h-full rounded-full blur-sm opacity-50 pointer-events-none"
-        aria-hidden="true"
-      >
+    <div class="about-profile-with-hint">
+      <AboutMeProfileAvatar client:load githubSrc={profileAvatarSrc} />
+      <div class="about-click-hint" aria-hidden="true">
+        <div class="about-click-hint__label">
+          <p class="about-click-hint__text">Click me!</p>
+          <svg
+            class="about-click-hint__arrow"
+            viewBox="0 0 72 68"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M 28 6 C 16 22, 18 42, 62 58"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+            <path
+              d="M 56 52 L 64 58 L 58 64"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </div>
       </div>
     </div>
     <div class="mt-4">
@@ -66,3 +79,95 @@ import ContactButtons from "../Utils/Link/ContactButtons.jsx";
     </div>
   </div>
 </section>
+
+<style>
+  .about-profile-with-hint {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  /* Capa decorativa: no ocupa espacio en el flujo del layout */
+  .about-click-hint {
+    display: none;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-42%);
+    margin-right: 0.15rem;
+    z-index: 1;
+    color: #fff;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .about-click-hint {
+      display: block;
+    }
+  }
+
+  .about-click-hint__label {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2.75rem;
+    padding-right: 0.25rem;
+  }
+
+  .about-click-hint__text {
+    font-family: "Caveat", "Segoe Print", "Comic Sans MS", cursive;
+    font-size: clamp(1.35rem, 2vw, 1.85rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    display: inline-block;
+    transform: rotate(-10deg) translateX(-0.85rem);
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    opacity: 0.92;
+  }
+
+  /* Origen del trazo: debajo del centro vertical del texto */
+  .about-click-hint__arrow {
+    position: absolute;
+    left: 33%;
+    top: 52%;
+    width: clamp(4.25rem, 6.5vw, 5.5rem);
+    height: auto;
+    opacity: 0.9;
+    transform: rotate(8deg);
+    transform-origin: 28% 0%;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .about-click-hint__text {
+      animation: about-hint-wiggle 2.8s ease-in-out infinite;
+    }
+
+    .about-click-hint__arrow {
+      animation: about-hint-arrow-wiggle 2.8s ease-in-out infinite 0.15s;
+    }
+  }
+
+  @keyframes about-hint-wiggle {
+    0%,
+    100% {
+      transform: rotate(-10deg) translateX(-0.85rem) translateY(0);
+    }
+    50% {
+      transform: rotate(-8deg) translateX(-0.85rem) translateY(-2px);
+    }
+  }
+
+  @keyframes about-hint-arrow-wiggle {
+    0%,
+    100% {
+      transform: rotate(8deg) translate(0, 0);
+    }
+    50% {
+      transform: rotate(10deg) translate(2px, 1px);
+    }
+  }
+</style>
