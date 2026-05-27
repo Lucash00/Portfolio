@@ -1,52 +1,232 @@
 ---
 import MenuSection from "./MenuSection.astro";
 import curriculum from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
+
+const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
 ---
 
 <header
   id="header"
   transition:persist="site-header"
-  class="header fixed flex md:w-[80%] md:mr-[10%] md:-ml-5 lg:mx-[10%] md:z-40 md:justify-between md:h-auto md:rounded-2xl md:mt-10 md:right-0"
+  class="header fixed left-0 right-0 z-40 w-full"
 >
-  <img
-    src="https://avatars.githubusercontent.com/u/168908236?v=4"
-    alt="Foto Perfil"
-    class="hidden md:flex my-auto md:mx-4 lg:ml-8 w-14 rounded-full justify-start z-40 opacity-100 md:left-0"
-  />
+  <div
+    class="header__inner flex min-h-11 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:mr-[10%] md:-ml-5 lg:mx-[10%] md:ml-auto md:py-0 md:pl-2 md:pr-1"
+  >
+    <a
+      id="header-avatar-link"
+      href="/sobreMi"
+      data-astro-prefetch="hover"
+      aria-label="Sobre mí"
+      aria-current={isAboutActive ? "page" : undefined}
+      class:list={[
+        "header__avatar-link relative hidden h-full w-auto shrink-0 self-stretch overflow-hidden rounded-full md:mx-3 md:block lg:ml-6",
+        isAboutActive && "is-active",
+      ]}
+    >
+      <div
+        id="header-avatar-wrap"
+        class="header__avatar-wrap relative h-full w-full overflow-hidden rounded-full"
+      >
+        <img
+          id="header-avatar-img"
+          src="https://avatars.githubusercontent.com/u/168908236?v=4"
+          alt="Foto Perfil"
+          class="header__avatar absolute inset-0 h-full w-full object-cover"
+        />
+      </div>
+    </a>
 
-  <!-- Menú principal para pantallas grandes -->
-  <nav class="hidden md:flex items-end justify-end z-40">
-    <MenuSection href="/" icon="far fa-home" text="Inicio" />
-    <MenuSection href="/proyectos" icon="far fa-folder-open" text="Proyectos" />
-    <MenuSection href="/certificados" icon="far fa-file-certificate" text="Certificados" />
-    <MenuSection href="/experiencia" icon="far fa-briefcase" text="Experiencia" />
-    <MenuSection href="/sobreMi" icon="far fa-user" text="Sobre mí" />
-    <MenuSection href={curriculum} icon="far fa-file-alt" text="Descargar CV" />
-  </>
+    <!-- Menú principal para pantallas grandes -->
+    <nav class="header__nav hidden min-h-0 md:flex md:items-stretch md:justify-end md:p-0 z-40">
+      <MenuSection href="/" icon="far fa-home" text="Inicio" />
+      <MenuSection href="/proyectos" icon="far fa-folder-open" text="Proyectos" />
+      <MenuSection href="/certificados" icon="far fa-file-certificate" text="Certificados" />
+      <MenuSection href="/experiencia" icon="far fa-briefcase" text="Experiencia" />
+      <MenuSection href="/sobreMi" icon="far fa-user" text="Sobre mí" />
+      <MenuSection href={curriculum} icon="far fa-file-alt" text="Descargar CV" />
+    </nav>
+  </div>
+
+  <div
+    class="header__scroll-progress pointer-events-none absolute inset-x-0 z-50 hidden md:block"
+    aria-hidden="true"
+  >
+    <div class="header__scroll-progress-fill h-full"></div>
+  </div>
 </header>
 
 <style>
+  @media (min-width: 768px) {
+    /* Misma fila que el nav: altura 100 %, ancho = altura → círculo sin JS */
+    .header__avatar-link {
+      aspect-ratio: 1 / 1;
+      height: 100%;
+      width: auto;
+      min-height: 2.75rem;
+      flex-shrink: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .header__avatar-wrap {
+      height: 100%;
+      width: 100%;
+    }
+
+    .header__avatar {
+      transition: transform 0.28s ease;
+      transform: scale(1);
+    }
+
+    /* Crece solo la imagen dentro del hueco, sin mover el menú */
+    .header__avatar-link:hover .header__avatar {
+      transform: scale(1.1);
+    }
+
+    .header__avatar-link.is-flying,
+    .header__avatar-link:has(.header__avatar-wrap.is-flying) {
+      opacity: 0;
+    }
+
+    /* Mantiene el hueco del grid para que el menú no se mueva */
+    .header__avatar-link.is-about-hidden,
+    .header__avatar-link:has(.header__avatar-wrap.is-about-hidden) {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      width: var(--avatar-slot-width, auto);
+      min-width: var(--avatar-slot-width, 2.75rem);
+    }
+  }
+
+  .header__scroll-progress {
+    top: calc(100% + 1px);
+    height: 3px;
+    background: transparent;
+  }
+
+  .header__scroll-progress-fill {
+    width: 0%;
+    background: #22d3ee;
+    transition: width 0.12s ease-out;
+    will-change: width;
+  }
+
+  /* Borde de lectura: fundido transparente → azul en el avance */
+  .header__scroll-progress-fill:not(.is-complete) {
+    background: linear-gradient(90deg, transparent 0%, #22d3ee 72%);
+  }
+
+  .header__scroll-progress-fill.is-complete {
+    background: #22d3ee;
+  }
+
   .header {
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    top: 0;
+    overflow: visible;
+    border: 1px solid transparent;
     background-color: transparent;
     box-shadow: none;
-    border: none;
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+    transition:
+      top 0.4s ease,
+      border-color 0.35s ease,
+      border-radius 0.4s ease,
+      background-color 0.35s ease,
+      box-shadow 0.35s ease,
+      -webkit-backdrop-filter 0.35s ease,
+      backdrop-filter 0.35s ease;
   }
+
+  @media (min-width: 768px) {
+    .header {
+      top: 2.5rem;
+    }
+
+    .header.scrolled {
+      top: 0;
+    }
+  }
+
+  /* Barra a ancho completo; tinte cyan-900 (como el azul claro del gradiente superior) */
   .header.scrolled {
-    background-color: rgba(31, 41, 55, 0.75);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+    background-color: rgba(22, 78, 99, 0.6);
+    box-shadow:
+      0 4px 14px -2px rgba(0, 0, 0, 0.28),
+      0 10px 28px -6px rgba(8, 47, 73, 0.45);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .header.scrolled {
+      background-color: rgba(22, 78, 99, 0.45);
+    }
   }
 </style>
 
 <script>
-  window.addEventListener("scroll", () => {
+  const STICK_DISTANCE = 72;
+  const TOP_OFFSET_PX = 40;
+
+  const updateScrollProgress = () => {
+    const fill = document.querySelector(".header__scroll-progress-fill");
+    if (!fill) return;
+
+    const maxScroll =
+      document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
+    fill.style.width = `${ratio * 100}%`;
+    fill.classList.toggle("is-complete", ratio >= 0.995);
+  };
+
+  const updateHeaderScroll = () => {
     const header = document.getElementById("header");
-    if (header) {
-      if (window.scrollY > 50) {
-        header.classList.add("scrolled");
-      } else {
-        header.classList.remove("scrolled");
-      }
+    if (!header) return;
+
+    const y = window.scrollY;
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+    if (!isDesktop) {
+      header.style.removeProperty("top");
+      header.classList.toggle("scrolled", y > 50);
+      updateScrollProgress();
+      return;
+    }
+
+    if (y <= 0) {
+      header.style.removeProperty("top");
+      header.classList.remove("scrolled");
+      updateScrollProgress();
+      return;
+    }
+
+    const stickProgress = Math.min(y / STICK_DISTANCE, 1);
+    header.style.top = `${TOP_OFFSET_PX * (1 - stickProgress)}px`;
+    header.classList.toggle("scrolled", stickProgress >= 0.65);
+    updateScrollProgress();
+  };
+
+  const onHeaderUpdate = () => {
+    updateHeaderScroll();
+    updateScrollProgress();
+  };
+
+  onHeaderUpdate();
+  window.addEventListener("scroll", onHeaderUpdate, { passive: true });
+  window.addEventListener("resize", onHeaderUpdate, { passive: true });
+  document.addEventListener("astro:page-load", onHeaderUpdate);
+
+  document.addEventListener("astro:page-load", () => {
+    const link = document.getElementById("header-avatar-link");
+    const wrap = document.getElementById("header-avatar-wrap");
+    if (!link) return;
+    if (!/\/sobreMi\/?$/i.test(window.location.pathname)) {
+      link.classList.remove("is-flying", "is-about-hidden");
+      link.style.removeProperty("--avatar-slot-width");
+      wrap?.classList.remove("is-flying", "is-about-hidden");
     }
   });
 </script>

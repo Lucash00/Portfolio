@@ -1,0 +1,63 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer
+  class="site-footer w-full border-t border-slate-600/50 pt-8 pb-10 sm:pb-12"
+  aria-label="Pie de página"
+>
+  <div class="mx-6 md:mx-[10%]">
+  <div
+    class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <div class="min-w-0">
+      <p class="text-sm font-semibold tracking-tight text-slate-200">
+        Lucas Moreno Corral
+      </p>
+      <p class="mt-1 text-xs text-slate-400 sm:text-sm">
+        Desarrollador Web · Cádiz, España
+      </p>
+    </div>
+
+    <nav
+      class="flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium uppercase tracking-wide text-slate-400 sm:text-sm"
+      aria-label="Enlaces del pie de página"
+    >
+      <a
+        href="/"
+        class="transition-colors hover:text-amber-400 focus-visible:text-amber-400"
+      >
+        Inicio
+      </a>
+      <a
+        href="/proyectos"
+        class="transition-colors hover:text-amber-400 focus-visible:text-amber-400"
+      >
+        Proyectos
+      </a>
+      <a
+        href="/certificados"
+        class="transition-colors hover:text-amber-400 focus-visible:text-amber-400"
+      >
+        Certificados
+      </a>
+      <a
+        href="/sobreMi"
+        class="transition-colors hover:text-amber-400 focus-visible:text-amber-400"
+      >
+        Sobre mí
+      </a>
+      <a
+        href="#contacto"
+        class="transition-colors hover:text-amber-400 focus-visible:text-amber-400"
+      >
+        Contacto
+      </a>
+    </nav>
+  </div>
+
+  <p class="mt-6 text-center text-xs text-slate-500 sm:text-left">
+    © {currentYear} Lucas Moreno Corral. Todos los derechos reservados.
+  </p>
+  </div>
+</footer>

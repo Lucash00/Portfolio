@@ -1,0 +1,29 @@
+---
+import ContactSection from "../Contact/ContactSection.astro";
+import Footer from "../Footer/Footer.astro";
+
+interface Props {
+  class?: string;
+  /** home: ancho con mx 10%; content: misma columna central que Layout.astro */
+  contactAlign?: "home" | "content";
+}
+
+const { class: className = "", contactAlign = "home" } = Astro.props;
+---
+
+<div class:list={["page-end", className]}>
+  {
+    contactAlign === "content" ? (
+      <div class="flex justify-between">
+        <div class="w-auto sm:hidden" aria-hidden="true" />
+        <div class="w-11/12 min-w-0 max-w-full sm:w-full sm:mx-4">
+          <ContactSection align="content" />
+        </div>
+        <div class="w-auto sm:hidden" aria-hidden="true" />
+      </div>
+    ) : (
+      <ContactSection align="home" />
+    )
+  }
+  <Footer />
+</div>

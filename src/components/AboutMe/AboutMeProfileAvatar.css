@@ -1,0 +1,120 @@
+/* Estilos globales: el componente React no recibe el scope de Astro */
+
+.about-profile-frame {
+  padding: 3px;
+  background: linear-gradient(90deg, transparent 0%, #22d3ee 72%);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+  border-radius: 9999px;
+}
+
+.about-profile-frame__inner {
+  background: rgb(15 23 42);
+  border-radius: 9999px;
+  width: 100%;
+  height: 100%;
+}
+
+.about-profile-flip {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 9999px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.about-profile-flip__scene {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  perspective: 1200px;
+}
+
+.about-profile-flip__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  border-radius: 9999px;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.about-profile-face {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.about-profile-face--front {
+  transform: rotateY(0deg);
+}
+
+.about-profile-face--back {
+  transform: rotateY(180deg);
+}
+
+.about-profile-face .about-profile-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9999px;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.28s ease;
+  transform: scale(1);
+}
+
+/* Hover en la imagen, no en la cara (no rompe el giro 3D) */
+.about-profile-frame:hover
+  .about-profile-flip:not(.is-flipped)
+  .about-profile-face--front
+  .about-profile-img {
+  transform: scale(1.034);
+}
+
+.about-profile-frame:hover
+  .about-profile-flip.is-flipped
+  .about-profile-face--back
+  .about-profile-img {
+  transform: scale(1.034);
+}
+
+@media (min-width: 768px) {
+  .about-profile-flip:not(.is-visible) .about-profile-face--front .about-profile-img {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .about-profile-flip .about-profile-img {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-profile-flip__inner {
+    transition-duration: 0.2s;
+  }
+
+  .about-profile-frame:hover
+    .about-profile-flip:not(.is-flipped)
+    .about-profile-face--front
+    .about-profile-img,
+  .about-profile-frame:hover
+    .about-profile-flip.is-flipped
+    .about-profile-face--back
+    .about-profile-img {
+    transform: scale(1.02);
+  }
+}
