@@ -1,19 +1,19 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Title from "../components/Utils/Font/Title.astro";
-import CertificateList from "../components/Certificate/CertificateList.astro";
-import { certificates } from '../data/certificates';
+import CertificateListLocalized from "../components/Certificate/CertificateListLocalized.jsx";
+import { t } from "../i18n/astro";
 ---
 
-<Layout title="Certificados">
-
+<Layout title={t("pages.certificates.title")}>
   <main>
     <Title
-      title="Certificados"
+      title={t("pages.certificates.title")}
+      titleI18nKey="pages.certificates.title"
       logo="/Certificates/logo.png"
-      description="Certificaciones y formación complementaria que respaldan mi perfil técnico."
+      description={t("pages.certificates.description")}
+      descriptionI18nKey="pages.certificates.description"
     />
-    <CertificateList certificates={certificates} />
+    <CertificateListLocalized client:load />
   </main>
-
 </Layout>

@@ -6,9 +6,18 @@ interface Props {
   logo?: string;
   class?: string;
   description?: string;
+  titleI18nKey?: string;
+  descriptionI18nKey?: string;
 }
 
-const { title, logo, class: className = "", description } = Astro.props;
+const {
+  title,
+  logo,
+  class: className = "",
+  description,
+  titleI18nKey,
+  descriptionI18nKey,
+} = Astro.props;
 ---
 <div class:list={[description ? "w-full" : "w-fit max-w-full"]}>
   <h1
@@ -28,11 +37,14 @@ const { title, logo, class: className = "", description } = Astro.props;
         />
       )
     }
-    <span data-text-glow class="text-mouse-glow">{title}</span>
+    <span data-text-glow class="text-mouse-glow" data-i18n={titleI18nKey}>{title}</span>
   </h1>
   {
     description && (
-      <p class="mt-2 w-full max-w-none text-sm md:text-base font-medium tracking-tight text-slate-300 text-pretty">
+      <p
+        class="mt-2 w-full max-w-none text-sm md:text-base font-medium tracking-tight text-slate-300 text-pretty"
+        data-i18n={descriptionI18nKey}
+      >
         {description}
       </p>
     )

@@ -3,9 +3,10 @@ interface Props {
   title: string;
   class?: string;
   id?: string;
+  i18nKey?: string;
 }
 
-const { title, class: className = "", id } = Astro.props;
+const { title, class: className = "", id, i18nKey } = Astro.props;
 ---
 
 <h2
@@ -17,7 +18,7 @@ const { title, class: className = "", id } = Astro.props;
     className,
   ]}
 >
-  {title}
+  <span data-i18n={i18nKey}>{title}</span>
 </h2>
 
 <style>

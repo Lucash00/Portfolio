@@ -1,171 +1,29 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import TitleComponent from "../../components/Utils/Font/Title.astro";
-import TitleContent from "../../components/Utils/Font/TitleContent.astro";
-import TextContent from "../../components/Utils/Font/TextContent.jsx";
-import Card from "../../components/Utils/Card/Card.astro";
-import LinkExperience from "../../components/Utils/Link/LinkExperience.jsx";
-import LinkList from "../../components/Utils/Link/Link.jsx";
-import SectionToggle from "../../components/Utils/SectionToggle.jsx";
-import Slider from "../../components/Utils/Slider/Slider.jsx";
-import { experiences } from "../../data/experiences";
+import ExperienceDetailLocalized from "../../components/Experience/ExperienceDetailLocalized.jsx";
+import {
+  getAllExperienceSlugs,
+  getExperienceBySlug,
+} from "../../data/getLocalized";
+import { DEFAULT_LOCALE } from "../../i18n/config";
 
-// Generar rutas estáticas
 export async function getStaticPaths() {
-    return experiences.map((experience) => ({
-        params: {
-            title: encodeURIComponent(experience.title.replace(/\s+/g, "-")),
-        },
-    }));
+  return getAllExperienceSlugs().map((slug) => ({
+    params: { title: slug },
+  }));
 }
 
-const params = Astro.params;
-
-if (!params.title) {
-    throw new Error("No title parameter provided");
+const slug = Astro.params.title;
+if (!slug) {
+  throw new Error("No slug parameter provided");
 }
 
-const decodedTitle = decodeURIComponent(params.title);
-const experience = experiences.find(
-    (exp) =>
-        exp.title.toLowerCase() ===
-        decodedTitle.replace(/-/g, " ").toLowerCase(),
-);
-
+const experience = getExperienceBySlug(slug, DEFAULT_LOCALE);
 if (!experience) {
-    throw new Error(`Experience with title '${decodedTitle}' not found`);
+  throw new Error(`Experience with slug '${slug}' not found`);
 }
-
-// Crear secciones dinámicas, asignar null a contenido vacío
-const sections = [
-    {
-        name: "Aspectos destacados",
-        content: experience.highlights?.join("") || null,
-    },
-    {
-        name: "Responsabilidades",
-        content: experience.responsibilities?.join("") || null,
-    },
-    {
-        name: "Habilidades",
-        content: experience.skills?.join("") || null,
-    },
-    { name: "Tipo", content: experience.type || null },
-    { name: "Ubicación", content: experience.location || null },
-];
-
-// Filtrar solo las secciones que tienen contenido
-const validSections = sections.filter(
-    (section) => section.content && section.content !== null,
-);
-
-const experienceMedia =
-    experience.media?.filter((src) => src?.trim().length > 0) ?? [];
-const hasExperienceMedia = experienceMedia.length > 0;
 ---
 
 <Layout title={`Experiencia: ${experience.title}`}>
-    <main>
-        <!-- Título principal -->
-        <TitleComponent title={experience.title} logo={experience.logo} />
-
-        <!-- Contenido principal -->
-        <Card>
-            {
-                hasExperienceMedia && (
-                    <div class="z-10 mb-4 pt-3 md:pt-4 col-span-2 col-start-1">
-                        <Slider
-                            client:load
-                            images={experienceMedia}
-                            lightboxLabel={experience.title}
-                        />
-                    </div>
-                )
-            }
-            <!-- Sección de Descripción -->
-            <div
-                class="py-4 col-span-2 col-start-1 border-spacing-y-10 border-b-2 border-gray-300"
-            >
-                <TitleContent title={experience.title} />
-
-                {/* Mostrar provider, startDate y endDate si existe provider */}
-                {
-                    experience.provider ? (
-                        <p class="mb-2 text-gray-400">
-                            {experience.provider} / {experience.startDate} -{" "}
-                            {experience.endDate}
-                        </p>
-                    ) : (
-                        <p class="mb-2 text-gray-400">
-                            {experience.startDate} - {experience.endDate}
-                        </p>
-                    )
-                }
-
-                <TextContent content={experience.description} />
-            </div>
-            <!-- Tags -->
-            {
-                experience.tags && (
-                    <div class="col-span-2 col-start-1 mb-2">
-                        <ul class="flex flex-wrap gap-2 mb-2">
-                            {experience.tags.map((tag) => (
-                                <li class="px-2 py-1 bg-gray-300 rounded-full font-semibold text-gray-700 text-sm">
-                                    {tag}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )
-            }
-            <!-- Secciones dinámicas (solo las válidas) -->
-            <div
-                class="pt-4 sm:col-span-2 sm:col-start-1 md:col-span-2 md:col-start-1 border-y-2 border-gray-300"
-            >
-                <SectionToggle client:load sections={validSections} />
-            </div>
-
-            <!-- Seccion Links -->
-            {
-                (experience.companyUrl ||
-                    (experience.certificateUrl &&
-                        experience.certificateUrl.length > 0) ||
-                    (experience.projectUrl &&
-                        experience.projectUrl.length > 0)) && (
-                    <div class="pb-2 col-span-2 col-start-1">
-                        <TitleContent title="Links" />
-                        <div class="text-sm">
-                            {experience.companyUrl && (
-                                <div class="mb-4">
-                                    <LinkList
-                                        client:load
-                                        links={[
-                                            {
-                                                url: experience.companyUrl,
-                                                name:
-                                                    experience.companyLinkLabel ??
-                                                    "Ver empresa",
-                                            },
-                                        ]}
-                                    />
-                                </div>
-                            )}
-                            {experience.certificateUrl &&
-                                experience.certificateUrl.length > 0 && (
-                                    <LinkExperience
-                                        urls={experience.certificateUrl}
-                                    />
-                                )}
-                            {experience.projectUrl &&
-                                experience.projectUrl.length > 0 && (
-                                    <LinkExperience
-                                        urls={experience.projectUrl}
-                                    />
-                                )}
-                        </div>
-                    </div>
-                )
-            }
-        </Card>
-    </main>
+  <ExperienceDetailLocalized client:load slug={slug} />
 </Layout>

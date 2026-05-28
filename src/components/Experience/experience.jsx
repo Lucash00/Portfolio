@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Timeline from '../Utils/Timeline';
 import CardTimeline from '../Utils/Card/CardTimeline';
-import { experiences } from '../../data/experiences';
+import { getExperiences } from '../../data/getLocalized';
+import { useTranslation } from '../../i18n/client';
 
 const FLIP_MS = 150;
 const WHEEL_STEP_COOLDOWN_MS = 160;
-const EXPERIENCE_TITLE = 'Experiencia';
 
 function getTitleLetterSquash(index, total) {
   const center = (total - 1) / 2;
@@ -25,8 +25,11 @@ function isEditableTarget(target) {
 }
 
 export default function Experience() {
+  const { locale, t } = useTranslation();
+  const experiences = useMemo(() => getExperiences(locale), [locale]);
+  const experienceTitle = t('pages.experience.title');
   const [activeIndex, setActiveIndex] = useState(0);
-  const [displayExperience, setDisplayExperience] = useState(experiences[0]);
+  const [displayExperience, setDisplayExperience] = useState(() => experiences[0]);
   const [flipClass, setFlipClass] = useState('');
   const [titleSquashKey, setTitleSquashKey] = useState(0);
   const timelineRef = useRef(null);
@@ -99,6 +102,15 @@ export default function Experience() {
   );
 
   useEffect(() => () => clearFlipTimeouts(), []);
+
+  useEffect(() => {
+    if (!experiences.length) return;
+    activeIndexRef.current = 0;
+    setActiveIndex(0);
+    setDisplayExperience(experiences[0]);
+    setFlipClass('');
+    timelineRef.current?.scrollToIndex(0, 'auto');
+  }, [locale, experiences]);
 
   useEffect(() => {
     const root = document.getElementById('experience-page-root');
@@ -184,10 +196,10 @@ export default function Experience() {
             data-text-glow
             className="text-mouse-glow inline-flex items-center justify-center"
           >
-            {EXPERIENCE_TITLE.split('').map((char, index) => {
+            {experienceTitle.split('').map((char, index) => {
               const squash = getTitleLetterSquash(
                 index,
-                EXPERIENCE_TITLE.length,
+                experienceTitle.length,
               );
 
               return (
@@ -211,7 +223,7 @@ export default function Experience() {
           </span>
         </h1>
         <p className="pointer-events-none absolute left-1/2 z-20 w-[min(92%,52rem)] -translate-x-1/2 text-center text-sm md:text-base font-medium tracking-tight text-slate-300 top-[calc(4*var(--experience-menu-h)+4.1rem)] sm:top-[calc(2.5rem+4*var(--experience-menu-h)+5rem)]">
-          Mis experiencias laborales, aprendizaje autodidacta y formación en el sector tecnológico.
+          {t('pages.experience.subtitle')}
         </p>
         <div className="experience-card-stage absolute inset-0 flex items-center justify-center overflow-visible px-5 sm:px-8 md:px-12 lg:px-14 xl:px-16">
           <div className="flex h-full w-full min-w-0 max-w-full items-center justify-center overflow-visible">

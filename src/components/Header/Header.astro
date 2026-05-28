@@ -1,7 +1,9 @@
 ---
 import MenuSection from "./MenuSection.astro";
 import ProfileAvatarImage from "../Utils/ProfileAvatarImage.astro";
+import Translator from "../Translator/Translator.jsx";
 import curriculum from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
+import { t } from "../../i18n/astro";
 
 const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
 ---
@@ -12,13 +14,14 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
   class="header fixed left-0 right-0 z-40 w-full"
 >
   <div
-    class="header__inner flex min-h-11 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:ml-auto md:mr-[10%] md:py-0 md:pl-2 md:pr-1 lg:mx-[10%]"
+    class="header__inner relative flex min-h-11 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:ml-auto md:mr-[10%] md:py-0 md:pl-2 lg:mx-[10%]"
   >
     <a
       id="header-avatar-link"
       href="/sobreMi"
       data-astro-prefetch="hover"
-      aria-label="Sobre mí"
+      aria-label={t("nav.aboutAria")}
+      data-i18n-aria="nav.aboutAria"
       aria-current={isAboutActive ? "page" : undefined}
       class:list={[
         "header__avatar-link relative hidden h-full w-auto shrink-0 self-stretch overflow-hidden rounded-full md:mx-3 md:block lg:ml-6",
@@ -40,13 +43,17 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
 
     <!-- Menú principal para pantallas grandes -->
     <nav class="header__nav hidden min-h-0 md:flex md:items-stretch md:justify-end md:p-0 z-40">
-      <MenuSection href="/" icon="far fa-home" text="Inicio" />
-      <MenuSection href="/proyectos" icon="far fa-folder-open" text="Proyectos" />
-      <MenuSection href="/certificados" icon="far fa-file-certificate" text="Certificados" />
-      <MenuSection href="/experiencia" icon="far fa-briefcase" text="Experiencia" />
-      <MenuSection href="/sobreMi" icon="far fa-user" text="Sobre mí" />
-      <MenuSection href={curriculum} icon="far fa-file-alt" text="Descargar CV" />
+      <MenuSection href="/" icon="far fa-home" text={t("nav.home")} i18nKey="nav.home" />
+      <MenuSection href="/proyectos" icon="far fa-folder-open" text={t("nav.projects")} i18nKey="nav.projects" />
+      <MenuSection href="/certificados" icon="far fa-file-certificate" text={t("nav.certificates")} i18nKey="nav.certificates" />
+      <MenuSection href="/experiencia" icon="far fa-briefcase" text={t("nav.experience")} i18nKey="nav.experience" />
+      <MenuSection href="/sobreMi" icon="far fa-user" text={t("nav.about")} i18nKey="nav.about" />
+      <MenuSection href={curriculum} icon="far fa-file-alt" text={t("nav.downloadCv")} i18nKey="nav.downloadCv" />
     </nav>
+  </div>
+
+  <div class="header__lang">
+    <Translator client:load />
   </div>
 
   <div
@@ -58,6 +65,21 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
 </header>
 
 <style>
+  /* Esquina del <header> (barra translúcida a ancho completo), no del nav interno */
+  .header {
+    --header-corner-inset: 0.5rem;
+  }
+
+  .header__lang {
+    position: absolute;
+    top: var(--header-corner-inset);
+    right: var(--header-corner-inset);
+    z-index: 55;
+    display: flex;
+    align-items: flex-start;
+    pointer-events: auto;
+  }
+
   @media (min-width: 768px) {
     /* Misma fila que el nav: altura 100 %, ancho = altura → círculo sin JS */
     .header__avatar-link {

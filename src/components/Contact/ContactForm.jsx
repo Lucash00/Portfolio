@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import PopUp from '../Utils/PopUp/PopUp.jsx';
+import { useTranslation } from '../../i18n/client';
 
 const FORM_ENDPOINT = 'https://formsubmit.co/ajax/lucas.moreno.dev@gmail.com';
 
@@ -8,17 +9,21 @@ const inputClass =
 
 const labelClass = 'text-sm font-medium text-gray-700';
 
-const subjectOptions = [
-  { value: 'proyecto', label: 'Proyecto o encargo' },
-  { value: 'colaboracion', label: 'Colaboración' },
-  { value: 'empleo', label: 'Oportunidad laboral' },
-  { value: 'consulta', label: 'Consulta general' },
-  { value: 'otro', label: 'Otro' },
-];
-
 export default function ContactForm() {
+  const { t } = useTranslation();
   const [status, setStatus] = useState('idle');
   const [popupMessage, setPopupMessage] = useState('');
+
+  const subjectOptions = useMemo(
+    () => [
+      { value: 'proyecto', label: t('contact.form.subjects.project') },
+      { value: 'colaboracion', label: t('contact.form.subjects.collaboration') },
+      { value: 'empleo', label: t('contact.form.subjects.job') },
+      { value: 'consulta', label: t('contact.form.subjects.inquiry') },
+      { value: 'otro', label: t('contact.form.subjects.other') },
+    ],
+    [t],
+  );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,25 +49,23 @@ export default function ContactForm() {
 
       form.reset();
       setStatus('success');
-      setPopupMessage('¡Mensaje enviado! Te responderé lo antes posible.');
+      setPopupMessage(t('contact.form.success'));
     } catch {
       setStatus('error');
-      setPopupMessage(
-        'No se pudo enviar el mensaje. Prueba de nuevo o escríbeme por correo directamente.',
-      );
+      setPopupMessage(t('contact.form.error'));
     }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <input type="hidden" name="_subject" value="Nuevo mensaje desde el portfolio" />
+        <input type="hidden" name="_subject" value={t('contact.form.hiddenSubject')} />
         <input type="hidden" name="_template" value="table" />
         <input type="text" name="_gotcha" className="hidden" tabIndex={-1} autoComplete="off" />
 
         <div>
           <label htmlFor="contact-name" className={labelClass}>
-            Tu nombre
+            {t('contact.form.nameLabel')}
           </label>
           <input
             id="contact-name"
@@ -70,14 +73,15 @@ export default function ContactForm() {
             type="text"
             required
             autoComplete="name"
-            placeholder="Lucas Moreno"
+            placeholder={t('contact.form.namePlaceholder')}
+            data-i18n-placeholder="contact.form.namePlaceholder"
             className={inputClass}
           />
         </div>
 
         <div>
           <label htmlFor="contact-email" className={labelClass}>
-            Tu email
+            {t('contact.form.emailLabel')}
           </label>
           <input
             id="contact-email"
@@ -85,28 +89,31 @@ export default function ContactForm() {
             type="email"
             required
             autoComplete="email"
-            placeholder="tu@email.com"
+            placeholder={t('contact.form.emailPlaceholder')}
+            data-i18n-placeholder="contact.form.emailPlaceholder"
             className={inputClass}
           />
         </div>
 
         <div>
           <label htmlFor="contact-phone" className={labelClass}>
-            Teléfono <span className="font-normal text-gray-500">(opcional)</span>
+            {t('contact.form.phoneLabel')}{' '}
+            <span className="font-normal text-gray-500">{t('contact.form.phoneOptional')}</span>
           </label>
           <input
             id="contact-phone"
             name="phone"
             type="tel"
             autoComplete="tel"
-            placeholder="+34 600 000 000"
+            placeholder={t('contact.form.phonePlaceholder')}
+            data-i18n-placeholder="contact.form.phonePlaceholder"
             className={inputClass}
           />
         </div>
 
         <div>
           <label htmlFor="contact-subject" className={labelClass}>
-            Motivo del mensaje
+            {t('contact.form.subjectLabel')}
           </label>
           <select
             id="contact-subject"
@@ -116,7 +123,7 @@ export default function ContactForm() {
             className={`${inputClass} cursor-pointer`}
           >
             <option value="" disabled>
-              Selecciona una opción
+              {t('contact.form.selectPlaceholder')}
             </option>
             {subjectOptions.map((option) => (
               <option key={option.value} value={option.label}>
@@ -128,14 +135,15 @@ export default function ContactForm() {
 
         <div>
           <label htmlFor="contact-message" className={labelClass}>
-            Tu mensaje
+            {t('contact.form.messageLabel')}
           </label>
           <textarea
             id="contact-message"
             name="message"
             required
             rows={6}
-            placeholder="Hola, me gustaría hablar sobre..."
+            placeholder={t('contact.form.messagePlaceholder')}
+            data-i18n-placeholder="contact.form.messagePlaceholder"
             className={`${inputClass} min-h-[150px] resize-y`}
           />
         </div>
@@ -146,7 +154,7 @@ export default function ContactForm() {
           className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-amber-400 px-4 py-2 text-sm font-semibold uppercase tracking-wide text-gray-900 shadow-md transition-[background-color,transform,box-shadow] duration-200 hover:bg-amber-500 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 md:hover:scale-[1.02]"
         >
           <SendIcon />
-          {status === 'loading' ? 'Enviando...' : 'Enviar mensaje'}
+          {status === 'loading' ? t('contact.form.sending') : t('contact.form.submit')}
         </button>
       </form>
 

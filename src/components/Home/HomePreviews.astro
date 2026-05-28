@@ -1,25 +1,76 @@
 ---
-import HomePreviewSection from "./HomePreviewSection.astro";
-import ExperiencePreviewList from "../Experience/ExperiencePreviewList.astro";
-import ProjectList from "../Project/ProjectList.astro";
-import { experiences } from "../../data/experiences";
-import { projects } from "../../data/projects";
-
-const PREVIEW_COUNT = 3;
+import HomePreviewsLocalized from "./HomePreviewsLocalized.jsx";
 ---
 
-<HomePreviewSection
-  title="Experiencias"
-  viewMoreHref="/experiencia"
-  description="Un vistazo rápido a mis experiencias laborales, formación y evolución en el sector."
->
-  <ExperiencePreviewList experiences={experiences} limit={PREVIEW_COUNT} />
-</HomePreviewSection>
+<HomePreviewsLocalized client:load />
 
-<HomePreviewSection
-  title="Proyectos"
-  viewMoreHref="/proyectos"
-  description="Proyectos destacados con enfoque práctico en desarrollo frontend, backend y despliegue."
->
-  <ProjectList projects={projects} limit={PREVIEW_COUNT} compact />
-</HomePreviewSection>
+<style is:global>
+  .home-preview-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    border: 1px solid rgba(156, 163, 175, 0.45);
+    border-radius: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    transition:
+      color 0.35s ease,
+      border-color 0.35s ease,
+      background-color 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  @media (min-width: 640px) {
+    .home-preview-link {
+      padding: 0.625rem 1.375rem;
+      font-size: 0.875rem;
+    }
+  }
+
+  .home-preview-link-arrow {
+    display: inline-block;
+    transition: transform 0.35s ease;
+  }
+
+  .home-preview-link:hover,
+  .home-preview-link:focus-visible {
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.55);
+    background-color: rgba(251, 191, 36, 0.06);
+    transform: translateY(-2px);
+  }
+
+  .home-preview-link:hover .home-preview-link-arrow,
+  .home-preview-link:focus-visible .home-preview-link-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-preview-link,
+    .home-preview-link-arrow {
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+    }
+
+    .home-preview-link:hover,
+    .home-preview-link:focus-visible {
+      transform: none;
+    }
+
+    .home-preview-link:hover .home-preview-link-arrow,
+    .home-preview-link:focus-visible .home-preview-link-arrow {
+      transform: none;
+    }
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.75);
+  }
+</style>

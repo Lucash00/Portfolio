@@ -2,24 +2,23 @@ import { FiExternalLink } from 'react-icons/fi';
 
 import { cardEntryTitleClass } from './cardEntryTitle';
 import TextContent from '../Font/TextContent.jsx';
+import { experiencePath } from '../../../data/slug';
+import { useTranslation } from '../../../i18n/client';
 
 
 
 export default function CardTimeline({ experience }) {
+  const { t } = useTranslation();
 
   if (!experience) return null;
 
-
-
-  const formattedTitle = encodeURIComponent(experience.title.replace(/\s+/g, '-'));
-
-
+  const endLabel = experience.endDate ?? t('experience.current');
 
   return (
 
     <a
 
-      href={`/experiencia/${formattedTitle}`}
+      href={experiencePath(experience.slug)}
 
       className="group flex min-w-0 max-w-full flex-col rounded-lg ease-in-out duration-300 sm:transform-none transform md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-gray-900"
 
@@ -67,7 +66,7 @@ export default function CardTimeline({ experience }) {
 
           <p className="mt-2 text-sm text-gray-400 sm:text-[0.9375rem] 2xl:text-base">
 
-            {experience.provider} / {experience.startDate} - {experience.endDate}
+            {experience.provider} / {experience.startDate} - {endLabel}
 
           </p>
 
@@ -75,7 +74,7 @@ export default function CardTimeline({ experience }) {
 
           <p className="mt-1 text-sm text-gray-400 sm:text-[0.9375rem] 2xl:text-base">
 
-            {experience.startDate} - {experience.endDate}
+            {experience.startDate} - {endLabel}
 
           </p>
 

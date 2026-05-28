@@ -1,0 +1,87 @@
+---
+import { catalogs } from "../../i18n/locales";
+import { DEFAULT_LOCALE } from "../../i18n/config";
+---
+
+<script is:inline define:vars={{ catalogs, defaultLocale: DEFAULT_LOCALE }}>
+  (function () {
+    const STORAGE_KEY = "portfolio-locale";
+    const COOKIE = "portfolio-locale";
+
+    function readCookie() {
+      const match = document.cookie.match(
+        new RegExp("(?:^|; )" + COOKIE + "=([^;]*)"),
+      );
+      return match ? decodeURIComponent(match[1]) : null;
+    }
+
+    function resolveLocale(raw) {
+      if (raw && catalogs[raw]) return raw;
+      return defaultLocale;
+    }
+
+    function getByPath(source, path) {
+      return path.split(".").reduce(function (acc, part) {
+        if (acc && typeof acc === "object" && part in acc) return acc[part];
+        return undefined;
+      }, source);
+    }
+
+    function createT(locale) {
+      const messages = catalogs[locale] || catalogs[defaultLocale];
+      const fallback = catalogs[defaultLocale];
+      return function t(key) {
+        var value = getByPath(messages, key);
+        if (typeof value !== "string") value = getByPath(fallback, key);
+        return typeof value === "string" ? value : key;
+      };
+    }
+
+    function applyDom(locale) {
+      var t = createT(locale);
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        var key = el.getAttribute("data-i18n");
+        if (key) el.textContent = t(key);
+      });
+      document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+        var key = el.getAttribute("data-i18n-aria");
+        if (key) el.setAttribute("aria-label", t(key));
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
+        var key = el.getAttribute("data-i18n-placeholder");
+        if (key) el.placeholder = t(key);
+      });
+    }
+
+    function refreshDom(locale) {
+      window.__PORTFOLIO_I18N__ = {
+        locale: locale,
+        catalogs: catalogs,
+        t: createT(locale),
+      };
+      document.documentElement.lang = locale;
+      applyDom(locale);
+      window.dispatchEvent(
+        new CustomEvent("portfolio:locale-change", { detail: { locale: locale } }),
+      );
+    }
+
+    var locale = resolveLocale(
+      localStorage.getItem(STORAGE_KEY) || readCookie() || document.documentElement.lang,
+    );
+
+    refreshDom(locale);
+
+    function syncDomFromStorage() {
+      refreshDom(resolveLocale(localStorage.getItem(STORAGE_KEY) || readCookie()));
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", syncDomFromStorage);
+    } else {
+      syncDomFromStorage();
+    }
+
+    document.addEventListener("astro:page-load", syncDomFromStorage);
+  })();
+</script>
