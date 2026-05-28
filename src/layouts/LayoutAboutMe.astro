@@ -3,7 +3,7 @@ interface Props {
   title: string;
 }
 import Header from "../components/Header/Header.astro";
-import SideMenu from "../components/SideMenu/SideMenu.jsx";
+import SideMenu from "../components/SideMenu/SideMenu.astro";
 import Translator from "../components/Translator/Translator.jsx";
 import GhostCodeBackground from "../components/Background/GhostCodeBackground.jsx";
 import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.jsx";
@@ -63,7 +63,7 @@ const profileAvatarSrc =
     <Header />
     <div class="relative z-10 flex flex-col pt-0 md:pt-40 lg:pt-60">
       <!-- SideMenu para móviles -->
-      <SideMenu client:load />
+      <SideMenu />
       <div class="flex justify-between">
         <!-- Columna izquierda -->
         <div class="w-auto sm:hidden"></div>
@@ -74,8 +74,10 @@ const profileAvatarSrc =
         <!-- Columna derecha -->
         <div class="w-auto sm:hidden"></div>
       </div>
-      <!-- Contacto + footer a ancho completo (igual que en home) -->
-      <PageEnd contactAlign="content" />
+      <!-- Contacto + footer: misma entrada que el resto de páginas -->
+      <div class="md:animate-slideIn">
+        <PageEnd contactAlign="content" />
+      </div>
     </div>
   </body>
 </html>

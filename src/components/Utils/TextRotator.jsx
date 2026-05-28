@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { AnimatedSpan } from "./AnimatedSpan.styled";
 
 const TextRotator = ({ texts, interval = 5000 }) => {

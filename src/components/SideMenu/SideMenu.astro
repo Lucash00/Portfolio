@@ -1,0 +1,15 @@
+---
+import { getImage } from "astro:assets";
+import SideMenuNav from "./SideMenu.jsx";
+
+const avatarSrc = (
+  await getImage({
+    src: "https://avatars.githubusercontent.com/u/168908236?v=4",
+    width: 80,
+    height: 80,
+    format: "webp",
+  })
+).src;
+---
+
+<SideMenuNav client:load avatarSrc={avatarSrc} />

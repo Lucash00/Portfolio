@@ -1,18 +1,30 @@
 ---
+import { getImage } from "astro:assets";
 import ContactButtons from "../Utils/Link/ContactButtons.jsx";
 import AboutMeAvatarFly from "./AboutMeAvatarFly.jsx";
 import AboutMeProfileAvatar from "./AboutMeProfileAvatar.jsx";
+import animeProfile from "../../assets/animeprofile.png";
 
 const profileAvatarSrc = "https://avatars.githubusercontent.com/u/168908236?v=4";
+const animeSrc = (
+  await getImage({ src: animeProfile, width: 384, height: 384, format: "webp" })
+).src;
+const githubAvatarSrc = (
+  await getImage({ src: profileAvatarSrc, width: 384, height: 384, format: "webp" })
+).src;
 ---
 
 <AboutMeAvatarFly client:load />
 
 <section class="flex flex-col lg:flex-row items-center justify-between px-6 py-12">
   <div class="w-full lg:w-1/3 flex flex-col items-center lg:justify-start mb-8 lg:mb-0">
-    <div class="about-profile-with-hint">
-      <AboutMeProfileAvatar client:load githubSrc={profileAvatarSrc} />
-      <div class="about-click-hint" aria-hidden="true">
+    <div class="about-profile-with-hint about-avatar-stage">
+      <AboutMeProfileAvatar
+        client:load
+        githubSrc={githubAvatarSrc}
+        animeSrc={animeSrc}
+      />
+      <div class="about-click-hint md:animate-slideIn" aria-hidden="true">
         <div class="about-click-hint__label">
           <p class="about-click-hint__text">Click me!</p>
           <svg
@@ -38,49 +50,68 @@ const profileAvatarSrc = "https://avatars.githubusercontent.com/u/168908236?v=4"
         </div>
       </div>
     </div>
-    <div class="mt-4">
+    <div class="mt-4 md:animate-slideIn">
       <ContactButtons client:load />
     </div>
   </div>
 
-  <div class="w-full lg:w-2/3">
-    <div
-      class="sm:p-4 md:p-6 rounded-lg border-t-2 border-l-2 border-r-2 border-transparent bg-gradient-to-b to-transparent from-gray-700"
-    >
-      <h1
-        class="sm:text-2xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-5xl sm:mb-4 md:mb-8 font-bold text-slate-200"
-      >
-        Hola, soy <span class="text-amber-400">Lucas Moreno</span>
-      </h1>
-      <p
-        class="sm:text-base md:text-md lg:text-lg xl:text-lg 2xl:text-lg text-gray-300 leading-relaxed text-justify"
-      >
-        Soy desarrollador web apasionado por la creación de experiencias digitales
-        únicas, funcionales y centradas en el usuario. Mi enfoque combina habilidades
-        de <strong>FrontEnd</strong> y <strong>BackEnd</strong>, lo que me permite
-        abordar proyectos de manera integral, desde la concepción de interfaces <strong
-          >atractivas</strong
-        > y <strong>responsive</strong>, hasta la implementación de sistemas <strong
-          >robustos</strong
-        > y <strong>escalables</strong>.
-        <br /><br />
-        Mi compromiso con la excelencia técnica se refleja en cada detalle: <strong
-          >diseño intuitivo</strong
-        >, <strong>análisis de datos</strong>, <strong>optimización de rendimiento</strong
-        > y una <strong>comunicación fluida</strong> que garantiza que cada proyecto
-        alcance su máximo potencial. La adaptabilidad y la curiosidad son las claves
-        que me permiten seguir creciendo y explorar nuevas formas de transformar ideas
-        en soluciones tecnológicas reales.
-        <br /><br />
-        Cuando no estoy programando, disfruto aprendiendo sobre tendencias emergentes,
-        perfeccionando mi conocimiento de la programación y explorando cómo la tecnología
-        puede impactar positivamente.
-      </p>
-    </div>
+  <div class="w-full lg:w-2/3 md:animate-slideIn">
+    <article class="about-intro">
+      <div class="about-intro__panel">
+        <div class="about-intro__border" aria-hidden="true"></div>
+
+        <div class="about-intro__content">
+        <h1
+          class="about-intro__title text-mouse-glow w-fit max-w-full"
+          data-text-glow
+        >
+          Hola, soy
+          <span class="about-intro__name">Lucas Moreno</span>
+        </h1>
+
+        <div
+          class="about-intro__body text-mouse-glow w-full max-w-full"
+          data-text-glow
+        >
+          <p>
+            Soy desarrollador web apasionado por la creación de experiencias digitales
+            únicas, funcionales y centradas en el usuario. Mi enfoque combina
+            <strong>FrontEnd</strong>, <strong>BackEnd</strong> y
+            <strong>DevOps</strong>, lo que me permite abordar proyectos de manera integral:
+            desde la concepción de interfaces <strong>atractivas</strong> y
+            <strong>responsive</strong>, hasta la implementación de sistemas
+            <strong>robustos</strong>, <strong>escalables</strong> y con despliegues
+            <strong>eficientes</strong>.
+          </p>
+          <p>
+            Mi compromiso con la excelencia técnica se refleja en cada detalle:
+            <strong>diseño intuitivo</strong>, <strong>análisis de datos</strong>,
+            <strong>optimización de rendimiento</strong>, <strong>automatización</strong> y
+            una <strong>comunicación fluida</strong> que garantiza que cada proyecto alcance
+            su máximo potencial. Soy <strong>adaptable</strong> a las necesidades de cada
+            equipo y contexto, y la curiosidad me impulsa a seguir creciendo y a transformar
+            ideas en soluciones tecnológicas reales.
+          </p>
+          <p>
+            Cuando no estoy programando, disfruto aprendiendo sobre tendencias emergentes,
+            perfeccionando mi conocimiento en desarrollo y DevOps, y explorando cómo la
+            tecnología puede impactar positivamente.
+          </p>
+        </div>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
 <style>
+  /* Avatar + borde: sin slideIn (animación propia de vuelo / borde) */
+  .about-avatar-stage {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   .about-profile-with-hint {
     position: relative;
     width: fit-content;
@@ -168,6 +199,162 @@ const profileAvatarSrc = "https://avatars.githubusercontent.com/u/168908236?v=4"
     }
     50% {
       transform: rotate(10deg) translate(2px, 1px);
+    }
+  }
+
+  /* Bloque de presentación (misma columna y cuerpo de texto que antes) */
+  .about-intro {
+    width: 100%;
+  }
+
+  .about-intro__panel {
+    position: relative;
+    overflow: visible;
+    border-radius: 1rem;
+  }
+
+  /* Mismo gradiente y animación de abajo→arriba que el borde de la foto */
+  .about-intro__border {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(90deg, transparent 0%, #22d3ee 72%);
+    clip-path: inset(0 0 0 100% round 1rem);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    animation: about-intro-border-sweep 1.15s cubic-bezier(0.33, 1, 0.68, 1) 0.28s
+      forwards;
+  }
+
+  /* Derecha → izquierda (evita el salto brusco arriba del barrido vertical) */
+  @keyframes about-intro-border-sweep {
+    from {
+      clip-path: inset(0 0 0 100% round 1rem);
+    }
+
+    to {
+      clip-path: inset(0 0 0 0 round 1rem);
+    }
+  }
+
+  .about-intro__content {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border-radius: calc(1rem - 2px);
+    padding: 1rem;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+    background: linear-gradient(
+      145deg,
+      rgba(8, 47, 73, 0.42) 0%,
+      rgba(15, 23, 42, 0.28) 48%,
+      rgba(15, 23, 42, 0.12) 100%
+    );
+    -webkit-backdrop-filter: blur(12px) saturate(1.15);
+    backdrop-filter: blur(12px) saturate(1.15);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+      0 18px 42px -22px rgba(8, 47, 73, 0.85);
+  }
+
+  @media (min-width: 768px) {
+    .about-intro__content {
+      padding: 1.5rem;
+    }
+  }
+
+  .about-intro__title {
+    position: relative;
+    margin: 0 0 1rem;
+    padding-left: 0;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: #f8fafc;
+    font-size: clamp(1.85rem, 3.8vw, 3.35rem);
+  }
+
+  @media (min-width: 768px) {
+    .about-intro__title {
+      margin-bottom: 2rem;
+      font-size: clamp(2.35rem, 4.2vw, 3.75rem);
+    }
+  }
+
+  .about-intro__name {
+    display: block;
+    margin-top: 0.12em;
+    color: #fbbf24;
+    text-shadow: 0 0 28px rgba(251, 191, 36, 0.28);
+  }
+
+  @media (min-width: 640px) {
+    .about-intro__name {
+      display: inline;
+      margin-top: 0;
+      margin-left: 0.2em;
+    }
+  }
+
+  .about-intro__body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .about-intro__body p {
+    margin: 0;
+    text-align: justify;
+    line-height: 1.65;
+    color: #cbd5e1;
+    font-size: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-intro__body p {
+      font-size: 1.0625rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .about-intro__body p {
+      font-size: 1.125rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .about-intro__body p {
+      font-size: 1.125rem;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .about-intro__body p {
+      font-size: 1.125rem;
+    }
+  }
+
+  .about-intro__body strong {
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-intro__border {
+      animation: none;
+      clip-path: inset(0 0 0 0 round 1rem);
     }
   }
 </style>

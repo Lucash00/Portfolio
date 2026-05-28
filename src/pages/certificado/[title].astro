@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import TitleComponent from "../../components/Utils/Font/Title.astro";
 import TextContent from "../../components/Utils/Font/TextContent.jsx";
 import Card from "../../components/Utils/Card/Card.astro";
+import Slider from "../../components/Utils/Slider/Slider.jsx";
 import { certificates } from "../../data/certificates";
 import LinkList from "../../components/Utils/Link/Link.jsx";
 import TitleContent from "../../components/Utils/Font/TitleContent.astro";
@@ -37,18 +38,17 @@ if (!certificate) {
   <main>
     <TitleComponent title={certificate.title} logo={certificate.logo} />
     <Card>
-      <!-- Media superior -->
-      <div class="mb-4 pt-3 md:pt-4 sm:-mx-2 md:-mx-4 col-span-2 col-start-1 flex justify-center">
-        {
-          certificate.media && certificate.media.length > 0 ? (
-            <img
-              src={certificate.media[0]}
-              alt={certificate.title}
-              class="object-cover max-h-100"
+      {
+        certificate.media && certificate.media.length > 0 && (
+          <div class="z-10 mb-4 pt-3 md:pt-4 col-span-2 col-start-1">
+            <Slider
+              client:load
+              images={certificate.media}
+              lightboxLabel={certificate.title}
             />
-          ) : null
-        }
-      </div>
+          </div>
+        )
+      }
       <div class="py-2 col-span-2 col-start-1">
 
         {

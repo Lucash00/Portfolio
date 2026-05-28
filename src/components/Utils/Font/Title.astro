@@ -1,4 +1,6 @@
 ---
+import OptimizedImage from "../OptimizedImage.astro";
+
 interface Props {
   title: string;
   logo?: string;
@@ -17,10 +19,12 @@ const { title, logo, class: className = "", description } = Astro.props;
   >
     {
       logo && (
-        <img
+        <OptimizedImage
           src={logo}
           alt={`${title} logo`}
           class="h-10 w-auto shrink-0 object-contain select-none"
+          width={40}
+          height={40}
         />
       )
     }

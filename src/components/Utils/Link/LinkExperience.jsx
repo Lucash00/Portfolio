@@ -1,4 +1,3 @@
-import React from 'react';
 import { FiCornerRightUp } from 'react-icons/fi';
 
 function LinkExperience({ urls }) {

@@ -9,11 +9,12 @@ var {alt, src} = Astro.props;
 
 <astro>
   <div
-    class="carousel-item sm:mx-3.5 md:mx-6 lg:mx-10 xl:mx-14 sm:w-[3.75rem] md:w-[4.5rem] lg:w-[6rem] xl:w-[6.75rem]"
+    class="carousel-item sm:mx-3.5 md:mx-6 lg:mx-10 xl:mx-14 sm:w-[3.375rem] md:w-[4.05rem] lg:w-[5.4rem] xl:w-[6.075rem]"
     data-icon-glow
   >
     <img
       alt={alt}
+      src={src}
       fetchpriority="high"
       width="150"
       height="75"
@@ -22,7 +23,6 @@ var {alt, src} = Astro.props;
       class="carousel-item__img relative z-[1] ease-in-out duration-200 transform hover:scale-110 2xl:hover:scale-125"
       style="color:transparent;"
       draggable="false"
-      src={src}
     />
   </div>
 
@@ -32,10 +32,16 @@ var {alt, src} = Astro.props;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 4.25rem;
+      height: 3.825rem;
       margin-right: 14px;
       opacity: 1;
       overflow: visible;
+      position: relative;
+      z-index: 1;
+    }
+
+    .carousel-item:hover {
+      z-index: 5;
     }
 
     .carousel-item__img {
@@ -45,17 +51,18 @@ var {alt, src} = Astro.props;
       max-width: 100%;
       object-fit: contain;
       object-position: center center;
+      transform-origin: center center;
     }
 
     @media (min-width: 640px) {
       .carousel-item {
-        height: 4.875rem;
+        height: 4.3875rem;
       }
     }
 
     @media (min-width: 1024px) {
       .carousel-item {
-        height: 5.625rem;
+        height: 5.0625rem;
       }
     }
   </style>

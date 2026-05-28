@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatedSpan } from "./AnimatedSpan.styled";
 
 const SPECIALTIES = ["Fullstack", "Backend", "Frontend"];

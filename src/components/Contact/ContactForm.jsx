@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PopUp from '../Utils/PopUp/PopUp.jsx';
 
 const FORM_ENDPOINT = 'https://formsubmit.co/ajax/lucas.moreno.dev@gmail.com';

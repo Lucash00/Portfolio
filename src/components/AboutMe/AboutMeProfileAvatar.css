@@ -1,14 +1,34 @@
 /* Estilos globales: el componente React no recibe el scope de Astro */
 
 .about-profile-frame {
-  padding: 3px;
-  background: linear-gradient(90deg, transparent 0%, #22d3ee 72%);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+  position: relative;
   border-radius: 9999px;
 }
 
+/* Anillo de padding: mismo gradiente que el borde final */
+.about-profile-frame__border {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 9999px;
+  padding: 3px;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, #22d3ee 72%);
+  clip-path: inset(100% 0 0 0 round 9999px);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
 .about-profile-frame__inner {
-  background: rgb(15 23 42);
+  position: relative;
+  z-index: 1;
   border-radius: 9999px;
   width: 100%;
   height: 100%;
@@ -75,7 +95,6 @@
   transform: scale(1);
 }
 
-/* Hover en la imagen, no en la cara (no rompe el giro 3D) */
 .about-profile-frame:hover
   .about-profile-flip:not(.is-flipped)
   .about-profile-face--front
@@ -91,12 +110,84 @@
 }
 
 @media (min-width: 768px) {
-  .about-profile-flip:not(.is-visible) .about-profile-face--front .about-profile-img {
+  .about-profile-frame:not(.is-visible):not(.is-landing) {
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .about-profile-frame:not(.is-visible):not(.is-landing)
+    .about-profile-frame__inner {
+    background: transparent;
+  }
+
+  .about-profile-flip:not(.is-visible):not(.is-landing)
+    .about-profile-face--front
+    .about-profile-img {
     opacity: 0;
+  }
+
+  /* Durante el vuelo: solo reserva el hueco (padding), sin fondo ni sombra */
+  .about-profile-frame.is-landing {
+    padding: 3px;
+    box-shadow: none;
+  }
+
+  .about-profile-frame.is-landing .about-profile-frame__inner {
+    background: transparent;
+  }
+
+  .about-profile-frame.is-visible {
+    padding: 3px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+  }
+
+  .about-profile-frame.is-visible .about-profile-frame__inner,
+  .about-profile-frame.is-landing .about-profile-frame__inner {
+    background: transparent;
+  }
+
+  .about-profile-flip.is-visible .about-profile-face--front .about-profile-img {
+    opacity: 1;
+  }
+
+  /* De abajo hacia arriba, ambos lados a la vez (barrido horizontal) */
+  .about-profile-frame.is-ring-drawing .about-profile-frame__border {
+    opacity: 1;
+    animation: about-profile-border-rise 1.15s cubic-bezier(0.33, 1, 0.68, 1)
+      forwards;
+  }
+
+  .about-profile-frame.is-ring-complete .about-profile-frame__border {
+    opacity: 1;
+    clip-path: inset(0 0 0 0 round 9999px);
+  }
+}
+
+@keyframes about-profile-border-rise {
+  from {
+    clip-path: inset(100% 0 0 0 round 9999px);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0 round 9999px);
   }
 }
 
 @media (max-width: 767px) {
+  .about-profile-frame {
+    padding: 3px;
+    background: linear-gradient(90deg, transparent 0%, #22d3ee 72%);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+  }
+
+  .about-profile-frame__border {
+    display: none;
+  }
+
+  .about-profile-frame__inner {
+    background: transparent;
+  }
+
   .about-profile-flip .about-profile-img {
     opacity: 1;
   }
@@ -105,6 +196,13 @@
 @media (prefers-reduced-motion: reduce) {
   .about-profile-flip__inner {
     transition-duration: 0.2s;
+  }
+
+  .about-profile-frame.is-visible.is-ring-complete .about-profile-frame__border,
+  .about-profile-frame.is-visible.is-ring-drawing .about-profile-frame__border {
+    opacity: 1;
+    clip-path: inset(0 0 0 0 round 9999px);
+    animation: none;
   }
 
   .about-profile-frame:hover

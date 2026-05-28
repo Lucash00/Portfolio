@@ -159,13 +159,5 @@ export default {
 				['responsive', 'hover']
 			)
 		},
-		function ({ addBase }) {
-			addBase({
-				'*': {
-					position: 'static',
-					zIndex: 'auto',
-				},
-			});
-		},
 	],
 };

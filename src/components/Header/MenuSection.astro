@@ -1,4 +1,6 @@
 ---
+import OptimizedImage from "../Utils/OptimizedImage.astro";
+
 interface Props {
   href: string;
   icon: string | ImageMetadata;
@@ -44,7 +46,13 @@ const isActive =
         {typeof icon === "string" ? (
           <i class={icon + " block text-xl leading-none mb-0.5"}></i>
         ) : (
-          <img src={icon.src} class="block h-5 w-5 mb-0.5 object-contain" />
+          <OptimizedImage
+            src={icon}
+            alt=""
+            width={icon.width}
+            height={icon.height}
+            class="block h-5 w-5 mb-0.5 object-contain"
+          />
         )}
         <span class="block md:text-xxs lg:text-xs 2xl:text-sm leading-tight">{text}</span>
       </span>

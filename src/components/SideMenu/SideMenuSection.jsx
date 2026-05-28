@@ -1,5 +1,3 @@
-import React from "react";
-
 const SideMenuSection = ({ href, icon, text, isActive }) => {
   return (
     <a

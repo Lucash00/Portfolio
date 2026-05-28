@@ -1,4 +1,3 @@
-import React from 'react';
 import { FiGithub, FiFileText, FiExternalLink } from 'react-icons/fi';
 
 function getIcon(name) {
