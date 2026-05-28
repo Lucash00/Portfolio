@@ -1,0 +1,48 @@
+.scroll-reveal {
+  opacity: 0;
+  transition:
+    opacity 0.68s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.68s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* Entrada al hacer scroll hacia abajo */
+.scroll-reveal.scroll-reveal--from-below {
+  transform: translate3d(0, 22px, 0);
+}
+
+/* Entrada al hacer scroll hacia arriba */
+.scroll-reveal.scroll-reveal--from-above {
+  transform: translate3d(0, -22px, 0);
+}
+
+/* Salida al hacer scroll hacia abajo (elementos que suben y se van) */
+.scroll-reveal.scroll-reveal--exit-up {
+  transform: translate3d(0, -22px, 0);
+}
+
+/* Salida al hacer scroll hacia arriba (elementos que bajan y se van) */
+.scroll-reveal.scroll-reveal--exit-down {
+  transform: translate3d(0, 22px, 0);
+}
+
+.scroll-reveal.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+/* Ya visible tras slideIn/fadeIn: sin segundo fade ni desplazamiento */
+.scroll-reveal.scroll-reveal--settled {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}

@@ -9,6 +9,7 @@ import GhostCodeBackground from "../components/Background/GhostCodeBackground.js
 import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.jsx";
 import ScrollReset from "../components/Utils/ScrollReset.astro";
 import PageEnd from "../components/PageEnd/PageEnd.astro";
+import ScrollRevealManager from "../components/Utils/ScrollReveal/ScrollRevealManager.jsx";
 const profileAvatarSrc =
   "https://avatars.githubusercontent.com/u/168908236?v=4";
 ---
@@ -59,6 +60,7 @@ const profileAvatarSrc =
   >
     <GhostCodeBackground client:idle />
     <TextMouseGlowManager client:idle />
+    <ScrollRevealManager client:idle />
     <Translator client:load/>
     <Header />
     <div class="relative z-10 flex flex-col pt-0 md:pt-40 lg:pt-60">
@@ -75,7 +77,7 @@ const profileAvatarSrc =
         <div class="w-auto sm:hidden"></div>
       </div>
       <!-- Contacto + footer: misma entrada que el resto de páginas -->
-      <div class="md:animate-slideIn">
+      <div class="md:animate-slideIn" data-page-enter="slide">
         <PageEnd contactAlign="content" />
       </div>
     </div>

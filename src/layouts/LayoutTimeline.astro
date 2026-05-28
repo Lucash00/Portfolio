@@ -8,6 +8,7 @@ import Translator from "../components/Translator/Translator.jsx";
 import GhostCodeBackground from "../components/Background/GhostCodeBackground.jsx";
 import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.jsx";
 import ScrollReset from "../components/Utils/ScrollReset.astro";
+import PageEnterManager from "../components/Utils/ScrollReveal/PageEnterManager.jsx";
 ---
 
 <!doctype html>
@@ -54,6 +55,7 @@ import ScrollReset from "../components/Utils/ScrollReset.astro";
   >
     <GhostCodeBackground client:idle />
     <TextMouseGlowManager client:idle />
+    <PageEnterManager client:idle />
     <Translator client:load/>
     <Header />
 
@@ -63,7 +65,10 @@ import ScrollReset from "../components/Utils/ScrollReset.astro";
       <!-- Columna izquierda -->
       <div class="w-auto sm:hidden"></div>
       <!-- Columna del medio (grande) -->
-      <div class="w-11/12 min-w-0 max-w-full sm:w-full sm:mx-4 overflow-x-clip md:animate-slideIn">
+      <div
+        class="w-11/12 min-w-0 max-w-full sm:w-full sm:mx-4 overflow-x-clip md:animate-slideIn"
+        data-page-enter="slide"
+      >
         <slot />
       </div>
       <!-- Columna derecha -->

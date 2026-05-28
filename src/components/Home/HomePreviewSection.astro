@@ -18,7 +18,7 @@ const { title, viewMoreHref, viewMoreLabel = "Ver más", description } = Astro.p
     <HomeSectionTitle title={title} class="mb-4 sm:mb-5 md:mb-6" />
     {
       description && (
-        <p class="mb-4 sm:mb-5 md:mb-6 -mt-1 w-full max-w-none text-sm md:text-base font-medium tracking-tight text-slate-300 text-shadow text-pretty">
+        <p class="scroll-reveal-item mb-4 sm:mb-5 md:mb-6 -mt-1 w-full max-w-none text-sm md:text-base font-medium tracking-tight text-slate-300 text-shadow text-pretty">
           {description}
         </p>
       )
@@ -27,7 +27,7 @@ const { title, viewMoreHref, viewMoreLabel = "Ver más", description } = Astro.p
   </div>
 
   <div class="flex justify-center mt-5 sm:mt-6 md:mt-8 w-full">
-    <a href={viewMoreHref} class="home-preview-link">
+    <a href={viewMoreHref} class="scroll-reveal-item home-preview-link">
       {viewMoreLabel}
       <span class="home-preview-link-arrow" aria-hidden="true">→</span>
     </a>
