@@ -1,5 +1,6 @@
 ---
 import MenuSection from "./MenuSection.astro";
+import ProfileAvatarImage from "../Utils/ProfileAvatarImage.astro";
 import curriculum from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
 
 const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
@@ -28,11 +29,11 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
         id="header-avatar-wrap"
         class="header__avatar-wrap relative h-full w-full overflow-hidden rounded-full"
       >
-        <img
+        <ProfileAvatarImage
           id="header-avatar-img"
-          src="https://avatars.githubusercontent.com/u/168908236?v=4"
-          alt="Foto Perfil"
-          class="header__avatar absolute inset-0 h-full w-full object-cover"
+          class="absolute inset-0 h-full w-full"
+          width={256}
+          height={256}
         />
       </div>
     </a>
@@ -65,7 +66,6 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
       width: auto;
       min-height: 2.75rem;
       flex-shrink: 0;
-      transition: opacity 0.25s ease;
     }
 
     .header__avatar-wrap {
@@ -73,26 +73,29 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
       width: 100%;
     }
 
-    .header__avatar {
+    /* Astro Image envuelve en <picture>; el hover va sobre el <img> */
+    .header__avatar-wrap :global(img) {
       transition: transform 0.28s ease;
       transform: scale(1);
+      transform-origin: center center;
     }
 
-    /* Crece solo la imagen dentro del hueco, sin mover el menú */
-    .header__avatar-link:hover .header__avatar {
+    .header__avatar-link:hover .header__avatar-wrap :global(img) {
       transform: scale(1.1);
     }
 
     .header__avatar-link.is-flying,
-    .header__avatar-link:has(.header__avatar-wrap.is-flying) {
+    .header__avatar-link:has(.header__avatar-wrap.is-flying),
+    .header__avatar-link.is-about-hidden,
+    .header__avatar-link:has(.header__avatar-wrap.is-about-hidden) {
       opacity: 0;
+      transition: none;
     }
 
     /* Mantiene el hueco del grid para que el menú no se mueva */
     .header__avatar-link.is-about-hidden,
     .header__avatar-link:has(.header__avatar-wrap.is-about-hidden) {
       visibility: hidden;
-      opacity: 0;
       pointer-events: none;
       width: var(--avatar-slot-width, auto);
       min-width: var(--avatar-slot-width, 2.75rem);

@@ -13,12 +13,6 @@ html {
     scrollbar-width: none; /* Firefox */
   }
 
-/* Ajusta las reglas globales */
-* {
-  position: relative; /* En lugar de static */
-  z-index: auto; /* Resetea valores personalizados de z-index */
-}
-
 /* Side Menu */
 .side-menu {
   position: fixed; /* Fijo sobre todo el contenido */

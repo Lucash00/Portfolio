@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import SideMenuSection from "./SideMenuSection.jsx";
 import curriculum from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
 
-const SideMenu = () => {
+const SideMenu = ({ avatarSrc }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState("");
 
@@ -35,9 +35,13 @@ const SideMenu = () => {
           {/* Imagen de perfil */}
           <div className="w-full flex justify-center mb-4">
             <img
-              src="https://avatars.githubusercontent.com/u/168908236?v=4"
+              src={avatarSrc}
               alt="Foto Perfil"
-              className="w-20 h-20 rounded-full"
+              className="h-20 w-20 rounded-full object-cover"
+              width={80}
+              height={80}
+              loading="eager"
+              decoding="async"
             />
           </div>
 

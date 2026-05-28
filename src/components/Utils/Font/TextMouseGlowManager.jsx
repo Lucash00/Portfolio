@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import "../../../styles/textMouseGlow.css";
 
-const GLOW_SELECTOR = "[data-text-glow], [data-icon-glow]";
 const ICON_GLOW_LAYER_ID = "portfolio-icon-glow-layer";
 const MAX_TEXT_GLOW = 0.4;
 const MAX_ICON_GLOW = 0.38;

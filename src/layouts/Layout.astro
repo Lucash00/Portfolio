@@ -3,7 +3,7 @@ interface Props {
   title: string;
 }
 import Header from "../components/Header/Header.astro";
-import SideMenu from "../components/SideMenu/SideMenu.jsx";
+import SideMenu from "../components/SideMenu/SideMenu.astro";
 import Translator from "../components/Translator/Translator.jsx";
 import GhostCodeBackground from "../components/Background/GhostCodeBackground.jsx";
 import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.jsx";
@@ -59,7 +59,7 @@ import PageEnd from "../components/PageEnd/PageEnd.astro";
     <Header />
     <div class="relative z-10 flex flex-col sm:pt-20 md:pt-40">
       <!-- SideMenu para móviles -->
-      <SideMenu client:load />
+      <SideMenu />
       <div class="flex justify-between">
         <!-- Columna izquierda -->
         <div class="w-auto sm:hidden"></div>

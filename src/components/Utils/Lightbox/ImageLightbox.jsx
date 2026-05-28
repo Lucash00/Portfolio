@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import {
+  getInactiveSlideTransform,
+  getSlideOffset,
+  slideImageTransition,
+} from "../Slider/imageSlideAnimation";
 
 const MIN_SCALE = 1;
 const MAX_SCALE = 3;
@@ -23,7 +28,6 @@ export default function ImageLightbox({
   const stageRef = useRef(null);
 
   const hasMultiple = images.length > 1;
-  const currentSrc = images[index];
   const hasZoom = scale > MIN_SCALE;
 
   const resetView = useCallback(() => {
@@ -108,6 +112,13 @@ export default function ImageLightbox({
 
   const onPointerDown = (event) => {
     if (event.button !== 0) return;
+    if (
+      event.target.closest(
+        ".lightbox-stage-nav, .lightbox-nav, .lightbox-control, .lightbox-close",
+      )
+    ) {
+      return;
+    }
 
     event.preventDefault();
     stageRef.current?.setPointerCapture(event.pointerId);
@@ -140,11 +151,12 @@ export default function ImageLightbox({
     }
   };
 
-  if ((!isOpen && !mounted) || !currentSrc) {
+  if ((!isOpen && !mounted) || images.length === 0) {
     return null;
   }
 
   const stageCursor = isDragging ? "grabbing" : "grab";
+  const panTransition = isDragging ? "none" : "transform 0.2s ease-out";
 
   return createPortal(
     <div
@@ -202,7 +214,7 @@ export default function ImageLightbox({
             <button
               type="button"
               onClick={goPrev}
-              className="lightbox-nav lightbox-nav-side hidden sm:flex"
+              className="lightbox-nav lightbox-nav-side flex"
               aria-label="Imagen anterior"
             >
               ‹
@@ -220,18 +232,48 @@ export default function ImageLightbox({
             onPointerUp={endDrag}
             onPointerCancel={endDrag}
           >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <img
-                key={currentSrc}
-                src={currentSrc}
-                alt={`${label} ${index + 1}`}
-                className="lightbox-image max-h-full max-w-full select-none object-contain"
-                style={{
-                  transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-                  transition: isDragging ? "none" : "transform 0.2s ease-out",
-                }}
-                draggable={false}
-              />
+            {hasMultiple && (
+              <>
+                <button
+                  type="button"
+                  className="lightbox-stage-nav lightbox-stage-nav--prev"
+                  onClick={goPrev}
+                  aria-label="Imagen anterior"
+                />
+                <button
+                  type="button"
+                  className="lightbox-stage-nav lightbox-stage-nav--next"
+                  onClick={goNext}
+                  aria-label="Imagen siguiente"
+                />
+              </>
+            )}
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              {images.map((src, i) => {
+                const isActive = i === index;
+                const offset = getSlideOffset(i, index);
+
+                return (
+                  <img
+                    key={`${src}-${i}`}
+                    src={src}
+                    alt={`${label} ${i + 1}`}
+                    aria-hidden={!isActive}
+                    className="lightbox-image absolute max-h-full max-w-full select-none object-contain"
+                    style={{
+                      zIndex: isActive ? 2 : 1,
+                      opacity: isActive ? 1 : 0,
+                      transform: isActive
+                        ? `translate(${position.x}px, ${position.y}px) scale(${scale})`
+                        : getInactiveSlideTransform(offset),
+                      transition: isActive
+                        ? `${slideImageTransition}, ${panTransition}`
+                        : slideImageTransition,
+                    }}
+                    draggable={false}
+                  />
+                );
+              })}
             </div>
           </div>
 
@@ -239,7 +281,7 @@ export default function ImageLightbox({
             <button
               type="button"
               onClick={goNext}
-              className="lightbox-nav lightbox-nav-side hidden sm:flex"
+              className="lightbox-nav lightbox-nav-side flex"
               aria-label="Imagen siguiente"
             >
               ›
@@ -248,7 +290,7 @@ export default function ImageLightbox({
         </div>
 
         <p className="relative z-20 shrink-0 border-t border-slate-200 px-4 py-2.5 text-center text-[10px] text-gray-500 sm:text-xs">
-          Rueda o +/- para zoom · Arrastra para mover (sin zoom vuelve al centro) · Doble clic restablece · ESC cierra
+          Rueda o +/- para zoom · Arrastra para mover · Doble clic restablece · ESC cierra
         </p>
       </div>
 
@@ -300,7 +342,27 @@ export default function ImageLightbox({
         .lightbox-nav-side {
           align-self: center;
           margin: 0 0.5rem;
-          z-index: 20;
+          position: relative;
+          z-index: 30;
+        }
+
+        .lightbox-stage-nav {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          z-index: 15;
+          width: 28%;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+        }
+
+        .lightbox-stage-nav--prev {
+          left: 0;
+        }
+
+        .lightbox-stage-nav--next {
+          right: 0;
         }
 
         .lightbox-close {

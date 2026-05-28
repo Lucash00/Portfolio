@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PopUp from '../PopUp/PopUp.jsx';
 
 const ContactButtons = () => {

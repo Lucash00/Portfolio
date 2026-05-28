@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Timeline from '../Utils/Timeline';
 import CardTimeline from '../Utils/Card/CardTimeline';
 import { experiences } from '../../data/experiences';
@@ -168,7 +168,7 @@ export default function Experience() {
       id="experience-page-root"
       className="h-full max-h-full overflow-x-clip overflow-y-hidden grid grid-cols-3"
     >
-      <div className="col-span-1 max-h-screen overflow-y-auto snap-y snap-mandatory scrollbar-hide">
+      <div className="col-span-1 h-full max-h-screen min-h-0">
         <Timeline
           ref={timelineRef}
           experiences={experiences}

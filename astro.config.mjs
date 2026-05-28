@@ -4,6 +4,14 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
+  image: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+    ],
+  },
   integrations: [tailwind(), react()],
   vite: {
     optimizeDeps: {

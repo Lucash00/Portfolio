@@ -1,5 +1,6 @@
 ---
 import CardLink from "../Utils/Card/CardLink.astro";
+import OptimizedImage from "../Utils/OptimizedImage.astro";
 import { cardEntryTitleClass } from "../Utils/Card/cardEntryTitle";
 import TextContent from "../Utils/Font/TextContent";
 import type { Experience } from "../../data/experiences";
@@ -48,10 +49,12 @@ const experienceLink = `/experiencia/${encodeURIComponent(title.replace(/\s+/g, 
     logo ? (
       <div class="sm:col-span-10 sm:mt-4 sm:mb-2 md:col-span-3 flex items-center justify-center">
         <div class="card-logo-wrap">
-          <img
+          <OptimizedImage
             src={logo}
             alt={title}
             class="card-logo card-logo-img md:group-hover:animate-logoWobble"
+            width={224}
+            height={96}
           />
         </div>
       </div>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { FiExternalLink } from 'react-icons/fi';
 
 import { cardEntryTitleClass } from './cardEntryTitle';

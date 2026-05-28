@@ -1,5 +1,6 @@
 ---
 import CardLink from "../Utils/Card/CardLink.astro";
+import OptimizedImage from "../Utils/OptimizedImage.astro";
 import { cardEntryTitleClass } from "../Utils/Card/cardEntryTitle";
 import TextContent from "../Utils/Font/TextContent";
 export interface Props {
@@ -52,7 +53,13 @@ const tagClass = compact
   >
     <div class={logoColClass}>
       <div class={logoWrapClass}>
-        <img src={logo} alt={title} class={logoImgClass} />
+        <OptimizedImage
+          src={logo}
+          alt={title}
+          class={logoImgClass}
+          width={224}
+          height={96}
+        />
       </div>
     </div>
     <div class={bodyColClass}>

@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src: string | ImageMetadata;
+  alt: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  loading?: "lazy" | "eager";
+  fetchpriority?: "high" | "low" | "auto";
+  decoding?: "async" | "sync" | "auto";
+  id?: string;
+  draggable?: boolean | "true" | "false";
+  style?: string;
+}
+
+const {
+  src,
+  alt,
+  class: className,
+  width,
+  height,
+  loading = "lazy",
+  fetchpriority,
+  decoding = "async",
+  id,
+  draggable,
+  style,
+} = Astro.props;
+---
+
+{
+  typeof src === "string" ? (
+    width != null || height != null ? (
+      <Image
+        src={src}
+        alt={alt}
+        class={className}
+        width={width!}
+        height={height!}
+        loading={loading}
+        fetchpriority={fetchpriority}
+        decoding={decoding}
+        id={id}
+        draggable={draggable}
+        style={style}
+      />
+    ) : (
+      <Image
+        src={src}
+        alt={alt}
+        class={className}
+        loading={loading}
+        fetchpriority={fetchpriority}
+        decoding={decoding}
+        id={id}
+        draggable={draggable}
+        style={style}
+        inferSize
+      />
+    )
+  ) : (
+    <Image
+      src={src}
+      alt={alt}
+      class={className}
+      width={width}
+      height={height}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      decoding={decoding}
+      id={id}
+      draggable={draggable}
+      style={style}
+    />
+  )
+}

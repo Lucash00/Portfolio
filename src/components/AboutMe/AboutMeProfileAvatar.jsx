@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import animeProfile from "../../assets/animeprofile.png";
 import "./AboutMeProfileAvatar.css";
 
 const GITHUB_AVATAR =
@@ -9,6 +8,7 @@ const REVEAL_EVENT = "about-profile-revealed";
 
 export default function AboutMeProfileAvatar({
   githubSrc = GITHUB_AVATAR,
+  animeSrc,
 }) {
   const [showAnime, setShowAnime] = useState(false);
   const [revealed, setRevealed] = useState(
@@ -24,8 +24,38 @@ export default function AboutMeProfileAvatar({
   }, []);
 
   useEffect(() => {
+    const frame = document.querySelector(".about-profile-frame");
+    const border = frame?.querySelector(".about-profile-frame__border");
+    if (!border) return undefined;
+
+    const onRingEnd = (event) => {
+      if (event.animationName !== "about-profile-border-rise") return;
+      frame?.classList.add("is-ring-complete");
+      frame?.classList.remove("is-ring-drawing");
+    };
+
+    border.addEventListener("animationend", onRingEnd);
+    return () => border.removeEventListener("animationend", onRingEnd);
+  }, []);
+
+  useEffect(() => {
     const resetFlip = () => {
       setShowAnime(false);
+      const frame = document.querySelector(".about-profile-frame");
+      frame?.classList.remove(
+        "is-visible",
+        "is-landing",
+        "is-ring-drawing",
+        "is-ring-complete",
+      );
+      document
+        .getElementById("about-profile-flip")
+        ?.classList.remove("is-visible", "is-landing");
+      const profileImg = document.getElementById("about-profile-img");
+      if (profileImg instanceof HTMLImageElement) {
+        profileImg.style.removeProperty("opacity");
+        profileImg.style.removeProperty("transition");
+      }
       if (!window.matchMedia("(min-width: 768px)").matches) {
         setRevealed(true);
       } else {
@@ -43,7 +73,16 @@ export default function AboutMeProfileAvatar({
       id="about-profile-slot"
       className="relative h-60 w-60 md:h-72 md:w-72 lg:h-80 lg:w-80 xl:h-96 xl:w-96 2xl:h-100 2xl:w-100"
     >
-      <div className="about-profile-frame h-full w-full rounded-full">
+      <div
+        className={[
+          "about-profile-frame",
+          "h-full w-full rounded-full",
+          revealed ? "is-visible" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
+        <div className="about-profile-frame__border" aria-hidden="true" />
         <div className="about-profile-frame__inner relative h-full w-full rounded-full">
           <button
             type="button"
@@ -85,7 +124,7 @@ export default function AboutMeProfileAvatar({
               </div>
               <div className="about-profile-face about-profile-face--back">
                 <img
-                  src={animeProfile.src}
+                  src={animeSrc}
                   alt="Lucas Moreno Corral - Avatar anime"
                   width={384}
                   height={384}

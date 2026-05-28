@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import 'flag-icons/css/flag-icons.min.css'; // Importar la librería de iconos de banderas
 
 const TranslatorDynamic = () => {
@@ -17,7 +17,6 @@ const TranslatorDynamic = () => {
 
   // Detectar idioma actual (cuando ya se está en una página traducida)
   useEffect(() => {
-    const currentUrl = window.location.href;
     const urlParams = new URLSearchParams(window.location.search);
     const currentLang = urlParams.get('_x_tr_hl') || urlParams.get('hl');
     

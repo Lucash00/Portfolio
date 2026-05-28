@@ -1,4 +1,3 @@
-import React from "react";
 import { ghostCodeColumns } from "./ghostCodeSnippets";
 import "./ghostCode.css";
 

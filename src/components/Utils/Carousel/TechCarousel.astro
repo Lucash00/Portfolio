@@ -60,13 +60,14 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       overflow-y: visible;
       width: 100%;
       /* Reserva margen vertical para el hover scale sin recortar arriba/abajo */
-      padding-block: 0.45rem;
-      margin-block: -0.45rem;
+      padding-block: 0.65rem;
+      margin-block: -0.65rem;
     }
 
     .carousel-track {
       display: flex;
       align-items: center;
+      overflow: visible;
       cursor: grab;
       user-select: none;
     }
@@ -309,26 +310,14 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       const tooltipRect = tooltip.getBoundingClientRect();
       const maskX = sectionRect.left - tooltipRect.left;
 
-      tooltip.style.webkitMaskImage = CAROUSEL_EDGE_MASK;
+      tooltip.style.setProperty("-webkit-mask-image", CAROUSEL_EDGE_MASK);
       tooltip.style.maskImage = CAROUSEL_EDGE_MASK;
-      tooltip.style.webkitMaskSize = `${sectionRect.width}px 100%`;
+      tooltip.style.setProperty("-webkit-mask-size", `${sectionRect.width}px 100%`);
       tooltip.style.maskSize = `${sectionRect.width}px 100%`;
-      tooltip.style.webkitMaskPosition = `${maskX}px 0`;
+      tooltip.style.setProperty("-webkit-mask-position", `${maskX}px 0`);
       tooltip.style.maskPosition = `${maskX}px 0`;
-      tooltip.style.webkitMaskRepeat = "no-repeat";
+      tooltip.style.setProperty("-webkit-mask-repeat", "no-repeat");
       tooltip.style.maskRepeat = "no-repeat";
-    }
-
-    function clearTooltipEdgeMask() {
-      if (!tooltip) return;
-      tooltip.style.removeProperty("-webkit-mask-image");
-      tooltip.style.removeProperty("mask-image");
-      tooltip.style.removeProperty("-webkit-mask-size");
-      tooltip.style.removeProperty("mask-size");
-      tooltip.style.removeProperty("-webkit-mask-position");
-      tooltip.style.removeProperty("mask-position");
-      tooltip.style.removeProperty("-webkit-mask-repeat");
-      tooltip.style.removeProperty("mask-repeat");
     }
 
     function cancelShowTooltipFrame() {
@@ -338,12 +327,16 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       }
     }
 
-    function isCarouselIcon(node: EventTarget | null): node is HTMLImageElement {
-      return (
-        node instanceof HTMLImageElement &&
-        !!track &&
-        track.contains(node)
-      );
+    function resolveCarouselIcon(
+      node: EventTarget | null,
+    ): HTMLImageElement | null {
+      if (!(node instanceof Element) || !track) return null;
+
+      const item = node.closest(".carousel-item");
+      if (!item || !track.contains(item)) return null;
+
+      const img = item.querySelector("img");
+      return img instanceof HTMLImageElement ? img : null;
     }
 
     function hideTooltip() {
@@ -403,10 +396,8 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
     }
 
     function handleMouseOver(e: MouseEvent) {
-      const target = e.target;
-      if (isCarouselIcon(target)) {
-        showTooltip(target);
-      }
+      const img = resolveCarouselIcon(e.target);
+      if (img) showTooltip(img);
     }
 
   </script>
