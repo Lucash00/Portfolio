@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import SideMenuSection from "./SideMenuSection.jsx";
 import curriculum from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
+import { useTranslation } from "../../i18n/client";
 
 const SideMenu = ({ avatarSrc }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState("");
 
@@ -16,27 +18,24 @@ const SideMenu = ({ avatarSrc }) => {
 
   return (
     <>
-      {/* Botón para abrir/cerrar el menú */}
       <button
         onClick={toggleMenu}
         className="fixed top-5 left-5 z-[10000] w-10 h-10 flex items-center justify-center bg-gray-800 text-white rounded-full md:hidden"
-        aria-label="Toggle menu"
+        aria-label={t("nav.toggleMenu")}
       >
         <i className={isOpen ? "far fa-times" : "far fa-bars"}></i>
       </button>
 
-      {/* Contenedor del menú lateral */}
       <div
         className={`side-menu fixed top-0 left-0 h-full w-64 bg-gray-900 text-white shadow-lg transform transition-transform duration-300 z-[9999] ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:hidden`}
       >
         <nav className="flex flex-col items-start p-4 space-y-4">
-          {/* Imagen de perfil */}
           <div className="w-full flex justify-center mb-4">
             <img
               src={avatarSrc}
-              alt="Foto Perfil"
+              alt={t("nav.profilePhoto")}
               className="h-20 w-20 rounded-full object-cover"
               width={80}
               height={80}
@@ -45,47 +44,45 @@ const SideMenu = ({ avatarSrc }) => {
             />
           </div>
 
-          {/* Secciones del menú */}
           <SideMenuSection
             href="/"
             icon="far fa-home"
-            text="Inicio"
+            text={t("nav.home")}
             isActive={currentPath === "/"}
           />
           <SideMenuSection
             href="/proyectos"
             icon="far fa-folder-open"
-            text="Proyectos"
+            text={t("nav.projects")}
             isActive={currentPath === "/proyectos"}
           />
           <SideMenuSection
             href="/certificados"
             icon="far fa-file-certificate"
-            text="Certificados"
+            text={t("nav.certificates")}
             isActive={currentPath === "/certificados"}
           />
           <SideMenuSection
             href="/experiencia"
             icon="far fa-briefcase"
-            text="Experiencia"
+            text={t("nav.experience")}
             isActive={currentPath === "/experiencia"}
           />
           <SideMenuSection
             href="/sobreMi"
             icon="far fa-user"
-            text="Sobre mí"
+            text={t("nav.about")}
             isActive={currentPath === "/sobreMi"}
           />
           <SideMenuSection
             href={curriculum}
             icon="far fa-file-alt"
-            text="Descargar CV"
+            text={t("nav.downloadCv")}
             isActive={false}
           />
         </nav>
       </div>
 
-      {/* Fondo oscuro al abrir el menú */}
       {isOpen && (
         <div
           onClick={toggleMenu}

@@ -5,8 +5,10 @@ interface Props {
   href: string;
   icon: string | ImageMetadata;
   text: string;
+  /** Clave en `src/i18n/locales/es.ts` para cambio de idioma en cliente */
+  i18nKey?: string;
 }
-var { href, icon, text } = Astro.props;
+var { href, icon, text, i18nKey } = Astro.props;
 const currentPath = Astro.url.pathname;
 
 const relatedPaths: Record<string, string> = {
@@ -54,7 +56,12 @@ const isActive =
             class="block h-5 w-5 mb-0.5 object-contain"
           />
         )}
-        <span class="block md:text-xxs lg:text-xs 2xl:text-sm leading-tight">{text}</span>
+        <span
+          class="block md:text-xxs lg:text-xs 2xl:text-sm leading-tight"
+          data-i18n={i18nKey}
+        >
+          {text}
+        </span>
       </span>
     </a>
   </div>

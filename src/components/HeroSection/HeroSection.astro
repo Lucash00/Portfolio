@@ -2,7 +2,8 @@
 import TechCarousel from "../Utils/Carousel/TechCarousel.astro";
 import ContactButtons from "../Utils/Link/ContactButtons.jsx";
 import HeroTitleRotator from "../Utils/HeroTitleRotator.jsx";
-import HomeSectionTitle from "../Home/HomeSectionTitle.astro";
+import HeroIntro from "./HeroIntro.jsx";
+import HomeSectionTitleLocalized from "../Home/HomeSectionTitleLocalized.jsx";
 ---
 
 <astro>
@@ -17,45 +18,26 @@ import HomeSectionTitle from "../Home/HomeSectionTitle.astro";
         <HeroTitleRotator interval={4000} client:load />
       </h1>
       
-      <p
-        data-text-glow
-        class="scroll-reveal-item text-mouse-glow z-0 mb-2 ml-auto w-fit max-w-full sm:text-sm md:text-base lg:text-lg xl:text-xl text-right font-normal text-gray-400"
-      >
-        Hey! Soy <span class="text-amber-400">Lucas Moreno</span>, un
-        Desarrollador Web <span class="text-gray-200">versátil</span> con una sólida
-        base en diversas <span class="text-gray-200">tecnologías</span>
-      </p>
-      <p
-        data-text-glow
-        class="scroll-reveal-item text-mouse-glow z-0 mb-8 ml-auto w-fit max-w-full text-right font-normal sm:text-sm md:text-base lg:text-lg xl:text-xl text-gray-400"
-      >
-        <span class="text-amber-400">Cádiz</span>, España
-      </p>
+      <HeroIntro client:load />
       <div class="scroll-reveal-item z-0 mt-16 sm:mt-12 md:max-w-screen-md lg:max-w-screen-lg">
         <ContactButtons client:load />
       </div>
-
-      <!-- Ajustar el ancho del TechCarousel -->
-      
     </div>    
   </section>
   
   <div class="mx-6 md:mx-[10%]">
-    <HomeSectionTitle
-      title="Tecnologías"
-      class="mb-3 sm:mb-4 sm:mt-20 md:mt-28 lg:mt-24 xl:mt-12 md:!mb-5"
+    <HomeSectionTitleLocalized
+      client:load
+      i18nKey="hero.technologiesTitle"
+      className="mb-3 sm:mb-4 sm:mt-20 md:mt-28 lg:mt-24 xl:mt-12 md:!mb-5"
     />
   </div>
 
-  <!-- Tecnologías -->
   <TechCarousel />
 </astro>
 
 <style>
-  /* .ladosTransparentes {
-    mask-image: linear-gradient(to right, transparent, white, transparent);
-  } */
   .text-shadow {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra al texto */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   }
 </style>

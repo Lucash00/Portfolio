@@ -1,0 +1,7 @@
+export default function CardShell({ children }) {
+  return (
+    <div className="group sm:my-4 sm:mx-1 md:my-6 md:mx-3 lg:my-6 lg:mx-4 xl:my-8 xl:mx-8 2xl:my-10 2xl:mx-16 sm:px-4 md:px-6 lg:px-6 xl:px-6 2xl:px-8 grid grid-cols-2 gap-4 rounded overflow-hidden bg-gray-100">
+      {children}
+    </div>
+  );
+}

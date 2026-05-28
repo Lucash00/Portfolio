@@ -2,6 +2,7 @@
 import HomeSectionTitle from "../Home/HomeSectionTitle.astro";
 import ContactButtons from "../Utils/Link/ContactButtons.jsx";
 import ContactForm from "./ContactForm.jsx";
+import { t } from "../../i18n/astro";
 
 interface Props {
   class?: string;
@@ -26,7 +27,7 @@ const cardMargins =
       : "sm:mx-2 md:mx-4 lg:mx-6 xl:mx-8 2xl:mx-12"
     : "";
 const email = "lucas.moreno.dev@gmail.com";
-const location = "Cádiz, España";
+const location = t("contact.locationValue");
 ---
 
 <section
@@ -54,14 +55,15 @@ const location = "Cádiz, España";
     <div class="mb-10 text-center md:mb-12 md:text-left">
       <HomeSectionTitle
         id="contacto-titulo"
-        title="Contacto"
+        title={t("contact.title")}
+        i18nKey="contact.title"
         class="mb-3 sm:mb-4 md:mx-0"
       />
       <p
         class="scroll-reveal-item w-full max-w-none text-sm font-medium tracking-tight text-slate-300 md:text-base text-pretty"
+        data-i18n="contact.intro"
       >
-        ¿Tienes un proyecto en mente o quieres hablar de una posible colaboración?
-        Escríbeme con el formulario o contáctame por cualquiera de mis canales.
+        {t("contact.intro")}
       </p>
     </div>
 
@@ -74,8 +76,11 @@ const location = "Cádiz, España";
         <div
           class="min-w-0 bg-slate-100 px-5 py-7 sm:px-7 sm:py-8 md:px-8 md:py-9 lg:col-span-5"
         >
-          <h3 class="scroll-reveal-item card-title mb-6 text-xl font-bold leading-snug md:text-2xl">
-            Envíame un mensaje
+          <h3
+            class="scroll-reveal-item card-title mb-6 text-xl font-bold leading-snug md:text-2xl"
+            data-i18n="contact.formTitle"
+          >
+            {t("contact.formTitle")}
           </h3>
           <div class="scroll-reveal-item min-w-0">
             <ContactForm client:load />
@@ -89,12 +94,12 @@ const location = "Cádiz, España";
             <div class="scroll-reveal-item">
               <h3
                 class="mb-3 text-lg font-bold tracking-tight text-white md:text-xl"
+                data-i18n="contact.infoTitle"
               >
-                Información de contacto
+                {t("contact.infoTitle")}
               </h3>
-              <p class="text-sm leading-relaxed text-slate-300">
-                Siempre estoy abierto a nuevos proyectos, ideas creativas u
-                oportunidades profesionales.
+              <p class="text-sm leading-relaxed text-slate-300" data-i18n="contact.infoText">
+                {t("contact.infoText")}
               </p>
             </div>
 
@@ -120,7 +125,7 @@ const location = "Cádiz, España";
                 </svg>
               </div>
               <div class="min-w-0">
-                <h4 class="text-sm font-semibold text-white md:text-base">Email</h4>
+                <h4 class="text-sm font-semibold text-white md:text-base" data-i18n="contact.email">{t("contact.email")}</h4>
                 <a
                   href={`mailto:${email}`}
                   class="break-all text-sm font-medium text-amber-400 underline-offset-2 transition-colors hover:text-amber-300 hover:underline"
@@ -154,16 +159,19 @@ const location = "Cádiz, España";
                 </svg>
               </div>
               <div>
-                <h4 class="text-sm font-semibold text-white md:text-base">
-                  Ubicación
+                <h4 class="text-sm font-semibold text-white md:text-base" data-i18n="contact.location">
+                  {t("contact.location")}
                 </h4>
-                <p class="text-sm text-slate-300">{location}</p>
+                <p class="text-sm text-slate-300" data-i18n="contact.locationValue">{location}</p>
               </div>
             </div>
 
             <div class="scroll-reveal-item">
-              <h4 class="mb-3 text-sm font-semibold text-white md:text-base">
-                Redes y enlaces
+              <h4
+                class="mb-3 text-sm font-semibold text-white md:text-base"
+                data-i18n="contact.socialTitle"
+              >
+                {t("contact.socialTitle")}
               </h4>
               <ContactButtons client:load />
             </div>

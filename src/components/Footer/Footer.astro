@@ -1,10 +1,13 @@
 ---
+import { t } from "../../i18n/astro";
+
 const currentYear = new Date().getFullYear();
 ---
 
 <footer
   class="site-footer w-full border-t border-slate-600/50 pt-8 pb-10 sm:pb-12"
-  aria-label="Pie de página"
+  data-i18n-aria="footer.aria"
+  aria-label={t("footer.aria")}
 >
   <div class="mx-6 md:mx-[10%]">
   <div
@@ -14,50 +17,56 @@ const currentYear = new Date().getFullYear();
       <p class="text-sm font-semibold tracking-tight text-slate-200">
         Lucas Moreno Corral
       </p>
-      <p class="mt-1 text-xs text-slate-400 sm:text-sm">
-        Desarrollador Web · Cádiz, España
+      <p class="mt-1 text-xs text-slate-400 sm:text-sm" data-i18n="footer.role">
+        {t("footer.role")}
       </p>
     </div>
 
     <nav
       class="flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium uppercase tracking-wide text-slate-400 sm:text-sm"
-      aria-label="Enlaces del pie de página"
+      data-i18n-aria="footer.navAria"
+      aria-label={t("footer.navAria")}
     >
       <a
         href="/"
         class="transition-colors hover:text-amber-400 focus-visible:text-amber-400"
+        data-i18n="nav.home"
       >
-        Inicio
+        {t("nav.home")}
       </a>
       <a
         href="/proyectos"
         class="transition-colors hover:text-amber-400 focus-visible:text-amber-400"
+        data-i18n="nav.projects"
       >
-        Proyectos
+        {t("nav.projects")}
       </a>
       <a
         href="/certificados"
         class="transition-colors hover:text-amber-400 focus-visible:text-amber-400"
+        data-i18n="nav.certificates"
       >
-        Certificados
+        {t("nav.certificates")}
       </a>
       <a
         href="/sobreMi"
         class="transition-colors hover:text-amber-400 focus-visible:text-amber-400"
+        data-i18n="nav.about"
       >
-        Sobre mí
+        {t("nav.about")}
       </a>
       <a
         href="#contacto"
         class="transition-colors hover:text-amber-400 focus-visible:text-amber-400"
+        data-i18n="contact.title"
       >
-        Contacto
+        {t("contact.title")}
       </a>
     </nav>
   </div>
 
   <p class="mt-6 text-center text-xs text-slate-500 sm:text-left">
-    © {currentYear} Lucas Moreno Corral. Todos los derechos reservados.
+    © {currentYear} Lucas Moreno Corral. <span data-i18n="footer.rights">{t("footer.rights")}</span>
   </p>
   </div>
 </footer>

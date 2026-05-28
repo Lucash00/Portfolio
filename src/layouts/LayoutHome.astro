@@ -4,16 +4,17 @@ interface Props {
 }
 import Header from "../components/Header/Header.astro";
 import SideMenu from "../components/SideMenu/SideMenu.astro";
-import Translator from "../components/Translator/Translator.jsx";
 import GhostCodeBackground from "../components/Background/GhostCodeBackground.jsx";
 import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.jsx";
 import ScrollReset from "../components/Utils/ScrollReset.astro";
 import PageEnd from "../components/PageEnd/PageEnd.astro";
 import ScrollRevealManager from "../components/Utils/ScrollReveal/ScrollRevealManager.jsx";
+import I18nBootstrap from "../components/I18n/I18nBootstrap.astro";
+import { DEFAULT_LOCALE } from "../i18n/config";
 ---
 
 <!doctype html>
-<html lang="es" class="scrollbar-hide">
+<html lang={DEFAULT_LOCALE} class="scrollbar-hide">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Portfolio de Lucas Moreno Corral, desarrollador web FullStack con experiencia en tecnologías modernas como React, TailwindCSS, Astro, Spring, y muchas más. Proyectos destacados y habilidades en desarrollo frontend y backend." />
@@ -53,10 +54,10 @@ import ScrollRevealManager from "../components/Utils/ScrollReveal/ScrollRevealMa
   </head>
 
   <body class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 bg-fixed tracking-tighter leading-none">
+    <I18nBootstrap />
     <GhostCodeBackground client:idle />
     <TextMouseGlowManager client:idle />
     <ScrollRevealManager client:idle />
-    <Translator client:load />
     <Header />
     <div
       class="relative z-10 justify-between pt-36 pb-0 md:animate-fadeIn"

@@ -1,99 +1,29 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import TitleComponent from "../../components/Utils/Font/Title.astro";
-import TextContent from "../../components/Utils/Font/TextContent.jsx";
-import Card from "../../components/Utils/Card/Card.astro";
-import Slider from "../../components/Utils/Slider/Slider.jsx";
-import { certificates } from "../../data/certificates";
-import LinkList from "../../components/Utils/Link/Link.jsx";
-import TitleContent from "../../components/Utils/Font/TitleContent.astro";
+import CertificateDetailLocalized from "../../components/Certificate/CertificateDetailLocalized.jsx";
+import {
+  getAllCertificateSlugs,
+  getCertificateBySlug,
+} from "../../data/getLocalized";
+import { DEFAULT_LOCALE } from "../../i18n/config";
 
-// Generar rutas estáticas
 export async function getStaticPaths() {
-  return certificates.map((certificate) => ({
-    params: {
-      title: encodeURIComponent(certificate.title.replace(/\s+/g, "-")),
-    },
+  return getAllCertificateSlugs().map((slug) => ({
+    params: { title: slug },
   }));
 }
 
-const params = Astro.params;
-
-if (!params.title) {
-  throw new Error("No title parameter provided");
+const slug = Astro.params.title;
+if (!slug) {
+  throw new Error("No slug parameter provided");
 }
 
-const decodedTitle = decodeURIComponent(params.title);
-const certificate = certificates.find(
-  (c) =>
-    c.title.toLowerCase() === decodedTitle.replace(/-/g, " ").toLowerCase(),
-);
-
+const certificate = getCertificateBySlug(slug, DEFAULT_LOCALE);
 if (!certificate) {
-  throw new Error(`Certificate with title '${decodedTitle}' not found`);
+  throw new Error(`Certificate with slug '${slug}' not found`);
 }
 ---
 
 <Layout title={`Certificado: ${certificate.title}`}>
-  <main>
-    <TitleComponent title={certificate.title} logo={certificate.logo} />
-    <Card>
-      {
-        certificate.media && certificate.media.length > 0 && (
-          <div class="z-10 mb-4 pt-3 md:pt-4 col-span-2 col-start-1">
-            <Slider
-              client:load
-              images={certificate.media}
-              lightboxLabel={certificate.title}
-            />
-          </div>
-        )
-      }
-      <div class="py-2 col-span-2 col-start-1">
-
-        {
-          certificate.certificateUrl && (
-            <LinkList
-            links={[
-              { url: certificate.certificateUrl, name: "Ver Certificado" },
-            ]}
-            />
-          )
-        }
-        </div>
-
-      {
-        certificate.tags && (
-          <div class="sm:col-span-2 md:col-span-2 lg:col-span-1 col-start-1 ">
-            <ul class="flex flex-wrap gap-2 mb-4">
-              {certificate.tags.map((tag) => (
-                <li class="px-2 py-1 bg-gray-300 rounded-full font-semibold text-gray-700 text-sm">
-                  {tag}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )
-      }
-      <!-- Credenciales -->
-      {
-        certificate.credentials && (
-          <div class="sm:col-span-2 sm:col-start-1 md:col-span-2 md:col-start-1 lg:col-span-1 lg:col-start-2 ">
-                    <TitleContent title="Credenciales" />
-            <p>{certificate.credentials}</p>
-          </div>
-        )
-      }
-      <!-- Descripción -->
-      <div class="py-4 col-span-2 col-start-1 border-spacing-y-10 border-y-2 border-gray-300">
-        <TitleContent title={certificate.title} />
-        <p class="mb-2 text-gray-400">
-          {certificate.provider} / {certificate.date}
-        </p>
-        <TextContent content={certificate.description} />
-      </div>
-
-      
-    </Card>
-  </main>
+  <CertificateDetailLocalized client:load slug={slug} />
 </Layout>

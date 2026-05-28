@@ -1,24 +1,41 @@
 ---
 import HomeSectionTitle from "./HomeSectionTitle.astro";
+import { t } from "../../i18n/astro";
 
 interface Props {
   title: string;
   viewMoreHref: string;
   viewMoreLabel?: string;
   description?: string;
+  titleI18nKey?: string;
+  descriptionI18nKey?: string;
 }
 
-const { title, viewMoreHref, viewMoreLabel = "Ver más", description } = Astro.props;
+const {
+  title,
+  viewMoreHref,
+  viewMoreLabel = t("home.viewMore"),
+  description,
+  titleI18nKey,
+  descriptionI18nKey,
+} = Astro.props;
 ---
 
 <section
   class="home-preview-section mt-12 sm:mt-16 md:mt-24 lg:mt-28 mb-10 sm:mb-12 md:mb-16"
 >
   <div class="mx-6 md:mx-[10%]">
-    <HomeSectionTitle title={title} class="mb-4 sm:mb-5 md:mb-6" />
+    <HomeSectionTitle
+      title={title}
+      i18nKey={titleI18nKey}
+      class="mb-4 sm:mb-5 md:mb-6"
+    />
     {
       description && (
-        <p class="scroll-reveal-item mb-4 sm:mb-5 md:mb-6 -mt-1 w-full max-w-none text-sm md:text-base font-medium tracking-tight text-slate-300 text-shadow text-pretty">
+        <p
+          class="scroll-reveal-item mb-4 sm:mb-5 md:mb-6 -mt-1 w-full max-w-none text-sm md:text-base font-medium tracking-tight text-slate-300 text-shadow text-pretty"
+          data-i18n={descriptionI18nKey}
+        >
           {description}
         </p>
       )
@@ -27,7 +44,11 @@ const { title, viewMoreHref, viewMoreLabel = "Ver más", description } = Astro.p
   </div>
 
   <div class="flex justify-center mt-5 sm:mt-6 md:mt-8 w-full">
-    <a href={viewMoreHref} class="scroll-reveal-item home-preview-link">
+    <a
+      href={viewMoreHref}
+      class="scroll-reveal-item home-preview-link"
+      data-i18n="home.viewMore"
+    >
       {viewMoreLabel}
       <span class="home-preview-link-arrow" aria-hidden="true">→</span>
     </a>

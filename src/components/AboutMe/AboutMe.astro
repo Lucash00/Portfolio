@@ -4,6 +4,8 @@ import ContactButtons from "../Utils/Link/ContactButtons.jsx";
 import AboutMeAvatarFly from "./AboutMeAvatarFly.jsx";
 import AboutMeProfileAvatar from "./AboutMeProfileAvatar.jsx";
 import animeProfile from "../../assets/animeprofile.png";
+import { t } from "../../i18n/astro";
+import AboutMeBody from "./AboutMeBody.jsx";
 
 const profileAvatarSrc = "https://avatars.githubusercontent.com/u/168908236?v=4";
 const animeSrc = (
@@ -29,7 +31,7 @@ const githubAvatarSrc = (
       />
       <div class="about-click-hint md:animate-slideIn" aria-hidden="true">
         <div class="about-click-hint__label">
-          <p class="about-click-hint__text">Click me!</p>
+          <p class="about-click-hint__text" data-i18n="about.clickHint">{t("about.clickHint")}</p>
           <svg
             class="about-click-hint__arrow"
             viewBox="0 0 72 68"
@@ -68,39 +70,11 @@ const githubAvatarSrc = (
           class="about-intro__title text-mouse-glow w-fit max-w-full"
           data-text-glow
         >
-          Hola, soy
-          <span class="about-intro__name">Lucas Moreno</span>
+          <span data-i18n="about.greeting">{t("about.greeting")}</span>
+          <span class="about-intro__name" data-i18n="about.name">{t("about.name")}</span>
         </h1>
 
-        <div
-          class="about-intro__body text-mouse-glow w-full max-w-full"
-          data-text-glow
-        >
-          <p>
-            Soy desarrollador web apasionado por la creación de experiencias digitales
-            únicas, funcionales y centradas en el usuario. Mi enfoque combina
-            <strong>FrontEnd</strong>, <strong>BackEnd</strong> y
-            <strong>DevOps</strong>, lo que me permite abordar proyectos de manera integral:
-            desde la concepción de interfaces <strong>atractivas</strong> y
-            <strong>responsive</strong>, hasta la implementación de sistemas
-            <strong>robustos</strong>, <strong>escalables</strong> y con despliegues
-            <strong>eficientes</strong>.
-          </p>
-          <p>
-            Mi compromiso con la excelencia técnica se refleja en cada detalle:
-            <strong>diseño intuitivo</strong>, <strong>análisis de datos</strong>,
-            <strong>optimización de rendimiento</strong>, <strong>automatización</strong> y
-            una <strong>comunicación fluida</strong> que garantiza que cada proyecto alcance
-            su máximo potencial. Soy <strong>adaptable</strong> a las necesidades de cada
-            equipo y contexto, y la curiosidad me impulsa a seguir creciendo y a transformar
-            ideas en soluciones tecnológicas reales.
-          </p>
-          <p>
-            Cuando no estoy programando, disfruto aprendiendo sobre tendencias emergentes,
-            perfeccionando mi conocimiento en desarrollo y DevOps, y explorando cómo la
-            tecnología puede impactar positivamente.
-          </p>
-        </div>
+        <AboutMeBody client:load />
         </div>
       </div>
     </article>
@@ -310,14 +284,15 @@ const githubAvatarSrc = (
     }
   }
 
-  .about-intro__body {
+  /* :global — el cuerpo lo renderiza AboutMeBody (React); el scope de Astro no llega ahí */
+  :global(.about-intro__body) {
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 1.1rem;
   }
 
-  .about-intro__body p {
+  :global(.about-intro__body p) {
     margin: 0;
     text-align: justify;
     line-height: 1.65;
@@ -326,30 +301,30 @@ const githubAvatarSrc = (
   }
 
   @media (min-width: 768px) {
-    .about-intro__body p {
+    :global(.about-intro__body p) {
       font-size: 1.0625rem;
     }
   }
 
   @media (min-width: 1024px) {
-    .about-intro__body p {
+    :global(.about-intro__body p) {
       font-size: 1.125rem;
     }
   }
 
   @media (min-width: 1280px) {
-    .about-intro__body p {
+    :global(.about-intro__body p) {
       font-size: 1.125rem;
     }
   }
 
   @media (min-width: 1536px) {
-    .about-intro__body p {
+    :global(.about-intro__body p) {
       font-size: 1.125rem;
     }
   }
 
-  .about-intro__body strong {
+  :global(.about-intro__body strong) {
     font-weight: 600;
     color: #e2e8f0;
   }

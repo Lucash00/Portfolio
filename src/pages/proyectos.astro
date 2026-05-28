@@ -1,18 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Title from "../components/Utils/Font/Title.astro";
-import ProjectList from "../components/Project/ProjectList.astro";
-import { projects } from '../data/projects';
+import ProjectListLocalized from "../components/Project/ProjectListLocalized.jsx";
+import { t } from "../i18n/astro";
 ---
 
-<Layout title="Proyectos">
-
+<Layout title={t("pages.projects.title")}>
   <main>
     <Title
-      title="Proyectos"
-      description="Aquí encontrarás mis trabajos más representativos, su enfoque y las tecnologías utilizadas."
+      title={t("pages.projects.title")}
+      titleI18nKey="pages.projects.title"
+      description={t("pages.projects.description")}
+      descriptionI18nKey="pages.projects.description"
     />
-    <ProjectList projects={projects} />
+    <ProjectListLocalized client:load />
   </main>
-
 </Layout>

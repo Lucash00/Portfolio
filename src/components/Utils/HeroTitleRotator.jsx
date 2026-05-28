@@ -1,17 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatedSpan } from "./AnimatedSpan.styled";
+import { useTranslation } from "../../i18n/client";
 
-const SPECIALTIES = ["Fullstack", "Backend", "Frontend"];
 const EXIT_MS = 1400;
 
-function buildSequence() {
+function buildSequence(t) {
+  const specialties = [
+    t("hero.rotator.specialties.fullstack"),
+    t("hero.rotator.specialties.backend"),
+    t("hero.rotator.specialties.frontend"),
+  ];
+
   return [
-    ...SPECIALTIES.map((specialty) => ({
+    ...specialties.map((specialty) => ({
       roleId: "desarrollador",
-      role: "Desarrollador ",
+      role: t("hero.rotator.developer"),
       specialty,
     })),
-    { roleId: "devops", role: "DevOps", specialty: null },
+    { roleId: "devops", role: t("hero.rotator.devops"), specialty: null },
   ];
 }
 
@@ -37,7 +43,8 @@ function AnimatedWord({ text, phase, animate, className, animationKey }) {
 }
 
 const HeroTitleRotator = ({ interval = 4000 }) => {
-  const sequence = useMemo(() => buildSequence(), []);
+  const { t, locale } = useTranslation();
+  const sequence = useMemo(() => buildSequence(t), [t, locale]);
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState("in");
   const hasTransitionedRef = useRef(false);
@@ -63,6 +70,12 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
   const specialtyAnimates =
     hasSpecialty &&
     (phase === "out" || specialty !== prevStep.specialty);
+
+  useEffect(() => {
+    hasTransitionedRef.current = false;
+    setIndex(0);
+    setPhase("in");
+  }, [locale]);
 
   useEffect(() => {
     let timeout;
