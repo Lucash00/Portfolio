@@ -12,14 +12,14 @@ import HomeSectionTitle from "../Home/HomeSectionTitle.astro";
     <div class="py-8 w-full lg:py-8">
       <h1
         data-text-glow
-        class="text-mouse-glow w-fit max-w-full mb-6 lg:mb-10 text-left font-extrabold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-6xl"
+        class="scroll-reveal-item text-mouse-glow w-fit max-w-full mb-6 lg:mb-10 text-left font-extrabold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-6xl"
       >
         <HeroTitleRotator interval={4000} client:load />
       </h1>
       
       <p
         data-text-glow
-        class="text-mouse-glow z-0 mb-2 ml-auto w-fit max-w-full sm:text-sm md:text-base lg:text-lg xl:text-xl text-right font-normal text-gray-400"
+        class="scroll-reveal-item text-mouse-glow z-0 mb-2 ml-auto w-fit max-w-full sm:text-sm md:text-base lg:text-lg xl:text-xl text-right font-normal text-gray-400"
       >
         Hey! Soy <span class="text-amber-400">Lucas Moreno</span>, un
         Desarrollador Web <span class="text-gray-200">versátil</span> con una sólida
@@ -27,11 +27,11 @@ import HomeSectionTitle from "../Home/HomeSectionTitle.astro";
       </p>
       <p
         data-text-glow
-        class="text-mouse-glow z-0 mb-8 ml-auto w-fit max-w-full text-right font-normal sm:text-sm md:text-base lg:text-lg xl:text-xl text-gray-400"
+        class="scroll-reveal-item text-mouse-glow z-0 mb-8 ml-auto w-fit max-w-full text-right font-normal sm:text-sm md:text-base lg:text-lg xl:text-xl text-gray-400"
       >
         <span class="text-amber-400">Cádiz</span>, España
       </p>
-      <div class="z-0 mt-16 sm:mt-12 md:max-w-screen-md lg:max-w-screen-lg">
+      <div class="scroll-reveal-item z-0 mt-16 sm:mt-12 md:max-w-screen-md lg:max-w-screen-lg">
         <ContactButtons client:load />
       </div>
 
@@ -47,11 +47,8 @@ import HomeSectionTitle from "../Home/HomeSectionTitle.astro";
     />
   </div>
 
-<!-- Tecnologías -->
-<TechCarousel/>
-  
-
-
+  <!-- Tecnologías -->
+  <TechCarousel />
 </astro>
 
 <style>
