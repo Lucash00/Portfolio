@@ -54,6 +54,11 @@ export const en = {
       description:
         "Highlighted projects with a practical focus on frontend, backend, and deployment.",
     },
+    certificates: {
+      title: "Certificates",
+      description:
+        "Recent certifications and complementary training that support my technical profile.",
+    },
     viewMore: "View more",
     scrollCueAria: "Go to the experience section",
   },
@@ -161,6 +166,8 @@ export const en = {
     },
     links: {
       viewCompany: "View company",
+      projects: "Projects",
+      certificates: "Certificates",
     },
   },
   certificate: {

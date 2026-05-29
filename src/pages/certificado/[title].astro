@@ -25,5 +25,5 @@ if (!certificate) {
 ---
 
 <Layout title={`Certificado: ${certificate.title}`}>
-  <CertificateDetailLocalized client:load slug={slug} />
+  <CertificateDetailLocalized client:only="react" slug={slug} />
 </Layout>

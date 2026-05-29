@@ -1,44 +1,100 @@
-import { FiCornerRightUp } from 'react-icons/fi';
+import { FiArrowUpRight, FiFileText, FiFolder } from "react-icons/fi";
+import {
+  getCertificateBySlug,
+  getProjectBySlug,
+} from "../../../data/getLocalized";
+import { useTranslation } from "../../../i18n/client";
+import {
+  DETAIL_LINK_CHIP_ARROW_CLASS,
+  DETAIL_LINK_CHIP_CLASS,
+  DETAIL_LINK_CHIP_INNER_CLASS,
+  DETAIL_LINK_CHIP_LIST_CLASS,
+} from "./detailLinkChip";
 
-function LinkExperience({ urls }) {
-    return (
-        <div className="links-container gap-2 grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
-            {urls.map((url, index) => {
-                const urlParts = url.split("/");
-                const lastSegment = urlParts[urlParts.length - 1];
-                const formattedName = lastSegment
-                    .replace(/-/g, " ")
-                    .replace(/\b\w/g, (char) => char.toUpperCase());
+function slugFromPortfolioUrl(url) {
+  const path = url.startsWith("http")
+    ? new URL(url, window.location.origin).pathname
+    : url.split("?")[0];
 
-                return (
-                    <a
-                        key={index}
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`
-                          sm:px-6 sm:py-3 md:px-6 md:py-3 sm:mb-2 md:mb-3 xl:mb-6 rounded-full
-                          flex items-center sm:gap-x-1 gap-x-2 
-                          text-gray-900 bg-transparent
-                          shadow-[-5px_-5px_10px_rgba(255,_255,_255,_0.8),_5px_5px_10px_rgba(0,_0,_0,_0.25)]
-                          transition-all
-                          md:hover:shadow-[-1px_-1px_5px_rgba(255,_255,_255,_0.6),_1px_1px_5px_rgba(0,_0,_0,_0.3),inset_2px_2px_4px_rgba(0,_0,_0,_0.3)]
-                          sm:active:shadow-[-1px_-1px_5px_rgba(255,_255,_255,_0.6),_1px_1px_5px_rgba(0,_0,_0,_0.3),inset_2px_2px_4px_rgba(0,_0,_0,_0.3)]
-                        md:hover:text-blue-700
-                        md:hover:bg-gray-200
-                        sm:active:text-blue-700
-                        sm:active:bg-gray-200
-                          md:hover:translate-y-1
-                          sm:active:translate-y-1
-                        `}
-                    >
-                        <FiCornerRightUp />
-                        <span className="sm:text-sm md:text-base">{formattedName}</span>
-                    </a>
-                );
-            })}
-        </div>
-    );
+  const segment = path.split("/").filter(Boolean).pop() ?? "";
+  try {
+    return decodeURIComponent(segment);
+  } catch {
+    return segment;
+  }
 }
 
-export default LinkExperience;
+function formatSlug(slug) {
+  return slug
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function resolveLinkLabel(url, kind, locale) {
+  const slug = slugFromPortfolioUrl(url);
+
+  if (kind === "project") {
+    return getProjectBySlug(slug, locale)?.title ?? formatSlug(slug);
+  }
+
+  if (kind === "certificate") {
+    return getCertificateBySlug(slug, locale)?.title ?? formatSlug(slug);
+  }
+
+  return formatSlug(slug);
+}
+
+function LinkIcon({ kind }) {
+  if (kind === "certificate") {
+    return <FiFileText className="shrink-0 text-base" aria-hidden="true" />;
+  }
+
+  return <FiFolder className="shrink-0 text-base" aria-hidden="true" />;
+}
+
+function ExperienceLinkGroup({ title, urls, kind }) {
+  const { locale } = useTranslation();
+
+  if (!urls?.length) return null;
+
+  return (
+    <div className="experience-link-group mb-4 last:mb-0">
+      {title ? (
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+          {title}
+        </p>
+      ) : null}
+      <ul className={DETAIL_LINK_CHIP_LIST_CLASS}>
+        {urls.map((url) => {
+          const label = resolveLinkLabel(url, kind, locale);
+          const isExternal = /^https?:\/\//i.test(url);
+
+          return (
+            <li key={url}>
+              <a
+                href={url}
+                className={DETAIL_LINK_CHIP_CLASS}
+                {...(isExternal
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
+                <span className={DETAIL_LINK_CHIP_INNER_CLASS}>
+                  <LinkIcon kind={kind} />
+                  <span className="min-w-0">{label}</span>
+                  <FiArrowUpRight
+                    className={DETAIL_LINK_CHIP_ARROW_CLASS}
+                    aria-hidden="true"
+                  />
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+export default function LinkExperience({ urls, kind, title }) {
+  return <ExperienceLinkGroup title={title} urls={urls} kind={kind} />;
+}

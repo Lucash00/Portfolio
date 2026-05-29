@@ -36,6 +36,16 @@ export function getStoredLocale(): string {
   return resolveLocale(fromStorage || fromCookie || fromHtml);
 }
 
+/** Locale ya resuelto por I18nEarlyScript antes del primer paint. */
+export function getClientLocale(): string {
+  if (typeof window === "undefined") return DEFAULT_LOCALE;
+
+  const fromBootstrap = window.__PORTFOLIO_I18N__?.locale;
+  if (fromBootstrap) return resolveLocale(fromBootstrap);
+
+  return getStoredLocale();
+}
+
 export function persistLocale(locale: string) {
   if (typeof window === "undefined") return;
 

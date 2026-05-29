@@ -13,6 +13,6 @@ import { t } from "../i18n/astro";
       description={t("pages.projects.description")}
       descriptionI18nKey="pages.projects.description"
     />
-    <ProjectListLocalized client:load />
+    <ProjectListLocalized client:only="react" />
   </main>
 </Layout>

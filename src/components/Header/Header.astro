@@ -40,11 +40,11 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
       </div>
     </a>
 
-    <HeaderNavLocalized client:load />
+    <HeaderNavLocalized client:only="react" />
   </div>
 
   <div class="header__lang">
-    <Translator client:load />
+    <Translator client:only="react" />
   </div>
 
   <div
@@ -186,11 +186,75 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
       background-color: rgba(22, 78, 99, 0.45);
     }
   }
+
+  @keyframes headerReloadFadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .header.header--reload-fade-in {
+    animation: headerReloadFadeIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.header-reload-boot #header {
+      opacity: 1;
+    }
+
+    .header.header--reload-fade-in {
+      animation: none;
+    }
+  }
 </style>
 
 <script>
   const STICK_DISTANCE = 72;
   const TOP_OFFSET_PX = 40;
+
+  let spaNavigation = false;
+
+  document.addEventListener("astro:before-swap", () => {
+    spaNavigation = true;
+  });
+
+  function playHeaderReloadFade() {
+    const header = document.getElementById("header");
+    if (!header) return;
+
+    document.documentElement.classList.remove("header-reload-boot");
+    header.classList.remove("header--reload-fade-in");
+    void header.offsetWidth;
+    header.classList.add("header--reload-fade-in");
+
+    header.addEventListener(
+      "animationend",
+      () => header.classList.remove("header--reload-fade-in"),
+      { once: true },
+    );
+  }
+
+  function maybePlayHeaderReloadFade() {
+    if (spaNavigation) {
+      spaNavigation = false;
+      document.documentElement.classList.remove("header-reload-boot");
+      return;
+    }
+
+    if (document.documentElement.classList.contains("header-reload-boot")) {
+      playHeaderReloadFade();
+    }
+  }
+
+  document.addEventListener("astro:page-load", maybePlayHeaderReloadFade);
+
+  if (document.documentElement.classList.contains("header-reload-boot")) {
+    maybePlayHeaderReloadFade();
+  }
 
   const updateScrollProgress = () => {
     const fill = document.querySelector(".header__scroll-progress-fill");

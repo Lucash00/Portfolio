@@ -7,14 +7,15 @@
   -webkit-user-select: none;
 }
 
+/* Sin pseudo-elemento hasta que la página esté lista (evita flash en navegación) */
 .text-mouse-glow::before {
-  content: "";
+  content: none;
   position: absolute;
   inset: -0.55em -0.85em;
   z-index: -1;
   pointer-events: none;
   opacity: var(--glow-opacity, 0);
-  transition: opacity 0.22s ease-out;
+  transition: none;
   background: radial-gradient(
     210px circle at var(--glow-x, 50%) var(--glow-y, 50%),
     rgba(255, 255, 255, 0.4) 0%,
@@ -23,6 +24,29 @@
     transparent 80%
   );
   filter: blur(18px);
+}
+
+html.glow-ready .text-mouse-glow::before {
+  content: "";
+  transition: opacity 0.22s ease-out;
+}
+
+html.is-route-changing .text-mouse-glow::before,
+html.glow-paused .text-mouse-glow::before {
+  content: none !important;
+  opacity: 0 !important;
+  transition: none !important;
+}
+
+html:not(.glow-ready) #portfolio-icon-glow-layer {
+  display: none !important;
+}
+
+html.is-route-changing #portfolio-icon-glow-layer,
+html.glow-paused #portfolio-icon-glow-layer {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  transition: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

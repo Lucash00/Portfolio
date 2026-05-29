@@ -10,7 +10,7 @@ export const certificatesEn: Certificate[] = [
       tags: ["Back End", "API", "Node.js", "Express", "MongoDB"],
       logo: "/Certificates/BackEndAPIs/BackEndAPIs.svg",
       media: ["/Certificates/BackEndAPIs/BackEndAPIs.png"],
-      certificateUrl: "https://freecodecamp.org/certification/LucasMorenoDev/back-end-development-and-apis",
+      certificateUrl: "https://www.freecodecamp.org/certification/lucasmorenodev/back-end-development-and-apis",
       credentials: "lucasmorenodev-bedaa"
     },
     {
@@ -22,7 +22,7 @@ export const certificatesEn: Certificate[] = [
       tags: ["Data Analysis", "Python", "pandas", "numpy", "Data Science"],
       logo: "/Certificates/DataAnalysis/DataAnalysis.svg",
       media: ["/Certificates/DataAnalysis/DataAnalysis.png"],
-      certificateUrl: "https://freecodecamp.org/certification/LucasMorenoDev/data-analysis-with-python-v7",
+      certificateUrl: "https://www.freecodecamp.org/certification/lucasmorenodev/data-analysis-with-python-v7",
       credentials: "lucasmorenodev-dawp"
     },
     {
@@ -34,7 +34,7 @@ export const certificatesEn: Certificate[] = [
       tags: ["Data Visualization", "JavaScript", "D3.js", "Chart.js", "Data Representation"],
       logo: "/Certificates/DataVisualization/DataVisualization.svg",
       media: ["/Certificates/DataVisualization/DataVisualization.png"],
-      certificateUrl: "https://www.freecodecamp.org/certification/LucasMorenoDev/data-visualization",
+      certificateUrl: "https://www.freecodecamp.org/certification/lucasmorenodev/data-visualization",
       credentials: "lucasmorenodev-dv"
     },
     {
@@ -58,7 +58,7 @@ export const certificatesEn: Certificate[] = [
       tags: ["HTML", "CSS", "Responsive Design", "Flexbox", "CSS Grid"],
       logo: "/Certificates/ResponsiveWebDesign/ResponsiveWebDesign.svg",
       media: ["/Certificates/ResponsiveWebDesign/ResponsiveWebDesign.png"],
-      certificateUrl: "https://freecodecamp.org/certification/LucasMorenoDev/responsive-web-design",
+      certificateUrl: "https://www.freecodecamp.org/certification/lucasmorenodev/responsive-web-design",
       credentials: "lucasmorenodev-rwd"
     },
     {

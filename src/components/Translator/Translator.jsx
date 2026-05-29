@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "flag-icons/css/flag-icons.min.css";
 import "./Translator.css";
 import { LOCALE_OPTIONS } from "../../i18n/config";
-import { getStoredLocale, setPortfolioLocale } from "../../i18n/runtime";
+import { getClientLocale, setPortfolioLocale } from "../../i18n/runtime";
 import { useTranslation } from "../../i18n/client";
 
 const ENABLED_LOCALES = LOCALE_OPTIONS.filter((lang) => lang.enabled);
@@ -10,15 +10,11 @@ const ENABLED_LOCALES = LOCALE_OPTIONS.filter((lang) => lang.enabled);
 const Translator = () => {
   const { t } = useTranslation();
   const rootRef = useRef(null);
-  const [selectedLanguage, setSelectedLanguage] = useState("es");
+  const [selectedLanguage, setSelectedLanguage] = useState(getClientLocale);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    setSelectedLanguage(getStoredLocale());
-  }, []);
-
-  useEffect(() => {
-    const sync = () => setSelectedLanguage(getStoredLocale());
+    const sync = () => setSelectedLanguage(getClientLocale());
     window.addEventListener("portfolio:locale-change", sync);
     document.addEventListener("astro:page-load", sync);
     return () => {

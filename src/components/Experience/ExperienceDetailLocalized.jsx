@@ -125,10 +125,18 @@ export default function ExperienceDetailLocalized({ slug }) {
                 </div>
               ) : null}
               {experience.certificateUrl?.length > 0 ? (
-                <LinkExperience urls={experience.certificateUrl} />
+                <LinkExperience
+                  kind="certificate"
+                  title={t("experience.links.certificates")}
+                  urls={experience.certificateUrl}
+                />
               ) : null}
               {experience.projectUrl?.length > 0 ? (
-                <LinkExperience urls={experience.projectUrl} />
+                <LinkExperience
+                  kind="project"
+                  title={t("experience.links.projects")}
+                  urls={experience.projectUrl}
+                />
               ) : null}
             </div>
           </div>

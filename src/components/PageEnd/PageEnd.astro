@@ -11,7 +11,7 @@ interface Props {
 const { class: className = "", contactAlign = "home" } = Astro.props;
 ---
 
-<div class:list={["page-end", className]}>
+<div class:list={["page-end", className]} transition:animate="none">
   {
     contactAlign === "content" ? (
       <div class="flex justify-between">

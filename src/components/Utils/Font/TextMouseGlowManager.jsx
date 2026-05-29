@@ -6,6 +6,14 @@ const MAX_TEXT_GLOW = 0.4;
 const MAX_ICON_GLOW = 0.38;
 const MAX_ICON_GLOW_HOVER = 0.62;
 
+function isGlowBlocked() {
+  const root = document.documentElement;
+  return (
+    root.classList.contains("is-route-changing") ||
+    root.classList.contains("glow-paused")
+  );
+}
+
 function isPointerNearTooltip(clientX, clientY) {
   const tooltip = document.getElementById("tooltip");
   if (!tooltip || tooltip.classList.contains("tooltip-hidden")) {
@@ -103,6 +111,8 @@ function updateIconGlows(clientX, clientY) {
 function resetGlowTargets() {
   document.querySelectorAll("[data-text-glow]").forEach((element) => {
     element.style.setProperty("--glow-opacity", "0");
+    element.style.removeProperty("--glow-x");
+    element.style.removeProperty("--glow-y");
   });
   document.querySelectorAll("[data-icon-glow]").forEach((element) => {
     element.removeAttribute("data-glow-active");
@@ -117,6 +127,7 @@ export default function TextMouseGlowManager() {
     }
 
     const onMouseMove = (event) => {
+      if (isGlowBlocked()) return;
       updateTextGlows(event.clientX, event.clientY);
       updateIconGlows(event.clientX, event.clientY);
     };
@@ -125,12 +136,24 @@ export default function TextMouseGlowManager() {
       resetGlowTargets();
     };
 
+    const onBeforeSwap = () => {
+      resetGlowTargets();
+    };
+
+    const onAfterSwap = () => {
+      resetGlowTargets();
+    };
+
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     document.documentElement.addEventListener("mouseleave", onMouseLeave);
+    document.addEventListener("astro:before-swap", onBeforeSwap);
+    document.addEventListener("astro:after-swap", onAfterSwap);
 
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
       document.documentElement.removeEventListener("mouseleave", onMouseLeave);
+      document.removeEventListener("astro:before-swap", onBeforeSwap);
+      document.removeEventListener("astro:after-swap", onAfterSwap);
       resetGlowTargets();
       document.getElementById(ICON_GLOW_LAYER_ID)?.remove();
     };

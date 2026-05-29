@@ -22,7 +22,10 @@ export default function HomePreviewSectionLocalized({
           {t(titleKey)}
         </h2>
         {descriptionKey ? (
-          <p className="scroll-reveal-item mb-4 sm:mb-5 md:mb-6 -mt-1 w-full max-w-none text-sm md:text-base font-medium tracking-tight text-slate-300 text-shadow text-pretty">
+          <p
+            data-text-glow
+            className="scroll-reveal-item text-mouse-glow mb-4 sm:mb-5 md:mb-6 -mt-1 w-full max-w-none text-sm md:text-base font-medium tracking-tight text-slate-300 text-shadow text-pretty"
+          >
             {t(descriptionKey)}
           </p>
         ) : null}

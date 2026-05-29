@@ -58,6 +58,11 @@ export const es = {
       description:
         "Proyectos destacados con enfoque práctico en desarrollo frontend, backend y despliegue.",
     },
+    certificates: {
+      title: "Certificados",
+      description:
+        "Certificaciones recientes y formación complementaria que respaldan mi perfil técnico.",
+    },
     viewMore: "Ver más",
     scrollCueAria: "Ir a la sección de experiencias",
   },
@@ -165,6 +170,8 @@ export const es = {
     },
     links: {
       viewCompany: "Ver empresa",
+      projects: "Proyectos",
+      certificates: "Certificados",
     },
   },
   certificate: {

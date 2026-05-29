@@ -61,28 +61,75 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
       };
       document.documentElement.lang = locale;
       applyDom(locale);
+      document.documentElement.classList.remove("i18n-pending");
       window.dispatchEvent(
-        new CustomEvent("portfolio:locale-change", { detail: { locale: locale } }),
+        new CustomEvent("portfolio:locale-change", {
+          detail: { locale: locale },
+        }),
       );
     }
 
-    var locale = resolveLocale(
-      localStorage.getItem(STORAGE_KEY) || readCookie() || document.documentElement.lang,
-    );
-
-    refreshDom(locale);
-
-    function syncDomFromStorage() {
-      refreshDom(resolveLocale(localStorage.getItem(STORAGE_KEY) || readCookie()));
+    function readLocale() {
+      return resolveLocale(
+        localStorage.getItem(STORAGE_KEY) ||
+          readCookie() ||
+          document.documentElement.lang,
+      );
     }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", syncDomFromStorage);
-    } else {
+    function syncDomFromStorage() {
+      refreshDom(readLocale());
+    }
+
+    function bootI18n() {
       syncDomFromStorage();
     }
 
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bootI18n, { once: true });
+    } else {
+      bootI18n();
+    }
+
+    document.addEventListener("astro:before-swap", function () {
+      var locale = readLocale();
+      if (locale !== defaultLocale) {
+        document.documentElement.classList.add("i18n-pending");
+      }
+    });
+
     document.addEventListener("astro:page-load", syncDomFromStorage);
-    document.addEventListener("astro:after-swap", syncDomFromStorage);
+    document.addEventListener("portfolio:after-route-swap", syncDomFromStorage);
   })();
+</script>
+
+<script>
+  import {
+    beginNavigationScrollRevealHold,
+    finishPageEnterGlowPause,
+    markPageEnterNavigation,
+    restartPageEnterAnimations,
+    revealPageEnterContent,
+  } from "../Utils/ScrollReveal/pageEnter.js";
+  import { prepScrollRevealState } from "../Utils/ScrollReveal/scrollRevealPrep.js";
+
+  function runPageEnterBoot() {
+    document.documentElement.classList.add("glow-paused");
+    document.documentElement.classList.remove("glow-ready");
+
+    beginNavigationScrollRevealHold();
+    prepScrollRevealState({ skipSettledShortcut: true });
+    restartPageEnterAnimations(true);
+    revealPageEnterContent();
+    finishPageEnterGlowPause();
+  }
+
+  document.addEventListener("astro:before-swap", () => {
+    markPageEnterNavigation();
+    beginNavigationScrollRevealHold();
+    document.documentElement.classList.add("glow-paused");
+    document.documentElement.classList.remove("glow-ready");
+  });
+
+  document.addEventListener("astro:page-load", runPageEnterBoot);
 </script>

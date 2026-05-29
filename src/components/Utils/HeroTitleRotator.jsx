@@ -1,8 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatedSpan } from "./AnimatedSpan.styled";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "../../i18n/client";
+import "./heroLetter.css";
 
 const EXIT_MS = 1400;
+
+function isHomePath() {
+  const path = window.location.pathname
+    .replace(/\/index\.html$/i, "")
+    .replace(/\/$/, "");
+  return path === "";
+}
 
 function buildSequence(t) {
   const specialties = [
@@ -21,7 +28,18 @@ function buildSequence(t) {
   ];
 }
 
-function AnimatedWord({ text, phase, animate, className, animationKey }) {
+function HeroLetter({ letter, index, phase }) {
+  return (
+    <span
+      className={`hero-letter hero-letter--${phase}${letter === " " ? " hero-letter--space" : ""}`}
+      style={{ "--letter-i": index }}
+    >
+      {letter}
+    </span>
+  );
+}
+
+function AnimatedWord({ text, phase, animate, className, cycleKey }) {
   if (!animate) {
     return <span className={className}>{text}</span>;
   }
@@ -29,14 +47,12 @@ function AnimatedWord({ text, phase, animate, className, animationKey }) {
   return (
     <span className={className} aria-label={text}>
       {text.split("").map((letter, letterIndex) => (
-        <AnimatedSpan
-          key={`${animationKey}-${letterIndex}`}
-          $index={letterIndex}
-          $letter={letter}
-          className={phase}
-        >
-          {letter}
-        </AnimatedSpan>
+        <HeroLetter
+          key={`${cycleKey}-${phase}-${letterIndex}`}
+          letter={letter}
+          index={letterIndex}
+          phase={phase}
+        />
       ))}
     </span>
   );
@@ -47,7 +63,15 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
   const sequence = useMemo(() => buildSequence(t), [t, locale]);
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState("in");
+  const [cycleKey, setCycleKey] = useState(0);
   const hasTransitionedRef = useRef(false);
+
+  const resetRotator = () => {
+    hasTransitionedRef.current = false;
+    setIndex(0);
+    setPhase("in");
+    setCycleKey((current) => current + 1);
+  };
 
   const step = sequence[index];
   const { role, roleId, specialty } = step;
@@ -71,10 +95,21 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
     hasSpecialty &&
     (phase === "out" || specialty !== prevStep.specialty);
 
+  useLayoutEffect(() => {
+    const syncHome = () => {
+      if (isHomePath()) resetRotator();
+    };
+
+    syncHome();
+    document.addEventListener("astro:page-load", syncHome);
+
+    return () => {
+      document.removeEventListener("astro:page-load", syncHome);
+    };
+  }, []);
+
   useEffect(() => {
-    hasTransitionedRef.current = false;
-    setIndex(0);
-    setPhase("in");
+    resetRotator();
   }, [locale]);
 
   useEffect(() => {
@@ -100,7 +135,7 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
         phase={phase}
         animate={roleAnimates}
         className="text-amber-400"
-        animationKey={`role-${roleId}-${index}`}
+        cycleKey={`${cycleKey}-role-${roleId}-${index}`}
       />
       {hasSpecialty && (
         <span className="md:inline-block">
@@ -109,7 +144,7 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
             text={specialty}
             phase={phase}
             animate={specialtyAnimates}
-            animationKey={`specialty-${specialty}-${index}`}
+            cycleKey={`${cycleKey}-specialty-${specialty}-${index}`}
           />
         </span>
       )}

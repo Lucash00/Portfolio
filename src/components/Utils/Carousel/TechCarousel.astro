@@ -117,70 +117,31 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
 
   <script>
     let intervalId: ReturnType<typeof setInterval> | null = null;
-    let slider: HTMLElement | null;
-    let track: HTMLElement | null;
-    let tooltip: HTMLElement | null;
-    let tooltipLabel: HTMLElement | null;
+    let slider: HTMLElement | null = null;
+    let track: HTMLElement | null = null;
+    let tooltip: HTMLElement | null = null;
+    let tooltipLabel: HTMLElement | null = null;
     let activeTooltipImg: HTMLImageElement | null = null;
     let showTooltipFrame = 0;
     let scrollAmount = 1;
-    const AUTO_SCROLL_SPEED_FACTOR = 0.9; // ~10% más lento
+    const AUTO_SCROLL_SPEED_FACTOR = 0.9;
     let startX = 0;
     let scrollLeft = 0;
     let isMouseDown = false;
     let isMouseOverSlider = false;
-    let isUserInteracting = false;
     let interactionTimeout: ReturnType<typeof setTimeout> | null = null;
 
-    window.addEventListener("DOMContentLoaded", () => {
-      slider = document.querySelector(".carousel-container");
-      track = document.querySelector(".carousel-track");
-      tooltip = document.getElementById("tooltip");
-      tooltipLabel = document.getElementById("tooltip-label");
-      if (slider && track && tooltip && tooltipLabel) {
-        const scrollX = window.scrollX;
-        const scrollY = window.scrollY;
-        document.body.appendChild(tooltip);
-        window.scrollTo(scrollX, scrollY);
-        cloneElements();
-        intervalId = setInterval(moveCarousel, 13);
-        slider.addEventListener("mousedown", handleMouseDown);
-        slider.addEventListener("mouseup", handleMouseUp);
-        slider.addEventListener("mousemove", handleMouseMove);
-        slider.addEventListener("touchstart", handleTouchStart);
-        slider.addEventListener("touchend", handleTouchEnd);
-        slider.addEventListener("touchmove", handleTouchMove);
-        slider.addEventListener("mouseenter", handleMouseEnter);
-        slider.addEventListener("mouseleave", handleMouseLeave);
-        track.addEventListener("mouseleave", handleTrackMouseLeave);
-        track.addEventListener("mouseover", handleMouseOver);
-        slider.addEventListener("scroll", refreshTooltip, { passive: true });
-        window.addEventListener("resize", refreshTooltip, { passive: true });
-      }
-    });
-
-    // Función para ajustar la velocidad de desplazamiento
     function adjustScrollSpeed() {
       const width = window.innerWidth;
 
-      // Ajustar scrollAmount según el tamaño de la pantalla
       if (width <= 768) {
-        // Dispositivos móviles (tamaño de pantalla pequeña)
-        scrollAmount = 1 * AUTO_SCROLL_SPEED_FACTOR; // Movimiento más lento
+        scrollAmount = 1 * AUTO_SCROLL_SPEED_FACTOR;
       } else if (width <= 1024) {
-        // Tablets
-        scrollAmount = 1 * AUTO_SCROLL_SPEED_FACTOR; // Velocidad estándar
+        scrollAmount = 1 * AUTO_SCROLL_SPEED_FACTOR;
       } else {
-        // Desktop
-        scrollAmount = 2 * AUTO_SCROLL_SPEED_FACTOR; // Movimiento más rápido
+        scrollAmount = 2 * AUTO_SCROLL_SPEED_FACTOR;
       }
     }
-
-    // Llamar a la función cada vez que se redimensione la ventana
-    window.addEventListener("resize", adjustScrollSpeed);
-
-    // Llamar a la función al cargar la página para establecer la velocidad inicial
-    adjustScrollSpeed();
 
     function moveCarousel() {
       if (!isMouseDown && !isMouseOverSlider && slider && track) {
@@ -194,91 +155,82 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
     }
 
     function cloneElements() {
-      const items = Array.from(track!.children) as HTMLElement[];
+      if (!track || !slider) return;
+
+      const items = Array.from(track.children) as HTMLElement[];
       for (let i = 0; i < items.length; i++) {
-        const clone = items[i].cloneNode(true) as HTMLElement;
-        track!.appendChild(clone);
+        track.appendChild(items[i].cloneNode(true));
       }
-      // Forzar scroll al inicio exacto
-      slider!.scrollLeft = 0;
+      slider.scrollLeft = 0;
     }
 
     function handleMouseDown(e: MouseEvent) {
+      if (!slider) return;
       isMouseDown = true;
-      slider!.classList.add("active");
-      startX = e.pageX - slider!.offsetLeft;
-      scrollLeft = slider!.scrollLeft;
+      slider.classList.add("active");
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
     }
 
     function handleMouseUp() {
-      if (isMouseDown) {
-        isMouseDown = false;
-        slider!.classList.remove("active");
-        // Ajustar scroll para evitar salto
-        const halfScrollWidth = track!.scrollWidth / 2;
-        slider!.scrollLeft = slider!.scrollLeft % halfScrollWidth;
-      }
+      if (!isMouseDown || !slider || !track) return;
+      isMouseDown = false;
+      slider.classList.remove("active");
+      const halfScrollWidth = track.scrollWidth / 2;
+      slider.scrollLeft = slider.scrollLeft % halfScrollWidth;
     }
 
     function handleMouseMove(e: MouseEvent) {
-      if (isMouseDown) {
-        e.preventDefault();
-        const x = e.pageX - slider!.offsetLeft;
-        const walk = (x - startX) * 1.2;
-        slider!.scrollLeft = scrollLeft - walk;
-        hideTooltip();
-
-        markUserInteracting();
-      }
+      if (!isMouseDown || !slider) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 1.2;
+      slider.scrollLeft = scrollLeft - walk;
+      hideTooltip();
+      markUserInteracting();
     }
 
     function handleTouchStart(e: TouchEvent) {
+      if (!slider) return;
       isMouseDown = true;
-      slider!.classList.add("active");
-      startX = e.touches[0].pageX - slider!.offsetLeft;
-      scrollLeft = slider!.scrollLeft;
+      slider.classList.add("active");
+      startX = e.touches[0].pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
       hideTooltip();
     }
 
     function handleTouchEnd() {
-      if (isMouseDown) {
-        isMouseDown = false;
-        slider!.classList.remove("active");
-        // Ajustar scroll para evitar salto
-        const halfScrollWidth = track!.scrollWidth / 2;
-        slider!.scrollLeft = slider!.scrollLeft % halfScrollWidth;
-
-        // Reanudar desplazamiento automático
-        markUserInteracting();
-      }
+      if (!isMouseDown || !slider || !track) return;
+      isMouseDown = false;
+      slider.classList.remove("active");
+      const halfScrollWidth = track.scrollWidth / 2;
+      slider.scrollLeft = slider.scrollLeft % halfScrollWidth;
+      markUserInteracting();
     }
 
     function handleTouchMove(e: TouchEvent) {
-      if (isMouseDown) {
-        e.preventDefault();
-        const x = e.touches[0].pageX - slider!.offsetLeft;
-        const screenWidth = window.innerWidth;
-        const multiplier = screenWidth <= 768 ? 1.0 : 3;
-        const walk = (x - startX) * multiplier;
-        slider!.scrollLeft = scrollLeft - walk;
-
-        markUserInteracting();
-      }
+      if (!isMouseDown || !slider) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - slider.offsetLeft;
+      const screenWidth = window.innerWidth;
+      const multiplier = screenWidth <= 768 ? 1.0 : 3;
+      const walk = (x - startX) * multiplier;
+      slider.scrollLeft = scrollLeft - walk;
+      markUserInteracting();
     }
 
     function markUserInteracting() {
-      isUserInteracting = true;
       if (interactionTimeout) clearTimeout(interactionTimeout);
       if (intervalId) {
-        clearInterval(intervalId); // Detener el intervalo actual
+        clearInterval(intervalId);
+        intervalId = null;
       }
       interactionTimeout = setTimeout(() => {
-        isUserInteracting = false;
-        if (!isUserInteracting) {
-          // Reiniciar el intervalo con la velocidad correcta
+        interactionTimeout = null;
+        if (slider && track && !intervalId) {
           intervalId = setInterval(moveCarousel, 13);
         }
-      }, 100); // espera 1.5s desde la última interacción antes de reactivar auto-scroll
+      }, 100);
     }
 
     function handleMouseEnter() {
@@ -299,7 +251,6 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
     const CAROUSEL_EDGE_MASK =
       "linear-gradient(to right, transparent 0%, white 40%, white 60%, transparent 100%)";
 
-    /** Alinea la máscara del tooltip con la de .carousel-section (mismo fade lateral). */
     function syncTooltipEdgeMask() {
       if (!tooltip) return;
 
@@ -345,7 +296,6 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       activeTooltipImg = null;
       tooltip.classList.add("tooltip-hidden");
       tooltip.setAttribute("aria-hidden", "true");
-      // No limpiar la máscara aquí: evita 1 frame a opacidad plena al salir
     }
 
     function updateTooltipLayout() {
@@ -378,8 +328,6 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       cancelShowTooltipFrame();
       activeTooltipImg = img;
       tooltipLabel.textContent = img.alt;
-
-      // Posición y máscara mientras sigue oculto (sin flash a opacidad plena)
       updateTooltipLayout();
       void tooltip.offsetWidth;
 
@@ -400,5 +348,87 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       if (img) showTooltip(img);
     }
 
+    function destroyCarousel() {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+      if (interactionTimeout) {
+        clearTimeout(interactionTimeout);
+        interactionTimeout = null;
+      }
+
+      cancelShowTooltipFrame();
+      hideTooltip();
+
+      if (slider) {
+        slider.removeEventListener("mousedown", handleMouseDown);
+        slider.removeEventListener("mouseup", handleMouseUp);
+        slider.removeEventListener("mousemove", handleMouseMove);
+        slider.removeEventListener("touchstart", handleTouchStart);
+        slider.removeEventListener("touchend", handleTouchEnd);
+        slider.removeEventListener("touchmove", handleTouchMove);
+        slider.removeEventListener("mouseenter", handleMouseEnter);
+        slider.removeEventListener("mouseleave", handleMouseLeave);
+        slider.removeEventListener("scroll", refreshTooltip);
+      }
+
+      if (track) {
+        track.removeEventListener("mouseleave", handleTrackMouseLeave);
+        track.removeEventListener("mouseover", handleMouseOver);
+      }
+
+      slider = null;
+      track = null;
+      isMouseDown = false;
+      isMouseOverSlider = false;
+    }
+
+    function initCarousel() {
+      destroyCarousel();
+
+      slider = document.querySelector(".carousel-container");
+      track = document.querySelector(".carousel-track");
+      tooltip = document.getElementById("tooltip");
+      tooltipLabel = document.getElementById("tooltip-label");
+
+      if (!slider || !track || !tooltip || !tooltipLabel) {
+        return;
+      }
+
+      const scrollX = window.scrollX;
+      const scrollY = window.scrollY;
+      if (tooltip.parentElement !== document.body) {
+        document.body.appendChild(tooltip);
+      }
+      window.scrollTo(scrollX, scrollY);
+
+      adjustScrollSpeed();
+      cloneElements();
+      intervalId = setInterval(moveCarousel, 13);
+
+      slider.addEventListener("mousedown", handleMouseDown);
+      slider.addEventListener("mouseup", handleMouseUp);
+      slider.addEventListener("mousemove", handleMouseMove);
+      slider.addEventListener("touchstart", handleTouchStart);
+      slider.addEventListener("touchend", handleTouchEnd);
+      slider.addEventListener("touchmove", handleTouchMove);
+      slider.addEventListener("mouseenter", handleMouseEnter);
+      slider.addEventListener("mouseleave", handleMouseLeave);
+      track.addEventListener("mouseleave", handleTrackMouseLeave);
+      track.addEventListener("mouseover", handleMouseOver);
+      slider.addEventListener("scroll", refreshTooltip, { passive: true });
+    }
+
+    window.addEventListener("resize", adjustScrollSpeed);
+    window.addEventListener("resize", refreshTooltip, { passive: true });
+    document.addEventListener("astro:before-swap", destroyCarousel);
+    document.addEventListener("astro:page-load", initCarousel);
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initCarousel, { once: true });
+    } else {
+      initCarousel();
+    }
   </script>
 </astro>
