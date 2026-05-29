@@ -20,15 +20,7 @@ export function useTranslation() {
     };
   }, []);
 
-  const t = useMemo(() => {
-    if (
-      typeof window !== "undefined" &&
-      window.__PORTFOLIO_I18N__?.locale === locale
-    ) {
-      return window.__PORTFOLIO_I18N__.t;
-    }
-    return createTranslator(locale);
-  }, [locale]);
+  const t = useMemo(() => createTranslator(locale), [locale]);
 
   return { locale, t };
 }

@@ -77,9 +77,7 @@ export function initPortfolioI18n() {
   window.__PORTFOLIO_I18N__ = { locale, catalogs, t };
   document.documentElement.lang = locale;
 
-  if (locale !== DEFAULT_LOCALE) {
-    applyDomTranslations(locale);
-  }
+  applyDomTranslations(locale);
 
   window.dispatchEvent(
     new CustomEvent("portfolio:locale-change", { detail: { locale } }),

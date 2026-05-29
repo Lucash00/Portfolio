@@ -2,9 +2,80 @@ import { useEffect } from "react";
 
 const AVATAR_SRC = "https://avatars.githubusercontent.com/u/168908236?v=4";
 const FLY_MS = 750;
+const MIN_RECT_SIZE = 8;
+const LAYOUT_MAX_FRAMES = 40;
+const ELEMENT_WAIT_MS = 2500;
+
+let flyGeneration = 0;
+let activeCleanup = null;
 
 function isAboutPage() {
   return /\/sobreMi\/?$/i.test(window.location.pathname);
+}
+
+function isDesktop() {
+  return window.matchMedia("(min-width: 768px)").matches;
+}
+
+function waitFrames(count) {
+  return new Promise((resolve) => {
+    let left = count;
+    const step = () => {
+      left -= 1;
+      if (left <= 0) resolve();
+      else requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+}
+
+function waitForElement(selector, timeoutMs = ELEMENT_WAIT_MS) {
+  return new Promise((resolve) => {
+    const existing = document.querySelector(selector);
+    if (existing) {
+      resolve(existing);
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      const el = document.querySelector(selector);
+      if (el) {
+        observer.disconnect();
+        resolve(el);
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    window.setTimeout(() => {
+      observer.disconnect();
+      resolve(document.querySelector(selector));
+    }, timeoutMs);
+  });
+}
+
+function waitForValidRect(getRect, maxFrames = LAYOUT_MAX_FRAMES) {
+  return new Promise((resolve) => {
+    let frames = 0;
+
+    const tick = () => {
+      const rect = getRect();
+      if (rect && rect.width >= MIN_RECT_SIZE && rect.height >= MIN_RECT_SIZE) {
+        resolve(rect);
+        return;
+      }
+
+      frames += 1;
+      if (frames >= maxFrames) {
+        resolve(rect ?? null);
+        return;
+      }
+
+      requestAnimationFrame(tick);
+    };
+
+    tick();
+  });
 }
 
 /** Layout final (padding del anillo) sin mostrar la foto aún */
@@ -29,12 +100,6 @@ function prepareProfileLanding() {
     void profileImg.offsetHeight;
     profileImg.style.removeProperty("transition");
   }
-}
-
-function getProfileImageRect() {
-  const profileImg = document.getElementById("about-profile-img");
-  if (!(profileImg instanceof HTMLImageElement)) return null;
-  return profileImg.getBoundingClientRect();
 }
 
 function startProfileRingAnimation() {
@@ -122,6 +187,16 @@ function resetHeaderAvatar() {
   }
 }
 
+function hideHeaderAvatarSlot(avatarLink, headerWrap, fromWidth) {
+  avatarLink.style.setProperty("--avatar-slot-width", `${Math.round(fromWidth)}px`);
+  avatarLink.classList.add("is-flying");
+  headerWrap.classList.add("is-flying");
+  avatarLink.classList.add("is-about-hidden");
+  headerWrap.classList.add("is-about-hidden");
+  avatarLink.classList.remove("is-flying");
+  headerWrap.classList.remove("is-flying");
+}
+
 function resolveFlyAvatarSrc(headerImg, profileImg, headerWrap) {
   if (profileImg instanceof HTMLImageElement) {
     const profileSrc = profileImg.currentSrc || profileImg.src;
@@ -152,30 +227,58 @@ function preloadImage(src) {
   });
 }
 
-function runFlyAnimation() {
-  if (!isAboutPage()) return;
-  if (!window.matchMedia("(min-width: 768px)").matches) return;
+async function runFlyAnimation(generation) {
+  if (!isAboutPage() || !isDesktop()) return null;
 
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const avatarLink = getAvatarLink();
+    const headerWrap = document.getElementById("header-avatar-wrap");
+    if (avatarLink && headerWrap) {
+      hideHeaderAvatarSlot(avatarLink, headerWrap, 44);
+    }
+    revealProfileImageImmediate();
+    return null;
+  }
+
+  const profileImg = await waitForElement("#about-profile-img");
   const avatarLink = getAvatarLink();
   const headerWrap = document.getElementById("header-avatar-wrap");
   const headerImg = document.getElementById("header-avatar-img");
-  const profileImg = document.getElementById("about-profile-img");
 
-  if (!avatarLink || !headerWrap || !headerImg || !profileImg) return;
+  if (generation !== flyGeneration) return null;
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    avatarLink.classList.add("is-about-hidden");
-    headerWrap.classList.add("is-about-hidden");
+  if (!profileImg || !avatarLink || !headerWrap || !headerImg) {
     revealProfileImageImmediate();
-    return undefined;
+    return null;
   }
+
+  if (document.fonts?.ready) {
+    try {
+      await document.fonts.ready;
+    } catch {
+      /* ignore */
+    }
+  }
+
+  await waitFrames(2);
+  if (generation !== flyGeneration) return null;
 
   prepareProfileLanding();
 
-  const from = avatarLink.getBoundingClientRect();
-  const to = getProfileImageRect();
+  const from = await waitForValidRect(() => avatarLink.getBoundingClientRect());
+  const to = await waitForValidRect(() =>
+    profileImg instanceof HTMLElement
+      ? profileImg.getBoundingClientRect()
+      : null,
+  );
 
-  if (!to || from.width < 1 || to.width < 1) return;
+  if (generation !== flyGeneration) return null;
+
+  if (!from || from.width < MIN_RECT_SIZE || !to || to.width < MIN_RECT_SIZE) {
+    hideHeaderAvatarSlot(avatarLink, headerWrap, from?.width ?? 44);
+    revealProfileImageImmediate();
+    return null;
+  }
 
   const flySrc = resolveFlyAvatarSrc(headerImg, profileImg, headerWrap);
   let cancelled = false;
@@ -188,58 +291,72 @@ function runFlyAnimation() {
   headerWrap.classList.add("is-flying");
 
   const cleanupHeader = () => {
-    avatarLink.classList.add("is-about-hidden");
-    headerWrap.classList.add("is-about-hidden");
-    avatarLink.classList.remove("is-flying");
-    headerWrap.classList.remove("is-flying");
+    hideHeaderAvatarSlot(avatarLink, headerWrap, from.width);
   };
 
-  preloadImage(flySrc)
-    .catch(() => preloadImage(AVATAR_SRC))
-    .then((resolvedSrc) => {
-      if (cancelled) return;
+  try {
+    const resolvedSrc = await preloadImage(flySrc).catch(() =>
+      preloadImage(AVATAR_SRC),
+    );
 
-      const flyer = document.createElement("img");
-      flyer.src = resolvedSrc;
-      flyer.alt = "";
-      flyer.decoding = "sync";
-      flyer.className = "about-avatar-flyer";
-      Object.assign(flyer.style, {
-        position: "fixed",
-        zIndex: "100",
-        borderRadius: "9999px",
-        objectFit: "cover",
-        left: `${from.left}px`,
-        top: `${from.top}px`,
-        width: `${from.width}px`,
-        height: `${from.height}px`,
-        margin: "0",
-        padding: "0",
-        border: "none",
-        pointerEvents: "none",
-        boxShadow: "0 12px 40px rgba(0, 0, 0, 0.35)",
-        transition: `left ${FLY_MS}ms cubic-bezier(0.33, 1, 0.68, 1), top ${FLY_MS}ms cubic-bezier(0.33, 1, 0.68, 1), width ${FLY_MS}ms cubic-bezier(0.33, 1, 0.68, 1), height ${FLY_MS}ms cubic-bezier(0.33, 1, 0.68, 1)`,
-      });
+    if (generation !== flyGeneration || cancelled) return null;
 
-      document.body.appendChild(flyer);
+    const flyer = document.createElement("img");
+    flyer.src = resolvedSrc;
+    flyer.alt = "";
+    flyer.decoding = "sync";
+    flyer.className = "about-avatar-flyer";
+    Object.assign(flyer.style, {
+      position: "fixed",
+      zIndex: "100",
+      borderRadius: "9999px",
+      objectFit: "cover",
+      left: `${from.left}px`,
+      top: `${from.top}px`,
+      width: `${from.width}px`,
+      height: `${from.height}px`,
+      margin: "0",
+      padding: "0",
+      border: "none",
+      pointerEvents: "none",
+      boxShadow: "0 12px 40px rgba(0, 0, 0, 0.35)",
+      transition: `left ${FLY_MS}ms cubic-bezier(0.33, 1, 0.68, 1), top ${FLY_MS}ms cubic-bezier(0.33, 1, 0.68, 1), width ${FLY_MS}ms cubic-bezier(0.33, 1, 0.68, 1), height ${FLY_MS}ms cubic-bezier(0.33, 1, 0.68, 1)`,
+    });
 
+    document.body.appendChild(flyer);
+
+    if (flyer.decode) {
+      try {
+        await flyer.decode();
+      } catch {
+        /* ignore */
+      }
+    }
+
+    if (generation !== flyGeneration || cancelled) {
+      flyer.remove();
+      return null;
+    }
+
+    return await new Promise((resolve) => {
       let finished = false;
 
       const finish = () => {
-        if (finished || cancelled) return;
+        if (finished || cancelled || generation !== flyGeneration) return;
         finished = true;
         window.clearTimeout(fallback);
-
         handoffFlyerToProfile(flyer);
         cleanupHeader();
+        resolve(null);
       };
 
       const startMove = () => {
+        const target = profileImg.getBoundingClientRect();
         requestAnimationFrame(() => {
-          flyer.style.left = `${to.left}px`;
-          flyer.style.top = `${to.top}px`;
-          flyer.style.width = `${to.width}px`;
-          flyer.style.height = `${to.height}px`;
+          flyer.style.left = `${target.left}px`;
+          flyer.style.top = `${target.top}px`;
+          flyer.style.width = `${target.width}px`;
+          flyer.style.height = `${target.height}px`;
         });
       };
 
@@ -248,52 +365,59 @@ function runFlyAnimation() {
         finish();
       });
 
-      const fallback = window.setTimeout(finish, FLY_MS + 80);
+      const fallback = window.setTimeout(finish, FLY_MS + 120);
       startMove();
 
-      return () => {
+      resolve(() => {
         cancelled = true;
         finished = true;
         window.clearTimeout(fallback);
         flyer.remove();
-      };
-    })
-    .catch(() => {
-      if (cancelled) return;
-      avatarLink.classList.remove("is-flying");
-      headerWrap.classList.remove("is-flying");
-      revealProfileImageImmediate();
+        avatarLink.classList.remove("is-flying");
+        headerWrap.classList.remove("is-flying");
+      });
     });
-
-  return () => {
-    cancelled = true;
-  };
+  } catch {
+    if (generation !== flyGeneration || cancelled) return null;
+    avatarLink.classList.remove("is-flying");
+    headerWrap.classList.remove("is-flying");
+    hideHeaderAvatarSlot(avatarLink, headerWrap, from.width);
+    revealProfileImageImmediate();
+    return null;
+  }
 }
 
-export default function AboutMeAvatarFly() {
-  useEffect(() => {
+function scheduleAboutFly() {
+  flyGeneration += 1;
+  const generation = flyGeneration;
+
+  activeCleanup?.();
+  activeCleanup = null;
+
+  void (async () => {
     if (!isAboutPage()) {
       resetHeaderAvatar();
       return;
     }
 
-    let cleanupFly;
-    const start = () => {
-      cleanupFly = runFlyAnimation();
-    };
+    await waitFrames(2);
+    if (generation !== flyGeneration) return;
 
-    const raf = requestAnimationFrame(() => {
-      requestAnimationFrame(start);
-    });
+    activeCleanup = await runFlyAnimation(generation);
+  })();
+}
+
+export default function AboutMeAvatarFly() {
+  useEffect(() => {
+    scheduleAboutFly();
 
     const onPageLoad = () => {
       if (isAboutPage()) {
-        resetHeaderAvatar();
-        cleanupFly?.();
-        requestAnimationFrame(() => {
-          requestAnimationFrame(start);
-        });
+        scheduleAboutFly();
       } else {
+        flyGeneration += 1;
+        activeCleanup?.();
+        activeCleanup = null;
         resetHeaderAvatar();
       }
     };
@@ -301,8 +425,9 @@ export default function AboutMeAvatarFly() {
     document.addEventListener("astro:page-load", onPageLoad);
 
     return () => {
-      cancelAnimationFrame(raf);
-      cleanupFly?.();
+      flyGeneration += 1;
+      activeCleanup?.();
+      activeCleanup = null;
       document.removeEventListener("astro:page-load", onPageLoad);
     };
   }, []);
