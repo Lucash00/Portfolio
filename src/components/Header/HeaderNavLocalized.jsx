@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import curriculum from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
+import { getCurriculumUrl } from "../../data/curriculum";
 import { useTranslation } from "../../i18n/client";
 
 const RELATED_PATHS = {
@@ -15,7 +15,7 @@ const NAV_ITEMS = [
   { href: "/certificados", icon: "far fa-file-certificate", key: "nav.certificates" },
   { href: "/experiencia", icon: "far fa-briefcase", key: "nav.experience" },
   { href: "/sobreMi", icon: "far fa-user", key: "nav.about" },
-  { href: curriculum, icon: "far fa-file-alt", key: "nav.downloadCv", external: true },
+  { icon: "far fa-file-alt", key: "nav.downloadCv", external: true, cv: true },
 ];
 
 function isActive(href, pathname) {
@@ -26,7 +26,7 @@ function isActive(href, pathname) {
 
 function NavLink({ href, icon, label, active, external }) {
   const linkClass = [
-    "menu-link group flex h-full w-full flex-col border-b-2 box-border pt-2 pb-0 text-center transition-colors duration-150 ease-in-out",
+    "menu-link group flex h-full w-full flex-col border-b-2 box-border pt-1 pb-0 text-center transition-colors duration-150 ease-in-out",
     "md:px-3 lg:px-5 xl:px-7 2xl:px-8",
     active
       ? "cursor-default text-white border-transparent"
@@ -34,7 +34,7 @@ function NavLink({ href, icon, label, active, external }) {
   ].join(" ");
 
   const contentClass = [
-    "menu-link__content block flex-1 pb-1 transition-transform duration-150 ease-in-out",
+    "menu-link__content block flex-1 pb-0.5 transition-transform duration-150 ease-in-out",
     !active && "group-hover:scale-110",
   ]
     .filter(Boolean)
@@ -47,7 +47,6 @@ function NavLink({ href, icon, label, active, external }) {
         data-menu-link
         data-active={active ? "true" : undefined}
         className={linkClass}
-        {...(external ? { download: true } : {})}
       >
         <span className={contentClass}>
           <i className={`${icon} block text-xl leading-none mb-0.5`} aria-hidden="true" />
@@ -80,7 +79,7 @@ export default function HeaderNavLocalized() {
       {NAV_ITEMS.map((item) => (
         <NavLink
           key={item.key}
-          href={item.href}
+          href={item.cv ? getCurriculumUrl(locale) : item.href}
           icon={item.icon}
           label={t(item.key)}
           active={!item.external && isActive(item.href, pathname)}

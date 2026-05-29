@@ -55,6 +55,7 @@ export const en = {
         "Highlighted projects with a practical focus on frontend, backend, and deployment.",
     },
     viewMore: "View more",
+    scrollCueAria: "Go to the experience section",
   },
   pages: {
     projects: {

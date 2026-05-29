@@ -13,7 +13,7 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
   class="header fixed left-0 right-0 z-40 w-full"
 >
   <div
-    class="header__inner relative flex min-h-11 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:gap-x-4 md:ml-auto md:mr-[10%] md:py-0 md:pl-2 md:pr-1 lg:mx-[10%] lg:gap-x-6"
+    class="header__inner relative flex min-h-10 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:gap-x-4 md:ml-auto md:mr-[10%] md:py-0 md:pl-2 md:pr-1 lg:mx-[10%] lg:gap-x-6"
   >
     <a
       id="header-avatar-link"
@@ -67,11 +67,12 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
 
   .header__lang {
     position: absolute;
-    top: var(--header-corner-inset);
+    top: 50%;
     right: var(--header-corner-inset);
     z-index: 55;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    transform: translateY(-50%);
     pointer-events: auto;
   }
 
@@ -81,7 +82,7 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
       aspect-ratio: 1 / 1;
       height: 100%;
       width: auto;
-      min-height: 2.75rem;
+      min-height: 2.5rem;
       flex-shrink: 0;
     }
 
@@ -115,7 +116,7 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
       visibility: hidden;
       pointer-events: none;
       width: var(--avatar-slot-width, auto);
-      min-width: var(--avatar-slot-width, 2.75rem);
+      min-width: var(--avatar-slot-width, 2.5rem);
     }
   }
 

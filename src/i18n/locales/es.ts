@@ -59,6 +59,7 @@ export const es = {
         "Proyectos destacados con enfoque práctico en desarrollo frontend, backend y despliegue.",
     },
     viewMore: "Ver más",
+    scrollCueAria: "Ir a la sección de experiencias",
   },
   pages: {
     projects: {

@@ -4,6 +4,7 @@ import ContactButtons from "../Utils/Link/ContactButtons.jsx";
 import HeroTitleRotator from "../Utils/HeroTitleRotator.jsx";
 import HeroIntro from "./HeroIntro.jsx";
 import HomeSectionTitleLocalized from "../Home/HomeSectionTitleLocalized.jsx";
+import HomeScrollCue from "../Home/HomeScrollCue.jsx";
 ---
 
 <astro>
@@ -34,10 +35,156 @@ import HomeSectionTitleLocalized from "../Home/HomeSectionTitleLocalized.jsx";
   </div>
 
   <TechCarousel />
+
+  <div class="home-scroll-cue-wrap">
+    <HomeScrollCue client:load />
+  </div>
 </astro>
 
 <style>
   .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  }
+</style>
+
+<style is:global>
+  #home-experiences {
+    scroll-margin-top: calc(var(--header-height, 4.5rem) + 2.5rem);
+  }
+
+  .home-scroll-cue-wrap {
+    width: 100%;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  .home-scroll-cue {
+    position: fixed;
+    left: 50%;
+    bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+    z-index: 35;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(0.75rem);
+    transition:
+      opacity 0.35s ease,
+      visibility 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .home-scroll-cue--visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .home-scroll-cue__btn:disabled {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .home-scroll-cue__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    color: #9ca3af;
+    background: transparent;
+    border: 1px solid rgba(156, 163, 175, 0.45);
+    border-radius: 9999px;
+    cursor: pointer;
+    box-shadow: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    transition:
+      color 0.35s ease,
+      border-color 0.35s ease,
+      transform 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+
+  @media (min-width: 640px) {
+    .home-scroll-cue__btn {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  .home-scroll-cue__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    line-height: 1;
+    transition: transform 0.35s ease;
+  }
+
+  @media (min-width: 640px) {
+    .home-scroll-cue__icon {
+      font-size: 1.05rem;
+    }
+  }
+
+  .home-scroll-cue__btn:hover,
+  .home-scroll-cue__btn:focus-visible {
+    color: #22d3ee;
+    border-color: rgba(34, 211, 238, 0.55);
+    background: transparent;
+    transform: translateY(-3px);
+    box-shadow: 0 0 18px rgba(34, 211, 238, 0.18);
+  }
+
+  .home-scroll-cue__btn:hover .home-scroll-cue__icon,
+  .home-scroll-cue__btn:focus-visible .home-scroll-cue__icon {
+    transform: translateY(3px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .home-scroll-cue--visible .home-scroll-cue__icon {
+      animation: home-scroll-cue-bob 2.4s ease-in-out infinite;
+    }
+  }
+
+  @keyframes home-scroll-cue-bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(4px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-scroll-cue,
+    .home-scroll-cue__btn,
+    .home-scroll-cue__icon {
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .home-scroll-cue--visible .home-scroll-cue__icon {
+      animation: none;
+    }
+
+    .home-scroll-cue__btn:hover,
+    .home-scroll-cue__btn:focus-visible {
+      transform: none;
+    }
+
+    .home-scroll-cue__btn:hover .home-scroll-cue__icon,
+    .home-scroll-cue__btn:focus-visible .home-scroll-cue__icon {
+      transform: none;
+    }
   }
 </style>
