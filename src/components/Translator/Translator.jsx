@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "flag-icons/css/flag-icons.min.css";
+import "./Translator.css";
 import { LOCALE_OPTIONS } from "../../i18n/config";
 import { getStoredLocale, setPortfolioLocale } from "../../i18n/runtime";
 import { useTranslation } from "../../i18n/client";
@@ -8,6 +9,7 @@ const ENABLED_LOCALES = LOCALE_OPTIONS.filter((lang) => lang.enabled);
 
 const Translator = () => {
   const { t } = useTranslation();
+  const rootRef = useRef(null);
   const [selectedLanguage, setSelectedLanguage] = useState("es");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,6 +27,24 @@ const Translator = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const closeOnOutside = (event) => {
+      if (!rootRef.current?.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", closeOnOutside);
+    document.addEventListener("touchstart", closeOnOutside, { passive: true });
+
+    return () => {
+      document.removeEventListener("mousedown", closeOnOutside);
+      document.removeEventListener("touchstart", closeOnOutside);
+    };
+  }, [isOpen]);
+
   const handleLanguageChange = (languageCode) => {
     setSelectedLanguage(languageCode);
     setPortfolioLocale(languageCode);
@@ -35,33 +55,42 @@ const Translator = () => {
     ENABLED_LOCALES.find((lang) => lang.code === selectedLanguage) ??
     ENABLED_LOCALES[0];
 
+  const label = t(`language.${selected.code}`);
+
   return (
-    <div className="header-lang relative">
+    <div ref={rootRef} className="header-lang">
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className="header-lang__trigger cursor-pointer whitespace-nowrap rounded-md border border-gray-300 bg-white px-1.5 py-0.5 text-sm leading-tight shadow-sm md:px-2 md:py-1 md:text-base"
+        className={`header-lang__trigger${isOpen ? " header-lang__trigger--expanded" : ""}`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        aria-label={t("language.label")}
+        aria-label={`${t("language.label")}: ${label}`}
       >
-        <span className={`${selected.flag} mr-1`} aria-hidden="true" />
-        {t(`language.${selected.code}`)}
+        <span
+          className={`header-lang__flag ${selected.flag}`}
+          aria-hidden="true"
+        />
+        <span className="header-lang__label">{label}</span>
       </button>
 
       {isOpen && (
         <ul
-          className="header-lang__menu absolute right-0 top-full z-[60] mt-1 min-w-full overflow-hidden rounded-md border border-gray-300 bg-white shadow-lg"
+          className="header-lang__menu"
           role="listbox"
+          aria-label={t("language.label")}
         >
           {ENABLED_LOCALES.map((language) => (
-            <li key={language.code} role="option">
+            <li key={language.code} role="option" aria-selected={language.code === selectedLanguage}>
               <button
                 type="button"
-                className="flex w-full cursor-pointer items-center px-1.5 py-0.5 text-sm hover:bg-gray-100 md:px-2 md:text-base"
+                className="header-lang__menu-item"
                 onClick={() => handleLanguageChange(language.code)}
               >
-                <span className={`${language.flag} mr-1 md:mr-2`} aria-hidden="true" />
+                <span
+                  className={`header-lang__flag ${language.flag}`}
+                  aria-hidden="true"
+                />
                 {t(`language.${language.code}`)}
               </button>
             </li>

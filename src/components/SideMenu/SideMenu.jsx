@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import SideMenuSection from "./SideMenuSection.jsx";
-import curriculum from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
+import { getCurriculumUrl } from "../../data/curriculum";
 import { useTranslation } from "../../i18n/client";
 
 const SideMenu = ({ avatarSrc }) => {
-  const { t } = useTranslation();
+  const { locale, t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState("");
 
@@ -75,7 +75,7 @@ const SideMenu = ({ avatarSrc }) => {
             isActive={currentPath === "/sobreMi"}
           />
           <SideMenuSection
-            href={curriculum}
+            href={getCurriculumUrl(locale)}
             icon="far fa-file-alt"
             text={t("nav.downloadCv")}
             isActive={false}

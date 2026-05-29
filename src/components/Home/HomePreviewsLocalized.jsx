@@ -21,6 +21,7 @@ export default function HomePreviewsLocalized() {
   return (
     <>
       <HomePreviewSectionLocalized
+        sectionId="home-experiences"
         titleKey="home.experiences.title"
         descriptionKey="home.experiences.description"
         viewMoreHref="/experiencia"

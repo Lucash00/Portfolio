@@ -4,12 +4,16 @@ export default function HomePreviewSectionLocalized({
   titleKey,
   descriptionKey,
   viewMoreHref,
+  sectionId,
   children,
 }) {
   const { t } = useTranslation();
 
   return (
-    <section className="home-preview-section mt-12 sm:mt-16 md:mt-24 lg:mt-28 mb-10 sm:mb-12 md:mb-16">
+    <section
+      id={sectionId}
+      className="home-preview-section mt-12 sm:mt-16 md:mt-24 lg:mt-28 mb-10 sm:mb-12 md:mb-16"
+    >
       <div className="mx-6 md:mx-[10%]">
         <h2
           data-text-glow
