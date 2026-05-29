@@ -222,7 +222,10 @@ export default function Experience() {
             })}
           </span>
         </h1>
-        <p className="pointer-events-none absolute left-1/2 z-20 w-[min(92%,52rem)] -translate-x-1/2 text-center text-sm md:text-base font-medium tracking-tight text-slate-300 top-[calc(4*var(--experience-menu-h)+4.1rem)] sm:top-[calc(2.5rem+4*var(--experience-menu-h)+5rem)]">
+        <p
+          data-text-glow
+          className="pointer-events-none absolute left-1/2 z-20 w-[min(92%,52rem)] -translate-x-1/2 text-center text-sm md:text-base font-medium tracking-tight text-slate-300 text-mouse-glow top-[calc(4*var(--experience-menu-h)+4.1rem)] sm:top-[calc(2.5rem+4*var(--experience-menu-h)+5rem)]"
+        >
           {t('pages.experience.subtitle')}
         </p>
         <div className="experience-card-stage absolute inset-0 flex items-center justify-center overflow-visible px-5 sm:px-8 md:px-12 lg:px-14 xl:px-16">

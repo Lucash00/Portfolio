@@ -43,6 +43,10 @@ export default {
 					'0%': { opacity: '0', transform: 'translateX(24px)' },
 					'100%': { opacity: '1', transform: 'translateX(0)' },
 				},
+				slideInPage: {
+					'0%': { opacity: '0', transform: 'translate3d(24px, 0, 0)' },
+					'100%': { opacity: '1', transform: 'translate3d(0, 0, 0)' },
+				},
 				logoWobble: {
 					'0%, 22%, 100%': { transform: 'rotate(0deg)' },
 					'5%': { transform: 'rotate(-3deg)' },
@@ -81,6 +85,7 @@ export default {
 			animation: {
 				fadeIn: 'fadeIn 1s ease-out forwards',
 				slideIn: 'slideIn 0.8s ease-out forwards',
+				slideInPage: 'slideInPage 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards',
 				logoWobble: 'logoWobble 2.75s ease-in-out infinite',
 				cardFlipOutUp: 'cardFlipOutUp 150ms ease-in-out forwards',
 				cardFlipInUp: 'cardFlipInUp 150ms ease-in-out forwards',

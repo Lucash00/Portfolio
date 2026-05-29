@@ -14,12 +14,13 @@ import HomeScrollCue from "../Home/HomeScrollCue.jsx";
     <div class="py-8 w-full lg:py-8">
       <h1
         data-text-glow
-        class="scroll-reveal-item text-mouse-glow w-fit max-w-full mb-6 lg:mb-10 text-left font-extrabold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-6xl"
+        class="text-mouse-glow w-fit max-w-full mb-6 lg:mb-10 text-left font-extrabold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-6xl"
+        data-no-scroll-reveal
       >
-        <HeroTitleRotator interval={4000} client:load />
+        <HeroTitleRotator interval={4000} client:only="react" />
       </h1>
       
-      <HeroIntro client:load />
+      <HeroIntro client:only="react" />
       <div class="scroll-reveal-item z-0 mt-16 sm:mt-12 md:max-w-screen-md lg:max-w-screen-lg">
         <ContactButtons client:load />
       </div>
@@ -28,7 +29,7 @@ import HomeScrollCue from "../Home/HomeScrollCue.jsx";
   
   <div class="mx-6 md:mx-[10%]">
     <HomeSectionTitleLocalized
-      client:load
+      client:only="react"
       i18nKey="hero.technologiesTitle"
       className="mb-3 sm:mb-4 sm:mt-20 md:mt-28 lg:mt-24 xl:mt-12 md:!mb-5"
     />
@@ -37,13 +38,17 @@ import HomeScrollCue from "../Home/HomeScrollCue.jsx";
   <TechCarousel />
 
   <div class="home-scroll-cue-wrap">
-    <HomeScrollCue client:load />
+    <HomeScrollCue client:only="react" />
   </div>
 </astro>
 
 <style>
   .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  }
+
+  .hero-section h1[data-text-glow] {
+    perspective: 700px;
   }
 </style>
 

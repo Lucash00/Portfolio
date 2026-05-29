@@ -25,5 +25,5 @@ if (!experience) {
 ---
 
 <Layout title={`Experiencia: ${experience.title}`}>
-  <ExperienceDetailLocalized client:load slug={slug} />
+  <ExperienceDetailLocalized client:only="react" slug={slug} />
 </Layout>

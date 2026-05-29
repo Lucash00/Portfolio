@@ -1,6 +1,7 @@
 import { useMemo } from "react";
-import { getExperiences, getProjects } from "../../data/getLocalized";
+import { getCertificates, getExperiences, getProjects } from "../../data/getLocalized";
 import { useTranslation } from "../../i18n/client";
+import CertificateCard from "../Certificate/CertificateCard.jsx";
 import ExperienceCard from "../Experience/ExperienceCard.jsx";
 import ProjectCard from "../Project/ProjectCard.jsx";
 import HomePreviewSectionLocalized from "./HomePreviewSectionLocalized.jsx";
@@ -15,6 +16,10 @@ export default function HomePreviewsLocalized() {
   );
   const projects = useMemo(
     () => getProjects(locale).slice(0, PREVIEW_COUNT),
+    [locale],
+  );
+  const certificates = useMemo(
+    () => getCertificates(locale).slice(0, PREVIEW_COUNT),
     [locale],
   );
 
@@ -45,6 +50,22 @@ export default function HomePreviewsLocalized() {
         <div className="min-w-0 w-full max-w-full">
           {projects.map((project) => (
             <ProjectCard key={project.slug} project={project} compact />
+          ))}
+        </div>
+      </HomePreviewSectionLocalized>
+
+      <HomePreviewSectionLocalized
+        titleKey="home.certificates.title"
+        descriptionKey="home.certificates.description"
+        viewMoreHref="/certificados"
+      >
+        <div className="min-w-0 w-full max-w-full">
+          {certificates.map((certificate) => (
+            <CertificateCard
+              key={certificate.slug}
+              certificate={certificate}
+              compact
+            />
           ))}
         </div>
       </HomePreviewSectionLocalized>

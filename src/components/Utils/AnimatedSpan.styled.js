@@ -1,4 +1,4 @@
-import styled, { keyframes, css } from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const enter = keyframes`
   0% {
@@ -26,8 +26,9 @@ export const AnimatedSpan = styled.span`
   transform-style: preserve-3d;
   transform-origin: bottom;
   padding: ${(props) => (props.$letter === " " ? "0.325rem" : null)};
-  opacity: ${(props) => (props.className === "in" ? 0 : 1)};  // Solo opacity en "in"
+  opacity: ${(props) => (props.$phase === "in" ? 0 : 1)};
 
-  animation: ${(props) => (props.className === "in" ? enter : exit)} 0.6s ease forwards;
+  animation: ${(props) => (props.$phase === "in" ? enter : exit)} 0.6s ease
+    forwards;
   animation-delay: ${(props) => props.$index * 0.1}s;
 `;

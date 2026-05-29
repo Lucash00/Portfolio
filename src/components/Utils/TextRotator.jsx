@@ -35,7 +35,7 @@ const TextRotator = ({ texts, interval = 5000 }) => {
                     key={index}
                     $index={index}
                     $letter={letter}
-                    className={phase}
+                    $phase={phase}
                 >
                     {letter}
                 </AnimatedSpan>

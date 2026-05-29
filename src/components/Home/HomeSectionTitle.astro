@@ -4,16 +4,25 @@ interface Props {
   class?: string;
   id?: string;
   i18nKey?: string;
+  /** Resplandor al pasar el ratón; desactivar en secciones fuera del viewport inicial */
+  mouseGlow?: boolean;
 }
 
-const { title, class: className = "", id, i18nKey } = Astro.props;
+const {
+  title,
+  class: className = "",
+  id,
+  i18nKey,
+  mouseGlow = true,
+} = Astro.props;
 ---
 
 <h2
   id={id}
-  data-text-glow
+  {...(mouseGlow ? { "data-text-glow": true } : {})}
   class:list={[
-    "scroll-reveal-item home-section-title text-mouse-glow w-fit max-w-full text-left text-white font-extrabold tracking-tight text-shadow text-balance",
+    "scroll-reveal-item home-section-title w-fit max-w-full text-left text-white font-extrabold tracking-tight text-shadow text-balance",
+    mouseGlow && "text-mouse-glow",
     "text-lg sm:text-xl md:text-2xl lg:text-[1.75rem]",
     className,
   ]}

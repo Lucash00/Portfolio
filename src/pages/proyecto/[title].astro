@@ -22,5 +22,5 @@ if (!project) {
 ---
 
 <Layout title={`Proyecto: ${project.title}`}>
-  <ProjectDetailLocalized client:load slug={slug} />
+  <ProjectDetailLocalized client:only="react" slug={slug} />
 </Layout>

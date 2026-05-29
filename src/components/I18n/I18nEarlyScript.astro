@@ -1,0 +1,156 @@
+---
+import { catalogs } from "../../i18n/locales";
+import { DEFAULT_LOCALE } from "../../i18n/config";
+---
+
+<style is:inline>
+  html.i18n-pending body {
+    opacity: 0;
+  }
+
+  /* Recarga + navegación: oculto hasta que arranque la animación de entrada */
+  html.page-enter-boot [data-page-enter],
+  html.page-enter-boot [data-page-enter] astro-island,
+  html.page-enter-boot [data-page-enter] :is(a.group, .bg-slate-100, main .grid.grid-cols-2 > *),
+  html.page-enter-boot .page-end,
+  html.page-enter-boot .contact-section,
+  html.is-route-changing [data-page-enter],
+  html.is-route-changing [data-page-enter] astro-island,
+  html.is-route-changing [data-page-enter] :is(a.group, .bg-slate-100, main .grid.grid-cols-2 > *),
+  html.is-route-changing .page-end,
+  html.is-route-changing .contact-section {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  html.glow-paused .page-end,
+  html.glow-paused .contact-section {
+    pointer-events: none !important;
+  }
+
+  html.glow-paused .page-end .text-mouse-glow::before,
+  html.glow-paused .contact-section .text-mouse-glow::before {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: none !important;
+  }
+
+  html.glow-paused .text-mouse-glow::before,
+  html.glow-paused #portfolio-icon-glow-layer {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: none !important;
+  }
+
+  /* Recarga completa: header oculto hasta el fade-in (no aplica en navegación SPA) */
+  html.header-reload-boot #header {
+    opacity: 0;
+  }
+</style>
+
+<script is:inline define:vars={{ catalogs, defaultLocale: DEFAULT_LOCALE }}>
+  (function () {
+    document.documentElement.classList.add("glow-paused", "header-reload-boot");
+    if (window.matchMedia("(min-width: 640px)").matches) {
+      document.documentElement.classList.add("page-enter-boot");
+    }
+
+    const STORAGE_KEY = "portfolio-locale";
+    const COOKIE = "portfolio-locale";
+
+    function readCookie() {
+      const match = document.cookie.match(
+        new RegExp("(?:^|; )" + COOKIE + "=([^;]*)"),
+      );
+      return match ? decodeURIComponent(match[1]) : null;
+    }
+
+    function resolveLocale(raw) {
+      if (raw && catalogs[raw]) return raw;
+      return defaultLocale;
+    }
+
+    function getByPath(source, path) {
+      return path.split(".").reduce(function (acc, part) {
+        if (acc && typeof acc === "object" && part in acc) return acc[part];
+        return undefined;
+      }, source);
+    }
+
+    function createT(locale) {
+      const messages = catalogs[locale] || catalogs[defaultLocale];
+      const fallback = catalogs[defaultLocale];
+      return function t(key) {
+        var value = getByPath(messages, key);
+        if (typeof value !== "string") value = getByPath(fallback, key);
+        return typeof value === "string" ? value : key;
+      };
+    }
+
+    var locale = resolveLocale(
+      localStorage.getItem(STORAGE_KEY) ||
+        readCookie() ||
+        document.documentElement.lang,
+    );
+
+    window.__PORTFOLIO_I18N__ = {
+      locale: locale,
+      catalogs: catalogs,
+      t: createT(locale),
+    };
+
+    document.documentElement.lang = locale;
+
+    if (locale !== defaultLocale) {
+      document.documentElement.classList.add("i18n-pending");
+    }
+
+    var ROUTE_HIDE_STYLE =
+      "html.page-enter-boot [data-page-enter],html.page-enter-boot [data-page-enter] astro-island,html.page-enter-boot [data-page-enter] :is(a.group,.bg-slate-100,main .grid.grid-cols-2>*),html.page-enter-boot .page-end,html.page-enter-boot .contact-section,html.is-route-changing [data-page-enter],html.is-route-changing [data-page-enter] astro-island,html.is-route-changing [data-page-enter] :is(a.group,.bg-slate-100,main .grid.grid-cols-2>*),html.is-route-changing .page-end,html.is-route-changing .contact-section,html.is-route-changing .text-mouse-glow::before,html.is-route-changing #portfolio-icon-glow-layer,html.glow-paused .text-mouse-glow::before,html.glow-paused #portfolio-icon-glow-layer{opacity:0!important;visibility:hidden!important;transition:none!important}";
+
+    function resetTextGlowState(root) {
+      root.querySelectorAll("[data-text-glow]").forEach(function (el) {
+        el.style.setProperty("--glow-opacity", "0");
+        el.style.removeProperty("--glow-x");
+        el.style.removeProperty("--glow-y");
+      });
+    }
+
+    function clearIconGlowLayer() {
+      var layer = document.getElementById("portfolio-icon-glow-layer");
+      if (layer) layer.replaceChildren();
+    }
+
+    document.addEventListener("astro:before-swap", function (e) {
+      document.documentElement.classList.add("is-route-changing", "glow-paused");
+      document.documentElement.classList.remove("glow-ready", "page-enter-boot");
+      resetTextGlowState(document);
+      clearIconGlowLayer();
+
+      var doc = e.newDocument;
+      if (!doc) return;
+
+      doc.documentElement.classList.add(
+        "page-enter-boot",
+        "is-route-changing",
+        "glow-paused",
+      );
+      resetTextGlowState(doc);
+
+      if (!doc.getElementById("portfolio-route-hide")) {
+        var style = doc.createElement("style");
+        style.id = "portfolio-route-hide";
+        style.textContent = ROUTE_HIDE_STYLE;
+        doc.head.appendChild(style);
+      }
+
+      doc.querySelectorAll("[data-page-enter]").forEach(function (el) {
+        el.classList.remove(
+          "md:animate-slideIn",
+          "md:animate-slideInPage",
+          "md:animate-fadeIn",
+        );
+      });
+    });
+  })();
+</script>

@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import "../../../styles/scrollReveal.css";
-import { getPageEnterDelay } from "./pageEnter";
-
-const REVEAL_SELECTORS = [
-  "[data-scroll-reveal]",
-  ".scroll-reveal-item",
-  "a.group",
-  "main .grid.grid-cols-2 > *",
-  "[data-scroll-reveal='on']",
-].join(",");
+import {
+  endNavigationScrollRevealHold,
+  getScrollRevealStartDelay,
+} from "./pageEnter";
+import {
+  collectRevealElements,
+  prepLateRevealElements,
+  prepScrollRevealState,
+} from "./scrollRevealPrep.js";
 
 const DIRECTION_CLASSES = [
   "scroll-reveal--from-below",
@@ -16,43 +16,6 @@ const DIRECTION_CLASSES = [
   "scroll-reveal--exit-up",
   "scroll-reveal--exit-down",
 ];
-
-const SKIP_TAGS = new Set([
-  "SCRIPT",
-  "STYLE",
-  "LINK",
-  "META",
-  "NOSCRIPT",
-  "ASTRO-ISLAND",
-]);
-
-function isExperiencePage() {
-  return /^\/experiencia\/?$/i.test(window.location.pathname);
-}
-
-function isExcluded(el) {
-  if (!(el instanceof HTMLElement)) return true;
-  if (SKIP_TAGS.has(el.tagName)) return true;
-  if (el.closest('[data-scroll-reveal="off"]')) return true;
-  if (el.closest("[data-scroll-reveal-zone='exclude']")) return true;
-  if (el.closest("#header, header, .side-menu, .header")) return true;
-  if (el.closest(".lightbox-root, .about-avatar-flyer")) return true;
-  if (el.hasAttribute("data-no-scroll-reveal")) return true;
-
-  const style = getComputedStyle(el);
-  if (style.display === "none" || style.visibility === "hidden") return true;
-
-  return false;
-}
-
-function collectRevealElements() {
-  const nodes = document.querySelectorAll(REVEAL_SELECTORS);
-  const candidates = [...nodes].filter((el) => !isExcluded(el));
-
-  return candidates.filter(
-    (el) => !candidates.some((other) => other !== el && el.contains(other)),
-  );
-}
 
 function clearDirectionClasses(el) {
   el.classList.remove(...DIRECTION_CLASSES);
@@ -71,38 +34,24 @@ function getHeaderHeight() {
   return Math.ceil(header?.getBoundingClientRect().height ?? 0);
 }
 
-/** Entrada desde arriba: un poco antes para no dejar hueco vacío. */
 function getTopRevealInset() {
   const h = getHeaderHeight();
   return Math.max(88, h + 16);
 }
 
-/** Salida hacia arriba: más tarde para que se vea la animación bajo el menú. */
 function getTopSafeZone() {
   const h = getHeaderHeight();
   return Math.max(112, h + 40);
 }
 
-function isInViewportOnInit(el, topInset) {
-  const rect = el.getBoundingClientRect();
-  const vh = window.innerHeight;
-  return rect.top < vh * 0.92 && rect.bottom > topInset;
-}
-
-function initScrollReveal() {
-  if (isExperiencePage()) return () => {};
+function attachScrollRevealObserver(elements, onNeedMore) {
+  if (!elements.length && !onNeedMore) return () => {};
 
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
 
-  const elements = collectRevealElements();
-  if (!elements.length) return () => {};
-
-  if (reducedMotion) {
-    elements.forEach((el) => el.classList.add("scroll-reveal", "is-revealed"));
-    return () => {};
-  }
+  if (reducedMotion) return () => {};
 
   let lastScrollY = window.scrollY;
   let scrollDirection = "down";
@@ -120,6 +69,13 @@ function initScrollReveal() {
   window.addEventListener("scroll", onScroll, { passive: true });
 
   const visibility = new WeakMap();
+
+  elements.forEach((el) => {
+    visibility.set(
+      el,
+      el.classList.contains("is-revealed") ? "visible" : "hidden",
+    );
+  });
 
   const show = async (el, enterDirection) => {
     if (visibility.get(el) === "visible") return;
@@ -150,7 +106,6 @@ function initScrollReveal() {
 
   const topSafeZone = getTopSafeZone();
   const topRevealInset = getTopRevealInset();
-  const hadPageEnter = Boolean(document.querySelector("[data-page-enter]"));
 
   const getEnterDirection = (entry) => {
     const { top, bottom } = entry.boundingClientRect;
@@ -167,7 +122,6 @@ function initScrollReveal() {
     const { top, bottom } = entry.boundingClientRect;
     const vh = window.innerHeight;
 
-    // Salida hacia arriba: solo cuando ya pasó la zona del menú
     if (bottom < 0 || top < -topSafeZone * 0.35) return "up";
     if (top > vh || bottom > vh * 1.05) return "down";
 
@@ -206,26 +160,56 @@ function initScrollReveal() {
     },
   );
 
-  elements.forEach((el) => {
-    const alreadyVisible =
-      hadPageEnter && isInViewportOnInit(el, topRevealInset);
+  const observeAll = (list) => {
+    list.forEach((el) => {
+      visibility.set(
+        el,
+        el.classList.contains("is-revealed") ? "visible" : "hidden",
+      );
+      observer.observe(el);
+    });
+  };
 
-    el.classList.add("scroll-reveal");
+  observeAll(elements);
 
-    if (alreadyVisible) {
-      el.classList.add("is-revealed", "scroll-reveal--settled");
-      visibility.set(el, "visible");
-    } else {
-      el.classList.add("scroll-reveal--from-below");
-    }
-
-    observer.observe(el);
-  });
+  let lateObserver = () => {};
+  if (onNeedMore) {
+    lateObserver = onNeedMore((added) => {
+      observeAll(added);
+    });
+  }
 
   return () => {
     observer.disconnect();
+    lateObserver();
     window.removeEventListener("scroll", onScroll);
   };
+}
+
+function attachLateRevealWatcher(onAdded) {
+  const roots = [
+    ...document.querySelectorAll("[data-page-enter], .page-end"),
+  ];
+  if (!roots.length) return () => {};
+
+  const observer = new MutationObserver((mutations) => {
+    const touched = new Set();
+
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (!(node instanceof HTMLElement)) return;
+        prepLateRevealElements(node).forEach((el) => touched.add(el));
+      });
+    });
+
+    if (touched.size) onAdded([...touched]);
+  });
+
+  roots.forEach((root) => {
+    observer.observe(root, { childList: true, subtree: true });
+  });
+
+  return () => observer.disconnect();
 }
 
 export default function ScrollRevealManager() {
@@ -233,24 +217,63 @@ export default function ScrollRevealManager() {
     let disconnectObserver = () => {};
     let pageEnterTimer = 0;
 
+    const refreshScrollReveal = () => {
+      disconnectObserver();
+      prepScrollRevealState({ skipSettledShortcut: false });
+      disconnectObserver = attachScrollRevealObserver(
+        collectRevealElements(),
+        attachLateRevealWatcher,
+      );
+    };
+
     const scheduleScrollReveal = () => {
       disconnectObserver();
 
       if (pageEnterTimer) window.clearTimeout(pageEnterTimer);
 
-      const delay = getPageEnterDelay();
+      prepScrollRevealState({ skipSettledShortcut: true });
+
+      const startObserver = () => {
+        endNavigationScrollRevealHold();
+        refreshScrollReveal();
+      };
+
+      const bootDone =
+        !document.documentElement.classList.contains("page-enter-boot") &&
+        !document.documentElement.classList.contains("is-route-changing");
+
+      if (document.documentElement.classList.contains("glow-ready") || bootDone) {
+        startObserver();
+        return;
+      }
+
+      const onPageVisible = () => {
+        if (pageEnterTimer) window.clearTimeout(pageEnterTimer);
+        pageEnterTimer = window.setTimeout(startObserver, getScrollRevealStartDelay());
+      };
+
+      document.addEventListener("portfolio:after-route-swap", onPageVisible, {
+        once: true,
+      });
+
       pageEnterTimer = window.setTimeout(() => {
-        disconnectObserver = initScrollReveal();
-      }, delay);
+        document.removeEventListener("portfolio:after-route-swap", onPageVisible);
+        startObserver();
+      }, getScrollRevealStartDelay() + 250);
     };
 
     scheduleScrollReveal();
     document.addEventListener("astro:page-load", scheduleScrollReveal);
+    document.addEventListener("portfolio:page-enter-complete", refreshScrollReveal);
 
     return () => {
       disconnectObserver();
       if (pageEnterTimer) window.clearTimeout(pageEnterTimer);
       document.removeEventListener("astro:page-load", scheduleScrollReveal);
+      document.removeEventListener(
+        "portfolio:page-enter-complete",
+        refreshScrollReveal,
+      );
     };
   }, []);
 

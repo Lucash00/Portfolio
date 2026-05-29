@@ -10,10 +10,9 @@ import { t } from "../i18n/astro";
     <Title
       title={t("pages.certificates.title")}
       titleI18nKey="pages.certificates.title"
-      logo="/Certificates/logo.png"
       description={t("pages.certificates.description")}
       descriptionI18nKey="pages.certificates.description"
     />
-    <CertificateListLocalized client:load />
+    <CertificateListLocalized client:only="react" />
   </main>
 </Layout>

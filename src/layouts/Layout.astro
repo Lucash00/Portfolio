@@ -10,7 +10,10 @@ import ScrollReset from "../components/Utils/ScrollReset.astro";
 import PageEnd from "../components/PageEnd/PageEnd.astro";
 import ScrollRevealManager from "../components/Utils/ScrollReveal/ScrollRevealManager.jsx";
 import I18nBootstrap from "../components/I18n/I18nBootstrap.astro";
+import I18nEarlyScript from "../components/I18n/I18nEarlyScript.astro";
+import { ClientRouter } from "astro:transitions";
 import { DEFAULT_LOCALE } from "../i18n/config";
+import "../styles/scrollReveal.css";
 ---
 
 <!doctype html>
@@ -51,12 +54,14 @@ import { DEFAULT_LOCALE } from "../i18n/config";
     <!-- Fuente Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap" rel="stylesheet" />
     <ScrollReset />
+    <I18nEarlyScript />
+    <ClientRouter />
   </head>
   <body
     class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 md:bg-fixed tracking-tighter leading-none"
   >
     <I18nBootstrap />
-    <GhostCodeBackground client:idle />
+    <GhostCodeBackground client:idle transition:persist="ghost-code" />
     <TextMouseGlowManager client:idle />
     <ScrollRevealManager client:idle />
     <Header />
@@ -68,15 +73,15 @@ import { DEFAULT_LOCALE } from "../i18n/config";
         <div class="w-auto sm:hidden"></div>
         <!-- Columna del medio (contenido de página) -->
         <div
-          class="w-11/12 min-w-0 max-w-full sm:w-full sm:mx-4 md:animate-slideIn"
-          data-page-enter="slide"
+          class="w-11/12 min-w-0 max-w-full sm:w-full sm:mx-4 md:animate-slideInPage"
+          data-page-enter="slide-page"
+          transition:animate="none"
         >
           <slot />
         </div>
         <!-- Columna derecha -->
         <div class="w-auto sm:hidden"></div>
       </div>
-      <!-- Contacto + footer a ancho completo (igual que en home) -->
       <PageEnd contactAlign="content" />
     </div>
   </body>
