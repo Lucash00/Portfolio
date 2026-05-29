@@ -1,8 +1,7 @@
 ---
-import MenuSection from "./MenuSection.astro";
 import ProfileAvatarImage from "../Utils/ProfileAvatarImage.astro";
+import HeaderNavLocalized from "./HeaderNavLocalized.jsx";
 import Translator from "../Translator/Translator.jsx";
-import curriculum from "../../assets/CV_Lucas_Moreno_Corral_EN.pdf";
 import { t } from "../../i18n/astro";
 
 const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
@@ -14,7 +13,7 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
   class="header fixed left-0 right-0 z-40 w-full"
 >
   <div
-    class="header__inner relative flex min-h-11 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:ml-auto md:mr-[10%] md:py-0 md:pl-2 lg:mx-[10%]"
+    class="header__inner relative flex min-h-11 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:gap-x-4 md:ml-auto md:mr-[10%] md:py-0 md:pl-2 md:pr-1 lg:mx-[10%] lg:gap-x-6"
   >
     <a
       id="header-avatar-link"
@@ -41,15 +40,7 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
       </div>
     </a>
 
-    <!-- Menú principal para pantallas grandes -->
-    <nav class="header__nav hidden min-h-0 md:flex md:items-stretch md:justify-end md:p-0 z-40">
-      <MenuSection href="/" icon="far fa-home" text={t("nav.home")} i18nKey="nav.home" />
-      <MenuSection href="/proyectos" icon="far fa-folder-open" text={t("nav.projects")} i18nKey="nav.projects" />
-      <MenuSection href="/certificados" icon="far fa-file-certificate" text={t("nav.certificates")} i18nKey="nav.certificates" />
-      <MenuSection href="/experiencia" icon="far fa-briefcase" text={t("nav.experience")} i18nKey="nav.experience" />
-      <MenuSection href="/sobreMi" icon="far fa-user" text={t("nav.about")} i18nKey="nav.about" />
-      <MenuSection href={curriculum} icon="far fa-file-alt" text={t("nav.downloadCv")} i18nKey="nav.downloadCv" />
-    </nav>
+    <HeaderNavLocalized client:load />
   </div>
 
   <div class="header__lang">
@@ -63,6 +54,10 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
     <div class="header__scroll-progress-fill h-full"></div>
   </div>
 </header>
+
+<style is:global>
+  @import url("https://pro.fontawesome.com/releases/v5.10.0/css/all.css");
+</style>
 
 <style>
   /* Esquina del <header> (barra translúcida a ancho completo), no del nav interno */
@@ -254,4 +249,21 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
       wrap?.classList.remove("is-flying", "is-about-hidden");
     }
   });
+
+  if (!(window as unknown as { __menuSameRouteGuard__?: boolean }).__menuSameRouteGuard__) {
+    (window as unknown as { __menuSameRouteGuard__?: boolean }).__menuSameRouteGuard__ = true;
+
+    document.addEventListener(
+      "click",
+      (event) => {
+        const link = (event.target as Element | null)?.closest(
+          "a[data-menu-link][data-active='true']",
+        );
+        if (!link) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      },
+      true,
+    );
+  }
 </script>

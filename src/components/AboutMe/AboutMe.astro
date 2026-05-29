@@ -4,8 +4,8 @@ import ContactButtons from "../Utils/Link/ContactButtons.jsx";
 import AboutMeAvatarFly from "./AboutMeAvatarFly.jsx";
 import AboutMeProfileAvatar from "./AboutMeProfileAvatar.jsx";
 import animeProfile from "../../assets/animeprofile.png";
+import AboutMeIntro from "./AboutMeIntro.jsx";
 import { t } from "../../i18n/astro";
-import AboutMeBody from "./AboutMeBody.jsx";
 
 const profileAvatarSrc = "https://avatars.githubusercontent.com/u/168908236?v=4";
 const animeSrc = (
@@ -15,8 +15,6 @@ const githubAvatarSrc = (
   await getImage({ src: profileAvatarSrc, width: 384, height: 384, format: "webp" })
 ).src;
 ---
-
-<AboutMeAvatarFly client:load />
 
 <section class="flex flex-col lg:flex-row items-center justify-between px-6 py-12">
   <div class="w-full lg:w-1/3 flex flex-col items-center lg:justify-start mb-8 lg:mb-0">
@@ -29,9 +27,12 @@ const githubAvatarSrc = (
         githubSrc={githubAvatarSrc}
         animeSrc={animeSrc}
       />
+      <AboutMeAvatarFly client:load />
       <div class="about-click-hint md:animate-slideIn" aria-hidden="true">
         <div class="about-click-hint__label">
-          <p class="about-click-hint__text" data-i18n="about.clickHint">{t("about.clickHint")}</p>
+          <p class="about-click-hint__text" data-i18n="about.clickHint">
+            {t("about.clickHint")}
+          </p>
           <svg
             class="about-click-hint__arrow"
             viewBox="0 0 72 68"
@@ -66,15 +67,7 @@ const githubAvatarSrc = (
         <div class="about-intro__border" aria-hidden="true"></div>
 
         <div class="about-intro__content">
-        <h1
-          class="about-intro__title text-mouse-glow w-fit max-w-full"
-          data-text-glow
-        >
-          <span data-i18n="about.greeting">{t("about.greeting")}</span>
-          <span class="about-intro__name" data-i18n="about.name">{t("about.name")}</span>
-        </h1>
-
-        <AboutMeBody client:load />
+        <AboutMeIntro client:load />
         </div>
       </div>
     </article>
@@ -251,7 +244,7 @@ const githubAvatarSrc = (
     }
   }
 
-  .about-intro__title {
+  :global(.about-intro__title) {
     position: relative;
     margin: 0 0 1rem;
     padding-left: 0;
@@ -263,13 +256,13 @@ const githubAvatarSrc = (
   }
 
   @media (min-width: 768px) {
-    .about-intro__title {
+    :global(.about-intro__title) {
       margin-bottom: 2rem;
       font-size: clamp(2.35rem, 4.2vw, 3.75rem);
     }
   }
 
-  .about-intro__name {
+  :global(.about-intro__name) {
     display: block;
     margin-top: 0.12em;
     color: #fbbf24;
@@ -277,7 +270,7 @@ const githubAvatarSrc = (
   }
 
   @media (min-width: 640px) {
-    .about-intro__name {
+    :global(.about-intro__name) {
       display: inline;
       margin-top: 0;
       margin-left: 0.2em;

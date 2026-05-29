@@ -83,5 +83,6 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
     }
 
     document.addEventListener("astro:page-load", syncDomFromStorage);
+    document.addEventListener("astro:after-swap", syncDomFromStorage);
   })();
 </script>
