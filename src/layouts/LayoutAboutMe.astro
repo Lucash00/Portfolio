@@ -82,10 +82,8 @@ const profileAvatarSrc =
         <!-- Columna derecha -->
         <div class="w-auto sm:hidden"></div>
       </div>
-      <!-- Contacto + footer: misma entrada que el resto de páginas -->
-      <div class="md:animate-slideIn" data-page-enter="slide" transition:animate="none">
-        <PageEnd contactAlign="content" />
-      </div>
+      <!-- Contacto + footer: fuera de data-page-enter (igual que Layout.astro) -->
+      <PageEnd contactAlign="content" />
     </div>
   </body>
 </html>

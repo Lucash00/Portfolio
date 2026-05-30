@@ -132,4 +132,12 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
   });
 
   document.addEventListener("astro:page-load", runPageEnterBoot);
+
+  /* Evita que page-enter-boot / is-route-changing queden colgados si page-load corre antes del módulo */
+  if (
+    document.documentElement.classList.contains("page-enter-boot") ||
+    document.documentElement.classList.contains("is-route-changing")
+  ) {
+    runPageEnterBoot();
+  }
 </script>
