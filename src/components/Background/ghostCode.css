@@ -134,12 +134,6 @@
   }
 }
 
-@media (max-width: 639px) {
-  .ghost-code-root {
-    display: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .ghost-code-root {
     filter: none;

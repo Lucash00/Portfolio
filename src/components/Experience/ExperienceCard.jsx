@@ -14,16 +14,14 @@ export default function ExperienceCard({ experience, compact = false }) {
     : `${experience.startDate} - ${experience.endDate ?? (t("experience.current") ?? "Present")}`;
 
   const metaClass = compact
-    ? "mb-2 text-gray-400 text-sm sm:text-[0.9375rem]"
+    ? "mb-2 text-gray-400 text-sm sm:text-xs md:text-[0.9375rem]"
     : "mb-2 text-gray-400 sm:text-xs md:text-sm";
-  const tagClass = compact
-    ? "inline-block bg-gray-300 rounded-full sm:px-2 sm:py-1 md:px-3 md:py-1 sm:mr-1 sm:my-1 md:mr-2 md:my-2 text-sm font-semibold text-gray-700"
-    : "inline-block bg-gray-300 rounded-full sm:px-2 sm:py-1 md:px-3 md:py-1 sm:mr-1 sm:my-1 md:mr-2 md:my-2 sm:text-xs md:text-sm font-semibold text-gray-700";
+  const tagClass = compact ? "portfolio-tag" : "portfolio-tag portfolio-tag--list";
 
   return (
     <CardLink link={experiencePath(experience.slug)} compact={compact}>
       {experience.logo ? (
-        <div className="sm:col-span-10 sm:mt-4 sm:mb-2 md:col-span-3 flex items-center justify-center">
+        <div className="card-logo-col sm:col-span-10 sm:mt-4 sm:mb-2 md:col-span-3 flex items-center justify-center">
           <div className="card-logo-wrap">
             <img
               src={experience.logo}

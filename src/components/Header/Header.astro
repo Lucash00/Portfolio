@@ -13,7 +13,7 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
   class="header fixed left-0 right-0 z-40 w-full"
 >
   <div
-    class="header__inner relative flex min-h-10 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:gap-x-4 md:ml-auto md:mr-[10%] md:py-0 md:pl-2 md:pr-1 lg:mx-[10%] lg:gap-x-6"
+    class="header__inner relative flex min-h-10 md:grid md:w-[80%] md:grid-cols-[auto_1fr] md:items-stretch md:gap-x-2 md:ml-auto md:mr-[10%] md:py-0 md:pl-2 md:pr-1 lg:mx-[10%] lg:gap-x-4 xl:gap-x-6"
   >
     <a
       id="header-avatar-link"
@@ -76,7 +76,46 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
     pointer-events: auto;
   }
 
-  @media (min-width: 768px) {
+  /* Side menu (< md): solo bandera, sin barra blur ni animaciones */
+  @media (max-width: 639px) {
+    .header {
+      top: 0 !important;
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      transition: none !important;
+      pointer-events: none;
+    }
+
+    .header.scrolled {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .header__inner {
+      display: none;
+    }
+
+    .header__lang {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.25rem;
+      z-index: 10000;
+      transform: none;
+      pointer-events: auto;
+    }
+
+    .header__scroll-progress {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 640px) {
     /* Misma fila que el nav: altura 100 %, ancho = altura → círculo sin JS */
     .header__avatar-link {
       aspect-ratio: 1 / 1;
@@ -160,7 +199,7 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
       backdrop-filter 0.35s ease;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 640px) {
     .header {
       top: 2.5rem;
     }
@@ -272,11 +311,11 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
     if (!header) return;
 
     const y = window.scrollY;
-    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+    const isDesktop = window.matchMedia("(min-width: 640px)").matches;
 
     if (!isDesktop) {
       header.style.removeProperty("top");
-      header.classList.toggle("scrolled", y > 50);
+      header.classList.remove("scrolled");
       updateScrollProgress();
       return;
     }

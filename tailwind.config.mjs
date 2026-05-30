@@ -26,6 +26,8 @@ export default {
 				'lg': '1024px',
 				'xl': '1280px',
 				'2xl': '1536px',
+				/** Pantallas altas y estrechas (430×932, 768×1024, 800×1280, 900×1440); excluye 390×844 */
+				'tall-narrow': { 'raw': '(min-height: 900px) and (max-width: 1023px)' },
 			},
 			typography: {
 				DEFAULT: {
@@ -129,12 +131,36 @@ export default {
 						'flex-shrink': '0',
 						'transform-origin': 'center bottom',
 						'transition': 'transform 0.3s ease-out',
+						'max-width': '100%',
 					},
 					'.card-logo-img': {
 						'height': '4rem',
 						'width': 'auto',
 						'max-width': '9rem',
 						'object-fit': 'contain',
+					},
+					'@media (min-width: 640px) and (max-width: 1023px)': {
+						'.card-logo-col': {
+							'min-width': '0',
+							'overflow': 'hidden',
+							'padding-left': '0.375rem',
+							'padding-right': '0.5rem',
+							'box-sizing': 'border-box',
+						},
+						'.card-logo-wrap': {
+							'width': '100%',
+							'max-width': '100%',
+						},
+						'.card-logo-img': {
+							'height': 'auto',
+							'width': 'auto',
+							'max-height': '3.5rem',
+							'max-width': '100%',
+							'object-fit': 'contain',
+						},
+						'.group:hover .card-logo-wrap': {
+							'transform': 'scale(1.04)',
+						},
 					},
 					'.card-logo-img-timeline': {
 						'height': '2rem',
@@ -148,17 +174,69 @@ export default {
 						'.group:hover .card-title': {
 							'color': '#1d4ed8',
 						},
-						'.card-logo-img': {
-							'height': '6rem',
-							'max-width': '14rem',
-						},
 						'.card-logo-img-timeline': {
 							'height': '2rem',
 							'max-width': '5.5rem',
 						},
+					},
+					'@media (min-width: 1024px)': {
+						'.card-logo-img': {
+							'height': '6rem',
+							'max-width': '14rem',
+						},
 						'.group:hover .card-logo-wrap': {
 							'transform': 'scale(1.12)',
 						},
+					},
+					'.portfolio-tag': {
+						'display': 'inline-block',
+						'background-color': '#d1d5db',
+						'border-radius': '9999px',
+						'font-weight': '600',
+						'color': '#374151',
+						'font-size': '0.875rem',
+						'line-height': '1.25',
+						'padding': '0.25rem 0.5rem',
+						'margin': '0.25rem 0.25rem',
+					},
+					'.portfolio-tag--list': {
+						'font-size': '0.75rem',
+					},
+					'@media (min-width: 640px)': {
+						'.portfolio-tag': {
+							'font-size': '0.875rem',
+							'padding': '0.25rem 0.75rem',
+							'margin': '0.25rem 0.5rem',
+						},
+						'.portfolio-tag--list': {
+							'font-size': '0.875rem',
+						},
+					},
+					'@media (min-width: 640px) and (max-width: 1440px) and (max-height: 1024px)': {
+						'.portfolio-tag': {
+							'font-size': '0.8125rem',
+							'padding': '0.125rem 0.5625rem',
+							'margin': '0.125rem 0.375rem',
+						},
+						'.portfolio-tag--list': {
+							'font-size': '0.8125rem',
+						},
+					},
+					'.portfolio-tag-list': {
+						'display': 'flex',
+						'flex-wrap': 'wrap',
+						'gap': '0.5rem',
+						'list-style': 'none',
+						'margin': '0',
+						'padding': '0',
+					},
+					'@media (min-width: 640px) and (max-width: 1440px) and (max-height: 1024px)': {
+						'.portfolio-tag-list': {
+							'gap': '0.375rem',
+						},
+					},
+					'.portfolio-tag-list > .portfolio-tag, .portfolio-tag-list > li.portfolio-tag': {
+						'margin': '0',
 					},
 				},
 				['responsive', 'hover']

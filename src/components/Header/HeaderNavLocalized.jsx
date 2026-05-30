@@ -27,7 +27,7 @@ function isActive(href, pathname) {
 function NavLink({ href, icon, label, active, external }) {
   const linkClass = [
     "menu-link group flex h-full w-full flex-col border-b-2 box-border pt-1 pb-0 text-center transition-colors duration-150 ease-in-out",
-    "md:px-3 lg:px-5 xl:px-7 2xl:px-8",
+    "md:px-2 lg:px-4 xl:px-7 2xl:px-8",
     active
       ? "cursor-default text-white border-transparent"
       : "text-gray-400 border-transparent hover:text-yellow-400 hover:border-yellow-400",
@@ -72,7 +72,7 @@ export default function HeaderNavLocalized() {
 
   return (
     <nav
-      className="header__nav hidden min-h-0 md:flex md:min-w-0 md:flex-1 md:items-stretch md:justify-end md:pl-2 md:pr-[6.75rem] md:p-0 lg:pr-[7.25rem] z-40"
+      className="header__nav hidden min-h-0 md:flex md:min-w-0 md:flex-1 md:items-stretch md:justify-end md:pl-1 md:pr-[5rem] lg:pl-2 lg:pr-[6.75rem] xl:pr-[7.25rem] md:p-0 z-40"
       aria-label={t("footer.navAria")}
       data-locale={locale}
     >

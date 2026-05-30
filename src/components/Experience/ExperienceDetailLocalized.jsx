@@ -85,12 +85,9 @@ export default function ExperienceDetailLocalized({ slug }) {
 
         {experience.tags?.length > 0 ? (
           <div className="col-span-2 col-start-1 mb-2">
-            <ul className="flex flex-wrap gap-2 mb-2">
+            <ul className="portfolio-tag-list mb-2">
               {experience.tags.map((tag) => (
-                <li
-                  key={tag}
-                  className="px-2 py-1 bg-gray-300 rounded-full font-semibold text-gray-700 text-sm"
-                >
+                <li key={tag} className="portfolio-tag">
                   {tag}
                 </li>
               ))}

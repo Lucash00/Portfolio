@@ -54,7 +54,10 @@ const Translator = () => {
   const label = t(`language.${selected.code}`);
 
   return (
-    <div ref={rootRef} className="header-lang">
+    <div
+      ref={rootRef}
+      className={`header-lang${isOpen ? " header-lang--open" : ""}`}
+    >
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
@@ -87,7 +90,9 @@ const Translator = () => {
                   className={`header-lang__flag ${language.flag}`}
                   aria-hidden="true"
                 />
-                {t(`language.${language.code}`)}
+                <span className="header-lang__menu-item-label">
+                  {t(`language.${language.code}`)}
+                </span>
               </button>
             </li>
           ))}

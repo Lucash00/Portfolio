@@ -1,10 +1,10 @@
 import { useTranslation } from "../../i18n/client";
 
 const introParagraphClass =
-  "scroll-reveal-item text-mouse-glow z-0 mb-2 ml-auto w-fit max-w-full sm:text-sm md:text-base lg:text-lg xl:text-xl text-right font-normal text-gray-400";
+  "scroll-reveal-item text-mouse-glow z-0 mb-2 ml-auto w-fit max-w-full sm:text-xs md:text-base lg:text-lg xl:text-xl text-right font-normal text-gray-400";
 
 const locationParagraphClass =
-  "scroll-reveal-item text-mouse-glow z-0 mb-8 ml-auto w-fit max-w-full text-right font-normal sm:text-sm md:text-base lg:text-lg xl:text-xl text-gray-400";
+  "scroll-reveal-item text-mouse-glow z-0 mb-8 ml-auto w-fit max-w-full text-right font-normal sm:text-xs md:text-base lg:text-lg xl:text-xl text-gray-400";
 
 export default function HeroIntro() {
   const { t } = useTranslation();
