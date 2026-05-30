@@ -12,7 +12,9 @@ export default function HomePreviewSectionLocalized({
   return (
     <section
       id={sectionId}
-      className="home-preview-section mt-12 sm:mt-16 md:mt-24 lg:mt-28 mb-10 sm:mb-12 md:mb-16"
+      className={`home-preview-section mt-12 sm:mt-16 md:mt-24 lg:mt-28 mb-10 sm:mb-12 md:mb-16${
+        sectionId === "home-experiences" ? " tall-narrow:mt-28" : ""
+      }`}
     >
       <div className="mx-6 md:mx-[10%]">
         <h2
@@ -24,7 +26,7 @@ export default function HomePreviewSectionLocalized({
         {descriptionKey ? (
           <p
             data-text-glow
-            className="scroll-reveal-item text-mouse-glow mb-4 sm:mb-5 md:mb-6 -mt-1 w-full max-w-none text-sm md:text-base font-medium tracking-tight text-slate-300 text-shadow text-pretty"
+            className="scroll-reveal-item text-mouse-glow mb-4 sm:mb-5 md:mb-6 -mt-1 w-full max-w-none text-sm sm:text-xs md:text-base font-medium tracking-tight text-slate-300 text-shadow text-pretty"
           >
             {t(descriptionKey)}
           </p>

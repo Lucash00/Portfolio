@@ -5,25 +5,25 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer
-  class="site-footer w-full border-t border-slate-600/50 pt-8 pb-10 sm:pb-12"
+  class="site-footer w-full border-t border-slate-600/50 pt-6 pb-8 sm:pt-6 sm:pb-8 md:pt-8 md:pb-10"
   data-i18n-aria="footer.aria"
   aria-label={t("footer.aria")}
 >
   <div class="mx-6 md:mx-[10%]">
   <div
-    class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+    class="flex flex-col gap-4 md:gap-6"
   >
     <div class="min-w-0">
-      <p class="text-sm font-semibold tracking-tight text-slate-200">
+      <p class="text-sm sm:text-xs md:text-sm font-semibold tracking-tight text-slate-200">
         Lucas Moreno Corral
       </p>
-      <p class="mt-1 text-xs text-slate-400 sm:text-sm" data-i18n="footer.role">
+      <p class="mt-0.5 sm:mt-1 text-xs text-slate-400" data-i18n="footer.role">
         {t("footer.role")}
       </p>
     </div>
 
     <nav
-      class="flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium uppercase tracking-wide text-slate-400 sm:text-sm"
+      class="flex flex-wrap gap-x-3 gap-y-1.5 sm:gap-x-3 sm:gap-y-1 md:gap-x-5 md:gap-y-2 text-xs font-medium uppercase tracking-wide text-slate-400"
       data-i18n-aria="footer.navAria"
       aria-label={t("footer.navAria")}
     >
@@ -65,7 +65,7 @@ const currentYear = new Date().getFullYear();
     </nav>
   </div>
 
-  <p class="mt-6 text-center text-xs text-slate-500 sm:text-left">
+  <p class="mt-4 sm:mt-4 md:mt-6 text-center text-xs text-slate-500 sm:text-left">
     © {currentYear} Lucas Moreno Corral. <span data-i18n="footer.rights">{t("footer.rights")}</span>
   </p>
   </div>

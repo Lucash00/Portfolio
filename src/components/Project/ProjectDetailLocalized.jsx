@@ -80,12 +80,9 @@ export default function ProjectDetailLocalized({ slug }) {
 
         {project.tags?.length > 0 ? (
           <div className="sm:col-span-2 md:col-span-2 col-start-1">
-            <ul className="flex flex-wrap gap-2 mb-4">
+            <ul className="portfolio-tag-list mb-4">
               {project.tags.map((tag) => (
-                <li
-                  key={tag}
-                  className="px-2 py-1 bg-gray-300 rounded-full font-semibold text-gray-700 text-sm"
-                >
+                <li key={tag} className="portfolio-tag">
                   {tag}
                 </li>
               ))}

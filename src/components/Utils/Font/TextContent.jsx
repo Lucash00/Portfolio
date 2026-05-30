@@ -9,7 +9,7 @@ function normalizeContent(content) {
 
 /** Tipografía compartida: ~15px móvil, 16px desktop (cards y ficha detalle). */
 const sharedTypography =
-  "font-Poppins text-pretty text-gray-700 sm:text-justify leading-relaxed hyphens-auto break-normal text-[0.9375rem] sm:text-base " +
+  "font-Poppins text-pretty text-gray-700 sm:text-justify leading-relaxed hyphens-auto break-normal text-[0.9375rem] sm:text-xs md:text-[0.9375rem] lg:text-base " +
   "[&_p]:leading-relaxed [&_p]:last:mb-0 " +
   "[&_ul]:list-disc [&_ul]:list-outside [&_ul]:space-y-1.5 [&_ul]:marker:text-gray-400 " +
   "[&_ol]:list-decimal [&_ol]:list-outside [&_ol]:space-y-1.5 [&_ol]:marker:text-gray-500 " +

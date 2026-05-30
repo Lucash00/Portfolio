@@ -9,17 +9,15 @@ export default function CertificateCard({ certificate, compact = false }) {
   const visibleTags = compact ? certificate.tags.slice(0, 4) : certificate.tags;
 
   const logoColClass = compact
-    ? "sm:col-span-10 sm:mt-4 sm:mb-2 md:col-span-3 flex items-center justify-center"
-    : "sm:col-span-10 sm:mt-10 sm:mb-5 md:col-span-3 lg:col-span-2 xl:col-span-2 2xl:col-span-2 flex items-center justify-center";
+    ? "card-logo-col sm:col-span-10 sm:mt-4 sm:mb-2 md:col-span-3 flex items-center justify-center"
+    : "card-logo-col sm:col-span-10 sm:mt-10 sm:mb-5 md:col-span-3 lg:col-span-2 xl:col-span-2 2xl:col-span-2 flex items-center justify-center";
   const bodyColClass = compact
     ? "sm:px-3 sm:py-2 md:py-3 sm:border-t-2 md:border-l-2 sm:pt-3 sm:border-slate-200 md:px-4 sm:col-span-10 md:col-span-7"
     : "min-w-0 sm:px-3 sm:py-2 md:py-4 sm:border-t-2 md:border-l-2 sm:pt-4 sm:border-slate-200 md:px-6 sm:col-span-10 md:col-span-7 lg:col-span-8 xl:col-span-8 2xl:col-span-8";
   const metaClass = compact
-    ? "mb-2 text-gray-400 text-sm sm:text-[0.9375rem]"
+    ? "mb-2 text-gray-400 text-sm sm:text-xs md:text-[0.9375rem]"
     : "mb-2 text-gray-400 sm:text-sm md:text-base";
-  const tagClass = compact
-    ? "inline-block bg-gray-300 rounded-full sm:px-2 sm:py-1 md:px-3 md:py-1 sm:mr-1 sm:my-1 md:mr-2 md:my-2 text-sm font-semibold text-gray-700"
-    : "inline-block bg-gray-300 rounded-full sm:px-2 sm:py-1 md:px-3 md:py-1 sm:mr-1 sm:my-1 md:mr-2 md:my-2 sm:text-xs md:text-sm font-semibold text-gray-700";
+  const tagClass = compact ? "portfolio-tag" : "portfolio-tag portfolio-tag--list";
 
   return (
     <CardLink link={certificatePath(certificate.slug)} compact={compact}>

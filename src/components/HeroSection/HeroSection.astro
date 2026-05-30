@@ -9,12 +9,12 @@ import HomeScrollCue from "../Home/HomeScrollCue.jsx";
 
 <astro>
   <section
-    class="hero-section text-shadow sm:-mt-10 md:mt-10 lg:mt-20 sm:mb-24 md:mb-32 lg:mb-16 2xl:mb-24 mx-6 md:mx-[10%]"
+    class="hero-section text-shadow sm:pt-5 md:mt-10 lg:mt-20 sm:mb-24 tall-narrow:mb-36 md:mb-32 lg:mb-16 2xl:mb-24 mx-6 md:mx-[10%]"
   >
     <div class="py-8 w-full lg:py-8">
       <h1
         data-text-glow
-        class="text-mouse-glow w-fit max-w-full mb-6 lg:mb-10 text-left font-extrabold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-6xl"
+        class="text-mouse-glow w-fit max-w-full mb-6 lg:mb-10 text-left font-extrabold tracking-tight text-white sm:text-2xl sm:leading-snug md:text-4xl lg:text-6xl"
         data-no-scroll-reveal
       >
         <HeroTitleRotator interval={4000} client:only="react" />
@@ -31,7 +31,7 @@ import HomeScrollCue from "../Home/HomeScrollCue.jsx";
     <HomeSectionTitleLocalized
       client:only="react"
       i18nKey="hero.technologiesTitle"
-      className="mb-3 sm:mb-4 sm:mt-20 md:mt-28 lg:mt-24 xl:mt-12 md:!mb-5"
+      className="mb-3 sm:mb-4 sm:mt-20 tall-narrow:mt-32 md:mt-28 lg:mt-24 xl:mt-12 md:!mb-5"
     />
   </div>
 
