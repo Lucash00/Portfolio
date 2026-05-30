@@ -72,6 +72,22 @@ export default {
 					'0%': { transform: 'rotateX(75deg)', opacity: '0' },
 					'100%': { transform: 'rotateX(0deg)', opacity: '1' },
 				},
+				cardFlipOutRight: {
+					'0%': { transform: 'rotateY(0deg)', opacity: '1' },
+					'100%': { transform: 'rotateY(75deg)', opacity: '0' },
+				},
+				cardFlipInRight: {
+					'0%': { transform: 'rotateY(-75deg)', opacity: '0' },
+					'100%': { transform: 'rotateY(0deg)', opacity: '1' },
+				},
+				cardFlipOutLeft: {
+					'0%': { transform: 'rotateY(0deg)', opacity: '1' },
+					'100%': { transform: 'rotateY(-75deg)', opacity: '0' },
+				},
+				cardFlipInLeft: {
+					'0%': { transform: 'rotateY(75deg)', opacity: '0' },
+					'100%': { transform: 'rotateY(0deg)', opacity: '1' },
+				},
 				experienceLetterSquash: {
 					'0%, 100%': {
 						transform: 'scaleX(1) scaleY(1)',
@@ -93,6 +109,10 @@ export default {
 				cardFlipInUp: 'cardFlipInUp 150ms ease-in-out forwards',
 				cardFlipOutDown: 'cardFlipOutDown 150ms ease-in-out forwards',
 				cardFlipInDown: 'cardFlipInDown 150ms ease-in-out forwards',
+				cardFlipOutRight: 'cardFlipOutRight 150ms ease-in-out forwards',
+				cardFlipInRight: 'cardFlipInRight 150ms ease-in-out forwards',
+				cardFlipOutLeft: 'cardFlipOutLeft 150ms ease-in-out forwards',
+				cardFlipInLeft: 'cardFlipInLeft 150ms ease-in-out forwards',
 				experienceLetterSquash: 'experienceLetterSquash 300ms ease-in-out',
 			},
 		},

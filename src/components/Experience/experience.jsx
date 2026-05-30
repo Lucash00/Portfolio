@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Timeline from '../Utils/Timeline';
+import TimelineHorizontal from '../Utils/TimelineHorizontal';
 import CardTimeline from '../Utils/Card/CardTimeline';
 import { getExperiences } from '../../data/getLocalized';
 import { useTranslation } from '../../i18n/client';
+import { useExperiencePortraitLayout } from './useExperiencePortraitLayout';
+import './experience.css';
 
 const FLIP_MS = 150;
 const WHEEL_STEP_COOLDOWN_MS = 160;
@@ -24,10 +27,41 @@ function isEditableTarget(target) {
   );
 }
 
+function ExperienceTitleContent({ title, titleSquashKey }) {
+  return (
+    <span
+      key={titleSquashKey}
+      data-text-glow
+      className="text-mouse-glow inline-flex items-center justify-center"
+    >
+      {title.split('').map((char, index) => {
+        const squash = getTitleLetterSquash(index, title.length);
+
+        return (
+          <span
+            key={`${char}-${index}`}
+            className={
+              titleSquashKey > 0
+                ? 'inline-block origin-center animate-experienceLetterSquash will-change-transform'
+                : 'inline-block'
+            }
+            style={
+              titleSquashKey > 0 ? { ['--bulge']: squash.bulge } : undefined
+            }
+          >
+            {char}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
 export default function Experience() {
   const { locale, t } = useTranslation();
   const experiences = useMemo(() => getExperiences(locale), [locale]);
   const experienceTitle = t('pages.experience.title');
+  const isPortraitLayout = useExperiencePortraitLayout();
   const [activeIndex, setActiveIndex] = useState(0);
   const [displayExperience, setDisplayExperience] = useState(() => experiences[0]);
   const [flipClass, setFlipClass] = useState('');
@@ -48,7 +82,7 @@ export default function Experience() {
   const runCardFlip = useCallback((experience, index) => {
     if (index === activeIndexRef.current) return;
 
-    const direction = index > activeIndexRef.current ? 'down' : 'up';
+    const goingRight = index > activeIndexRef.current;
     activeIndexRef.current = index;
     setActiveIndex(index);
 
@@ -66,22 +100,26 @@ export default function Experience() {
 
     setTitleSquashKey((key) => key + 1);
 
-    setFlipClass(
-      direction === 'down' ? 'animate-cardFlipOutUp' : 'animate-cardFlipOutDown',
-    );
+    const [flipOut, flipIn] = isPortraitLayout
+      ? goingRight
+        ? ['animate-cardFlipOutRight', 'animate-cardFlipInRight']
+        : ['animate-cardFlipOutLeft', 'animate-cardFlipInLeft']
+      : goingRight
+        ? ['animate-cardFlipOutUp', 'animate-cardFlipInUp']
+        : ['animate-cardFlipOutDown', 'animate-cardFlipInDown'];
+
+    setFlipClass(flipOut);
 
     flipTimeoutRef.current = window.setTimeout(() => {
       setDisplayExperience(experience);
-      setFlipClass(
-        direction === 'down' ? 'animate-cardFlipInUp' : 'animate-cardFlipInDown',
-      );
+      setFlipClass(flipIn);
 
       flipTimeoutRef.current = window.setTimeout(() => {
         setFlipClass('');
         flipTimeoutRef.current = null;
       }, FLIP_MS);
     }, FLIP_MS);
-  }, []);
+  }, [isPortraitLayout]);
 
   const navigateToIndex = useCallback((index, options = {}) => {
     const clamped = Math.max(0, Math.min(index, experiences.length - 1));
@@ -92,7 +130,7 @@ export default function Experience() {
     if (options.source !== 'timeline-scroll') {
       timelineRef.current?.scrollToIndex(clamped, 'smooth');
     }
-  }, [runCardFlip]);
+  }, [experiences, runCardFlip]);
 
   const stepIndex = useCallback(
     (delta) => {
@@ -110,7 +148,7 @@ export default function Experience() {
     setDisplayExperience(experiences[0]);
     setFlipClass('');
     timelineRef.current?.scrollToIndex(0, 'auto');
-  }, [locale, experiences]);
+  }, [locale, experiences, isPortraitLayout]);
 
   useEffect(() => {
     const root = document.getElementById('experience-page-root');
@@ -134,10 +172,10 @@ export default function Experience() {
     const onKeyDown = (event) => {
       if (isEditableTarget(event.target)) return;
 
-      if (event.key === 'ArrowDown') {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
         event.preventDefault();
         stepIndex(1);
-      } else if (event.key === 'ArrowUp') {
+      } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
         event.preventDefault();
         stepIndex(-1);
       }
@@ -175,67 +213,79 @@ export default function Experience() {
     };
   }, [stepIndex]);
 
+  const timelineProps = {
+    experiences,
+    activeIndex,
+    onActiveIndexChange: navigateToIndex,
+  };
+
+  const cardStage = (
+    <div
+      className={`experience-page__card-inner w-full min-w-0 max-w-full origin-center [transform-style:preserve-3d] [backface-visibility:hidden] ${flipClass}`}
+    >
+      <CardTimeline
+        experience={displayExperience}
+        variant={isPortraitLayout ? 'stacked' : 'default'}
+      />
+    </div>
+  );
+
+  if (isPortraitLayout) {
+    return (
+      <div
+        id="experience-page-root"
+        className="experience-page experience-page--portrait h-full max-h-full overflow-hidden"
+      >
+        <div className="experience-page__menu-spacer" aria-hidden="true" />
+
+        <section className="experience-page__intro">
+          <h1 className="experience-page__title text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <ExperienceTitleContent title={experienceTitle} titleSquashKey={titleSquashKey} />
+          </h1>
+          <p
+            data-text-glow
+            className="experience-page__subtitle text-mouse-glow mt-2 w-full max-w-2xl text-pretty text-center text-sm font-medium tracking-tight text-slate-300 md:text-base"
+          >
+            {t('pages.experience.subtitle')}
+          </p>
+        </section>
+
+        <section className="experience-page__timeline" aria-label={experienceTitle}>
+          <TimelineHorizontal ref={timelineRef} {...timelineProps} />
+        </section>
+
+        <section className="experience-page__card">
+          <div className="experience-page__card-stage w-full min-w-0 [perspective:1400px] [perspective-origin:center_center]">
+            {cardStage}
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   return (
     <div
       id="experience-page-root"
-      className="h-full max-h-full overflow-x-clip overflow-y-hidden grid grid-cols-3"
+      className="experience-page experience-page--landscape h-full max-h-full grid grid-cols-3 overflow-x-clip overflow-y-hidden"
     >
       <div className="col-span-1 h-full max-h-screen min-h-0">
-        <Timeline
-          ref={timelineRef}
-          experiences={experiences}
-          activeIndex={activeIndex}
-          onActiveIndexChange={navigateToIndex}
-        />
+        <Timeline ref={timelineRef} {...timelineProps} />
       </div>
 
       <div className="relative col-span-2 col-start-2 h-full max-h-screen min-h-0 overflow-visible px-2 md:px-3 lg:px-4 xl:px-8 2xl:px-16 [--experience-menu-h:3.25rem] md:[--experience-menu-h:3.5rem]">
-        <h1 className="pointer-events-none absolute left-1/2 z-20 w-fit max-w-full -translate-x-1/2 text-center text-4xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-5xl xl:text-[3.5rem] top-[calc(4*var(--experience-menu-h))] sm:top-[calc(2.5rem+4*var(--experience-menu-h))]">
-          <span
-            key={titleSquashKey}
-            data-text-glow
-            className="text-mouse-glow inline-flex items-center justify-center"
-          >
-            {experienceTitle.split('').map((char, index) => {
-              const squash = getTitleLetterSquash(
-                index,
-                experienceTitle.length,
-              );
-
-              return (
-                <span
-                  key={`${char}-${index}`}
-                  className={
-                    titleSquashKey > 0
-                      ? 'inline-block origin-center animate-experienceLetterSquash will-change-transform'
-                      : 'inline-block'
-                  }
-                  style={
-                    titleSquashKey > 0
-                      ? { ['--bulge']: squash.bulge }
-                      : undefined
-                  }
-                >
-                  {char}
-                </span>
-              );
-            })}
-          </span>
+        <h1 className="experience-page__landscape-title pointer-events-none absolute left-1/2 z-20 w-fit max-w-full -translate-x-1/2 text-center text-4xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-5xl xl:text-[3.5rem] top-[calc(4*var(--experience-menu-h))] sm:top-[calc(2.5rem+4*var(--experience-menu-h))]">
+          <ExperienceTitleContent title={experienceTitle} titleSquashKey={titleSquashKey} />
         </h1>
         <p
           data-text-glow
-          className="pointer-events-none absolute left-1/2 z-20 w-[min(92%,52rem)] -translate-x-1/2 text-center text-sm md:text-base font-medium tracking-tight text-slate-300 text-mouse-glow top-[calc(4*var(--experience-menu-h)+4.1rem)] sm:top-[calc(2.5rem+4*var(--experience-menu-h)+5rem)]"
+          className="experience-page__landscape-subtitle pointer-events-none absolute left-1/2 z-20 w-[min(92%,52rem)] -translate-x-1/2 text-center text-sm font-medium tracking-tight text-slate-300 text-mouse-glow top-[calc(4*var(--experience-menu-h)+4.1rem)] sm:top-[calc(2.5rem+4*var(--experience-menu-h)+5rem)] md:text-base experience-page__subtitle"
         >
           {t('pages.experience.subtitle')}
         </p>
         <div className="experience-card-stage absolute inset-0 flex items-center justify-center overflow-visible px-5 sm:px-8 md:px-12 lg:px-14 xl:px-16">
           <div className="flex h-full w-full min-w-0 max-w-full items-center justify-center overflow-visible">
             <div className="w-full min-w-0 max-w-full overflow-visible [perspective:1400px] [perspective-origin:center_center]">
-              <div
-                className={`w-full min-w-0 max-w-full origin-center [transform-style:preserve-3d] [backface-visibility:hidden] ${flipClass}`}
-              >
-                <CardTimeline experience={displayExperience} />
-              </div>
+              {cardStage}
             </div>
           </div>
         </div>

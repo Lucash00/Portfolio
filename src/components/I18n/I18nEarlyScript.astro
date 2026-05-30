@@ -130,14 +130,14 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
       var doc = e.newDocument;
       if (!doc) return;
 
-      doc.documentElement.classList.add(
-        "page-enter-boot",
-        "is-route-changing",
-        "glow-paused",
-      );
+      var isDesktopNav = window.matchMedia("(min-width: 640px)").matches;
+      doc.documentElement.classList.add("glow-paused");
+      if (isDesktopNav) {
+        doc.documentElement.classList.add("page-enter-boot", "is-route-changing");
+      }
       resetTextGlowState(doc);
 
-      if (!doc.getElementById("portfolio-route-hide")) {
+      if (isDesktopNav && !doc.getElementById("portfolio-route-hide")) {
         var style = doc.createElement("style");
         style.id = "portfolio-route-hide";
         style.textContent = ROUTE_HIDE_STYLE;
