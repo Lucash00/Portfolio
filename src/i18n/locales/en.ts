@@ -26,7 +26,7 @@ export const en = {
   hero: {
     introPrefix: "Hey! I'm ",
     introName: "Lucas Moreno",
-    introMiddle: ", a versatile Web Developer ",
+    introMiddle: ", a versatile Software Developer ",
     introVersatile: "",
     introRest: " with a solid foundation in various ",
     introTechnologies: "technologies",
@@ -120,7 +120,7 @@ export const en = {
   },
   footer: {
     aria: "Footer",
-    role: "Web Developer · Cádiz, Spain",
+    role: "Fullstack & DevOps Software Developer · Cádiz, Spain",
     navAria: "Footer links",
     rights: "All rights reserved.",
   },
@@ -130,7 +130,7 @@ export const en = {
     name: "Lucas Moreno",
     pageTitle: "About me",
     paragraphs: {
-      p1: 'I am a web developer passionate about creating unique, functional, user-centered digital experiences. My approach combines <strong>FrontEnd</strong>, <strong>BackEnd</strong>, and <strong>DevOps</strong>, allowing me to tackle projects holistically: from designing <strong>attractive</strong>, <strong>responsive</strong> interfaces to building <strong>robust</strong>, <strong>scalable</strong> systems with <strong>efficient</strong> deployments.',
+      p1: 'I am a software developer passionate about creating unique, functional, user-centered digital experiences. My approach combines <strong>FrontEnd</strong>, <strong>BackEnd</strong>, and <strong>DevOps</strong>, allowing me to tackle projects holistically: from designing <strong>attractive</strong>, <strong>responsive</strong> interfaces to building <strong>robust</strong>, <strong>scalable</strong> systems with <strong>efficient</strong> deployments.',
       p2: 'My commitment to technical excellence shows in every detail: <strong>intuitive design</strong>, <strong>data analysis</strong>, <strong>performance optimization</strong>, <strong>automation</strong>, and <strong>clear communication</strong> so every project reaches its full potential. I am <strong>adaptable</strong> to each team and context, and curiosity drives me to keep growing and turn ideas into real technology solutions.',
       p3: "When I'm not coding, I enjoy learning about emerging trends, sharpening my development and DevOps skills, and exploring how technology can make a positive impact.",
     },

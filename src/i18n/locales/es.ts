@@ -30,7 +30,7 @@ export const es = {
   hero: {
     introPrefix: "Hey! Soy ",
     introName: "Lucas Moreno",
-    introMiddle: ", un Desarrollador Web ",
+    introMiddle: ", un Desarrollador de Software ",
     introVersatile: "versátil",
     introRest: " con una sólida base en diversas ",
     introTechnologies: "tecnologías",
@@ -124,7 +124,7 @@ export const es = {
   },
   footer: {
     aria: "Pie de página",
-    role: "Desarrollador Web · Cádiz, España",
+    role: "Desarrollador de Software Fullstack & DevOps · Cádiz, España",
     navAria: "Enlaces del pie de página",
     rights: "Todos los derechos reservados.",
   },
@@ -134,7 +134,7 @@ export const es = {
     name: "Lucas Moreno",
     pageTitle: "Sobre mí",
     paragraphs: {
-      p1: 'Soy desarrollador web apasionado por la creación de experiencias digitales únicas, funcionales y centradas en el usuario. Mi enfoque combina <strong>FrontEnd</strong>, <strong>BackEnd</strong> y <strong>DevOps</strong>, lo que me permite abordar proyectos de manera integral: desde la concepción de interfaces <strong>atractivas</strong> y <strong>responsive</strong>, hasta la implementación de sistemas <strong>robustos</strong>, <strong>escalables</strong> y con despliegues <strong>eficientes</strong>.',
+      p1: 'Soy desarrollador de software apasionado por la creación de experiencias digitales únicas, funcionales y centradas en el usuario. Mi enfoque combina <strong>FrontEnd</strong>, <strong>BackEnd</strong> y <strong>DevOps</strong>, lo que me permite abordar proyectos de manera integral: desde la concepción de interfaces <strong>atractivas</strong> y <strong>responsive</strong>, hasta la implementación de sistemas <strong>robustos</strong>, <strong>escalables</strong> y con despliegues <strong>eficientes</strong>.',
       p2: 'Mi compromiso con la excelencia técnica se refleja en cada detalle: <strong>diseño intuitivo</strong>, <strong>análisis de datos</strong>, <strong>optimización de rendimiento</strong>, <strong>automatización</strong> y una <strong>comunicación fluida</strong> que garantiza que cada proyecto alcance su máximo potencial. Soy <strong>adaptable</strong> a las necesidades de cada equipo y contexto, y la curiosidad me impulsa a seguir creciendo y a transformar ideas en soluciones tecnológicas reales.',
       p3: "Cuando no estoy programando, disfruto aprendiendo sobre tendencias emergentes, perfeccionando mi conocimiento en desarrollo y DevOps, y explorando cómo la tecnología puede impactar positivamente.",
     },
