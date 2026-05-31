@@ -8,6 +8,31 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
     opacity: 0;
   }
 
+  /* Crítico inline (no esperar a scrollReveal.css): estado inicial del fade en Inicio */
+  [data-page-enter="fade"] {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  /* Scroll-reveal bajo el fold: oculto en CSS antes de que hidrate ScrollRevealManager */
+  html.page-enter-revealing
+    [data-page-enter="fade"]
+    .scroll-reveal.scroll-reveal--from-below:not(.is-revealed):not(.scroll-reveal--settled),
+  html.glow-ready
+    [data-page-enter="fade"]
+    .scroll-reveal.scroll-reveal--from-below:not(.is-revealed):not(.scroll-reveal--settled) {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+
+  /* Evita doble animación letras del hero durante el fade-in de recarga (CSS, sin bloquear JS) */
+  html.page-enter-boot .hero-letter,
+  html.page-enter-revealing .hero-letter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   /* Recarga + navegación: oculto hasta que arranque la animación de entrada */
   html.page-enter-boot [data-page-enter],
   html.page-enter-boot [data-page-enter="slide"] astro-island,

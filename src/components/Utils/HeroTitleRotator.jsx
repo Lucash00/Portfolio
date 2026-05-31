@@ -1,15 +1,28 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "../../i18n/client";
 import { takeHeroRotatorSpaReset } from "./ScrollReveal/pageEnter.js";
 import "./heroLetter.css";
 
-const EXIT_MS = 1400;
+const EXIT_MS = 1500;
 
 function isHomePath() {
   const path = window.location.pathname
     .replace(/\/index\.html$/i, "")
     .replace(/\/$/, "");
   return path === "";
+}
+
+function isPageEnterSettled() {
+  return (
+    !document.documentElement.classList.contains("page-enter-boot") &&
+    !document.documentElement.classList.contains("page-enter-revealing")
+  );
 }
 
 function buildSequence(t) {
@@ -29,9 +42,21 @@ function buildSequence(t) {
   ];
 }
 
-function HeroLetter({ letter, index, phase }) {
+function HeroLetter({ letter, index, phase, animToken }) {
+  const ref = useRef(null);
+
+  useLayoutEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    node.style.animation = "none";
+    void node.offsetHeight;
+    node.style.animation = "";
+  }, [animToken]);
+
   return (
     <span
+      ref={ref}
       className={`hero-letter hero-letter--${phase}${letter === " " ? " hero-letter--space" : ""}`}
       style={{ "--letter-i": index }}
     >
@@ -40,7 +65,7 @@ function HeroLetter({ letter, index, phase }) {
   );
 }
 
-function AnimatedWord({ text, phase, animate, className, cycleKey }) {
+function AnimatedWord({ text, phase, animate, className, wordKey, animToken }) {
   if (!animate) {
     return <span className={className}>{text}</span>;
   }
@@ -49,10 +74,11 @@ function AnimatedWord({ text, phase, animate, className, cycleKey }) {
     <span className={className} aria-label={text}>
       {text.split("").map((letter, letterIndex) => (
         <HeroLetter
-          key={`${cycleKey}-${phase}-${letterIndex}`}
+          key={`${wordKey}-${letterIndex}`}
           letter={letter}
           index={letterIndex}
           phase={phase}
+          animToken={animToken}
         />
       ))}
     </span>
@@ -65,6 +91,7 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState("in");
   const [cycleKey, setCycleKey] = useState(0);
+  const [cycleReady, setCycleReady] = useState(isPageEnterSettled);
   const hasTransitionedRef = useRef(false);
   const localeInitRef = useRef(true);
 
@@ -93,9 +120,13 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
   const roleAnimates =
     phase === "out" ? roleAnimatesOnExit : roleAnimatesOnEnter;
 
-  const specialtyAnimates =
-    hasSpecialty &&
-    (phase === "out" || specialty !== prevStep.specialty);
+  /* Tras el fade de carga: Fullstack estático; la rotación empieza saliendo hacia Backend. */
+  const isInitialFullstackHold =
+    index === 0 && phase === "in" && !hasTransitionedRef.current;
+
+  const specialtyAnimates = hasSpecialty && !isInitialFullstackHold;
+
+  const animToken = `${cycleKey}-${index}-${phase}`;
 
   useLayoutEffect(() => {
     if (isHomePath() && takeHeroRotatorSpaReset()) {
@@ -112,6 +143,29 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
   }, [locale]);
 
   useEffect(() => {
+    if (cycleReady) return;
+
+    const activate = () => {
+      setCycleReady(true);
+    };
+
+    if (isPageEnterSettled()) {
+      activate();
+      return;
+    }
+
+    window.addEventListener("portfolio:page-enter-complete", activate, {
+      once: true,
+    });
+
+    return () => {
+      window.removeEventListener("portfolio:page-enter-complete", activate);
+    };
+  }, [cycleReady]);
+
+  useEffect(() => {
+    if (!cycleReady) return;
+
     let timeout;
 
     if (phase === "in") {
@@ -125,7 +179,24 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
     }
 
     return () => clearTimeout(timeout);
-  }, [phase, index, interval, sequence.length]);
+  }, [cycleReady, phase, index, interval, sequence.length]);
+
+  const roleWordKey = `${cycleKey}-role-${roleId}-${index}`;
+  const specialtyWordKey = `${cycleKey}-specialty-${specialty}-${index}`;
+
+  if (!cycleReady) {
+    return (
+      <>
+        <span className="text-amber-400">{role}</span>
+        {hasSpecialty && (
+          <span className="md:inline-block">
+            {" "}
+            <span>{specialty}</span>
+          </span>
+        )}
+      </>
+    );
+  }
 
   return (
     <>
@@ -134,7 +205,8 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
         phase={phase}
         animate={roleAnimates}
         className="text-amber-400"
-        cycleKey={`${cycleKey}-role-${roleId}-${index}`}
+        wordKey={roleWordKey}
+        animToken={animToken}
       />
       {hasSpecialty && (
         <span className="md:inline-block">
@@ -143,7 +215,8 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
             text={specialty}
             phase={phase}
             animate={specialtyAnimates}
-            cycleKey={`${cycleKey}-specialty-${specialty}-${index}`}
+            wordKey={specialtyWordKey}
+            animToken={animToken}
           />
         </span>
       )}

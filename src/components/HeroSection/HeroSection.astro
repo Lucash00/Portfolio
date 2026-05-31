@@ -33,7 +33,7 @@ const locationParagraphClass =
         </HeroTitleRotator>
       </h1>
 
-      <HeroIntro client:only="react">
+      <HeroIntro client:idle>
         <div slot="fallback" aria-hidden="true">
           <p data-text-glow class={introParagraphClass}>
             <span>{t("hero.introPrefix")}</span>
@@ -50,14 +50,14 @@ const locationParagraphClass =
         </div>
       </HeroIntro>
       <div class="scroll-reveal-item z-0 mt-16 sm:mt-12 md:max-w-screen-md lg:max-w-screen-lg">
-        <ContactButtons client:load />
+        <ContactButtons client:idle />
       </div>
     </div>    
   </section>
   
   <div class="mx-6 md:mx-[10%]">
     <HomeSectionTitleLocalized
-      client:only="react"
+      client:visible
       i18nKey="hero.technologiesTitle"
       className="mb-3 sm:mb-4 sm:mt-20 tall-narrow:mt-32 md:mt-28 lg:mt-24 xl:mt-12 md:!mb-5"
     >
