@@ -44,7 +44,7 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
   </div>
 
   <div class="header__lang">
-    <Translator client:only="react" />
+    <Translator client:idle />
   </div>
 
   <div
@@ -54,10 +54,6 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
     <div class="header__scroll-progress-fill h-full"></div>
   </div>
 </header>
-
-<style is:global>
-  @import url("https://pro.fontawesome.com/releases/v5.10.0/css/all.css");
-</style>
 
 <style>
   /* Esquina del <header> (barra translúcida a ancho completo), no del nav interno */

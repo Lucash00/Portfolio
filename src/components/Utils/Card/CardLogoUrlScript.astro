@@ -1,0 +1,9 @@
+---
+import { getCardLogoUrlMap } from "../../../utils/buildCardLogoUrlMap";
+
+const cardLogoUrlMap = await getCardLogoUrlMap();
+---
+
+<script is:inline define:vars={{ cardLogoUrlMap }}>
+  window.__CARD_LOGO_URLS__ = cardLogoUrlMap;
+</script>

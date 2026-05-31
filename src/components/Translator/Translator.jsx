@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import "flag-icons/css/flag-icons.min.css";
+import "./flag-icons-subset.css";
 import "./Translator.css";
 import { LOCALE_OPTIONS } from "../../i18n/config";
 import { getClientLocale, setPortfolioLocale } from "../../i18n/runtime";

@@ -1,5 +1,7 @@
 import { FiExternalLink } from 'react-icons/fi';
 
+import CardLogoImage from '../Card/CardLogoImage.jsx';
+
 import { cardEntryTitleClass } from './cardEntryTitle';
 import TextContent from '../Font/TextContent.jsx';
 import { experiencePath } from '../../../data/slug';
@@ -34,13 +36,10 @@ export default function CardTimeline({ experience, variant = 'default' }) {
           {experience.logo ? (
             <>
               <div className="card-logo-wrap mt-1">
-                <img
+                <CardLogoImage
                   src={experience.logo}
                   alt={experience.title}
                   className="card-logo card-logo-img md:group-hover:animate-logoWobble"
-                  width={224}
-                  height={96}
-                  loading="lazy"
                 />
               </div>
               <div className={stackedSectionDividerClass}>
@@ -87,13 +86,10 @@ export default function CardTimeline({ experience, variant = 'default' }) {
         <div className="flex items-center gap-3 pr-8">
           {experience.logo ? (
             <div className="card-logo-wrap">
-              <img
+              <CardLogoImage
                 src={experience.logo}
                 alt={experience.title}
                 className="card-logo card-logo-img card-logo-img-timeline md:group-hover:animate-logoWobble"
-                width={224}
-                height={96}
-                loading="lazy"
               />
             </div>
           ) : null}

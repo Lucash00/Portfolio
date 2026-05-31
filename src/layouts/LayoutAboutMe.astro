@@ -14,6 +14,8 @@ import I18nEarlyScript from "../components/I18n/I18nEarlyScript.astro";
 import { ClientRouter } from "astro:transitions";
 import { getImage } from "astro:assets";
 import { DEFAULT_LOCALE } from "../i18n/config";
+import FontsHead from "../components/Head/FontsHead.astro";
+import CardLogoUrlScript from "../components/Utils/Card/CardLogoUrlScript.astro";
 import "../styles/scrollReveal.css";
 import "../styles/cardHover.css";
 const profileAvatarSrc =
@@ -63,8 +65,8 @@ const profileAvatarSrc =
     <title>Portfolio Lucas Moreno</title>
 
     <!-- Fuente Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+    <FontsHead includeCaveat />
+    <CardLogoUrlScript />
     <ScrollReset />
     <link rel="preload" as="image" href={profileAvatarSrc} fetchpriority="high" />
     <I18nEarlyScript />
@@ -84,9 +86,9 @@ const profileAvatarSrc =
         <!-- Columna izquierda -->
         <div class="w-auto sm:hidden"></div>
         <!-- Columna del medio (contenido de página) -->
-        <div class="w-11/12 min-w-0 max-w-full sm:w-full sm:mx-4">
+        <main class="w-11/12 min-w-0 max-w-full sm:w-full sm:mx-4">
           <slot />
-        </div>
+        </main>
         <!-- Columna derecha -->
         <div class="w-auto sm:hidden"></div>
       </div>
@@ -97,7 +99,6 @@ const profileAvatarSrc =
 </html>
 
 <style>
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
   body {
     font-family: "Poppins", sans-serif;
     word-spacing: 0.01rem;

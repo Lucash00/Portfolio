@@ -1,4 +1,5 @@
 import CardLink from "../Utils/Card/CardLink.jsx";
+import CardLogoImage from "../Utils/Card/CardLogoImage.jsx";
 import TextContent from "../Utils/Font/TextContent.jsx";
 import { projectPath } from "../../data/slug";
 import { useTranslation } from "../../i18n/client";
@@ -25,13 +26,10 @@ export default function ProjectCard({ project, compact = false }) {
     <CardLink link={projectPath(project.slug)} compact={compact}>
       <div className={logoColClass}>
         <div className="card-logo-wrap">
-          <img
+          <CardLogoImage
             src={project.logo}
             alt={project.title}
             className="card-logo card-logo-img md:group-hover:animate-logoWobble"
-            width={224}
-            height={96}
-            loading="lazy"
           />
         </div>
       </div>
