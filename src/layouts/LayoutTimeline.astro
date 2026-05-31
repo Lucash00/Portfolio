@@ -11,6 +11,8 @@ import I18nBootstrap from "../components/I18n/I18nBootstrap.astro";
 import I18nEarlyScript from "../components/I18n/I18nEarlyScript.astro";
 import { ClientRouter } from "astro:transitions";
 import { DEFAULT_LOCALE } from "../i18n/config";
+import FontsHead from "../components/Head/FontsHead.astro";
+import CardLogoUrlScript from "../components/Utils/Card/CardLogoUrlScript.astro";
 import "../styles/cardHover.css";
 ---
 
@@ -50,7 +52,8 @@ import "../styles/cardHover.css";
     <title>Portfolio Lucas Moreno</title>
 
     <!-- Fuente Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap" rel="stylesheet" />
+    <FontsHead />
+    <CardLogoUrlScript />
     <ScrollReset />
     <I18nEarlyScript />
     <ClientRouter fallback="swap" />
@@ -82,7 +85,6 @@ import "../styles/cardHover.css";
 </html>
 
 <style>
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
   body {
     font-family: "Poppins", sans-serif;
     word-spacing: 0.01rem;

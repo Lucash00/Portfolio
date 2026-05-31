@@ -1,4 +1,5 @@
 import CardLink from "../Utils/Card/CardLink.jsx";
+import CardLogoImage from "../Utils/Card/CardLogoImage.jsx";
 import TextContent from "../Utils/Font/TextContent.jsx";
 import { experiencePath } from "../../data/slug";
 import { useTranslation } from "../../i18n/client";
@@ -23,13 +24,10 @@ export default function ExperienceCard({ experience, compact = false }) {
       {experience.logo ? (
         <div className="card-logo-col sm:col-span-10 sm:mt-4 sm:mb-2 md:col-span-3 flex items-center justify-center">
           <div className="card-logo-wrap">
-            <img
+            <CardLogoImage
               src={experience.logo}
               alt={experience.title}
               className="card-logo card-logo-img md:group-hover:animate-logoWobble"
-              width={224}
-              height={96}
-              loading="lazy"
             />
           </div>
         </div>

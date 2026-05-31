@@ -1,4 +1,5 @@
 import CardLink from "../Utils/Card/CardLink.jsx";
+import CardLogoImage from "../Utils/Card/CardLogoImage.jsx";
 import TextContent from "../Utils/Font/TextContent.jsx";
 import { certificatePath } from "../../data/slug";
 
@@ -23,13 +24,10 @@ export default function CertificateCard({ certificate, compact = false }) {
     <CardLink link={certificatePath(certificate.slug)} compact={compact}>
       <div className={logoColClass}>
         <div className="card-logo-wrap">
-          <img
+          <CardLogoImage
             src={certificate.logo}
             alt={certificate.title}
             className="card-logo card-logo-img md:group-hover:animate-logoWobble"
-            width={224}
-            height={96}
-            loading="lazy"
           />
         </div>
       </div>

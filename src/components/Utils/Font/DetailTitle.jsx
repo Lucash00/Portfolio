@@ -1,15 +1,15 @@
+import CardLogoImage from "../Card/CardLogoImage.jsx";
+
 export default function DetailTitle({ title, logo }) {
   return (
     <div className="detail-title w-fit max-w-full sm:mb-3 sm:w-full">
       <h1 className="detail-title__heading w-fit max-w-full text-4xl text-left font-extrabold tracking-tight text-white flex items-center gap-3">
         {logo ? (
-          <img
+          <CardLogoImage
             src={logo}
             alt={`${title} logo`}
+            variant="detail"
             className="detail-title__logo h-10 w-auto shrink-0 object-contain select-none"
-            width={40}
-            height={40}
-            loading="lazy"
           />
         ) : null}
         <span data-text-glow className="detail-title__text text-mouse-glow min-w-0">

@@ -1,0 +1,29 @@
+---
+import "@fontsource/poppins/latin-300.css";
+import "@fontsource/poppins/latin-500.css";
+import "@fontsource/poppins/latin-800.css";
+import poppins800Woff2 from "@fontsource/poppins/files/poppins-latin-800-normal.woff2?url";
+
+interface Props {
+  includeCaveat?: boolean;
+}
+
+const { includeCaveat = false } = Astro.props;
+
+if (includeCaveat) {
+  await import("@fontsource/caveat/latin-500.css");
+  await import("@fontsource/caveat/latin-600.css");
+}
+---
+
+<link
+  rel="preload"
+  href={poppins800Woff2}
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="stylesheet"
+  href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+/>
