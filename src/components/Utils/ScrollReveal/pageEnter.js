@@ -1,8 +1,17 @@
 const PAGE_ENTER_CLASS = {
-  slide: "md:animate-slideIn",
-  "slide-page": "md:animate-slideInPage",
-  fade: "md:animate-fadeIn",
+  slide: "animate-slideIn",
+  "slide-page": "animate-slideInPage",
+  fade: "animate-fadeIn",
 };
+
+const PAGE_ENTER_CLASS_LEGACY = [
+  "animate-slideIn",
+  "animate-slideInPage",
+  "animate-fadeIn",
+  "md:animate-slideIn",
+  "md:animate-slideInPage",
+  "md:animate-fadeIn",
+];
 
 const PAGE_ENTER_MS = {
   slide: 820,
@@ -13,6 +22,17 @@ const PAGE_ENTER_MS = {
 let pendingNavigationRestart = false;
 let navigationScrollRevealHold = false;
 let glowPauseTimer = 0;
+let heroRotatorSpaResetPending = false;
+
+export function markHeroRotatorSpaReset() {
+  heroRotatorSpaResetPending = true;
+}
+
+export function takeHeroRotatorSpaReset() {
+  const pending = heroRotatorSpaResetPending;
+  heroRotatorSpaResetPending = false;
+  return pending;
+}
 
 export function markPageEnterNavigation() {
   pendingNavigationRestart = true;
@@ -52,9 +72,26 @@ export function restartPageEnterAnimations(force = false) {
 
     const mode = el.getAttribute("data-page-enter") || "slide";
     const animClass = PAGE_ENTER_CLASS[mode] ?? PAGE_ENTER_CLASS.slide;
+    const hadAnim = PAGE_ENTER_CLASS_LEGACY.some((cls) =>
+      el.classList.contains(cls),
+    );
 
-    Object.values(PAGE_ENTER_CLASS).forEach((cls) => el.classList.remove(cls));
-    void el.offsetWidth;
+    if (force && hadAnim && mode === "fade") {
+      const running = el
+        .getAnimations?.()
+        .some(
+          (anim) =>
+            anim.playState === "running" &&
+            (anim.animationName?.includes("fadeIn") ||
+              anim.animationName?.includes("fade")),
+        );
+      if (running) return;
+    }
+
+    PAGE_ENTER_CLASS_LEGACY.forEach((cls) => el.classList.remove(cls));
+    if (hadAnim) {
+      void el.offsetWidth;
+    }
     el.classList.add(animClass);
   });
 }
@@ -62,7 +99,6 @@ export function restartPageEnterAnimations(force = false) {
 /** Espera a que termine la animación de entrada antes del scroll reveal. */
 export function getPageEnterDelay() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return 0;
-  if (window.matchMedia("(max-width: 639px)").matches) return 0;
 
   const roots = document.querySelectorAll("[data-page-enter]");
   if (!roots.length) return 0;
@@ -76,11 +112,10 @@ export function getPageEnterDelay() {
   return delay;
 }
 
-/** Cuándo revelar cards/contenido en viewport (antes de que acabe slideIn). */
+/** Cuándo revelar cards/contenido en viewport (después de arrancar la entrada). */
 export function getScrollRevealStartDelay() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return 0;
-  if (window.matchMedia("(max-width: 639px)").matches) return 0;
-  return 120;
+  return 80;
 }
 
 /**
@@ -91,7 +126,10 @@ export function finishPageEnterGlowPause() {
   if (glowPauseTimer) window.clearTimeout(glowPauseTimer);
 
   glowPauseTimer = window.setTimeout(() => {
-    document.documentElement.classList.remove("glow-paused");
+    document.documentElement.classList.remove(
+      "glow-paused",
+      "page-enter-revealing",
+    );
     document.documentElement.classList.add("glow-ready");
     endNavigationScrollRevealHold();
     glowPauseTimer = 0;
@@ -99,9 +137,17 @@ export function finishPageEnterGlowPause() {
   }, getPageEnterDelay() + 100);
 }
 
+/** Muestra el contenido principal; contacto/footer esperan a page-enter-revealing. */
 export function revealPageEnterContent() {
   requestAnimationFrame(() => {
-    document.documentElement.classList.remove("page-enter-boot", "is-route-changing");
-    window.dispatchEvent(new CustomEvent("portfolio:after-route-swap"));
+    requestAnimationFrame(() => {
+      document.documentElement.classList.remove(
+        "page-enter-boot",
+        "is-route-changing",
+      );
+      document.documentElement.classList.add("page-enter-revealing");
+      restartPageEnterAnimations(true);
+      window.dispatchEvent(new CustomEvent("portfolio:after-route-swap"));
+    });
   });
 }

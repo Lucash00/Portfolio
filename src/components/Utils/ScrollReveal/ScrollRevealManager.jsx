@@ -216,10 +216,12 @@ export default function ScrollRevealManager() {
   useEffect(() => {
     let disconnectObserver = () => {};
     let pageEnterTimer = 0;
+    let scrollRevealScheduled = false;
+    let spaNavigation = false;
 
-    const refreshScrollReveal = () => {
+    const attachObserver = () => {
+      endNavigationScrollRevealHold();
       disconnectObserver();
-      prepScrollRevealState({ skipSettledShortcut: false });
       disconnectObserver = attachScrollRevealObserver(
         collectRevealElements(),
         attachLateRevealWatcher,
@@ -227,6 +229,7 @@ export default function ScrollRevealManager() {
     };
 
     const scheduleScrollReveal = () => {
+      scrollRevealScheduled = true;
       disconnectObserver();
 
       if (pageEnterTimer) window.clearTimeout(pageEnterTimer);
@@ -234,8 +237,7 @@ export default function ScrollRevealManager() {
       prepScrollRevealState({ skipSettledShortcut: true });
 
       const startObserver = () => {
-        endNavigationScrollRevealHold();
-        refreshScrollReveal();
+        attachObserver();
       };
 
       const bootDone =
@@ -262,17 +264,40 @@ export default function ScrollRevealManager() {
       }, getScrollRevealStartDelay() + 250);
     };
 
+    const onPageEnterComplete = () => {
+      endNavigationScrollRevealHold();
+    };
+
+    const onBeforeSwap = () => {
+      spaNavigation = true;
+      scrollRevealScheduled = false;
+    };
+
+    const onPageLoad = () => {
+      if (spaNavigation) {
+        spaNavigation = false;
+        scheduleScrollReveal();
+        return;
+      }
+      if (!scrollRevealScheduled) {
+        scheduleScrollReveal();
+      }
+    };
+
     scheduleScrollReveal();
-    document.addEventListener("astro:page-load", scheduleScrollReveal);
-    document.addEventListener("portfolio:page-enter-complete", refreshScrollReveal);
+
+    document.addEventListener("astro:before-swap", onBeforeSwap);
+    document.addEventListener("astro:page-load", onPageLoad);
+    document.addEventListener("portfolio:page-enter-complete", onPageEnterComplete);
 
     return () => {
       disconnectObserver();
       if (pageEnterTimer) window.clearTimeout(pageEnterTimer);
-      document.removeEventListener("astro:page-load", scheduleScrollReveal);
+      document.removeEventListener("astro:before-swap", onBeforeSwap);
+      document.removeEventListener("astro:page-load", onPageLoad);
       document.removeEventListener(
         "portfolio:page-enter-complete",
-        refreshScrollReveal,
+        onPageEnterComplete,
       );
     };
   }, []);

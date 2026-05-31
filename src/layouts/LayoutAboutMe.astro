@@ -12,10 +12,19 @@ import ScrollRevealManager from "../components/Utils/ScrollReveal/ScrollRevealMa
 import I18nBootstrap from "../components/I18n/I18nBootstrap.astro";
 import I18nEarlyScript from "../components/I18n/I18nEarlyScript.astro";
 import { ClientRouter } from "astro:transitions";
+import { getImage } from "astro:assets";
 import { DEFAULT_LOCALE } from "../i18n/config";
 import "../styles/scrollReveal.css";
+import "../styles/cardHover.css";
 const profileAvatarSrc =
-  "https://avatars.githubusercontent.com/u/168908236?v=4";
+  (
+    await getImage({
+      src: "https://avatars.githubusercontent.com/u/168908236?v=4",
+      width: 384,
+      height: 384,
+      format: "webp",
+    })
+  ).src;
 ---
 
 <!doctype html>
@@ -59,7 +68,7 @@ const profileAvatarSrc =
     <ScrollReset />
     <link rel="preload" as="image" href={profileAvatarSrc} fetchpriority="high" />
     <I18nEarlyScript />
-    <ClientRouter />
+    <ClientRouter fallback="swap" />
   </head>
   <body
     class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 md:bg-fixed tracking-tighter leading-none"
@@ -69,9 +78,8 @@ const profileAvatarSrc =
     <TextMouseGlowManager client:idle />
     <ScrollRevealManager client:idle />
     <Header />
+    <SideMenu />
     <div class="relative z-10 flex flex-col pt-0 md:pt-32 lg:pt-52">
-      <!-- SideMenu para móviles -->
-      <SideMenu />
       <div class="flex justify-between mb-0 md:mb-8 lg:mb-8">
         <!-- Columna izquierda -->
         <div class="w-auto sm:hidden"></div>

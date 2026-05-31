@@ -5,6 +5,13 @@ import HeroTitleRotator from "../Utils/HeroTitleRotator.jsx";
 import HeroIntro from "./HeroIntro.jsx";
 import HomeSectionTitleLocalized from "../Home/HomeSectionTitleLocalized.jsx";
 import HomeScrollCue from "../Home/HomeScrollCue.jsx";
+import { t } from "../../i18n/astro";
+
+const introParagraphClass =
+  "scroll-reveal-item text-mouse-glow z-0 mb-2 ml-auto w-fit max-w-full sm:text-xs md:text-base lg:text-lg xl:text-xl text-right font-normal text-gray-400";
+
+const locationParagraphClass =
+  "scroll-reveal-item text-mouse-glow z-0 mb-8 ml-auto w-fit max-w-full text-right font-normal sm:text-xs md:text-base lg:text-lg xl:text-xl text-gray-400";
 ---
 
 <astro>
@@ -14,13 +21,34 @@ import HomeScrollCue from "../Home/HomeScrollCue.jsx";
     <div class="py-8 w-full lg:py-8">
       <h1
         data-text-glow
-        class="text-mouse-glow w-fit max-w-full mb-6 lg:mb-10 text-left font-extrabold tracking-tight text-white sm:text-2xl sm:leading-snug md:text-4xl lg:text-6xl"
+        class="text-mouse-glow w-fit max-w-full mb-6 lg:mb-10 text-left font-extrabold tracking-tight text-white sm:text-2xl sm:leading-snug md:text-4xl lg:text-6xl hero-title-shell"
         data-no-scroll-reveal
       >
-        <HeroTitleRotator interval={4000} client:only="react" />
+        <HeroTitleRotator interval={4000} client:only="react">
+          <span slot="fallback" aria-hidden="true">
+            <span class="text-amber-400">
+              {t("hero.rotator.developer")}{t("hero.rotator.specialties.fullstack")}
+            </span>
+          </span>
+        </HeroTitleRotator>
       </h1>
-      
-      <HeroIntro client:only="react" />
+
+      <HeroIntro client:only="react">
+        <div slot="fallback" aria-hidden="true">
+          <p data-text-glow class={introParagraphClass}>
+            <span>{t("hero.introPrefix")}</span>
+            <span class="text-amber-400">{t("hero.introName")}</span>
+            <span>{t("hero.introMiddle")}</span>
+            <span class="text-gray-200">{t("hero.introVersatile")}</span>
+            <span>{t("hero.introRest")}</span>
+            <span class="text-gray-200">{t("hero.introTechnologies")}</span>
+          </p>
+          <p data-text-glow class={locationParagraphClass}>
+            <span class="text-amber-400">{t("hero.locationCity")}</span>,{" "}
+            <span>{t("hero.locationCountry")}</span>
+          </p>
+        </div>
+      </HeroIntro>
       <div class="scroll-reveal-item z-0 mt-16 sm:mt-12 md:max-w-screen-md lg:max-w-screen-lg">
         <ContactButtons client:load />
       </div>
@@ -32,7 +60,11 @@ import HomeScrollCue from "../Home/HomeScrollCue.jsx";
       client:only="react"
       i18nKey="hero.technologiesTitle"
       className="mb-3 sm:mb-4 sm:mt-20 tall-narrow:mt-32 md:mt-28 lg:mt-24 xl:mt-12 md:!mb-5"
-    />
+    >
+      <span slot="fallback" aria-hidden="true" class="mb-3 sm:mb-4 sm:mt-20 tall-narrow:mt-32 md:mt-28 lg:mt-24 xl:mt-12 md:!mb-5 block text-mouse-glow text-white font-bold sm:text-lg md:text-xl lg:text-2xl">
+        {t("hero.technologiesTitle")}
+      </span>
+    </HomeSectionTitleLocalized>
   </div>
 
   <TechCarousel />
@@ -49,6 +81,10 @@ import HomeScrollCue from "../Home/HomeScrollCue.jsx";
 
   .hero-section h1[data-text-glow] {
     perspective: 700px;
+  }
+
+  .hero-title-shell {
+    min-height: 1.15em;
   }
 </style>
 

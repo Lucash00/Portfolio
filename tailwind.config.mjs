@@ -186,19 +186,6 @@ export default {
 						'height': '2rem',
 						'max-width': '4.5rem',
 					},
-					'@media (min-width: 640px)': {
-						'.group:hover .card-accent-bar': {
-							'opacity': '1',
-							'filter': 'brightness(1.2) saturate(1.15)',
-						},
-						'.group:hover .card-title': {
-							'color': '#1d4ed8',
-						},
-						'.card-logo-img-timeline': {
-							'height': '2rem',
-							'max-width': '5.5rem',
-						},
-					},
 					'@media (min-width: 1024px)': {
 						'.card-logo-img': {
 							'height': '6rem',

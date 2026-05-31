@@ -9,6 +9,9 @@ import {
 const MIN_SCALE = 1;
 const MAX_SCALE = 3;
 const SCALE_STEP = 0.2;
+const DOUBLE_TAP_MS = 320;
+const DOUBLE_TAP_DIST = 32;
+const DOUBLE_TAP_ZOOM = 1.5;
 
 export default function ImageLightbox({
   images,
@@ -25,16 +28,63 @@ export default function ImageLightbox({
   const [visible, setVisible] = useState(false);
 
   const dragStart = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
+  const dragDelta = useRef({ x: 0, y: 0 });
+  const lastTap = useRef({ time: 0, x: 0, y: 0 });
+  const suppressNextDoubleClick = useRef(false);
   const stageRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const hasMultiple = images.length > 1;
   const hasZoom = scale > MIN_SCALE;
+  const hideChrome = isMobile && hasZoom;
+  const SWIPE_THRESHOLD = 52;
 
   const resetView = useCallback(() => {
     setScale(1);
     setPosition({ x: 0, y: 0 });
     setIsDragging(false);
   }, []);
+
+  const toggleDoubleTapZoom = useCallback(() => {
+    setIsDragging(false);
+    setScale((current) => {
+      if (current > MIN_SCALE + 0.02) {
+        setPosition({ x: 0, y: 0 });
+        return MIN_SCALE;
+      }
+      setPosition({ x: 0, y: 0 });
+      return DOUBLE_TAP_ZOOM;
+    });
+  }, []);
+
+  const handlePointerTapZoom = useCallback(
+    (clientX, clientY) => {
+      const now = Date.now();
+      const prev = lastTap.current;
+      const dt = now - prev.time;
+      const dist = Math.hypot(clientX - prev.x, clientY - prev.y);
+
+      if (dt > 0 && dt < DOUBLE_TAP_MS && dist < DOUBLE_TAP_DIST) {
+        lastTap.current = { time: 0, x: 0, y: 0 };
+        suppressNextDoubleClick.current = true;
+        window.setTimeout(() => {
+          suppressNextDoubleClick.current = false;
+        }, 450);
+        toggleDoubleTapZoom();
+        return true;
+      }
+
+      lastTap.current = { time: now, x: clientX, y: clientY };
+      return false;
+    },
+    [toggleDoubleTapZoom],
+  );
+
+  const onDoubleClick = (event) => {
+    event.preventDefault();
+    if (suppressNextDoubleClick.current) return;
+    toggleDoubleTapZoom();
+  };
 
   const goNext = useCallback(() => {
     setIndex((prev) => (prev + 1) % images.length);
@@ -50,6 +100,14 @@ export default function ImageLightbox({
     setVisible(false);
     window.setTimeout(onClose, 280);
   }, [onClose]);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -129,14 +187,21 @@ export default function ImageLightbox({
       posX: position.x,
       posY: position.y,
     };
+    dragDelta.current = { x: 0, y: 0 };
   };
 
   const onPointerMove = (event) => {
     if (!isDragging) return;
 
+    const dx = event.clientX - dragStart.current.x;
+    const dy = event.clientY - dragStart.current.y;
+    dragDelta.current = { x: dx, y: dy };
+
+    if (isMobile && !hasZoom) return;
+
     setPosition({
-      x: dragStart.current.posX + (event.clientX - dragStart.current.x),
-      y: dragStart.current.posY + (event.clientY - dragStart.current.y),
+      x: dragStart.current.posX + dx,
+      y: dragStart.current.posY + dy,
     });
   };
 
@@ -145,7 +210,27 @@ export default function ImageLightbox({
     if (event.pointerId !== undefined) {
       stageRef.current?.releasePointerCapture(event.pointerId);
     }
+
+    const dx = dragDelta.current.x;
+    const dy = dragDelta.current.y;
+    dragDelta.current = { x: 0, y: 0 };
     setIsDragging(false);
+
+    if (isMobile && !hasZoom && hasMultiple) {
+      if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy) * 1.15) {
+        if (dx < 0) goNext();
+        else goPrev();
+      } else if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+        handlePointerTapZoom(event.clientX, event.clientY);
+      }
+      setPosition({ x: 0, y: 0 });
+      return;
+    }
+
+    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+      handlePointerTapZoom(event.clientX, event.clientY);
+    }
+
     if (!hasZoom) {
       setPosition({ x: 0, y: 0 });
     }
@@ -168,11 +253,15 @@ export default function ImageLightbox({
       aria-label={label}
     >
       <div
-        className={`lightbox-panel fixed inset-0 flex flex-col bg-gray-100 transition-transform duration-300 ease-out ${
+        className={`lightbox-panel fixed inset-0 flex flex-col overflow-hidden bg-gray-100 transition-transform duration-300 ease-out ${
           visible ? "scale-100" : "scale-[0.99]"
-        }`}
+        }${hideChrome ? " lightbox-panel--zoomed" : ""}`}
       >
-        <div className="lightbox-toolbar relative z-20 flex shrink-0 items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 sm:px-6">
+        <div
+          className={`lightbox-toolbar relative z-20 flex shrink-0 items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 sm:px-6${
+            hideChrome ? " lightbox-toolbar--hidden" : ""
+          }`}
+        >
           <p className="text-xs font-semibold text-gray-500 sm:text-sm tabular-nums">
             {hasMultiple ? `${index + 1} / ${images.length}` : label}
           </p>
@@ -209,8 +298,8 @@ export default function ImageLightbox({
           </div>
         </div>
 
-        <div className="relative flex min-h-0 flex-1 items-stretch">
-          {hasMultiple && (
+        <div className="lightbox-stage-row relative flex min-h-0 min-w-0 flex-1 items-stretch overflow-hidden">
+          {hasMultiple && !isMobile ? (
             <button
               type="button"
               onClick={goPrev}
@@ -219,20 +308,20 @@ export default function ImageLightbox({
             >
               ‹
             </button>
-          )}
+          ) : null}
 
           <div
             ref={stageRef}
-            className="lightbox-stage relative min-h-0 flex-1 overflow-hidden touch-none"
-            style={{ cursor: stageCursor }}
+            className="lightbox-stage relative min-h-0 min-w-0 flex-1 overflow-hidden touch-none"
+            style={{ cursor: isMobile && !hasZoom ? "default" : stageCursor }}
             onWheel={onWheel}
-            onDoubleClick={resetView}
+            onDoubleClick={onDoubleClick}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={endDrag}
             onPointerCancel={endDrag}
           >
-            {hasMultiple && (
+            {hasMultiple && !isMobile ? (
               <>
                 <button
                   type="button"
@@ -247,7 +336,7 @@ export default function ImageLightbox({
                   aria-label="Imagen siguiente"
                 />
               </>
-            )}
+            ) : null}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
               {images.map((src, i) => {
                 const isActive = i === index;
@@ -261,7 +350,7 @@ export default function ImageLightbox({
                     aria-hidden={!isActive}
                     className="lightbox-image absolute max-h-full max-w-full select-none object-contain"
                     style={{
-                      zIndex: isActive ? 2 : 1,
+                      zIndex: isActive ? (hideChrome ? 50 : 2) : 1,
                       opacity: isActive ? 1 : 0,
                       transform: isActive
                         ? `translate(${position.x}px, ${position.y}px) scale(${scale})`
@@ -277,7 +366,7 @@ export default function ImageLightbox({
             </div>
           </div>
 
-          {hasMultiple && (
+          {hasMultiple && !isMobile ? (
             <button
               type="button"
               onClick={goNext}
@@ -286,11 +375,17 @@ export default function ImageLightbox({
             >
               ›
             </button>
-          )}
+          ) : null}
         </div>
 
-        <p className="relative z-20 shrink-0 border-t border-slate-200 px-4 py-2.5 text-center text-[10px] text-gray-500 sm:text-xs">
-          Rueda o +/- para zoom · Arrastra para mover · Doble clic restablece · ESC cierra
+        <p
+          className={`lightbox-footer relative z-20 shrink-0 border-t border-slate-200 px-4 py-2.5 text-center text-[10px] text-gray-500 sm:text-xs${
+            hideChrome ? " lightbox-footer--hidden" : ""
+          }`}
+        >
+          {isMobile
+            ? "Desliza para cambiar · +/- zoom · Doble toque: 150% o restablecer · ESC cierra"
+            : "Rueda o +/- para zoom · Arrastra para mover · Doble clic/toque: 150% o restablecer · ESC cierra"}
         </p>
       </div>
 
@@ -369,6 +464,48 @@ export default function ImageLightbox({
           width: 2.25rem;
           height: 2.25rem;
           font-size: 1rem;
+        }
+
+        @media (max-width: 639px) {
+          .lightbox-panel {
+            overflow: hidden;
+          }
+
+          .lightbox-nav-side,
+          .lightbox-stage-nav {
+            display: none !important;
+          }
+
+          .lightbox-stage-row {
+            width: 100%;
+            min-width: 0;
+          }
+
+          .lightbox-stage {
+            width: 100%;
+            min-width: 0;
+          }
+
+          .lightbox-image {
+            max-width: 100% !important;
+            max-height: 100% !important;
+          }
+
+          .lightbox-panel--zoomed .lightbox-toolbar,
+          .lightbox-panel--zoomed .lightbox-footer,
+          .lightbox-toolbar--hidden,
+          .lightbox-footer--hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+          }
+
+          .lightbox-panel--zoomed .lightbox-stage {
+            position: fixed;
+            inset: 0;
+            z-index: 45;
+            background: #f3f4f6;
+          }
         }
 
         @media (prefers-reduced-motion: reduce) {

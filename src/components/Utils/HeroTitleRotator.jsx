@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "../../i18n/client";
+import { takeHeroRotatorSpaReset } from "./ScrollReveal/pageEnter.js";
 import "./heroLetter.css";
 
 const EXIT_MS = 1400;
@@ -65,6 +66,7 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
   const [phase, setPhase] = useState("in");
   const [cycleKey, setCycleKey] = useState(0);
   const hasTransitionedRef = useRef(false);
+  const localeInitRef = useRef(true);
 
   const resetRotator = () => {
     hasTransitionedRef.current = false;
@@ -96,19 +98,16 @@ const HeroTitleRotator = ({ interval = 4000 }) => {
     (phase === "out" || specialty !== prevStep.specialty);
 
   useLayoutEffect(() => {
-    const syncHome = () => {
-      if (isHomePath()) resetRotator();
-    };
-
-    syncHome();
-    document.addEventListener("astro:page-load", syncHome);
-
-    return () => {
-      document.removeEventListener("astro:page-load", syncHome);
-    };
+    if (isHomePath() && takeHeroRotatorSpaReset()) {
+      resetRotator();
+    }
   }, []);
 
   useEffect(() => {
+    if (localeInitRef.current) {
+      localeInitRef.current = false;
+      return;
+    }
     resetRotator();
   }, [locale]);
 

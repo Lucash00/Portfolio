@@ -10,12 +10,16 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
 
   /* Recarga + navegación: oculto hasta que arranque la animación de entrada */
   html.page-enter-boot [data-page-enter],
-  html.page-enter-boot [data-page-enter] astro-island,
+  html.page-enter-boot [data-page-enter="slide"] astro-island,
+  html.page-enter-boot [data-page-enter="slide-page"] astro-island,
   html.page-enter-boot [data-page-enter] :is(a.group, .bg-slate-100, main .grid.grid-cols-2 > *),
   html.page-enter-boot .page-end,
   html.page-enter-boot .contact-section,
+  html.page-enter-revealing .page-end,
+  html.page-enter-revealing .contact-section,
   html.is-route-changing [data-page-enter],
-  html.is-route-changing [data-page-enter] astro-island,
+  html.is-route-changing [data-page-enter="slide"] astro-island,
+  html.is-route-changing [data-page-enter="slide-page"] astro-island,
   html.is-route-changing [data-page-enter] :is(a.group, .bg-slate-100, main .grid.grid-cols-2 > *),
   html.is-route-changing .page-end,
   html.is-route-changing .contact-section {
@@ -50,10 +54,7 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
 
 <script is:inline define:vars={{ catalogs, defaultLocale: DEFAULT_LOCALE }}>
   (function () {
-    document.documentElement.classList.add("glow-paused", "header-reload-boot");
-    if (window.matchMedia("(min-width: 640px)").matches) {
-      document.documentElement.classList.add("page-enter-boot");
-    }
+    document.documentElement.classList.add("glow-paused", "header-reload-boot", "page-enter-boot");
 
     const STORAGE_KEY = "portfolio-locale";
     const COOKIE = "portfolio-locale";
@@ -106,7 +107,7 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
     }
 
     var ROUTE_HIDE_STYLE =
-      "html.page-enter-boot [data-page-enter],html.page-enter-boot [data-page-enter] astro-island,html.page-enter-boot [data-page-enter] :is(a.group,.bg-slate-100,main .grid.grid-cols-2>*),html.page-enter-boot .page-end,html.page-enter-boot .contact-section,html.is-route-changing [data-page-enter],html.is-route-changing [data-page-enter] astro-island,html.is-route-changing [data-page-enter] :is(a.group,.bg-slate-100,main .grid.grid-cols-2>*),html.is-route-changing .page-end,html.is-route-changing .contact-section,html.is-route-changing .text-mouse-glow::before,html.is-route-changing #portfolio-icon-glow-layer,html.glow-paused .text-mouse-glow::before,html.glow-paused #portfolio-icon-glow-layer{opacity:0!important;visibility:hidden!important;transition:none!important}";
+      "html.page-enter-boot [data-page-enter],html.page-enter-boot [data-page-enter=\"slide\"] astro-island,html.page-enter-boot [data-page-enter=\"slide-page\"] astro-island,html.page-enter-boot [data-page-enter] :is(a.group,.bg-slate-100,main .grid.grid-cols-2>*),html.page-enter-boot .page-end,html.page-enter-boot .contact-section,html.is-route-changing [data-page-enter],html.is-route-changing [data-page-enter=\"slide\"] astro-island,html.is-route-changing [data-page-enter=\"slide-page\"] astro-island,html.is-route-changing [data-page-enter] :is(a.group,.bg-slate-100,main .grid.grid-cols-2>*),html.is-route-changing .page-end,html.is-route-changing .contact-section,html.is-route-changing .text-mouse-glow::before,html.is-route-changing #portfolio-icon-glow-layer,html.glow-paused .text-mouse-glow::before,html.glow-paused #portfolio-icon-glow-layer{opacity:0!important;visibility:hidden!important;transition:none!important}";
 
     function resetTextGlowState(root) {
       root.querySelectorAll("[data-text-glow]").forEach(function (el) {
@@ -130,14 +131,14 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
       var doc = e.newDocument;
       if (!doc) return;
 
-      var isDesktopNav = window.matchMedia("(min-width: 640px)").matches;
-      doc.documentElement.classList.add("glow-paused");
-      if (isDesktopNav) {
-        doc.documentElement.classList.add("page-enter-boot", "is-route-changing");
-      }
+      doc.documentElement.classList.add(
+        "page-enter-boot",
+        "is-route-changing",
+        "glow-paused",
+      );
       resetTextGlowState(doc);
 
-      if (isDesktopNav && !doc.getElementById("portfolio-route-hide")) {
+      if (!doc.getElementById("portfolio-route-hide")) {
         var style = doc.createElement("style");
         style.id = "portfolio-route-hide";
         style.textContent = ROUTE_HIDE_STYLE;
@@ -146,11 +147,25 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
 
       doc.querySelectorAll("[data-page-enter]").forEach(function (el) {
         el.classList.remove(
+          "animate-slideIn",
+          "animate-slideInPage",
+          "animate-fadeIn",
           "md:animate-slideIn",
           "md:animate-slideInPage",
           "md:animate-fadeIn",
         );
       });
+    });
+
+    window.addEventListener("unhandledrejection", function (event) {
+      var reason = event.reason;
+      var message =
+        reason && typeof reason === "object" && "message" in reason
+          ? String(reason.message)
+          : "";
+      if (/Transition was aborted/i.test(message)) {
+        event.preventDefault();
+      }
     });
   })();
 </script>

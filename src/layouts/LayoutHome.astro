@@ -14,6 +14,7 @@ import I18nEarlyScript from "../components/I18n/I18nEarlyScript.astro";
 import { ClientRouter } from "astro:transitions";
 import { DEFAULT_LOCALE } from "../i18n/config";
 import "../styles/scrollReveal.css";
+import "../styles/cardHover.css";
 ---
 
 <!doctype html>
@@ -55,7 +56,7 @@ import "../styles/scrollReveal.css";
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap" rel="stylesheet" />
     <ScrollReset />
     <I18nEarlyScript />
-    <ClientRouter />
+    <ClientRouter fallback="swap" />
   </head>
 
   <body class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 bg-fixed tracking-tighter leading-none">
@@ -64,13 +65,12 @@ import "../styles/scrollReveal.css";
     <TextMouseGlowManager client:idle />
     <ScrollRevealManager client:idle />
     <Header />
+    <SideMenu />
     <div
-      class="relative z-10 justify-between pt-36 pb-0 md:animate-fadeIn"
+      class="relative z-10 justify-between pt-36 pb-0"
       data-page-enter="fade"
       transition:animate="none"
     >
-      <!-- SideMenu para móviles -->
-      <SideMenu />
       <slot />
       <PageEnd />
     </div>

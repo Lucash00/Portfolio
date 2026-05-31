@@ -382,9 +382,21 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       track = null;
       isMouseDown = false;
       isMouseOverSlider = false;
+
+      document.querySelectorAll(".carousel-container[data-carousel-ready]").forEach(function (el) {
+        el.removeAttribute("data-carousel-ready");
+      });
     }
 
     function initCarousel() {
+      const existingSlider = document.querySelector(".carousel-container");
+      if (
+        existingSlider instanceof HTMLElement &&
+        existingSlider.dataset.carouselReady === "1"
+      ) {
+        return;
+      }
+
       destroyCarousel();
 
       slider = document.querySelector(".carousel-container");
@@ -395,6 +407,8 @@ import { techCarouselIcons } from "../../../data/techCarouselIcons";
       if (!slider || !track || !tooltip || !tooltipLabel) {
         return;
       }
+
+      slider.dataset.carouselReady = "1";
 
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;

@@ -98,8 +98,42 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
       }
     });
 
-    document.addEventListener("astro:page-load", syncDomFromStorage);
-    document.addEventListener("portfolio:after-route-swap", syncDomFromStorage);
+    document.addEventListener("astro:page-load", function () {
+      var isHome = Boolean(document.querySelector('[data-page-enter="fade"]'));
+      if (
+        isHome &&
+        !document.documentElement.classList.contains("glow-ready")
+      ) {
+        document.addEventListener(
+          "portfolio:page-enter-complete",
+          syncDomFromStorage,
+          { once: true },
+        );
+        return;
+      }
+      syncDomFromStorage();
+    });
+
+    document.addEventListener("portfolio:after-route-swap", function () {
+      var isHome = Boolean(document.querySelector('[data-page-enter="fade"]'));
+      if (!isHome) {
+        syncDomFromStorage();
+        return;
+      }
+
+      if (document.documentElement.classList.contains("glow-ready")) {
+        syncDomFromStorage();
+        return;
+      }
+
+      document.addEventListener(
+        "portfolio:page-enter-complete",
+        function () {
+          syncDomFromStorage();
+        },
+        { once: true },
+      );
+    });
   })();
 </script>
 
@@ -108,36 +142,37 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
     beginNavigationScrollRevealHold,
     finishPageEnterGlowPause,
     markPageEnterNavigation,
-    restartPageEnterAnimations,
+    markHeroRotatorSpaReset,
     revealPageEnterContent,
   } from "../Utils/ScrollReveal/pageEnter.js";
   import { prepScrollRevealState } from "../Utils/ScrollReveal/scrollRevealPrep.js";
 
+  let pageEnterBootRan = false;
+
   function runPageEnterBoot() {
-    document.documentElement.classList.add("glow-paused");
+    if (pageEnterBootRan) return;
+    pageEnterBootRan = true;
+
+    document.documentElement.classList.add(
+      "glow-paused",
+      "page-enter-boot",
+    );
     document.documentElement.classList.remove("glow-ready");
 
     beginNavigationScrollRevealHold();
     prepScrollRevealState({ skipSettledShortcut: true });
-    restartPageEnterAnimations(true);
     revealPageEnterContent();
     finishPageEnterGlowPause();
   }
 
   document.addEventListener("astro:before-swap", () => {
+    pageEnterBootRan = false;
     markPageEnterNavigation();
+    markHeroRotatorSpaReset();
     beginNavigationScrollRevealHold();
     document.documentElement.classList.add("glow-paused");
     document.documentElement.classList.remove("glow-ready");
   });
 
   document.addEventListener("astro:page-load", runPageEnterBoot);
-
-  /* Evita que page-enter-boot / is-route-changing queden colgados si page-load corre antes del módulo */
-  if (
-    document.documentElement.classList.contains("page-enter-boot") ||
-    document.documentElement.classList.contains("is-route-changing")
-  ) {
-    runPageEnterBoot();
-  }
 </script>
