@@ -74,6 +74,16 @@ function isInViewportOnInit(el, topInset) {
   return rect.top < vh * 0.92 && rect.bottom > topInset;
 }
 
+function isHomePageEnterActive() {
+  if (!isHomePage()) return false;
+  const html = document.documentElement;
+  return (
+    html.classList.contains("page-enter-boot") ||
+    html.classList.contains("page-enter-revealing") ||
+    isNavigationScrollRevealHold()
+  );
+}
+
 function prepRevealElements(elements, { skipSettledShortcut = false } = {}) {
   if (!elements.length) return [];
 
@@ -92,8 +102,13 @@ function prepRevealElements(elements, { skipSettledShortcut = false } = {}) {
   const topRevealInset = getTopRevealInset();
   const allowSettledShortcut =
     !skipSettledShortcut && !isNavigationScrollRevealHold();
+  const homeEnterActive = isHomePageEnterActive();
 
   elements.forEach((el) => {
+    if (homeEnterActive && el.classList.contains("scroll-reveal--settled")) {
+      return;
+    }
+
     el.classList.remove(
       "scroll-reveal--from-below",
       "scroll-reveal--from-above",
@@ -132,6 +147,12 @@ export function prepScrollRevealState(options = {}) {
     options.skipSettledShortcut ?? isNavigationScrollRevealHold();
 
   const elements = collectRevealElements();
+  const needsPrep = elements.some((el) => !el.classList.contains("scroll-reveal"));
+
+  if (!needsPrep && !options.force) {
+    return elements;
+  }
+
   return prepRevealElements(elements, { skipSettledShortcut });
 }
 

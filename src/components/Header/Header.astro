@@ -256,9 +256,11 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
   const TOP_OFFSET_PX = 40;
 
   let spaNavigation = false;
+  let headerReloadFadePlayed = false;
 
   document.addEventListener("astro:before-swap", () => {
     spaNavigation = true;
+    headerReloadFadePlayed = false;
   });
 
   function playHeaderReloadFade() {
@@ -285,6 +287,8 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
     }
 
     if (document.documentElement.classList.contains("header-reload-boot")) {
+      if (headerReloadFadePlayed) return;
+      headerReloadFadePlayed = true;
       playHeaderReloadFade();
     }
   }
@@ -353,21 +357,4 @@ const isAboutActive = /\/sobreMi\/?$/i.test(Astro.url.pathname);
       wrap?.classList.remove("is-flying", "is-about-hidden");
     }
   });
-
-  if (!(window as unknown as { __menuSameRouteGuard__?: boolean }).__menuSameRouteGuard__) {
-    (window as unknown as { __menuSameRouteGuard__?: boolean }).__menuSameRouteGuard__ = true;
-
-    document.addEventListener(
-      "click",
-      (event) => {
-        const link = (event.target as Element | null)?.closest(
-          "a[data-menu-link][data-active='true']",
-        );
-        if (!link) return;
-        event.preventDefault();
-        event.stopImmediatePropagation();
-      },
-      true,
-    );
-  }
 </script>

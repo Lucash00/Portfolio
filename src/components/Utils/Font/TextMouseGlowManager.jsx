@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import "../../../styles/textMouseGlow.css";
 
 const ICON_GLOW_LAYER_ID = "portfolio-icon-glow-layer";
+const MOBILE_GLOW_MQ = "(max-width: 639px)";
 const MAX_TEXT_GLOW = 0.4;
 const MAX_ICON_GLOW = 0.38;
 const MAX_ICON_GLOW_HOVER = 0.62;
@@ -126,8 +127,10 @@ export default function TextMouseGlowManager() {
       return undefined;
     }
 
+    const mobileMq = window.matchMedia(MOBILE_GLOW_MQ);
+
     const onMouseMove = (event) => {
-      if (isGlowBlocked()) return;
+      if (mobileMq.matches || isGlowBlocked()) return;
       updateTextGlows(event.clientX, event.clientY);
       updateIconGlows(event.clientX, event.clientY);
     };
@@ -144,16 +147,28 @@ export default function TextMouseGlowManager() {
       resetGlowTargets();
     };
 
-    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    const syncMobileGlow = () => {
+      if (mobileMq.matches) {
+        window.removeEventListener("mousemove", onMouseMove);
+        resetGlowTargets();
+        return;
+      }
+
+      window.addEventListener("mousemove", onMouseMove, { passive: true });
+    };
+
+    syncMobileGlow();
     document.documentElement.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("astro:before-swap", onBeforeSwap);
     document.addEventListener("astro:after-swap", onAfterSwap);
+    mobileMq.addEventListener("change", syncMobileGlow);
 
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
       document.documentElement.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("astro:before-swap", onBeforeSwap);
       document.removeEventListener("astro:after-swap", onAfterSwap);
+      mobileMq.removeEventListener("change", syncMobileGlow);
       resetGlowTargets();
       document.getElementById(ICON_GLOW_LAYER_ID)?.remove();
     };

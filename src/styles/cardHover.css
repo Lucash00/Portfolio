@@ -1,0 +1,18 @@
+/* Hover de tarjetas: desktop (≥640px, sin side menu) y dispositivos con ratón */
+@media (min-width: 640px) and (hover: hover) {
+  .group:hover .card-accent-bar {
+    opacity: 1;
+    filter: brightness(1.2) saturate(1.15);
+  }
+
+  .group:hover .card-title {
+    color: #1d4ed8;
+  }
+}
+
+@media (min-width: 640px) {
+  .card-logo-img-timeline {
+    height: 2rem;
+    max-width: 5.5rem;
+  }
+}

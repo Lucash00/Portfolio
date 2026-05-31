@@ -9,30 +9,41 @@ const SideMenu = ({ avatarSrc }) => {
   const [currentPath, setCurrentPath] = useState("");
 
   useEffect(() => {
-    setCurrentPath(window.location.pathname);
+    const syncPath = () => {
+      setCurrentPath(window.location.pathname);
+      setIsOpen(false);
+    };
+
+    syncPath();
+    document.addEventListener("astro:page-load", syncPath);
+
+    return () => {
+      document.removeEventListener("astro:page-load", syncPath);
+    };
   }, []);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((open) => !open);
   };
 
   return (
     <>
       <button
+        type="button"
         onClick={toggleMenu}
-        className="fixed top-5 left-5 z-[10000] w-10 h-10 flex items-center justify-center bg-gray-800 text-white rounded-full md:hidden"
+        className="side-menu-toggle fixed top-5 left-5 z-[10000] flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 text-white md:hidden"
         aria-label={t("nav.toggleMenu")}
+        aria-expanded={isOpen}
       >
         <i className={isOpen ? "far fa-times" : "far fa-bars"}></i>
       </button>
 
       <div
-        className={`side-menu fixed top-0 left-0 h-full w-64 bg-gray-900 text-white shadow-lg transform transition-transform duration-300 z-[9999] ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } md:hidden`}
+        className={`side-menu md:hidden${isOpen ? " side-menu--open" : ""}`}
+        aria-hidden={!isOpen}
       >
-        <nav className="flex flex-col items-start p-4 space-y-4">
-          <div className="w-full flex justify-center mb-4">
+        <nav className="flex flex-col items-start space-y-4 p-4">
+          <div className="mb-4 flex w-full justify-center">
             <img
               src={avatarSrc}
               alt={t("nav.profilePhoto")}
@@ -86,7 +97,7 @@ const SideMenu = ({ avatarSrc }) => {
       {isOpen && (
         <div
           onClick={toggleMenu}
-          className="fixed inset-0 bg-black bg-opacity-50 z-[9998] md:hidden pointer-events-auto"
+          className="side-menu-backdrop md:hidden"
           aria-hidden="true"
         ></div>
       )}

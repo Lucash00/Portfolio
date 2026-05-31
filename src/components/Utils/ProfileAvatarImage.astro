@@ -1,56 +1,56 @@
----
-import { getImage, Image } from "astro:assets";
-
-interface Props {
-  class?: string;
-  id?: string;
-  width?: number;
-  height?: number;
-  loading?: "lazy" | "eager";
-  fetchpriority?: "high" | "low" | "auto";
-}
-
-const {
-  class: className = "",
-  id,
-  width = 256,
-  height = 256,
-  loading = "eager",
-  fetchpriority = "high",
-} = Astro.props;
-
-const AVATAR_SRC = "https://avatars.githubusercontent.com/u/168908236?v=4";
-
-const displayImage = await getImage({
-  src: AVATAR_SRC,
-  width,
-  height,
-  format: "webp",
-});
-
-/** Misma resolución que el avatar del perfil en /sobreMi */
-const flyImage = await getImage({
-  src: AVATAR_SRC,
-  width: 384,
-  height: 384,
-  format: "webp",
-});
----
-
-<div
-  class:list={["profile-avatar-image", className]}
-  data-avatar-fly-src={flyImage.src}
->
-  <Image
-    src={displayImage.src}
-    alt="Foto Perfil"
-    class="h-full w-full object-cover"
-    id={id}
-    width={width}
-    height={height}
-    loading={loading}
-    fetchpriority={fetchpriority}
-    decoding="async"
-  />
-</div>
-
+---
+import { getImage } from "astro:assets";
+
+interface Props {
+  class?: string;
+  id?: string;
+  width?: number;
+  height?: number;
+  loading?: "lazy" | "eager";
+  fetchpriority?: "high" | "low" | "auto";
+}
+
+const {
+  class: className = "",
+  id,
+  width = 256,
+  height = 256,
+  loading = "eager",
+  fetchpriority = "high",
+} = Astro.props;
+
+const AVATAR_SRC = "https://avatars.githubusercontent.com/u/168908236?v=4";
+
+const displayImage = await getImage({
+  src: AVATAR_SRC,
+  width,
+  height,
+  format: "webp",
+});
+
+/** Misma resolución que el avatar del perfil en /sobreMi */
+const flyImage = await getImage({
+  src: AVATAR_SRC,
+  width: 384,
+  height: 384,
+  format: "webp",
+});
+---
+
+<div
+  class:list={["profile-avatar-image", className]}
+  data-avatar-fly-src={flyImage.src}
+>
+  <img
+    src={displayImage.src}
+    alt="Foto Perfil"
+    class="h-full w-full object-cover"
+    id={id}
+    width={width}
+    height={height}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding="async"
+  />
+</div>
+

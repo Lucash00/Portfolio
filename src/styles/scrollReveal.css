@@ -1,5 +1,4 @@
-  /* Contenedor de página: oculto hasta que arranque slideIn/fadeIn (evita flash en navegación). */
-@media (min-width: 640px) {
+  /* Contenedor de página: oculto hasta que arranque slideIn/fadeIn (evita flash en recarga). */
   [data-page-enter="slide"],
   [data-page-enter="slide-page"] {
     opacity: 0;
@@ -11,16 +10,18 @@
     transform: scale(0.9);
   }
 
-  /* Islands client:only vacíos hasta que hidraten */
-  [data-page-enter] astro-island:not(:defined) {
+  /* Islands client:only vacíos hasta que hidraten (solo páginas slide, no inicio fade) */
+  [data-page-enter="slide"] astro-island:not(:defined),
+  [data-page-enter="slide-page"] astro-island:not(:defined) {
     opacity: 0 !important;
     visibility: hidden !important;
   }
-}
 
-/* Contacto + footer: fuera de data-page-enter en Layout.astro */
+/* Contacto + footer: ocultos durante la entrada principal (recarga y navegación) */
 html.page-enter-boot .page-end,
 html.page-enter-boot .contact-section,
+html.page-enter-revealing .page-end,
+html.page-enter-revealing .contact-section,
 html.is-route-changing .page-end,
 html.is-route-changing .contact-section {
   opacity: 0 !important;
@@ -28,16 +29,19 @@ html.is-route-changing .contact-section {
   pointer-events: none !important;
 }
 
-/* Inicio: sin slide-up en viewport antes del prep; solo fadeIn del contenedor */
+/* Inicio: sin slide-up en viewport durante fadeIn */
 [data-page-enter="fade"]
   :is(
     .scroll-reveal-item,
     [data-scroll-reveal="on"],
     a.group,
     main .grid.grid-cols-2 > *
-  ):not(.scroll-reveal):not(.is-revealed):not(.scroll-reveal--settled) {
-  opacity: 1;
-  transform: none;
+  ):not(.scroll-reveal):not(.is-revealed):not(.scroll-reveal--settled),
+html.page-enter-revealing
+  [data-page-enter="fade"]
+  :is(.scroll-reveal-item, .scroll-reveal.scroll-reveal--settled, .scroll-reveal.is-revealed) {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* Oculta candidatos a scroll-reveal bajo el fold hasta que JS los marque visibles */

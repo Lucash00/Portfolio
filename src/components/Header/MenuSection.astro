@@ -69,28 +69,4 @@ const isActive =
   <style>
     @import url(https://pro.fontawesome.com/releases/v5.10.0/css/all.css);
   </style>
-
-  <script>
-    const menuScope = globalThis as unknown as {
-      __menuSameRouteGuard__?: boolean;
-    };
-
-    if (!menuScope.__menuSameRouteGuard__) {
-      menuScope.__menuSameRouteGuard__ = true;
-
-      document.addEventListener(
-        "click",
-        (event) => {
-          const link = (event.target as Element | null)?.closest(
-            "a[data-menu-link][data-active='true']",
-          );
-          if (!link) return;
-
-          event.preventDefault();
-          event.stopImmediatePropagation();
-        },
-        true,
-      );
-    }
-  </script>
 </astro>

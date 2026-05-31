@@ -55,6 +55,20 @@ html.glow-paused #portfolio-icon-glow-layer {
   }
 }
 
+/* Móvil (side menu): sin resplandor del cursor en textos ni carrusel */
+@media (max-width: 639px) {
+  html.glow-ready .text-mouse-glow::before {
+    content: none !important;
+    display: none !important;
+    opacity: 0 !important;
+  }
+
+  #portfolio-icon-glow-layer {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+
 /* Resplandor de iconos del carrusel (capa fija en body, sin recorte del overflow) */
 #portfolio-icon-glow-layer {
   position: fixed;
