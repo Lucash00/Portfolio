@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "Font Awesome 5 Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/fa-regular-subset.woff2") format("woff2");
+}
+
+.fa,
+.far {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+.far {
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 400;
+}
+
+.fa-times:before { content: "\f00d"; }
+.fa-bars:before { content: "\f0c9"; }
+.fa-home:before { content: "\f015"; }
+.fa-folder-open:before { content: "\f07c"; }
+.fa-file-certificate:before { content: "\f5f3"; }
+.fa-briefcase:before { content: "\f0b1"; }
+.fa-user:before { content: "\f007"; }
+.fa-file-alt:before { content: "\f15c"; }

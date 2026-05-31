@@ -1,7 +1,7 @@
 ---
-import { getCardLogoUrlMap } from "../../../utils/buildCardLogoUrlMap";
+import { buildCardLogoUrlMapSync } from "../../../utils/cardLogoUrls";
 
-const cardLogoUrlMap = await getCardLogoUrlMap();
+const cardLogoUrlMap = buildCardLogoUrlMapSync();
 ---
 
 <script is:inline define:vars={{ cardLogoUrlMap }}>

@@ -4,6 +4,7 @@ import {
   CARD_LOGO_PATHS,
   type CardLogoUrlMap,
 } from "../data/cardLogoPaths";
+import { buildCardLogoUrlMapSync } from "./cardLogoUrls";
 import { resolvePublicLogo } from "./cardLogoImageSources";
 
 const CARD_LOGO_WIDTH = 224;
@@ -33,6 +34,12 @@ async function optimizeLogo(
   return image.src;
 }
 
+/** Mapa con rutas WebP pregeneradas (SSR/React). */
+export function getCardLogoUrlMapSync(): CardLogoUrlMap {
+  return buildCardLogoUrlMapSync();
+}
+
+/** @deprecated Usar getCardLogoUrlMapSync en runtime estático. */
 export async function getCardLogoUrlMap(): Promise<CardLogoUrlMap> {
   if (cachedMap) return cachedMap;
 

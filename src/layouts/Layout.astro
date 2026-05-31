@@ -4,7 +4,7 @@ interface Props {
 }
 import Header from "../components/Header/Header.astro";
 import SideMenu from "../components/SideMenu/SideMenu.astro";
-import GhostCodeBackground from "../components/Background/GhostCodeBackground.jsx";
+import GhostCodeBackground from "../components/Background/GhostCodeBackground.astro";
 import TextMouseGlowManager from "../components/Utils/Font/TextMouseGlowManager.jsx";
 import ScrollReset from "../components/Utils/ScrollReset.astro";
 import PageEnd from "../components/PageEnd/PageEnd.astro";
@@ -65,7 +65,7 @@ import "../styles/cardHover.css";
     class="bg-gradient-to-t from-slate-950 via-blue-950 to-cyan-900 md:bg-fixed tracking-tighter leading-none"
   >
     <I18nBootstrap />
-    <GhostCodeBackground client:idle transition:persist="ghost-code" />
+    <GhostCodeBackground transition:persist="ghost-code" />
     <TextMouseGlowManager client:idle />
     <ScrollRevealManager client:idle />
     <Header />

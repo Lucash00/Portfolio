@@ -1,0 +1,70 @@
+{
+  "/DatabaySolutions/logo.png": {
+    "card": "/_card-logos/DatabaySolutions--logo-card.webp",
+    "detail": "/_card-logos/DatabaySolutions--logo-detail.webp"
+  },
+  "/Certificates/logo.png": {
+    "card": "/_card-logos/Certificates--logo-card.webp",
+    "detail": "/_card-logos/Certificates--logo-detail.webp"
+  },
+  "/ControlNet/logo.png": {
+    "card": "/_card-logos/ControlNet--logo-card.webp",
+    "detail": "/_card-logos/ControlNet--logo-detail.webp"
+  },
+  "/tecnico/logo.png": {
+    "card": "/_card-logos/tecnico--logo-card.webp",
+    "detail": "/_card-logos/tecnico--logo-detail.webp"
+  },
+  "/DevOpsTemplate/logo.png": {
+    "card": "/_card-logos/DevOpsTemplate--logo-card.webp",
+    "detail": "/_card-logos/DevOpsTemplate--logo-detail.webp"
+  },
+  "/Utsch/logo.png": {
+    "card": "/_card-logos/Utsch--logo-card.webp",
+    "detail": "/_card-logos/Utsch--logo-detail.webp"
+  },
+  "/Cuboc/logo.png": {
+    "card": "/_card-logos/Cuboc--logo-card.webp",
+    "detail": "/_card-logos/Cuboc--logo-detail.webp"
+  },
+  "/IndeK/logo.png": {
+    "card": "/_card-logos/IndeK--logo-card.webp",
+    "detail": "/_card-logos/IndeK--logo-detail.webp"
+  },
+  "/TourismWithStyle/logo.png": {
+    "card": "/_card-logos/TourismWithStyle--logo-card.webp",
+    "detail": "/_card-logos/TourismWithStyle--logo-detail.webp"
+  },
+  "/Russells/logo.png": {
+    "card": "/_card-logos/Russells--logo-card.webp",
+    "detail": "/_card-logos/Russells--logo-detail.webp"
+  },
+  "/ICEditorial/logo.png": {
+    "card": "/_card-logos/ICEditorial--logo-card.webp",
+    "detail": "/_card-logos/ICEditorial--logo-detail.webp"
+  },
+  "/BookingApi/logo.png": {
+    "card": "/_card-logos/BookingApi--logo-card.webp",
+    "detail": "/_card-logos/BookingApi--logo-detail.webp"
+  },
+  "/BafreMedia/logo.png": {
+    "card": "/_card-logos/BafreMedia--logo-card.webp",
+    "detail": "/_card-logos/BafreMedia--logo-detail.webp"
+  },
+  "/la11mil/logo.png": {
+    "card": "/_card-logos/la11mil--logo-card.webp",
+    "detail": "/_card-logos/la11mil--logo-detail.webp"
+  },
+  "/CRM/logo.png": {
+    "card": "/_card-logos/CRM--logo-card.webp",
+    "detail": "/_card-logos/CRM--logo-detail.webp"
+  },
+  "/MoviesDetails/logo.png": {
+    "card": "/_card-logos/MoviesDetails--logo-card.webp",
+    "detail": "/_card-logos/MoviesDetails--logo-detail.webp"
+  },
+  "/RotaPlace/logo.png": {
+    "card": "/_card-logos/RotaPlace--logo-card.webp",
+    "detail": "/_card-logos/RotaPlace--logo-detail.webp"
+  }
+}
