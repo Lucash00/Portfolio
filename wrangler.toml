@@ -1,0 +1,4 @@
+# Cloudflare Pages — asegura que /functions se empaquete con cada deploy (Git o Wrangler).
+name = "portfolio"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "dist"

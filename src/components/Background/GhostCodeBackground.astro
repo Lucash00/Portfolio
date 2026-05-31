@@ -1,0 +1,36 @@
+---
+import { ghostCodeColumns } from "./ghostCodeSnippets.js";
+import "./ghostCode.css";
+
+const durations = [110];
+---
+
+<div class="ghost-code-root" aria-hidden="true">
+  <div class="ghost-code-mask">
+    <div class="ghost-code-columns">
+      {
+        ghostCodeColumns.map((lines, index) => {
+          const loopLines = [...lines, ...lines];
+          return (
+            <div
+              class="gc-column"
+              style={{
+                animationDuration: `${durations[index]}s`,
+                animationDelay: `${index * 7}s`,
+              }}
+              aria-hidden="true"
+            >
+              {loopLines.map((tokens) => (
+                <div class="gc-line">
+                  {tokens.map((token) => (
+                    <span class={`gc-${token.type}`}>{token.text}</span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</div>
