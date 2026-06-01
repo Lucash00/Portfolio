@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react';
 import PopUp from '../Utils/PopUp/PopUp.jsx';
 import { useTranslation } from '../../i18n/client';
 
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/lucas.moreno.dev@gmail.com';
+/** Mismo origen: Cloudflare Pages Function (functions/api/contact.js) */
+const FORM_ENDPOINT = '/api/contact';
 
 const inputClass =
   'mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-gray-800 shadow-sm transition-[border-color,box-shadow] duration-200 placeholder:text-gray-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/35 md:text-sm';
@@ -43,8 +44,10 @@ export default function ContactForm() {
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error('Error al enviar');
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || result.success !== true) {
+        throw new Error(result.error ?? 'send_failed');
       }
 
       form.reset();

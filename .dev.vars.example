@@ -1,0 +1,2 @@
+# Copia a .dev.vars para probar el formulario con: npx wrangler pages dev dist
+WEB3FORMS_ACCESS_KEY=tu_access_key_de_web3forms

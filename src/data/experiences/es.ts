@@ -57,7 +57,7 @@ En mi etapa como <strong>Desarrollador Fullstack & DevOps</strong> participé en
       "/proyecto/DevOps-Template-GCP",
       "/proyecto/UTSCH",
       "/proyecto/Cuboc",
-      "/proyecto/INDE-K-API",
+      "/proyecto/INDEK-API",
       "/proyecto/Tourism-With-Style",
       "/proyecto/Russells",
       "/proyecto/ICEditorial",

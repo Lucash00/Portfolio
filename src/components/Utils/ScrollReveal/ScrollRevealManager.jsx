@@ -17,16 +17,19 @@ const DIRECTION_CLASSES = [
   "scroll-reveal--exit-down",
 ];
 
+const SHOW_BOTTOM_INSET_VH = 0.06;
+const HIDE_EXTRA_TOP_PX = 56;
+/** Ocultar más abajo (más tarde al salir por el borde inferior). */
+const HIDE_BOTTOM_BELOW_VIEWPORT_PX = 48;
+const REVEAL_TRANSITION_MS = 700;
+const SCROLL_DIRECTION_THRESHOLD_PX = 5;
+
 function clearDirectionClasses(el) {
   el.classList.remove(...DIRECTION_CLASSES);
 }
 
-function nextFrame() {
-  return new Promise((resolve) => {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(resolve);
-    });
-  });
+function forceReflow(el) {
+  void el.offsetHeight;
 }
 
 function getHeaderHeight() {
@@ -42,6 +45,62 @@ function getTopRevealInset() {
 function getTopSafeZone() {
   const h = getHeaderHeight();
   return Math.max(112, h + 40);
+}
+
+function getShowBounds(vh, topRevealInset) {
+  return {
+    top: topRevealInset,
+    bottom: vh * (1 - SHOW_BOTTOM_INSET_VH),
+  };
+}
+
+function getHideBounds(vh, topRevealInset) {
+  return {
+    top: topRevealInset + HIDE_EXTRA_TOP_PX,
+    bottom: vh + HIDE_BOTTOM_BELOW_VIEWPORT_PX,
+  };
+}
+
+function isInShowBounds(rect, vh, topRevealInset) {
+  const { top, bottom } = getShowBounds(vh, topRevealInset);
+  return rect.bottom > top && rect.top < bottom;
+}
+
+function shouldHideVisible(rect, vh, topRevealInset, direction) {
+  const { top: hideTop, bottom: hideBottom } = getHideBounds(vh, topRevealInset);
+
+  if (direction === "up" && rect.bottom < hideTop) return true;
+  if (direction === "down" && rect.top > hideBottom) return true;
+
+  if (rect.bottom < -24 || rect.top > vh + 24) return true;
+
+  return false;
+}
+
+function shouldShowHidden(rect, vh, topRevealInset, direction) {
+  if (!isInShowBounds(rect, vh, topRevealInset)) return false;
+
+  const show = getShowBounds(vh, topRevealInset);
+  const hide = getHideBounds(vh, topRevealInset);
+
+  if (direction === "down") {
+    return rect.bottom > show.top;
+  }
+
+  if (direction === "up") {
+    if (rect.bottom < hide.top) return false;
+    return rect.top < show.bottom;
+  }
+
+  return true;
+}
+
+function estimateIntersectionRatio(rect, vh, topRevealInset) {
+  const { top, bottom } = getShowBounds(vh, topRevealInset);
+  const visibleTop = Math.max(rect.top, top);
+  const visibleBottom = Math.min(rect.bottom, bottom);
+  const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+  return rect.height > 0 ? visibleHeight / rect.height : 0;
 }
 
 function attachScrollRevealObserver(elements, onNeedMore) {
@@ -60,8 +119,8 @@ function attachScrollRevealObserver(elements, onNeedMore) {
     const currentY = window.scrollY;
     const delta = currentY - lastScrollY;
 
-    if (delta > 3) scrollDirection = "down";
-    else if (delta < -3) scrollDirection = "up";
+    if (delta > SCROLL_DIRECTION_THRESHOLD_PX) scrollDirection = "down";
+    else if (delta < -SCROLL_DIRECTION_THRESHOLD_PX) scrollDirection = "up";
 
     lastScrollY = currentY;
   };
@@ -69,6 +128,7 @@ function attachScrollRevealObserver(elements, onNeedMore) {
   window.addEventListener("scroll", onScroll, { passive: true });
 
   const visibility = new WeakMap();
+  const animating = new WeakSet();
 
   elements.forEach((el) => {
     visibility.set(
@@ -77,8 +137,20 @@ function attachScrollRevealObserver(elements, onNeedMore) {
     );
   });
 
-  const show = async (el, enterDirection) => {
-    if (visibility.get(el) === "visible") return;
+  const lockAnimation = (el) => {
+    animating.add(el);
+    window.setTimeout(() => {
+      animating.delete(el);
+      if (visibility.get(el) === "visible" && el.classList.contains("is-revealed")) {
+        clearDirectionClasses(el);
+      }
+    }, REVEAL_TRANSITION_MS);
+  };
+
+  const show = (el, enterDirection) => {
+    if (visibility.get(el) === "visible" || animating.has(el)) return;
+
+    lockAnimation(el);
     el.classList.remove("scroll-reveal--settled");
     clearDirectionClasses(el);
     el.classList.remove("is-revealed");
@@ -86,26 +158,35 @@ function attachScrollRevealObserver(elements, onNeedMore) {
       enterDirection === "up" ? "scroll-reveal--from-above" : "scroll-reveal--from-below",
     );
 
-    await nextFrame();
-    el.classList.add("is-revealed");
-    visibility.set(el, "visible");
+    forceReflow(el);
+
+    requestAnimationFrame(() => {
+      el.classList.add("is-revealed");
+      visibility.set(el, "visible");
+    });
   };
 
-  const hide = async (el, exitDirection) => {
-    if (visibility.get(el) !== "visible") return;
+  const hide = (el, exitDirection) => {
+    if (visibility.get(el) !== "visible" || animating.has(el)) return;
+
+    lockAnimation(el);
     el.classList.remove("scroll-reveal--settled");
     clearDirectionClasses(el);
     el.classList.remove("is-revealed");
 
-    await nextFrame();
-    el.classList.add(
-      exitDirection === "up" ? "scroll-reveal--exit-up" : "scroll-reveal--exit-down",
-    );
-    visibility.set(el, "hidden");
+    forceReflow(el);
+
+    requestAnimationFrame(() => {
+      el.classList.add(
+        exitDirection === "up" ? "scroll-reveal--exit-up" : "scroll-reveal--exit-down",
+      );
+      visibility.set(el, "hidden");
+    });
   };
 
   const topSafeZone = getTopSafeZone();
   const topRevealInset = getTopRevealInset();
+  const observed = new Set(elements);
 
   const getEnterDirection = (entry) => {
     const { top, bottom } = entry.boundingClientRect;
@@ -132,36 +213,71 @@ function attachScrollRevealObserver(elements, onNeedMore) {
     const { top } = entry.boundingClientRect;
     const enteringFromAbove =
       scrollDirection === "up" || top < topRevealInset + 36;
-    return enteringFromAbove ? 0.13 : 0.08;
+    return enteringFromAbove ? 0.12 : 0.05;
+  };
+
+  const evaluateElement = (el, entry) => {
+    if (!(el instanceof HTMLElement)) return;
+    if (el.classList.contains("scroll-reveal--settled")) return;
+    if (animating.has(el)) return;
+
+    const rect = entry?.boundingClientRect ?? el.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const syntheticEntry = entry ?? {
+      boundingClientRect: rect,
+      isIntersecting: isInShowBounds(rect, vh, topRevealInset),
+      intersectionRatio: estimateIntersectionRatio(rect, vh, topRevealInset),
+    };
+    const isVisible = visibility.get(el) === "visible";
+
+    if (isVisible) {
+      if (shouldHideVisible(rect, vh, topRevealInset, scrollDirection)) {
+        hide(el, getExitDirection(syntheticEntry));
+      }
+      return;
+    }
+
+    if (
+      !syntheticEntry.isIntersecting &&
+      !isInShowBounds(rect, vh, topRevealInset)
+    ) {
+      return;
+    }
+    if (syntheticEntry.intersectionRatio < getMinRevealRatio(syntheticEntry)) {
+      return;
+    }
+    if (!shouldShowHidden(rect, vh, topRevealInset, scrollDirection)) return;
+
+    show(el, getEnterDirection(syntheticEntry));
   };
 
   const observer = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry) => {
-        const el = entry.target;
-        if (!(el instanceof HTMLElement)) return;
-
-        if (entry.isIntersecting) {
-          if (el.classList.contains("scroll-reveal--settled")) return;
-          if (entry.intersectionRatio < getMinRevealRatio(entry)) return;
-          show(el, getEnterDirection(entry));
-          return;
-        }
-
-        if (el.classList.contains("is-revealed")) {
-          hide(el, getExitDirection(entry));
-        }
-      });
+      entries.forEach((entry) => evaluateElement(entry.target, entry));
     },
     {
       root: null,
-      threshold: [0, 0.08, 0.13, 0.14, 0.22, 0.32],
-      rootMargin: `-${topRevealInset}px 0px -6% 0px`,
+      threshold: [0, 0.05, 0.1, 0.15, 0.25],
+      rootMargin: `-${topRevealInset}px 0px -${SHOW_BOTTOM_INSET_VH * 100}% 0px`,
     },
   );
 
+  let scrollCheckRaf = 0;
+  const onScrollVisibilityCheck = () => {
+    if (scrollCheckRaf) return;
+    scrollCheckRaf = requestAnimationFrame(() => {
+      scrollCheckRaf = 0;
+      observed.forEach((el) => {
+        if (!animating.has(el)) evaluateElement(el);
+      });
+    });
+  };
+
+  window.addEventListener("scroll", onScrollVisibilityCheck, { passive: true });
+
   const observeAll = (list) => {
     list.forEach((el) => {
+      observed.add(el);
       visibility.set(
         el,
         el.classList.contains("is-revealed") ? "visible" : "hidden",
@@ -183,6 +299,8 @@ function attachScrollRevealObserver(elements, onNeedMore) {
     observer.disconnect();
     lateObserver();
     window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("scroll", onScrollVisibilityCheck);
+    if (scrollCheckRaf) cancelAnimationFrame(scrollCheckRaf);
   };
 }
 
