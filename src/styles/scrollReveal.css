@@ -67,6 +67,12 @@ html.page-enter-revealing
     opacity 0.68s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.68s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.scroll-reveal.scroll-reveal--from-below:not(.is-revealed),
+.scroll-reveal.scroll-reveal--from-above:not(.is-revealed) {
+  opacity: 0;
 }
 
 /* Entrada al hacer scroll hacia abajo */

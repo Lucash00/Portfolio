@@ -25,17 +25,19 @@ function isActive(href, pathname) {
 }
 
 function NavLink({ href, icon, label, active, external }) {
+  const linkHover =
+    "hover:cursor-pointer hover:text-yellow-400 hover:border-yellow-400";
+
   const linkClass = [
     "menu-link group flex h-full w-full flex-col border-b-2 box-border pt-1 pb-0 text-center transition-colors duration-150 ease-in-out",
     "md:px-2 lg:px-4 xl:px-7 2xl:px-8",
     active
-      ? "cursor-default text-white border-transparent"
-      : "text-gray-400 border-transparent hover:text-yellow-400 hover:border-yellow-400",
+      ? `text-white border-transparent ${linkHover}`
+      : `text-gray-400 border-transparent ${linkHover}`,
   ].join(" ");
 
   const contentClass = [
-    "menu-link__content block flex-1 pb-0.5 transition-transform duration-150 ease-in-out",
-    !active && "group-hover:scale-110",
+    "menu-link__content block flex-1 pb-0.5 transition-transform duration-150 ease-in-out group-hover:scale-110",
   ]
     .filter(Boolean)
     .join(" ");
