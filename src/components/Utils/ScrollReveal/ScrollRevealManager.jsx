@@ -146,9 +146,8 @@ function attachScrollRevealObserver(elements, onNeedMore) {
     return "down";
   };
 
-  const getExitDirection = (entry) => {
-    return scrollDirection === "down" ? "up" : "down";
-  };
+  const getExitDirection = () =>
+    scrollDirection === "down" ? "up" : "down";
 
   const evaluateElement = (el, entry) => {
     if (!(el instanceof HTMLElement)) return;
@@ -162,7 +161,7 @@ function attachScrollRevealObserver(elements, onNeedMore) {
 
     if (isVisible) {
       if (shouldHideVisible(rect, vh, thresholds, scrollDirection)) {
-        hide(el, getExitDirection(syntheticEntry));
+        hide(el, getExitDirection());
       }
       return;
     }

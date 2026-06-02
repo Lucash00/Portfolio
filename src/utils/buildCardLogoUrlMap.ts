@@ -4,14 +4,15 @@ import {
   CARD_LOGO_PATHS,
   type CardLogoUrlMap,
 } from "../data/cardLogoPaths";
-import { buildCardLogoUrlMapSync } from "./cardLogoUrls";
+import {
+  buildCardLogoUrlMapSync,
+  DETAIL_LOGO_MAX_WIDTH,
+  DETAIL_LOGO_MAX_HEIGHT,
+} from "./cardLogoUrls";
 import { resolvePublicLogo } from "./cardLogoImageSources";
 
 const CARD_LOGO_WIDTH = 224;
 const CARD_LOGO_HEIGHT = 96;
-const DETAIL_LOGO_WIDTH = 80;
-const DETAIL_LOGO_HEIGHT = 80;
-
 let cachedMap: CardLogoUrlMap | null = null;
 
 async function optimizeLogo(
@@ -48,8 +49,8 @@ export async function getCardLogoUrlMap(): Promise<CardLogoUrlMap> {
       const card = await optimizeLogo(path, CARD_LOGO_WIDTH, CARD_LOGO_HEIGHT);
       const detail = await optimizeLogo(
         path,
-        DETAIL_LOGO_WIDTH,
-        DETAIL_LOGO_HEIGHT,
+        DETAIL_LOGO_MAX_WIDTH,
+        DETAIL_LOGO_MAX_HEIGHT,
       );
 
       return [path, { card, detail }] as const;

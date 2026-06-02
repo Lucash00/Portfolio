@@ -7,6 +7,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
 const outDir = path.join(rootDir, "public", "_card-logos");
 
+const DETAIL_MAX_WIDTH = 320;
+const DETAIL_MAX_HEIGHT = 80;
+
 const CARD_LOGO_PATHS = [
   "/DatabaySolutions/logo.png",
   "/Certificates/logo.png",
@@ -49,7 +52,7 @@ async function main() {
 
   for (const logoPath of CARD_LOGO_PATHS) {
     await optimizeLogo(logoPath, 224, 96, "card");
-    await optimizeLogo(logoPath, 80, 80, "detail");
+    await optimizeLogo(logoPath, DETAIL_MAX_WIDTH, DETAIL_MAX_HEIGHT, "detail");
   }
 
   const mapPath = path.join(rootDir, "src", "data", "cardLogoUrlMap.json");

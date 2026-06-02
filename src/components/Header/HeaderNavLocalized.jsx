@@ -24,7 +24,7 @@ function isActive(href, pathname) {
   return prefix ? pathname.startsWith(prefix) : false;
 }
 
-function NavLink({ href, icon, label, active, external }) {
+function NavLink({ href, icon, label, active }) {
   const linkHover =
     "hover:cursor-pointer hover:text-yellow-400 hover:border-yellow-400";
 
@@ -85,7 +85,6 @@ export default function HeaderNavLocalized() {
           icon={item.icon}
           label={t(item.key)}
           active={!item.external && isActive(item.href, pathname)}
-          external={item.external}
         />
       ))}
     </nav>
