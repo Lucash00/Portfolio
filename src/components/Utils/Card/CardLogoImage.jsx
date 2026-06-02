@@ -1,9 +1,11 @@
-import { getCardLogoWebpSrc } from "../../../utils/cardLogoUrls.ts";
+import {
+  getCardLogoWebpSrc,
+  DETAIL_LOGO_MAX_WIDTH,
+  DETAIL_LOGO_MAX_HEIGHT,
+} from "../../../utils/cardLogoUrls.ts";
 
 const CARD_LOGO_WIDTH = 224;
 const CARD_LOGO_HEIGHT = 96;
-const DETAIL_LOGO_WIDTH = 80;
-const DETAIL_LOGO_HEIGHT = 80;
 
 function resolveCardLogoSrc(src, variant = "card") {
   if (!src) return src;
@@ -35,9 +37,10 @@ export default function CardLogoImage({
 }) {
   const resolvedSrc = resolveCardLogoSrc(src, variant);
   const resolvedWidth =
-    width ?? (variant === "detail" ? DETAIL_LOGO_WIDTH : CARD_LOGO_WIDTH);
+    width ?? (variant === "detail" ? DETAIL_LOGO_MAX_WIDTH : CARD_LOGO_WIDTH);
   const resolvedHeight =
-    height ?? (variant === "detail" ? DETAIL_LOGO_HEIGHT : CARD_LOGO_HEIGHT);
+    height ??
+    (variant === "detail" ? DETAIL_LOGO_MAX_HEIGHT : CARD_LOGO_HEIGHT);
 
   return (
     <img

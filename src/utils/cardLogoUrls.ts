@@ -2,8 +2,9 @@ import { CARD_LOGO_PATHS, type CardLogoUrlMap } from "../data/cardLogoPaths";
 
 export const CARD_LOGO_WIDTH = 224;
 export const CARD_LOGO_HEIGHT = 96;
-export const DETAIL_LOGO_WIDTH = 80;
-export const DETAIL_LOGO_HEIGHT = 80;
+/** 2× del tamaño en pantalla (h-10 / 2rem) para logos anchos en DetailTitle. */
+export const DETAIL_LOGO_MAX_WIDTH = 320;
+export const DETAIL_LOGO_MAX_HEIGHT = 80;
 
 /** Slug estable: /DatabaySolutions/logo.png → DatabaySolutions--logo */
 export function cardLogoSlug(publicPath: string): string {
