@@ -8,17 +8,17 @@ import { FiExternalLink } from "react-icons/fi";
 const { link, compact = false } = Astro.props;
 
 const linkClass = compact
-  ? "group flex flex-col relative min-w-0 max-w-full my-2.5 sm:my-3 md:my-4 rounded-lg ease-in-out duration-300 sm:transform-none transform md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-gray-700"
-  : "group flex flex-col relative min-w-0 max-w-full sm:my-6 sm:mx-2 md:my-8 md:mx-4 lg:my-8 lg:mx-6 xl:my-8 xl:mx-8 2xl:my-8 2xl:mx-12 rounded-lg ease-in-out duration-300 sm:transform-none transform md:hover:-translate-y-1 md:hover:shadow-lg md:hover:shadow-gray-700";
+  ? "portfolio-list-card group flex flex-col relative min-w-0 max-w-full my-2.5 sm:my-3 md:my-4 rounded-lg"
+  : "portfolio-list-card group flex flex-col relative min-w-0 max-w-full sm:my-6 sm:mx-2 md:my-8 md:mx-4 lg:my-8 lg:mx-6 xl:my-8 xl:mx-8 2xl:my-8 2xl:mx-12 rounded-lg";
 
 const cardBodyClass =
-  "relative min-w-0 w-full grid grid-cols-10 rounded-b-lg overflow-hidden bg-slate-100";
+  "relative min-w-0 w-full grid grid-cols-10 rounded-b-lg overflow-hidden bg-slate-100 shadow-lg";
 ---
 
 <astro>
-  <a href={link} class={linkClass}>
+  <a href={link} class={linkClass} data-no-scroll-reveal>
     <div class="card-accent-bar" aria-hidden="true"></div>
-    <div class={cardBodyClass}>
+    <div class={cardBodyClass} data-no-scroll-reveal>
       <slot />
       <div class="absolute top-2 right-2 text-gray-400 pointer-events-none z-10 sm:text-base lg:text-lg xl:text-xl">
         <FiExternalLink />
