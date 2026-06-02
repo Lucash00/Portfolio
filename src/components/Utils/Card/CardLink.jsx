@@ -2,16 +2,16 @@ import { FiExternalLink } from "react-icons/fi";
 
 export default function CardLink({ link, compact = false, children }) {
   const linkClass = compact
-    ? "group flex flex-col relative min-w-0 max-w-full my-2.5 sm:my-3 md:my-4 rounded-lg md:hover:shadow-lg md:hover:shadow-gray-700"
-    : "group flex flex-col relative min-w-0 max-w-full sm:my-6 sm:mx-2 md:my-8 md:mx-4 lg:my-8 lg:mx-6 xl:my-8 xl:mx-8 2xl:my-8 2xl:mx-12 rounded-lg md:hover:shadow-lg md:hover:shadow-gray-700";
+    ? "portfolio-list-card group flex flex-col relative min-w-0 max-w-full my-2.5 sm:my-3 md:my-4 rounded-lg"
+    : "portfolio-list-card group flex flex-col relative min-w-0 max-w-full sm:my-6 sm:mx-2 md:my-8 md:mx-4 lg:my-8 lg:mx-6 xl:my-8 xl:mx-8 2xl:my-8 2xl:mx-12 rounded-lg";
 
   const cardSurfaceClass =
-    "relative min-w-0 w-full grid grid-cols-10 rounded-b-lg overflow-hidden bg-slate-100 md:transition-transform md:duration-300 md:ease-in-out md:group-hover:-translate-y-1";
+    "relative min-w-0 w-full grid grid-cols-10 rounded-b-lg overflow-hidden bg-slate-100 shadow-lg";
 
   return (
-    <a href={link} className={linkClass}>
+    <a href={link} className={linkClass} data-no-scroll-reveal>
       <div className="card-accent-bar" aria-hidden="true" />
-      <div className={cardSurfaceClass}>
+      <div className={cardSurfaceClass} data-no-scroll-reveal>
         {children}
         <div className="absolute top-2 right-2 text-gray-400 pointer-events-none z-10 sm:text-base lg:text-lg xl:text-xl">
           <FiExternalLink />

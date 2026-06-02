@@ -34,7 +34,7 @@ html.is-route-changing .contact-section {
   :is(
     .scroll-reveal-item,
     [data-scroll-reveal="on"],
-    a.group,
+    a.group:not([data-no-scroll-reveal]),
     main .grid.grid-cols-2 > *
   ):not(.scroll-reveal):not(.is-revealed):not(.scroll-reveal--settled),
 html.page-enter-revealing
@@ -50,7 +50,7 @@ html.page-enter-revealing
   :is(
     .scroll-reveal-item,
     [data-scroll-reveal="on"],
-    a.group,
+    a.group:not([data-no-scroll-reveal]),
     main .grid.grid-cols-2 > *
   ):not(.is-revealed):not(.scroll-reveal--settled),
 .page-end
@@ -112,7 +112,7 @@ html.page-enter-revealing
     :is(
       .scroll-reveal-item,
       [data-scroll-reveal="on"],
-      a.group,
+      a.group:not([data-no-scroll-reveal]),
       main .grid.grid-cols-2 > *
     ):not(.is-revealed):not(.scroll-reveal--settled),
   .page-end

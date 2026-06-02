@@ -6,7 +6,7 @@ import { isNavigationScrollRevealHold } from "./pageEnter.js";
 const REVEAL_SELECTORS = [
   "[data-scroll-reveal]",
   ".scroll-reveal-item",
-  "a.group",
+  "a.group:not([data-no-scroll-reveal])",
   "main .grid.grid-cols-2 > *",
   "[data-scroll-reveal='on']",
 ].join(",");
@@ -41,6 +41,9 @@ function isExcluded(el) {
   if (el.closest("#header, header, .side-menu, .header")) return true;
   if (el.closest(".lightbox-root, .about-avatar-flyer")) return true;
   if (el.hasAttribute("data-no-scroll-reveal")) return true;
+  if (el.closest("a.portfolio-list-card") && !el.matches("a.portfolio-list-card")) {
+    return true;
+  }
 
   const style = getComputedStyle(el);
   if (style.display === "none") return true;
