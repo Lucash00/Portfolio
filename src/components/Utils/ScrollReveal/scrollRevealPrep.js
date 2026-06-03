@@ -6,7 +6,7 @@ import { isNavigationScrollRevealHold } from "./pageEnter.js";
 const REVEAL_SELECTORS = [
   "[data-scroll-reveal]",
   ".scroll-reveal-item",
-  "a.group:not([data-no-scroll-reveal])",
+  "a.group:not(.portfolio-list-card)",
   "main .grid.grid-cols-2 > *",
   "[data-scroll-reveal='on']",
 ].join(",");
@@ -33,6 +33,11 @@ function isContactRevealElement(el) {
   return Boolean(el.closest(".page-end, .contact-section"));
 }
 
+/** Cards de listado: siempre reveal al scroll (también en inicio). */
+function isPortfolioCardRevealElement(el) {
+  return el.classList.contains("portfolio-list-card-wrap");
+}
+
 function isExcluded(el) {
   if (!(el instanceof HTMLElement)) return true;
   if (SKIP_TAGS.has(el.tagName)) return true;
@@ -41,9 +46,6 @@ function isExcluded(el) {
   if (el.closest("#header, header, .side-menu, .header")) return true;
   if (el.closest(".lightbox-root, .about-avatar-flyer")) return true;
   if (el.hasAttribute("data-no-scroll-reveal")) return true;
-  if (el.closest("a.portfolio-list-card") && !el.matches("a.portfolio-list-card")) {
-    return true;
-  }
 
   const style = getComputedStyle(el);
   if (style.display === "none") return true;
@@ -108,7 +110,11 @@ function prepRevealElements(elements, { skipSettledShortcut = false } = {}) {
   const homeEnterActive = isHomePageEnterActive();
 
   elements.forEach((el) => {
-    if (homeEnterActive && el.classList.contains("scroll-reveal--settled")) {
+    if (
+      homeEnterActive &&
+      el.classList.contains("scroll-reveal--settled") &&
+      !isPortfolioCardRevealElement(el)
+    ) {
       return;
     }
 
@@ -125,12 +131,14 @@ function prepRevealElements(elements, { skipSettledShortcut = false } = {}) {
     const showWithPageEnter =
       allowSettledShortcut &&
       !isContactRevealElement(el) &&
+      !isPortfolioCardRevealElement(el) &&
       hadPageEnter &&
       isInViewportOnInit(el, topRevealInset);
 
     const showWithHomeEnter =
       isHomePage() &&
       !isContactRevealElement(el) &&
+      !isPortfolioCardRevealElement(el) &&
       isInViewportOnInit(el, topRevealInset);
 
     if (showWithPageEnter || showWithHomeEnter) {

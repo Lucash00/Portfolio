@@ -29,17 +29,21 @@ html.is-route-changing .contact-section {
   pointer-events: none !important;
 }
 
-/* Inicio: sin slide-up en viewport durante fadeIn */
+/* Inicio: sin slide-up en viewport durante fadeIn (títulos, etc.; no las cards) */
 [data-page-enter="fade"]
   :is(
-    .scroll-reveal-item,
+    .scroll-reveal-item:not(.portfolio-list-card-wrap),
     [data-scroll-reveal="on"],
-    a.group:not([data-no-scroll-reveal]),
+    a.group:not(.portfolio-list-card),
     main .grid.grid-cols-2 > *
   ):not(.scroll-reveal):not(.is-revealed):not(.scroll-reveal--settled),
 html.page-enter-revealing
   [data-page-enter="fade"]
-  :is(.scroll-reveal-item, .scroll-reveal.scroll-reveal--settled, .scroll-reveal.is-revealed) {
+  :is(
+    .scroll-reveal-item:not(.portfolio-list-card-wrap),
+    .scroll-reveal.scroll-reveal--settled:not(.portfolio-list-card-wrap),
+    .scroll-reveal.is-revealed:not(.portfolio-list-card-wrap)
+  ) {
   opacity: 1 !important;
   transform: none !important;
 }
@@ -50,7 +54,7 @@ html.page-enter-revealing
   :is(
     .scroll-reveal-item,
     [data-scroll-reveal="on"],
-    a.group:not([data-no-scroll-reveal]),
+    a.group:not(.portfolio-list-card),
     main .grid.grid-cols-2 > *
   ):not(.is-revealed):not(.scroll-reveal--settled),
 .page-end
@@ -112,7 +116,7 @@ html.page-enter-revealing
     :is(
       .scroll-reveal-item,
       [data-scroll-reveal="on"],
-      a.group:not([data-no-scroll-reveal]),
+      a.group:not(.portfolio-list-card),
       main .grid.grid-cols-2 > *
     ):not(.is-revealed):not(.scroll-reveal--settled),
   .page-end
