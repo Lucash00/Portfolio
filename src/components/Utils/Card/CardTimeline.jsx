@@ -26,7 +26,6 @@ export default function CardTimeline({ experience, variant = 'default' }) {
       <a
         href={experiencePath(experience.slug)}
         className="portfolio-list-card group flex w-full min-w-0 max-w-full flex-col rounded-lg"
-        data-no-scroll-reveal
       >
         <div className="card-accent-bar" aria-hidden="true" />
         <div className="relative flex w-full min-w-0 flex-col items-center rounded-b-lg bg-slate-100 px-4 py-4 text-center shadow-lg sm:px-5 sm:py-5">
@@ -77,7 +76,6 @@ export default function CardTimeline({ experience, variant = 'default' }) {
     <a
       href={experiencePath(experience.slug)}
       className="portfolio-list-card group flex min-w-0 max-w-full flex-col rounded-lg"
-      data-no-scroll-reveal
     >
       <div className="card-accent-bar" aria-hidden="true" />
       <div className="relative grid w-full min-w-0 gap-1 overflow-hidden rounded-b-lg bg-slate-100 px-3 py-2 shadow-lg sm:px-3 sm:py-2 md:p-8">

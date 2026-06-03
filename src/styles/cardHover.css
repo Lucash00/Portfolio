@@ -1,5 +1,10 @@
 /* Hover de tarjetas: desktop (≥640px) y dispositivos con ratón */
 @media (min-width: 640px) and (hover: hover) {
+  .portfolio-list-card-wrap:has(a.portfolio-list-card:hover) {
+    position: relative;
+    z-index: 10;
+  }
+
   .portfolio-list-card {
     position: relative;
     z-index: 0;
@@ -9,9 +14,7 @@
       box-shadow 0.3s ease;
   }
 
-  a.portfolio-list-card:hover,
-  a.portfolio-list-card.scroll-reveal--settled:hover,
-  a.portfolio-list-card.is-revealed:hover {
+  a.portfolio-list-card:hover {
     z-index: 10;
     transform: translate3d(0, -0.25rem, 0);
     box-shadow:
@@ -19,16 +22,12 @@
       0 4px 6px -4px rgba(17, 24, 39, 0.35);
   }
 
-  a.portfolio-list-card:hover .card-accent-bar,
-  a.portfolio-list-card.scroll-reveal--settled:hover .card-accent-bar,
-  a.portfolio-list-card.is-revealed:hover .card-accent-bar {
+  a.portfolio-list-card:hover .card-accent-bar {
     opacity: 1;
     filter: brightness(1.2) saturate(1.15);
   }
 
-  a.portfolio-list-card:hover .card-title,
-  a.portfolio-list-card.scroll-reveal--settled:hover .card-title,
-  a.portfolio-list-card.is-revealed:hover .card-title {
+  a.portfolio-list-card:hover .card-title {
     color: #1d4ed8;
   }
 }

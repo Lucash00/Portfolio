@@ -37,7 +37,7 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
   html.page-enter-boot [data-page-enter],
   html.page-enter-boot [data-page-enter="slide"] astro-island,
   html.page-enter-boot [data-page-enter="slide-page"] astro-island,
-  html.page-enter-boot [data-page-enter] :is(a.group:not([data-no-scroll-reveal]), .bg-slate-100:not(.portfolio-list-card *), main .grid.grid-cols-2 > *),
+  html.page-enter-boot [data-page-enter] :is(a.group:not(.portfolio-list-card), .bg-slate-100:not(.portfolio-list-card *), main .grid.grid-cols-2 > *),
   html.page-enter-boot .page-end,
   html.page-enter-boot .contact-section,
   html.page-enter-revealing .page-end,
@@ -45,7 +45,7 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
   html.is-route-changing [data-page-enter],
   html.is-route-changing [data-page-enter="slide"] astro-island,
   html.is-route-changing [data-page-enter="slide-page"] astro-island,
-  html.is-route-changing [data-page-enter] :is(a.group:not([data-no-scroll-reveal]), .bg-slate-100:not(.portfolio-list-card *), main .grid.grid-cols-2 > *),
+  html.is-route-changing [data-page-enter] :is(a.group:not(.portfolio-list-card), .bg-slate-100:not(.portfolio-list-card *), main .grid.grid-cols-2 > *),
   html.is-route-changing .page-end,
   html.is-route-changing .contact-section {
     opacity: 0 !important;
@@ -132,7 +132,7 @@ import { DEFAULT_LOCALE } from "../../i18n/config";
     }
 
     var ROUTE_HIDE_STYLE =
-      "html.page-enter-boot [data-page-enter],html.page-enter-boot [data-page-enter=\"slide\"] astro-island,html.page-enter-boot [data-page-enter=\"slide-page\"] astro-island,html.page-enter-boot [data-page-enter] :is(a.group:not([data-no-scroll-reveal]),.bg-slate-100:not(.portfolio-list-card *),main .grid.grid-cols-2>*),html.page-enter-boot .page-end,html.page-enter-boot .contact-section,html.is-route-changing [data-page-enter],html.is-route-changing [data-page-enter=\"slide\"] astro-island,html.is-route-changing [data-page-enter=\"slide-page\"] astro-island,html.is-route-changing [data-page-enter] :is(a.group:not([data-no-scroll-reveal]),.bg-slate-100:not(.portfolio-list-card *),main .grid.grid-cols-2>*),html.is-route-changing .page-end,html.is-route-changing .contact-section,html.is-route-changing .text-mouse-glow::before,html.is-route-changing #portfolio-icon-glow-layer,html.glow-paused .text-mouse-glow::before,html.glow-paused #portfolio-icon-glow-layer{opacity:0!important;visibility:hidden!important;transition:none!important}";
+      "html.page-enter-boot [data-page-enter],html.page-enter-boot [data-page-enter=\"slide\"] astro-island,html.page-enter-boot [data-page-enter=\"slide-page\"] astro-island,html.page-enter-boot [data-page-enter] :is(a.group:not(.portfolio-list-card),.bg-slate-100:not(.portfolio-list-card *),main .grid.grid-cols-2>*),html.page-enter-boot .page-end,html.page-enter-boot .contact-section,html.is-route-changing [data-page-enter],html.is-route-changing [data-page-enter=\"slide\"] astro-island,html.is-route-changing [data-page-enter=\"slide-page\"] astro-island,html.is-route-changing [data-page-enter] :is(a.group:not(.portfolio-list-card),.bg-slate-100:not(.portfolio-list-card *),main .grid.grid-cols-2>*),html.is-route-changing .page-end,html.is-route-changing .contact-section,html.is-route-changing .text-mouse-glow::before,html.is-route-changing #portfolio-icon-glow-layer,html.glow-paused .text-mouse-glow::before,html.glow-paused #portfolio-icon-glow-layer{opacity:0!important;visibility:hidden!important;transition:none!important}";
 
     function resetTextGlowState(root) {
       root.querySelectorAll("[data-text-glow]").forEach(function (el) {
