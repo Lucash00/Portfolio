@@ -11,10 +11,12 @@ const DETAIL_MAX_WIDTH = 320;
 const DETAIL_MAX_HEIGHT = 80;
 
 const CARD_LOGO_PATHS = [
+  "/NettDigitalSchool/logo.png",
   "/DatabaySolutions/logo.png",
   "/Certificates/logo.png",
   "/ControlNet/logo.png",
   "/tecnico/logo.png",
+  "/EcoHome/logo.png",
   "/DevOpsTemplate/logo.png",
   "/Utsch/logo.png",
   "/Cuboc/logo.png",

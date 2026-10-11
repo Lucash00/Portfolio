@@ -1,9 +1,11 @@
 /** Rutas de logos usadas en cards/detalles (sin importar los arrays de datos). */
 export const CARD_LOGO_PATHS = [
+  "/NettDigitalSchool/logo.png",
   "/DatabaySolutions/logo.png",
   "/Certificates/logo.png",
   "/ControlNet/logo.png",
   "/tecnico/logo.png",
+  "/EcoHome/logo.png",
   "/DevOpsTemplate/logo.png",
   "/Utsch/logo.png",
   "/Cuboc/logo.png",

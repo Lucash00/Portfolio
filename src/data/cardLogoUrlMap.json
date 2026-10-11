@@ -1,4 +1,8 @@
 {
+  "/NettDigitalSchool/logo.png": {
+    "card": "/_card-logos/NettDigitalSchool--logo-card.webp",
+    "detail": "/_card-logos/NettDigitalSchool--logo-detail.webp"
+  },
   "/DatabaySolutions/logo.png": {
     "card": "/_card-logos/DatabaySolutions--logo-card.webp",
     "detail": "/_card-logos/DatabaySolutions--logo-detail.webp"
@@ -14,6 +18,10 @@
   "/tecnico/logo.png": {
     "card": "/_card-logos/tecnico--logo-card.webp",
     "detail": "/_card-logos/tecnico--logo-detail.webp"
+  },
+  "/EcoHome/logo.png": {
+    "card": "/_card-logos/EcoHome--logo-card.webp",
+    "detail": "/_card-logos/EcoHome--logo-detail.webp"
   },
   "/DevOpsTemplate/logo.png": {
     "card": "/_card-logos/DevOpsTemplate--logo-card.webp",

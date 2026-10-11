@@ -3,7 +3,6 @@
  * Sustituye FormSubmit.co, que en producción devolvía 521 / fallos de CORS.
  */
 const WEB3FORMS_URL = "https://api.web3forms.com/submit";
-const TO_EMAIL = "lucas.moreno.dev@gmail.com";
 
 function jsonResponse(body, status = 200) {
   return new Response(JSON.stringify(body), {
