@@ -11,11 +11,96 @@ const la11milMediaFolder = "/la11mil";
 const rotaPlaceMediaFolder = "/RotaPlace";
 const moviesDetailsMediaFolder = "/MoviesDetails";
 const BookingApiMediaFolder = "/BookingApi";
+const ecoHomeMediaFolder = "/EcoHome";
 
 
 import type { Project } from "../types";
 
 export const projectsEs: Project[] = [
+  {
+    slug: "EcoHome",
+    title: "EcoHome",
+    titleJob: "Plataforma SaaS de gestión energética del hogar — proyecto propio",
+    briefDescription: "Plataforma <strong>SaaS</strong> en producción que cruza el <strong>precio horario oficial de la luz</strong>, las <strong>facturas</strong>, la <strong>producción solar</strong> y un catálogo de tarifas para mostrar a cada usuario dónde paga de más. Cuatro servicios con <strong>Next.js</strong>, <strong>Node.js</strong> y <strong>Python/FastAPI</strong> en <strong>Vercel</strong> y <strong>Google Cloud Run</strong>.",
+    description: `<strong>EcoHome</strong> es una plataforma <strong>SaaS de gestión energética doméstica</strong> para el mercado eléctrico español, diseñada, construida, desplegada y operada íntegramente por mí como <strong>proyecto propio</strong>. Responde a una pregunta muy concreta: <strong>¿dónde estoy pagando de más y qué puedo hacer hoy para pagar menos?</strong> Para contestarla cruza, con los números reales de cada usuario, el precio horario oficial de la luz (PVPC, Red Eléctrica), el consumo y el coste de sus facturas, la producción de sus placas solares, el clima y un catálogo de ofertas del mercado.
+
+No es una demo: es un producto en producción, con dominio propio, cuentas de usuario, panel de administración, planes de suscripción con límites aplicados en servidor y datos oficiales reales, sin cifras simuladas.
+
+<strong>Qué hace:</strong>
+      <ul>
+      <li><strong>Facturas con OCR propio:</strong> subida de PDF o importación automática desde el correo (IMAP, Gmail API y Microsoft Graph), con extracción mediante un pipeline propio (calidad del texto, lectura espacial, OCR y QR oficial de la CNMC) y puntuación de confianza.</li>
+      <li><strong>Comparador de tarifas:</strong> motor de precios y catálogo propios que reproducen el cálculo oficial de la CNMC con una desviación mediana del 0,0 % (percentil 90 del 0,1 %), con veredicto CAMBIAR / VIGILAR / MANTENER y desglose auditable.</li>
+      <li><strong>Solar multi-proveedor:</strong> 7 integraciones de inversores (Huawei FusionSolar, SolarEdge, Victron, Fronius, SMA, GoodWe y SolisCloud; Huawei validado con una instalación real) con autoconsumo, excedentes, batería y rentabilidad de la instalación.</li>
+      <li><strong>Más de 40 consejos personalizados</strong> priorizados por severidad e impacto en euros, y diagnóstico de la potencia contratada.</li>
+      <li><strong>Tiempo real y back-office:</strong> WebSockets y SSE, 20 tipos de notificación y administración con impersonación auditada, códigos promocionales y cuadro de mando de negocio.</li>
+      </ul>
+
+<strong>Arquitectura:</strong>
+      <ul>
+      <li><strong>Frontend:</strong> Next.js 16, React 19 y TypeScript estricto en Vercel; 43 pantallas, modo claro y oscuro, SEO y accesibilidad medidos.</li>
+      <li><strong>Backend:</strong> Auth y Data-Ingestion en Node.js/Express con Prisma, y Analytics en Python/FastAPI con GraphQL, sobre Google Cloud Run; ≈175 endpoints en total.</li>
+      <li><strong>Datos:</strong> PostgreSQL (Supabase) con un esquema por servicio y Redis (Upstash) para caché, rate limiting y tiempo real.</li>
+      <li><strong>Borde:</strong> Worker de Cloudflare como proxy del servicio de Auth para compartir la cookie de sesión con el frontend.</li>
+      </ul>
+
+<strong>Seguridad, DevOps y calidad:</strong>
+      <ul>
+      <li><strong>Seguridad en profundidad:</strong> refresh tokens rotados con detección de reutilización, OAuth 2.0 con PKCE, 2FA, RBAC en dos capas, cifrado AES-256-GCM con rotación de claves y reglas de correlación de eventos con revocación automática de sesiones.</li>
+      <li><strong>CI/CD sin claves almacenadas:</strong> GitHub Actions con Workload Identity Federation, que despliega solo el servicio modificado tras pasar sus tests.</li>
+      <li><strong>Calidad medida:</strong> 724 tests automatizados y Lighthouse móvil de 93 a 97 (escritorio de 99 a 100) en el banco de pruebas propio; la home móvil pasó de 81 a 96 tras el plan de mejoras.</li>
+      </ul>
+
+_Monorepo privado: el código no está disponible públicamente, pero la plataforma está en producción y se puede visitar desde el enlace de este proyecto._`,
+    objective: "Responder con datos reales y verificables a una pregunta concreta —<strong>¿dónde pago de más en la luz y qué puedo hacer hoy para pagar menos?</strong>— con un producto <strong>neutral, auditable y en producción</strong>, construido de extremo a extremo: front-office público, back-office privado, gestión de usuarios y de contenidos y despliegue real en la nube.",
+    startDate: "Jun 2026",
+    endDate: "Oct 2026",
+    tags: [
+      "Next.js",
+      "FastAPI",
+      "PostgreSQL",
+      "Cloud Run",
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Prisma",
+      "GraphQL",
+      "Redis",
+      "Docker",
+      "GitHub Actions",
+      "Cloudflare",
+      "Vercel",
+      "OAuth 2.0",
+      "OCR",
+      "SaaS"
+    ],
+    logo: `${ecoHomeMediaFolder}/logo.png`,
+    media: [
+      `${ecoHomeMediaFolder}/1.webp`,
+      `${ecoHomeMediaFolder}/2.webp`,
+      `${ecoHomeMediaFolder}/3.webp`,
+      `${ecoHomeMediaFolder}/4.webp`,
+      `${ecoHomeMediaFolder}/5.webp`,
+      `${ecoHomeMediaFolder}/6.webp`,
+      `${ecoHomeMediaFolder}/7.webp`,
+      `${ecoHomeMediaFolder}/8.webp`,
+      `${ecoHomeMediaFolder}/9.webp`,
+      `${ecoHomeMediaFolder}/10.webp`,
+      `${ecoHomeMediaFolder}/11.webp`,
+      `${ecoHomeMediaFolder}/12.webp`
+    ],
+    links: {
+      website: "https://ecohome.lucas-moreno-dev.com"
+    },
+    team: {
+      contributors: [
+        { name: "Lucas Moreno", role: "Desarrollador Fullstack, DevOps y Arquitecto de Software" }
+      ]
+    },
+    developmentProcess: {
+      methodology: "Iterativa e incremental: planificación documentada antes de implementar (plan maestro y 47 documentos de detalle), medir antes de optimizar y verificación de extremo a extremo, con desarrollo asistido por IA (Cursor y Claude Code) bajo revisión propia.",
+      timeline: "Jun 2026 - Oct 2026"
+    }
+  },
   {
     slug: "DevOps-Template-GCP",
     title: "DevOps Template GCP",

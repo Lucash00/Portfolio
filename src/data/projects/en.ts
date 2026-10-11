@@ -11,11 +11,96 @@ const la11milMediaFolder = "/la11mil";
 const rotaPlaceMediaFolder = "/RotaPlace";
 const moviesDetailsMediaFolder = "/MoviesDetails";
 const BookingApiMediaFolder = "/BookingApi";
+const ecoHomeMediaFolder = "/EcoHome";
 
 
 import type { Project } from "../types";
 
 export const projectsEn: Project[] = [
+  {
+    slug: "EcoHome",
+    title: "EcoHome",
+    titleJob: "Home energy-management SaaS platform — personal project",
+    briefDescription: "Production <strong>SaaS</strong> platform that combines the <strong>official hourly electricity price</strong>, users' <strong>bills</strong>, their <strong>solar production</strong> and a tariff catalog to show each user where they overpay. Four services built with <strong>Next.js</strong>, <strong>Node.js</strong> and <strong>Python/FastAPI</strong>, running on <strong>Vercel</strong> and <strong>Google Cloud Run</strong>.",
+    description: `<strong>EcoHome</strong> is a <strong>home energy-management SaaS platform</strong> for the Spanish electricity market, designed, built, deployed and operated entirely by me as a <strong>personal project</strong>. It answers one very specific question: <strong>where am I overpaying, and what can I do today to pay less?</strong> To answer it, it combines each user's real numbers: the official hourly electricity price (PVPC, Red Eléctrica), the consumption and cost of their bills, the production of their solar panels, the weather and a catalog of market offers.
+
+It is not a demo: it is a production product, with its own domain, user accounts, an admin panel, subscription plans with server-enforced limits and real official data, with no simulated figures.
+
+<strong>What it does:</strong>
+      <ul>
+      <li><strong>Bills with in-house OCR:</strong> PDF upload or automatic import from email (IMAP, Gmail API and Microsoft Graph), extracted by a custom pipeline (text quality, spatial reading, OCR and the official CNMC QR code) with a confidence score.</li>
+      <li><strong>Tariff comparator:</strong> in-house pricing engine and catalog that reproduce the official CNMC calculation with a median deviation of 0.0% (90th percentile 0.1%), with a switch / watch / keep verdict and an auditable breakdown.</li>
+      <li><strong>Multi-vendor solar:</strong> 7 inverter integrations (Huawei FusionSolar, SolarEdge, Victron, Fronius, SMA, GoodWe and SolisCloud; Huawei validated with a real installation) covering self-consumption, surplus, battery and return on investment.</li>
+      <li><strong>40+ personalized tips</strong> prioritized by severity and euro impact, plus a contracted-power diagnosis.</li>
+      <li><strong>Real time and back-office:</strong> WebSockets and SSE, 20 notification types, and an admin area with audited impersonation, promo codes and a business dashboard.</li>
+      </ul>
+
+<strong>Architecture:</strong>
+      <ul>
+      <li><strong>Frontend:</strong> Next.js 16, React 19 and strict TypeScript on Vercel; 43 screens, light and dark mode, measured SEO and accessibility.</li>
+      <li><strong>Backend:</strong> Auth and Data-Ingestion in Node.js/Express with Prisma, and Analytics in Python/FastAPI with GraphQL, all on Google Cloud Run; about 175 endpoints in total.</li>
+      <li><strong>Data:</strong> PostgreSQL (Supabase) with one schema per service and Redis (Upstash) for caching, rate limiting and real time.</li>
+      <li><strong>Edge:</strong> Cloudflare Worker as a reverse proxy for the Auth service so the session cookie can be shared with the frontend.</li>
+      </ul>
+
+<strong>Security, DevOps and quality:</strong>
+      <ul>
+      <li><strong>Defense in depth:</strong> rotating refresh tokens with reuse detection, OAuth 2.0 with PKCE, 2FA, two-layer RBAC, AES-256-GCM encryption with key rotation and event-correlation rules that automatically revoke sessions.</li>
+      <li><strong>Keyless CI/CD:</strong> GitHub Actions with Workload Identity Federation, deploying only the changed service after its tests pass.</li>
+      <li><strong>Measured quality:</strong> 724 automated tests and mobile Lighthouse of 93 to 97 (desktop 99 to 100) on the in-house benchmark; the mobile homepage went from 81 to 96 after the improvement plan.</li>
+      </ul>
+
+_Private monorepo: the code is not publicly available, but the platform is in production and can be visited from this project's link._`,
+    objective: "Answer a concrete question with real, verifiable data —<strong>where am I overpaying for electricity, and what can I do today to pay less?</strong>— through a <strong>neutral, auditable, production-grade</strong> product built end to end: public front-office, private back-office, user and content management, and real cloud deployment.",
+    startDate: "Jun 2026",
+    endDate: "Oct 2026",
+    tags: [
+      "Next.js",
+      "FastAPI",
+      "PostgreSQL",
+      "Cloud Run",
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Prisma",
+      "GraphQL",
+      "Redis",
+      "Docker",
+      "GitHub Actions",
+      "Cloudflare",
+      "Vercel",
+      "OAuth 2.0",
+      "OCR",
+      "SaaS"
+    ],
+    logo: `${ecoHomeMediaFolder}/logo.png`,
+    media: [
+      `${ecoHomeMediaFolder}/1.webp`,
+      `${ecoHomeMediaFolder}/2.webp`,
+      `${ecoHomeMediaFolder}/3.webp`,
+      `${ecoHomeMediaFolder}/4.webp`,
+      `${ecoHomeMediaFolder}/5.webp`,
+      `${ecoHomeMediaFolder}/6.webp`,
+      `${ecoHomeMediaFolder}/7.webp`,
+      `${ecoHomeMediaFolder}/8.webp`,
+      `${ecoHomeMediaFolder}/9.webp`,
+      `${ecoHomeMediaFolder}/10.webp`,
+      `${ecoHomeMediaFolder}/11.webp`,
+      `${ecoHomeMediaFolder}/12.webp`
+    ],
+    links: {
+      website: "https://ecohome.lucas-moreno-dev.com"
+    },
+    team: {
+      contributors: [
+        { name: "Lucas Moreno", role: "Fullstack Developer, DevOps Engineer & Software Architect" }
+      ]
+    },
+    developmentProcess: {
+      methodology: "Iterative and incremental: documented planning before implementation (master plan and 47 detailed documents), measure before optimizing and end-to-end verification, with AI-assisted development (Cursor and Claude Code) under my own review.",
+      timeline: "Jun 2026 - Oct 2026"
+    }
+  },
   {
     slug: "DevOps-Template-GCP",
     title: "DevOps Template GCP",

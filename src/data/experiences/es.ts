@@ -2,10 +2,95 @@ const databaySolutionsMediaFolder = "/DatabaySolutions";
 const certificatesMediaFolder = "/Certificates";
 const controlNetMediaFolder = "/ControlNet";
 const tecnicoMediaFolder = "/tecnico";
+const nettDigitalSchoolMediaFolder = "/NettDigitalSchool";
 
 import type { Experience } from "../types";
 
 export const experiencesEs: Experience[] = [
+  {
+    id: 6,
+    slug: "Master-en-Desarrollo-Web-Avanzado",
+    title: "Máster en Desarrollo Web Avanzado",
+    provider: "NettDigitalSchool",
+    briefDescription: `Máster online en <strong>desarrollo web avanzado</strong> (22 módulos) que cubre <strong>frontend</strong>, <strong>backend</strong>, <strong>bases de datos</strong>, <strong>cloud</strong>, <strong>Docker</strong>, <strong>seguridad y RGPD</strong> y <strong>desarrollo asistido por IA</strong>.
+   Formación online orientada a construir, asegurar y desplegar aplicaciones web reales, compaginada con mi trabajo profesional.`,
+    description: `El <strong>Máster en Desarrollo Web Avanzado</strong> de <strong>NettDigitalSchool</strong> (<a href="https://nettdigitalschool.com/dwa/" target="_blank" rel="noopener noreferrer">nettdigitalschool.com</a>), acreditado por la <strong>Universidad UTAMED</strong>, es una formación <strong>online autogestionada</strong> de 22 módulos para diseñar, construir, asegurar y desplegar aplicaciones web modernas de extremo a extremo.
+
+<strong>Principales áreas de formación:</strong>
+      <ul>
+      <li><strong>Frontend:</strong> HTML5 y CSS avanzado, diseño responsive (Bootstrap y Tailwind), JavaScript y frameworks (React, Vue.js y Angular).</li>
+      <li><strong>Backend:</strong> Node.js con Express, PHP nativo y Laravel, y conexión con bases de datos.</li>
+      <li><strong>Datos:</strong> modelado de bases de datos y SQL.</li>
+      <li><strong>Cloud y DevOps:</strong> hostings y servidores, AWS, Git/GitHub y Docker en producción.</li>
+      <li><strong>CMS y e-commerce:</strong> WordPress avanzado (plugins y PHP personalizado) y PrestaShop (módulos y plantillas).</li>
+      <li><strong>Producto y calidad:</strong> usabilidad y UX, SEO técnico, metodologías ágiles (Scrum), seguridad web y protección de datos (RGPD).</li>
+      <li><strong>Master Classes:</strong> Docker y contenedores en producción, desarrollo asistido por IA (Vibe Coding) y una prueba técnica real de proceso de selección.</li>
+      </ul>`,
+    startDate: "Sept 2025",
+    endDate: "Sept 2026",
+    location: "Online",
+    tags: [
+      "React",
+      "Next.js",
+      "Node.js",
+      "Docker",
+      "AWS",
+      "SQL",
+      "Vue.js",
+      "Angular",
+      "Express",
+      "PHP",
+      "Laravel",
+      "Git",
+      "Tailwind CSS",
+      "Bootstrap",
+      "WordPress",
+      "PrestaShop",
+      "SEO",
+      "RGPD",
+      "UX",
+      "Scrum",
+      "Desarrollo asistido por IA",
+    ],
+    logo: `${nettDigitalSchoolMediaFolder}/logo.png`,
+    type: "Educacion",
+    companyUrl: "https://nettdigitalschool.com/dwa/",
+    companyLinkLabel: "Ver el máster en NettDigitalSchool",
+    skills: [
+      `<ul>
+          <li>Desarrollo frontend con React, Vue.js y Angular</li>
+          <li>Diseño responsive con Bootstrap y Tailwind CSS</li>
+          <li>Desarrollo backend con Node.js/Express y PHP/Laravel</li>
+          <li>Bases de datos relacionales: modelado y SQL</li>
+          <li>Contenedores y despliegue en producción con Docker</li>
+          <li>Servicios cloud en AWS</li>
+          <li>Control de versiones con Git y GitHub</li>
+          <li>Seguridad web y protección de datos (RGPD)</li>
+          <li>SEO técnico, usabilidad y UX</li>
+          <li>Gestión de proyectos con metodologías ágiles (Scrum)</li>
+          <li>WordPress y PrestaShop a medida (plugins, módulos y plantillas)</li>
+          <li>Desarrollo asistido por IA</li>
+        </ul>`,
+    ],
+    highlights: [
+      `<ul>
+          <li>Formación completa de <strong>22 módulos</strong>, de los fundamentos al despliegue en producción y el desarrollo asistido por IA.</li>
+          <li>Stack fullstack moderno: <strong>React</strong>, <strong>Vue.js</strong> y <strong>Angular</strong> en frontend; <strong>Node.js/Express</strong> y <strong>PHP/Laravel</strong> en backend.</li>
+          <li><strong>Docker</strong> y contenedores en producción, <strong>AWS</strong> y control de versiones con Git/GitHub.</li>
+          <li>Seguridad web y protección de datos (<strong>RGPD</strong>), SEO técnico, usabilidad y metodologías ágiles (<strong>Scrum</strong>).</li>
+          <li>Máster acreditado por la <strong>Universidad UTAMED</strong>.</li>
+        </ul>`,
+    ],
+    responsibilities: [
+      `<ul>
+          <li>Cursar los 22 módulos de formación online autogestionada, desde los fundamentos hasta el despliegue en producción.</li>
+          <li>Compaginar la formación con el trabajo profesional en Databay Solutions.</li>
+          <li>Aplicar buenas prácticas de seguridad web y protección de datos (RGPD).</li>
+          <li>Trabajar con herramientas de desarrollo asistido por IA (Vibe Coding) y contenedores Docker en producción.</li>
+          <li>Realizar una prueba técnica real de proceso de selección como Master Class.</li>
+        </ul>`,
+    ],
+  },
   {
     id: 5,
     slug: "Desarrollador-Fullstack-&-DevOps",
